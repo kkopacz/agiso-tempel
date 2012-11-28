@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- repository>./</repository -->
+	<!-- repository>./src/test/resources/repository</repository -->
+
+	<template key="groupingTemplate">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>groupingTemplate</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>mkdirs</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>bundles/${top.name}</target>
+				</resource>
+			</reference>
+
+			<reference>
+				<groupId>org.agiso.kkopacz.tempel.projects</groupId>
+				<templateId>javaProject</templateId>
+				<version>1.0.0</version>
+
+				<params>
+					<param key="name">
+						<fixed>true</fixed>
+						<value>${top.name}</value>
+					</param>
+				</params>
+
+				<workdir>bundles/${top.name}</workdir>
+			</reference>
+		</references>
+	</template>
+	<template key="javaProject">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>javaProject</templateId>
+		<version>1.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.eclipse</groupId>
+				<templateId>project.java</templateId>
+				<version>1.0.0</version>
+
+				<params>
+					<param key="name">
+						<fixed>true</fixed>
+						<value>${top.name}</value>
+					</param>
+				</params>
+			</reference>
+			<reference>
+				<groupId>org.agiso.tempel.tests</groupId>
+				<templateId>javaClass</templateId>
+				<version>1.0.0</version>
+
+				<params>
+					<param key="srcDir">
+						<fixed>true</fixed>
+						<value>${top.name}/src/main/java</value>
+					</param>
+				</params>
+			</reference>
+		</references>
+	</template>
+
+
+	<template key="velocityDirTemplate">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>1.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<!-- resource>
+					<target>${top.name}</target>
+				</resource -->
+			</reference>
+		</references>
+	</template>
+</tempel>

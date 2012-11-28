@@ -1,0 +1,16 @@
+/* ${package}.${name} ${date_medium}
+ * 
+ * ${name}.java
+ * 
+ * Copyright ${year} agiso.org
+ */
+package ${package};
+
+/**
+ * 
+ * 
+ * @author <a href="mailto:${user_email}">${user_firstName} ${user_lastName}</a>
+ */
+public class ${name} {
+
+}

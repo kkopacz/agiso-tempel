@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- repository>./</repository -->
+	<!-- repository>./src/test/resources/repository</repository -->
+
+	<properties>
+		<!-- user_name>${SYSTEM.user_name}</user_name -->
+		<user_firstName>Karol</user_firstName>
+		<user_lastName>Kopacz</user_lastName>
+		<user_email>kkopacz@agiso.org</user_email>
+
+		<date_locale>pl_PL</date_locale>
+		<!-- date_format_short></date_format_short -->
+		<!-- date_format_medium></date_format_medium -->
+		<!-- date_format_long></date_format_long -->
+		<!-- date_format_full></date_format_full -->
+	</properties>
+
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>javaClass</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="srcDir">
+				<value>/src/main/java</value>
+			</param>
+			<param key="package" name="Package name">
+				<value>org.agiso.package</value>
+			</param>
+			<param key="packageDir">
+				<fixed>true</fixed>
+				<value>${package}</value>
+				<converter>org.agiso.tempel.convert.PackageToPathConverter</converter>
+			</param>
+			<param key="name" name="Class name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>mkdirs</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.srcDir}/${top.packageDir}</target>
+				</resource>
+			</reference>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityFileEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<source>javaClass.java.vm</source>
+					<target>${top.srcDir}/${top.packageDir}/${top.name}.java</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+</tempel>
