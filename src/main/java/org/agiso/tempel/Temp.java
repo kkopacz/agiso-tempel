@@ -17,6 +17,8 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Klasa tymczasowa (do usunięcia). Zawiera statyczne metody narzędziowe do
@@ -170,11 +172,21 @@ public class Temp {
 
 		String basePath = file.getCanonicalPath();
 		if(file.isDirectory()) {
-			for(File subFile : file.listFiles()) {
+			File[] content = file.listFiles();
+			Arrays.sort(content, new Comparator<File>() {
+				@Override
+				public int compare(File f1, File f2) {
+					return f1.getName().compareTo(f2.getName());
+				}
+			});
+
+			for(File subFile : content) {
 				DigestUtils_updateDirecotryDigest(basePath, subFile, digest);
 			}
 		} else {
+//			System.out.print("append file: " + file.getPath() + " > ");
 			DigestUtils_updateDigest(digest, new FileInputStream(file));
+//			System.out.println(HexUtils_toHexString(digest.digest()));
 		}
 
 		return HexUtils_toHexString(digest.digest());
@@ -184,15 +196,25 @@ public class Temp {
 	private static void DigestUtils_updateDirecotryDigest(String path, File file, MessageDigest md) throws Exception {
 		String relativePath = file.getCanonicalPath().substring(path.length());
 		if(file.isDirectory()) {
-			// System.out.println("append directory: " + relativePath);
+//			System.out.print("append directory: " + relativePath + " > ");
 			md.update(relativePath.getBytes(Charset.forName("UTF8")));
+//			System.out.println(HexUtils_toHexString(md.digest()));
 
-			for(File subFile : file.listFiles()) {
+			File[] content = file.listFiles();
+			Arrays.sort(content, new Comparator<File>() {
+				@Override
+				public int compare(File f1, File f2) {
+					return f1.getName().compareTo(f2.getName());
+				}
+			});
+
+			for(File subFile : content) {
 				DigestUtils_updateDirecotryDigest(path, subFile, md);
 			}
 		} else {
-			// System.out.println("append file: " + relativePath);
+//			System.out.print("append file: " + relativePath + " > ");
 			md.update(relativePath.getBytes(Charset.forName("UTF8")));
+//			System.out.println(HexUtils_toHexString(md.digest()));
 
 			DigestUtils_updateDigest(md, new FileInputStream(file));
 		}
