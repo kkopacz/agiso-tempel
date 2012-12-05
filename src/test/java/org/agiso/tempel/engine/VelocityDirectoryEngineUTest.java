@@ -40,7 +40,7 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		engine.run(Scope.RUNTIME, "/VelocityDirectoryEngineUTest/testProcessDirectory1", modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "d2cd7c7cbd3e086b6641bb152829ab44".equals(md5);
+		assert "ca695792db22ea3c290a64c3339d2d13".equals(md5);
 	}
 
 	@Test
