@@ -1,0 +1,27 @@
+xStream (http://xstream.codehaus.org/) BSD License, http://xstream.codehaus.org/license.html
+
+xmlpull (http://www.xmlpull.org/) Public Domain, http://www.xmlpull.org/v1/download/unpacked/LICENSE.txt
+
+commons-cli (http://commons.apache.org/cli/) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+guava (http://code.google.com/p/guava-libraries/) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+testng (http://testng.org/) Apache License, Version 2.0, http://testng.org/license/
+
+junit (http://junit.sourceforge.net) Common Public License, Version 1.0, http://junit.sourceforge.net/cpl-v10.html
+
+hamcrest-core (http://code.google.com/p/hamcrest/) New BSD License, http://opensource.org/licenses/BSD-3-Clause
+
+bsh (http://www.beanshell.org/) Sun Public License / Gnu Lesser Public License, http://www.sun.com/developers/spl.html / http://www.gnu.org/copyleft/lesser.html
+
+jcommander (http://jcommander.org/) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+snakeyaml (http://code.google.com/p/snakeyaml/) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+velocity (http://velocity.apache.org) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-collections (http://commons.apache.org/collections/) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-lang (http://commons.apache.org/lang/) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
+
+inflector (https://inflector.dev.java.net) Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.txt
