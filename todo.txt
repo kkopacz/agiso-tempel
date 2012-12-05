@@ -1,3 +1,2 @@
  - Wywołanie szablonu 'mkdir' z podaniem ścieżki katalogów nie tworzy katalogów i nie wyświetla informacji o błędzie.
  + Mechanizm bazowego szablonu i bazowerj referencji, umożliwiający wyłanianie konfiguracji wspólnej tak, aby jej nie powtarzać.
- + Konwerter rzeczowników angielskich w liczbie pojedynczej na mnogą.

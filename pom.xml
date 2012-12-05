@@ -158,5 +158,11 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet</groupId>
+			<artifactId>inflector</artifactId>
+			<version>0.7.0</version>
+		</dependency>
 	</dependencies>
 </project>
