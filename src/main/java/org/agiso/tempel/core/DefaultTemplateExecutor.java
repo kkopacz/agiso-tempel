@@ -134,6 +134,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						subTemplate.getGroupId() +":" + subTemplate.getTemplateId() + ":" + subTemplate.getVersion()
 				);
 				subTemplate = subTemplate.clone();								// kopia podszablonu z repozytorium (do modyfikacji)
+				// subTemplate.setScope(template.getScope());						// podszablon ma to samo repozytorium co szablon
 
 				Map<String, Object> subParams = new HashMap<String, Object>(globalProperties);	// parametry dodane podzablonu
 				subParams.put("top", params);
@@ -216,7 +217,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			);
 
 			// Uruchomienie silnika do generacji zasobów tworzonych przez szablon:
-			if(template.getResources() != null) {
+			if(template.getResources() != null && !template.getResources().isEmpty()) {
 				// Wyznaczanie katalogu roboczego dla wszystkich zasobów geneorowanych przez
 				// aktualnie wykonywany szablon. Jest określany na poziomie całego szablonu,
 				// więc jest wspólny dla wszystkich zdefiniowanych w nim zasobów:
@@ -242,8 +243,29 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						srcDir = srcDir + '/' + template.getVersion();
 					}
 
-					doEngineRun(engine, resWorkDir, srcDir, resource, stack);
+					if(!Temp.StringUtils_isBlank(resource.getSource())) {
+						srcDir = srcDir + '/' + resource.getSource();
+					}
+					doEngineRun(template.getScope(), engine, resWorkDir, srcDir, resource.getTarget(), stack);
 				}
+			} else {
+				String resWorkDir = workDir;
+
+				String srcDir = null;
+				if(!Temp.StringUtils_isEmpty(template.getGroupId())) {
+					// Szablony bez określonej grupy, identyfikatora i wersji mogą generować zasoby
+					// o ile nie wymagają do tego celu żadnych plików źródłowych (np. szablonów velocity).
+					// Nie mają one bowiem określonej ścieżki w repozytorium.
+					// Przykładem tego typu szablonów są szablony tworzące katalogi.
+					Repository r = template.getRepository();
+
+					srcDir = (r == null? "" : r.getValue());
+					srcDir = srcDir + '/' + template.getGroupId().replace('.', '/');
+					srcDir = srcDir + '/' + template.getTemplateId();
+					srcDir = srcDir + '/' + template.getVersion();
+				}
+
+				doEngineRun(template.getScope(), engine, resWorkDir, srcDir, null, stack);
 			}
 		}
 	}
@@ -293,16 +315,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param resource
 	 * @param params
 	 */
-	private void doEngineRun(ITempelEngine engine, String workDir, String srcDir, TemplateResource resource, Stack<Map<String, Object>> stack) {
-		String source;
-		if(Temp.StringUtils_isBlank(resource.getSource())) {
-			source = srcDir;
+	private void doEngineRun(Template.Scope scope, ITempelEngine engine, String workDir, String srcDir, String target, Stack<Map<String, Object>> stack) {
+		if(Temp.StringUtils_isEmpty(target)) {
+			target = workDir + "/";
 		} else {
-			source = srcDir + '/' + resource.getSource();
+			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
 		}
-
-		String target = workDir + "/" + expressionEvaluator.evaluate(resource.getTarget(), stack.peek());
-		engine.run(resource.getParentTemplateReference().getScope(), source, (Map<String, Object>)stack.peek().get("top"), target);
+		engine.run(scope, srcDir, (Map<String, Object>)stack.peek().get("top"), target);
 	}
 
 //	--------------------------------------------------------------------------

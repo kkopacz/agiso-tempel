@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class TempelCoreITest {
-	@Test
+//	@Test
 	public void testTemplerCore() throws Exception {
 		File workDir = new File("./target/templer2");
 		if(!workDir.exists()) {
@@ -24,7 +24,7 @@ public class TempelCoreITest {
 		}
 
 		String[] args = new String[] {
-				"velocityDirTemplate",
+				"velocityDirTemplate2",
 				"-d ./target/templer2"
 		};
 
