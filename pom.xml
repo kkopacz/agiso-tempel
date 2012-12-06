@@ -160,7 +160,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jvnet</groupId>
+			<groupId>net.java.dev.inflector</groupId>
 			<artifactId>inflector</artifactId>
 			<version>0.7.0</version>
 		</dependency>

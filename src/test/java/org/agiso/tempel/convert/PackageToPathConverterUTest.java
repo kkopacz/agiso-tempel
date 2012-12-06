@@ -2,7 +2,7 @@
  * 
  * PackageToPathConverterUTest.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.convert;
 
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class PackageToPathConverterUTest {
 	private ITemplateParamConverter<String> converter = new PackageToPathConverter();

@@ -28,9 +28,11 @@ public interface ITempelEngine {
 	/**
 	 * Uruchamia silnik generatora.
 	 * 
-	 * @param source Plik szablonu do wykorzystania.
+	 * @param scope Obszar działania silnika (GLOBAL, USER, RUNTIME). Określa
+	 *     repozytorium, w którym będą wyszukiwane przetwarzane zasoby.
+	 * @param source Ścieżka szablonu do wykorzystania w celu generacji zasobu.
 	 * @param params Mapa parametrów szablonu.
-	 * @param target Plik docelowy utworzony w oparciu o szablon.
+	 * @param target Ścieżka docelowa zasobu tworzonego w oparciu o szablon.
 	 */
 	public void run(Template.Scope scope, String source, Map<String, Object> params, String target);
 }

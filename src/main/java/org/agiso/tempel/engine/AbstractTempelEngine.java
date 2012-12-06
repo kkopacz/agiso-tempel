@@ -2,7 +2,7 @@
  * 
  * AbstractTempelEngine.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.engine;
 
@@ -14,7 +14,7 @@ import org.agiso.tempel.core.model.Template.Scope;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class AbstractTempelEngine implements ITempelEngine {
 	private Map<Scope, String> repositories;

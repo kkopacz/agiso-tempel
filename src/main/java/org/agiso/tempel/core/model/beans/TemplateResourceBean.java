@@ -2,7 +2,7 @@
  * 
  * TemplateResourceBean.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.core.model.beans;
 
@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @XStreamAlias("resource")
 public class TemplateResourceBean implements TemplateResource {

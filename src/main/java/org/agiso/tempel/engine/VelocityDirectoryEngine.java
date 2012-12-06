@@ -2,7 +2,7 @@
  * 
  * VelocityDirectoryEngine.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.engine;
 
@@ -15,7 +15,7 @@ import org.apache.velocity.VelocityContext;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class VelocityDirectoryEngine extends VelocityFileEngine {
 	private static final String TEMPLATE_FILE_SUFFIX = ".vm";

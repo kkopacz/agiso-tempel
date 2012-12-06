@@ -2,7 +2,7 @@
  * 
  * AbstractVelocityEngine.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.engine;
 
@@ -18,7 +18,7 @@ import org.apache.velocity.app.VelocityEngine;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class AbstractVelocityEngine extends AbstractTempelEngine {
 //	private static Map<Scope, VelocityEngine> V_MAP;
