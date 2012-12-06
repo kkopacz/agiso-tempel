@@ -16,18 +16,51 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class TempelCoreITest {
-//	@Test
+	@Test
 	public void testTemplerCore() throws Exception {
-		File workDir = new File("./target/templer2");
+		File workDir = new File("./target/templer2/subdir");
 		if(!workDir.exists()) {
 			workDir.mkdirs();
 		}
 
-		String[] args = new String[] {
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate1",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
 				"velocityDirTemplate2",
 				"-d ./target/templer2"
-		};
+		});
 
-		Bootstrap.main(args);
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate3",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate4",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate5",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate6",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate7",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
+				"velocityDirTemplate8",
+				"-d ./target/templer2"
+		});
 	}
 }

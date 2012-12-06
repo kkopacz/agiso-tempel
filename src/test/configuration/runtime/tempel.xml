@@ -77,13 +77,82 @@
 	</template>
 
 
-	<template key="velocityDirTemplate1">
+
+
+	<template key="velocityDirTemplate1"
+			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>1.0.0</version>
 	
 		<params>
-			<param key="name" name="Project name" />
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 1</value>
+			</param>
+		</params>
+	</template>
+
+	<template key="velocityDirTemplate2"
+			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>2.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 2</value>
+			</param>
+		</params>
+
+		<resource />
+	</template>
+
+	<template key="velocityDirTemplate3"
+			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>3.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 3</value>
+			</param>
+		</params>
+
+		<resource>
+			<target>subdir</target>
+		</resource>
+	</template>
+
+	<template key="velocityDirTemplate4"
+			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>4.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 4</value>
+			</param>
+		</params>
+
+		<workdir>subdir</workdir>
+	</template>
+
+	<template key="velocityDirTemplate5">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>5.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 5</value>
+			</param>
 		</params>
 
 		<references>
@@ -97,14 +166,77 @@
 		</references>
 	</template>
 
-	<template key="velocityDirTemplate2"
-			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+	<template key="velocityDirTemplate6">
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
-		<version>2.0.0</version>
+		<version>6.0.0</version>
 	
 		<params>
-			<param key="name" name="Project name" />
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 6</value>
+			</param>
 		</params>
+
+		<workdir>subdir</workdir>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+
+	<template key="velocityDirTemplate7">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>7.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 7</value>
+			</param>
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>subdir</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+
+	<template key="velocityDirTemplate8">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityDirTemplate</templateId>
+		<version>8.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 8</value>
+			</param>
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+				<workdir>subdir</workdir>
+			</reference>
+		</references>
 	</template>
 </tempel>

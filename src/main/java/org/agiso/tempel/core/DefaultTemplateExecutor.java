@@ -11,11 +11,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.core.convert.ITemplateParamConverter;
 import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.core.lang.MapStack;
+import org.agiso.tempel.core.lang.SimpleMapStack;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
@@ -68,13 +69,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 */
 	@Override
 	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateRepository repository, Map<String, Object> globalProperties) {
-		Stack<Map<String, Object>> stack = new Stack<Map<String,Object>>();
+		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
 
 		stack.push(new HashMap<String, Object>(globalProperties));
 		executeTemplate(workDir, repoDir, template, repository, stack, globalProperties, "");
 		stack.pop();
 	}
-	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateRepository repository, Stack<Map<String, Object>> stack, Map<String, Object> globalProperties, String depth) {
+	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateRepository repository, MapStack<String, Object> stack, Map<String, Object> globalProperties, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -315,13 +316,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param resource
 	 * @param params
 	 */
-	private void doEngineRun(Template.Scope scope, ITempelEngine engine, String workDir, String srcDir, String target, Stack<Map<String, Object>> stack) {
+	private void doEngineRun(Template.Scope scope, ITempelEngine engine, String workDir, String srcDir, String target, MapStack<String, Object> stack) {
 		if(Temp.StringUtils_isEmpty(target)) {
 			target = workDir + "/";
 		} else {
 			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
 		}
-		engine.run(scope, srcDir, (Map<String, Object>)stack.peek().get("top"), target);
+		engine.run(scope, srcDir, stack, target);
 	}
 
 //	--------------------------------------------------------------------------
