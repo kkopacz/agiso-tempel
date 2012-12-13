@@ -12,6 +12,12 @@
 
 	<name>AGISO Templer</name>
 
+  <properties>
+    <aetherVersion>1.12</aetherVersion>
+    <mavenVersion>3.0.3</mavenVersion>
+    <wagonVersion>1.0-beta-7</wagonVersion>
+  </properties>
+
 	<build>
 		<resources>
 			<resource>
@@ -164,5 +170,63 @@
 			<artifactId>inflector</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+
+
+
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-api</artifactId>
+      <version>${aetherVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-util</artifactId>
+      <version>${aetherVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-impl</artifactId>
+      <version>${aetherVersion}</version>
+    </dependency>
+    <!-- dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-connector-file</artifactId>
+      <version>${aetherVersion}</version>
+    </dependency -->
+    <!-- dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-connector-asynchttpclient</artifactId>
+      <version>${aetherVersion}</version>
+    </dependency -->
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-connector-wagon</artifactId>
+      <version>${aetherVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-aether-provider</artifactId>
+      <version>${mavenVersion}</version>
+    </dependency>
+    <!-- dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-ssh</artifactId>
+      <version>${wagonVersion}</version>
+    </dependency -->
+    <!-- dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-file</artifactId>
+      <version>${wagonVersion}</version>
+    </dependency -->
+    <!-- dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-http</artifactId>
+      <version>${wagonVersion}</version>
+    </dependency -->
+    <dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-http-lightweight</artifactId>
+      <version>${wagonVersion}</version>
+    </dependency>
 	</dependencies>
 </project>

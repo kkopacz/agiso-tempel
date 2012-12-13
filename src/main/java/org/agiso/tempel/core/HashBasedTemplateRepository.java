@@ -8,6 +8,7 @@ package org.agiso.tempel.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
@@ -66,6 +67,15 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 
 	@Override
 	public Template get(String key) {
+		if(key.indexOf(':') > 0) {
+			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+			String groupId = tokenizer.nextToken();
+			String templateId = tokenizer.nextToken();
+			String version = tokenizer.nextToken();
+
+			return get(groupId, templateId, version);
+		}
+		
 		return kMap.get(key);
 	}
 

@@ -107,29 +107,13 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	public ITemplateRepository readTemplates(Map<String, Object> globalProperties) throws IOException {
 		this.globalProperties = globalProperties;
 
-		// Konfiguracja XStream'a:
-		// http://kickjava.com/src/com/thoughtworks/acceptance/MultipleObjectsInOneStreamTest.java.htm
-		XStream xStream = new XStream();
-		xStream.alias("properties", Map.class);
-		xStream.autodetectAnnotations(true);
-		xStream.processAnnotations(new Class[] {
-				RepositoryBean.class,
-				TemplateBean.class,
-				TemplateParamBean.class,
-				TemplateReferenceBean.class,
-				TemplateResourceBean.class
-		});
-		xStream.registerConverter(new MapEntryConverter());
-		xStream.registerConverter(new RepositoryConverter());
-		// xStream.alias("template", TemplateBean.class);
-		// xStream.useAttributeFor(TemplateBean.class, "id");
-		// xStream.alias("param", TemplateParamBean.class);
-		// xStream.useAttributeFor(TemplateParamBean.class, "id");
-
 		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
 		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
 		// katalogu bieżącym:
 		ITemplateRepository templateRepository = new HashBasedTemplateRepository();
+
+		// Przygotowanie parsera plików tempel.xml:
+		XStream xStream = prepareXStream();
 
 		FileInputStream xmlStream = null;
 
@@ -213,6 +197,32 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	/**
 	 * @return
 	 */
+	private XStream prepareXStream() {
+		// Konfiguracja XStream'a:
+		// http://kickjava.com/src/com/thoughtworks/acceptance/MultipleObjectsInOneStreamTest.java.htm
+		XStream xStream = new XStream();
+		xStream.alias("properties", Map.class);
+		xStream.autodetectAnnotations(true);
+		xStream.processAnnotations(new Class[] {
+				RepositoryBean.class,
+				TemplateBean.class,
+				TemplateParamBean.class,
+				TemplateReferenceBean.class,
+				TemplateResourceBean.class
+		});
+		xStream.registerConverter(new MapEntryConverter());
+		xStream.registerConverter(new RepositoryConverter());
+		// xStream.alias("template", TemplateBean.class);
+		// xStream.useAttributeFor(TemplateBean.class, "id");
+		// xStream.alias("param", TemplateParamBean.class);
+		// xStream.useAttributeFor(TemplateParamBean.class, "id");
+
+		return xStream;
+	}
+
+	/**
+	 * @return
+	 */
 	private String getApplicationSettingsPath() {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
@@ -263,6 +273,9 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 
 //	--------------------------------------------------------------------------
 	/**
+	 * Przetwarza obiekt odczytany z pliku tempel.xml
+	 * 
+	 * @param scope
 	 * @param object
 	 * @param templateRepository
 	 */
