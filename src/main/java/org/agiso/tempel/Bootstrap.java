@@ -74,11 +74,15 @@ public class Bootstrap {
 		templateName = String.valueOf(cmd.getArgList().get(0));
 
 		// Uruchamianie generatora dla określonego szablonu:
+		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
+
 		Tempel tempel = new Tempel(workDir, repoDir);
 		tempel.setTemplateProvider(new XStreamTemplateProvider());
 		tempel.setTemplateVerifier(new RecursiveTemplateVerifier());
 		tempel.setTemplateExecutor(new DefaultTemplateExecutor());
 		tempel.startTemplate(templateName, new HashMap<String, String>());
+
+		System.out.println("--- Zakonczono pomyslnie ---");
 	}
 
 //	--------------------------------------------------------------------------

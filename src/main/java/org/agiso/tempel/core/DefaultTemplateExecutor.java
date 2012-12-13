@@ -213,8 +213,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		// Generacja zasobów:
 		if(engine != null) {
 			System.err.println(depth + "Running template '" + template.getKey() + "': "+
-				template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion() + " " +
-				"with resources: " + stack.peek()
+				template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion()
+				// + " " + "with resources: " + stack.peek()
 			);
 
 			// Uruchomienie silnika do generacji zasobów tworzonych przez szablon:
