@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class TempelCoreITest {
-//	@Test
+	@Test
 	public void testTemplerCore() throws Exception {
 		File workDir = new File("./target/templer2/subdir");
 		if(!workDir.exists()) {
@@ -45,43 +45,42 @@ public class TempelCoreITest {
 		}
 
 		Bootstrap.main(new String[] {
-				// "org.agiso.tempel.templates.tests:velocityDirTemplate:1.0.0",
-				"velocityDirTemplate1",
+				"org.agiso.tempel.tests:velocityDirTemplate:1.0.0",		// "velocityDirTemplate1",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate2",
+				"org.agiso.tempel.tests:velocityDirTemplate:2.0.0",		// "velocityDirTemplate2",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate3",
+				"org.agiso.tempel.tests:velocityDirTemplate:3.0.0",		// "velocityDirTemplate3",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate4",
+				"org.agiso.tempel.tests:velocityDirTemplate:4.0.0",		// "velocityDirTemplate4",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate5",
+				"org.agiso.tempel.tests:velocityDirTemplate:5.0.0",		// "velocityDirTemplate5",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate6",
+				"org.agiso.tempel.tests:velocityDirTemplate:6.0.0",		// "velocityDirTemplate6",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate7",
+				"org.agiso.tempel.tests:velocityDirTemplate:7.0.0",		// "velocityDirTemplate7",
 				"-d ./target/templer2"
 		});
 
 		Bootstrap.main(new String[] {
-				"velocityDirTemplate8",
+				"org.agiso.tempel.tests:velocityDirTemplate:8.0.0",		// "velocityDirTemplate8",
 				"-d ./target/templer2"
 		});
 	}

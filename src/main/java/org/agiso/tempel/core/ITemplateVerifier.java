@@ -14,5 +14,5 @@ import org.agiso.tempel.core.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateVerifier {
-	public void verifyTemplate(Template template, ITemplateRepository repository) throws Exception;
+	public void verifyTemplate(Template template, ITemplateProvider templateProvider) throws Exception;
 }

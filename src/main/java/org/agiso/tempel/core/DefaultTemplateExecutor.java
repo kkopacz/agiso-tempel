@@ -68,14 +68,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param templates Mapa wszystkich dostępnych szablonów.
 	 */
 	@Override
-	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateRepository repository, Map<String, Object> globalProperties) {
+	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) {
 		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
 
 		stack.push(new HashMap<String, Object>(globalProperties));
-		executeTemplate(workDir, repoDir, template, repository, stack, globalProperties, "");
+		executeTemplate(workDir, repoDir, template, templateProvider, stack, globalProperties, "");
 		stack.pop();
 	}
-	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateRepository repository, MapStack<String, Object> stack, Map<String, Object> globalProperties, String depth) {
+	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> globalProperties, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -121,9 +121,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				String tId = Temp.StringUtils_emptyIfBlank(refTemplate.getTemplateId());
 				String ver = Temp.StringUtils_nullIfBlank(refTemplate.getVersion());		// dla nieokreślonej wersji null
 
-				Template subTemplate = repository.get(gId, tId, ver);
+				Template subTemplate = templateProvider.get(gId, tId, ver);
 				if(subTemplate == null) {
-					subTemplate = repository.get(refTemplate.getKey());
+					subTemplate = templateProvider.get(refTemplate.getKey());
 					if(subTemplate == null) {
 						throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + "' szablonu '" + template.getKey() + "'" );
 					}
@@ -204,7 +204,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
-				executeTemplate(subWorkDir, repoDir, subTemplate, repository, stack, globalProperties, "  " + depth);
+				executeTemplate(subWorkDir, repoDir, subTemplate, templateProvider, stack, globalProperties, "  " + depth);
 
 				stack.pop();
 			}

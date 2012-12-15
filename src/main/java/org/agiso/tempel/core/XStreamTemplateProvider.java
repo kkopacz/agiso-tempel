@@ -103,94 +103,31 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	}
 
 //	--------------------------------------------------------------------------
-	@Override
-	public ITemplateRepository readTemplates(Map<String, Object> globalProperties) throws IOException {
-		this.globalProperties = globalProperties;
+	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
-		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
-		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
-		// katalogu bieżącym:
-		ITemplateRepository templateRepository = new HashBasedTemplateRepository();
+	@Override
+	public void readTemplates(Map<String, Object> globalProperties) throws IOException {
+		this.globalProperties = globalProperties;
 
 		// Przygotowanie parsera plików tempel.xml:
 		XStream xStream = prepareXStream();
 
-		FileInputStream xmlStream = null;
+		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
+		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
+		// katalogu bieżącym:
+		readAppTemplates(xStream, templateRepository);
+		readUsrTemplates(xStream, templateRepository);
+		readRunTemplates(xStream, templateRepository);
+	}
 
-		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
-		String appSettings = getApplicationSettingsPath();
-		File appSettingsFile = new File(appSettings);
-		try {
-			xmlStream = new FileInputStream(appSettingsFile);
-			ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-			try {
-				while(true) {
-					processObject(Template.Scope.GLOBAL, in.readObject(), templateRepository);
-				}
-			} catch(EOFException e) {
-				System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
-			}
-		} catch(Exception e) {
-			System.err.println("Błąd wczytywania ustawień globalnych: " + e.getMessage());
-			throw new RuntimeException(e);
-		} finally {
-			if(xmlStream != null) {
-				xmlStream.close();
-				xmlStream = null;
-			}
-		}
+	@Override
+	public Template get(String key) {
+		return templateRepository.get(key);
+	}
 
-		// Mapa szablonów użytkownika (katalog domowy użytkownika):
-		String usrSettings = getUserSettingsPath();
-		File usrSettingsFile = new File(usrSettings);
-		if(usrSettingsFile.exists() && usrSettingsFile.isFile()) {
-			try {
-				xmlStream = new FileInputStream(usrSettingsFile);
-				ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-				try {
-					while(true) {
-						processObject(Template.Scope.USER, in.readObject(), templateRepository);
-					}
-				} catch(EOFException e) {
-					System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
-				}
-			} catch(Exception e) {
-				System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
-				throw new RuntimeException(e);
-			} finally {
-				if(xmlStream != null) {
-					xmlStream.close();
-					xmlStream = null;
-				}
-			}
-		}
-
-		// Mapa szablonów lokalnych (katalog bieżący projektu):
-		String runSettings = getRunningSettings();
-		File runSettingsFile = new File(runSettings);
-		if(runSettingsFile.exists() && runSettingsFile.isFile()) {
-			try {
-				xmlStream = new FileInputStream(runSettingsFile);
-				ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-				try {
-					while(true) {
-						processObject(Template.Scope.RUNTIME, in.readObject(), templateRepository);
-					}
-				} catch(EOFException e) {
-					System.out.println("Wczytano ustawienia lokalne z pliku " + runSettingsFile.getCanonicalPath());
-				}
-			} catch(Exception e) {
-				System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
-				throw new RuntimeException(e);
-			} finally {
-				if(xmlStream != null) {
-					xmlStream.close();
-					xmlStream = null;
-				}
-			}
-		}
-
-		return templateRepository;
+	@Override
+	public Template get(String groupId, String templateId, String version) {
+		return templateRepository.get(groupId, templateId, version);
 	}
 
 //	--------------------------------------------------------------------------
@@ -221,9 +158,36 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	}
 
 	/**
-	 * @return
+	 * @param xStream
+	 * @param templateRepository
+	 * @throws IOException
 	 */
-	private String getApplicationSettingsPath() {
+	private void readAppTemplates(XStream xStream, ITemplateRepository templateRepository) throws IOException {
+		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
+		String appSettings = getAppSettingsPath();
+		File appSettingsFile = new File(appSettings);
+		FileInputStream xmlStream = null;
+		try {
+			xmlStream = new FileInputStream(appSettingsFile);
+			ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
+			try {
+				while(true) {
+					processObject(Template.Scope.GLOBAL, in.readObject(), templateRepository);
+				}
+			} catch(EOFException e) {
+				System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
+			}
+		} catch(Exception e) {
+			System.err.println("Błąd wczytywania ustawień globalnych: " + e.getMessage());
+			throw new RuntimeException(e);
+		} finally {
+			if(xmlStream != null) {
+				xmlStream.close();
+				xmlStream = null;
+			}
+		}
+	}
+	private String getAppSettingsPath() {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
 		int index = path.lastIndexOf("/repo/");
@@ -238,9 +202,38 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	}
 
 	/**
-	 * @return
+	 * @param xStream
+	 * @param templateRepository
+	 * @throws IOException
 	 */
-	private String getUserSettingsPath() {
+	private void readUsrTemplates(XStream xStream, ITemplateRepository templateRepository) throws IOException {
+		// Mapa szablonów użytkownika (katalog domowy użytkownika):
+		String usrSettings = getUsrSettingsPath();
+		File usrSettingsFile = new File(usrSettings);
+		FileInputStream xmlStream = null;
+		if(usrSettingsFile.exists() && usrSettingsFile.isFile()) {
+			try {
+				xmlStream = new FileInputStream(usrSettingsFile);
+				ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
+				try {
+					while(true) {
+						processObject(Template.Scope.USER, in.readObject(), templateRepository);
+					}
+				} catch(EOFException e) {
+					System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
+				}
+			} catch(Exception e) {
+				System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
+				throw new RuntimeException(e);
+			} finally {
+				if(xmlStream != null) {
+					xmlStream.close();
+					xmlStream = null;
+				}
+			}
+		}
+	}
+	private String getUsrSettingsPath() {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
 		int index = path.lastIndexOf("/repo/");
@@ -255,9 +248,38 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	}
 
 	/**
-	 * @return
+	 * @param xStream
+	 * @param templateRepository
+	 * @throws IOException
 	 */
-	private String getRunningSettings() {
+	private void readRunTemplates(XStream xStream, ITemplateRepository templateRepository) throws IOException {
+		// Mapa szablonów lokalnych (katalog bieżący projektu):
+		String runSettings = getRunSettingsPath();
+		File runSettingsFile = new File(runSettings);
+		FileInputStream xmlStream = null;
+		if(runSettingsFile.exists() && runSettingsFile.isFile()) {
+			try {
+				xmlStream = new FileInputStream(runSettingsFile);
+				ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
+				try {
+					while(true) {
+						processObject(Template.Scope.RUNTIME, in.readObject(), templateRepository);
+					}
+				} catch(EOFException e) {
+					System.out.println("Wczytano ustawienia lokalne z pliku " + runSettingsFile.getCanonicalPath());
+				}
+			} catch(Exception e) {
+				System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
+				throw new RuntimeException(e);
+			} finally {
+				if(xmlStream != null) {
+					xmlStream.close();
+					xmlStream = null;
+				}
+			}
+		}
+	}
+	private String getRunSettingsPath() {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
 		int index = path.lastIndexOf("/repo/");
@@ -280,11 +302,30 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	 * @param templateRepository
 	 */
 	private void processObject(Template.Scope scope, Object object, ITemplateRepository templateRepository) {
+		// Ścieżka repozytorium pliku tempel.xml:
 		if(object instanceof Repository) {
 			Repository repository = (Repository)object;
 
 			templateRepository.setRepository(scope, repository);
-		} else if(object instanceof Template) {
+			return;
+		}
+
+		// Mapa parametrów pliku tempel.xml:
+		if(object instanceof Map) {
+			@SuppressWarnings("unchecked")
+			Map<String, String> scopeProperties = (Map<String, String>)object;
+			for(String key : scopeProperties.keySet()) {
+				String value = scopeProperties.get(key);
+				value = expressionEvaluator.evaluate(value, globalProperties);
+				// CHECK: scopeProperties.put(key, value);	// aktualizacja wartości po rozwinięciu
+				globalProperties.put(key, value);
+			}
+			globalProperties.put(scope.name(), Collections.unmodifiableMap(scopeProperties));
+			return;
+		}
+
+		// Definicja szabloun z pliku tempel.xml:
+		if(object instanceof Template) {
 			Template template = (Template)object;
 			template.setScope(scope);
 
@@ -303,16 +344,7 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 			if(!Temp.StringUtils_isBlank(key)) {
 				templateRepository.put(key, template);
 			}
-		} else if(object instanceof Map) {
-			@SuppressWarnings("unchecked")
-			Map<String, String> scopeProperties = (Map<String, String>)object;
-			for(String key : scopeProperties.keySet()) {
-				String value = scopeProperties.get(key);
-				value = expressionEvaluator.evaluate(value, globalProperties);
-				// CHECK: scopeProperties.put(key, value);	// aktualizacja wartości po rozwinięciu
-				globalProperties.put(key, value);
-			}
-			globalProperties.put(scope.name(), Collections.unmodifiableMap(scopeProperties));
+			return;
 		}
 	}
 }

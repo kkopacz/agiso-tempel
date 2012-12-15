@@ -73,8 +73,29 @@ public class Tempel {
 		}
 		globalProperties.put("SYSTEM", Collections.unmodifiableMap(new HashMap<String, Object>(globalProperties)));
 
-		ITemplateRepository repository = templateProvider.readTemplates(globalProperties);
+		// Dodajemy parametry predefiniowane (locale, data, ...):
+		addPredeifnedProperties(globalProperties);
 
+		// Inicjalizujemy provider'a szablonów:
+		templateProvider.readTemplates(globalProperties);
+
+		// Pobieranie definicji szablonu do użycia:
+		Template template = templateProvider.get(name);
+
+		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
+		// szablonów używanych. Sprawdzanie dostępność klas silników generatorów.
+		templateVerifier.verifyTemplate(template, templateProvider);
+
+		// Uruchamianie procesu generacji w oparciu o wskazany szablon:
+		templateExecutor.executeTemplate(workDir.getCanonicalPath(), repoDir.getCanonicalPath(),
+				template, templateProvider,
+				Collections.unmodifiableMap(globalProperties)
+		);
+	}
+
+//	--------------------------------------------------------------------------
+	// Tworzenie parametrów predefiniowanych przechowujących aktualną datę:
+	private void addPredeifnedProperties(Map<String, Object> globalProperties) {
 		Locale date_locale;
 		if(globalProperties.containsKey("date_locale")) {
 			date_locale = LocaleUtils.toLocale((String)globalProperties.get("date_locale"));
@@ -128,18 +149,5 @@ public class Tempel {
 			}
 			globalProperties.put("date_full", date_full);
 		}
-
-		// Pobieranie definicji szablonu do użycia:
-		Template template = repository.get(name);
-
-		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
-		// szablonów używanych. Sprawdzanie dostępność klas silników generatorów.
-		templateVerifier.verifyTemplate(template, repository);
-
-		// Uruchamianie procesu generacji w oparciu o wskazany szablon:
-		templateExecutor.executeTemplate(workDir.getCanonicalPath(), repoDir.getCanonicalPath(),
-				template, repository,
-				Collections.unmodifiableMap(globalProperties)
-		);
 	}
 }

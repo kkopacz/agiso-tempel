@@ -20,7 +20,7 @@ import org.agiso.tempel.core.model.TemplateReference;
  */
 public class RecursiveTemplateVerifier implements ITemplateVerifier {
 	@Override
-	public void verifyTemplate(Template template, ITemplateRepository repository) throws Exception {
+	public void verifyTemplate(Template template, ITemplateProvider templateProvider) throws Exception {
 		verifyTemplate(template, new LinkedHashSet<String>());
 	}
 
