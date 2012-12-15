@@ -7,6 +7,7 @@
 package org.agiso.tempel;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.agiso.tempel.core.DefaultTemplateExecutor;
@@ -46,24 +47,9 @@ public class Bootstrap {
 			System.exit(0);
 		}
 
-		// Określanie katalogu roboczego:
-		File workDir;
-		if(cmd.hasOption('d')) {
-			workDir = new File(cmd.getOptionValue('d').trim());
-			if(!workDir.exists()) {
-				System.err.println("Working directory does not exist: " + workDir.getPath());
-				System.exit(-2);
-			} else if(!workDir.isDirectory()) {
-				System.err.println("Incorrect working directory: " + workDir.getPath());
-				System.exit(-3);
-			}
-		} else {
-			workDir = new File(".");
-		}
-		System.out.println("Katalog roboczy: " + workDir.getCanonicalPath());
-
-		// FIXME: Określanie katalogu repozytorium szablonów:
-		File repoDir = new File("./src/test/resources/repository");
+		// Określanie katalogu roboczego i katalogu repozytorium:
+		File workDir = determineWorkDir(cmd);
+		File repoDir = determineRepoDir(cmd);
 
 		// Pobieranie nazwy szablonu do wykonania:
 		String templateName;
@@ -74,6 +60,16 @@ public class Bootstrap {
 		templateName = String.valueOf(cmd.getArgList().get(0));
 
 		// Uruchamianie generatora dla określonego szablonu:
+		doExecuteTemplate(templateName, workDir, repoDir);
+	}
+
+	/**
+	 * @param templateName
+	 * @param workDir
+	 * @param repoDir
+	 * @throws Exception
+	 */
+	private static void doExecuteTemplate(String templateName, File workDir, File repoDir) throws Exception {
 		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
 
 		Tempel tempel = new Tempel(workDir, repoDir);
@@ -92,6 +88,12 @@ public class Bootstrap {
 		System.out.println();
 		System.out.println("usage: tpl template [options]");
 		System.out.println("   or: tpl --help");
+	}
+
+	private static void printTempelHelp(Options options) {
+		// automatically generate the help statement
+		HelpFormatter formatter = new HelpFormatter();
+		formatter.printHelp("tpl template [options]", options);
 	}
 
 	private static Options configureTempelOptions() {
@@ -136,9 +138,31 @@ public class Bootstrap {
 		return cmd;
 	}
 
-	private static void printTempelHelp(Options options) {
-		// automatically generate the help statement
-		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("tpl template [options]", options);
+	/**
+	 * @param cmd
+	 * @return
+	 * @throws IOException
+	 */
+	private static File determineWorkDir(CommandLine cmd) throws IOException {
+		File workDir;
+		if(cmd.hasOption('d')) {
+			workDir = new File(cmd.getOptionValue('d').trim());
+			if(!workDir.exists()) {
+				System.err.println("Working directory does not exist: " + workDir.getPath());
+				System.exit(-2);
+			} else if(!workDir.isDirectory()) {
+				System.err.println("Incorrect working directory: " + workDir.getPath());
+				System.exit(-3);
+			}
+		} else {
+			workDir = new File(".");
+		}
+		System.out.println("Katalog roboczy: " + workDir.getCanonicalPath());
+		return workDir;
+	}
+
+	private static File determineRepoDir(CommandLine cmd) throws IOException {
+		// FIXME: Określanie katalogu repozytorium szablonów:
+		return new File("./src/test/resources/repository");
 	}
 }

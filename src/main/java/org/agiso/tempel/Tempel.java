@@ -65,7 +65,7 @@ public class Tempel {
 
 		// Odczytujemy właściwości systemowe i dodajemy je do globalnej mapy właściwości
 		// (będzie ona aktualizowana/uzupełniana/modifikowana w oparciu właściwości odczytane
-		// z poszczególnych plików konfigu racyjnych). Oryginalne wartości parametrów syste-
+		// z poszczególnych plików konfiguracyjnych). Oryginalne wartości parametrów syste-
 		// mowych zapamiętujemy pod kluczem "SYSTEM":
 		Properties systemProperties = System.getProperties();
 		for(String key : systemProperties.stringPropertyNames()) {
