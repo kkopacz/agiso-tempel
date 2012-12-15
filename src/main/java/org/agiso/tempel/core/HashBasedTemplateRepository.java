@@ -56,46 +56,77 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 	}
 
 	@Override
-	public void put(String key, Template template) {
-		if(kMap.containsKey(key)) {
-			throw new IllegalStateException("Powtórzony klucz szablonu: " + key);
-		}
-		kMap.put(key, template);
+	public void put(String key, String groupId, String templateId, String version, Template template) {
+		if(key == null) {
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			if(vMap == null) {
+				vMap = new HashMap<String, Template>();
+				gtvTable.put(groupId, templateId, vMap);
+			} else if(vMap.containsKey(version)) {
+				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
+			}
+			vMap.put(version, template);
 
-		template.setRepository(rMap.get(template.getScope()));
-	}
-
-	@Override
-	public Template get(String key) {
-		if(key.indexOf(':') > 0) {
+			template.setRepository(rMap.get(template.getScope()));
+		} else if(key.indexOf(':') > 0) {
 			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
-			String groupId = tokenizer.nextToken();
-			String templateId = tokenizer.nextToken();
-			String version = tokenizer.nextToken();
+			groupId = tokenizer.nextToken();
+			templateId = tokenizer.nextToken();
+			version = tokenizer.nextToken();
 
-			return get(groupId, templateId, version);
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			if(vMap == null) {
+				vMap = new HashMap<String, Template>();
+				gtvTable.put(groupId, templateId, vMap);
+			} else if(vMap.containsKey(version)) {
+				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
+			}
+			vMap.put(version, template);
+
+			template.setRepository(rMap.get(template.getScope()));
+		} else {
+			if(kMap.containsKey(key)) {
+				throw new IllegalStateException("Powtórzony klucz szablonu: " + key);
+			}
+			kMap.put(key, template);
+
+			template.setRepository(rMap.get(template.getScope()));
 		}
-		
-		return kMap.get(key);
 	}
 
 	@Override
-	public void put(String groupId, String templateId, String version, Template template) {
-		Map<String, Template> vMap = gtvTable.get(groupId, templateId);
-		if(vMap == null) {
-			vMap = new HashMap<String, Template>();
-			gtvTable.put(groupId, templateId, vMap);
-		} else if(vMap.containsKey(version)) {
-			throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
-		}
-		vMap.put(version, template);
+	public Template get(String key, String groupId, String templateId, String version) {
+		if(key == null) {
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			return vMap == null? null : vMap.get(version);
+		} else if(key.indexOf(':') > 0) {
+			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+			groupId = tokenizer.nextToken();
+			templateId = tokenizer.nextToken();
+			version = tokenizer.nextToken();
 
-		template.setRepository(rMap.get(template.getScope()));
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			return vMap == null? null : vMap.get(version);
+		} else {
+			return kMap.get(key);
+		}
 	}
 
 	@Override
-	public Template get(String groupId, String templateId, String version) {
-		Map<String, Template> vMap = gtvTable.get(groupId, templateId);
-		return vMap == null? null : vMap.get(version);
+	public boolean contains(String key, String groupId, String templateId, String version) {
+		if(key == null) {
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			return vMap == null? false : vMap.containsKey(version);
+		} else if(key.indexOf(':') > 0) {
+			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+			groupId = tokenizer.nextToken();
+			templateId = tokenizer.nextToken();
+			version = tokenizer.nextToken();
+
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			return vMap == null? false : vMap.containsKey(version);
+		} else {
+			return kMap.containsKey(key);
+		}
 	}
 }

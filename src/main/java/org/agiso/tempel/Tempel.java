@@ -77,10 +77,10 @@ public class Tempel {
 		addPredeifnedProperties(globalProperties);
 
 		// Inicjalizujemy provider'a szablonów:
-		templateProvider.readTemplates(globalProperties);
+		templateProvider.initialize(globalProperties);
 
 		// Pobieranie definicji szablonu do użycia:
-		Template template = templateProvider.get(name);
+		Template template = templateProvider.get(name, null, null, null);
 
 		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
 		// szablonów używanych. Sprawdzanie dostępność klas silników generatorów.

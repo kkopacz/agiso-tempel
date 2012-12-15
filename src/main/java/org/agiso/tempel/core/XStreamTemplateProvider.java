@@ -6,35 +6,17 @@
  */
 package org.agiso.tempel.core;
 
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateResource;
-import org.agiso.tempel.core.model.beans.RepositoryBean;
-import org.agiso.tempel.core.model.beans.TemplateBean;
-import org.agiso.tempel.core.model.beans.TemplateParamBean;
-import org.agiso.tempel.core.model.beans.TemplateReferenceBean;
-import org.agiso.tempel.core.model.beans.TemplateResourceBean;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.converters.Converter;
-import com.thoughtworks.xstream.converters.MarshallingContext;
-import com.thoughtworks.xstream.converters.UnmarshallingContext;
-import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
-import com.thoughtworks.xstream.io.HierarchicalStreamReader;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 /**
  * 
@@ -44,147 +26,60 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class XStreamTemplateProvider implements ITemplateProvider {
 	private Map<String, Object> globalProperties;
 
-	// FIXME: Zastosować wstrzykiwanie zależności
+//	private List<ITemplateRepository> repositories = new ArrayList<ITemplateRepository>();
+
+	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 	private IExpressionEvaluator expressionEvaluator = new VelocityExpressionEvaluator();
 
-//	--------------------------------------------------------------------------
-	/**
-	 * 
-	 * 
-	 * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
-	 */
-	public class RepositoryConverter extends AbstractSingleValueConverter {
-		@Override
-		public boolean canConvert(@SuppressWarnings("rawtypes") Class type) {
-			return type.equals(RepositoryBean.class);
-		}
-
-		@Override
-		public Object fromString(String str) {
-			RepositoryBean repository = new RepositoryBean();
-			repository.setValue(str);
-			return repository;
-		}
-
-	}
-
-	/**
-	 * 
-	 * 
-	 * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
-	 */
-	public class MapEntryConverter implements Converter {
-		@Override
-		public boolean canConvert(@SuppressWarnings("rawtypes") Class clazz) {
-			return AbstractMap.class.isAssignableFrom(clazz);
-		}
-
-		@Override
-		public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
-			@SuppressWarnings("unchecked")
-			AbstractMap<String, String> map = (AbstractMap<String, String>)value;
-			for(Entry<String, String> entry : map.entrySet()) {
-				writer.startNode(entry.getKey().toString());
-				writer.setValue(entry.getValue().toString());
-				writer.endNode();
-			}
-		}
-
-		@Override
-		public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-			Map<String, String> map = new HashMap<String, String>();
-			while(reader.hasMoreChildren()) {
-				reader.moveDown();
-				map.put(reader.getNodeName(), reader.getValue());
-				reader.moveUp();
-			}
-			return map;
-		}
-	}
+	private X x = new X();
 
 //	--------------------------------------------------------------------------
-	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
-
 	@Override
-	public void readTemplates(Map<String, Object> globalProperties) throws IOException {
+	public void initialize(Map<String, Object> globalProperties) throws IOException {
 		this.globalProperties = globalProperties;
 
-		// Przygotowanie parsera plików tempel.xml:
-		XStream xStream = prepareXStream();
+//		repositories.add(templateRepository);
+//
+//		repositories.add(new RunTemplateRepository());
+//		repositories.add(new UsrTemplateRepository());
+//		repositories.add(new AppTemplateRepository());
+//		repositories.add(new MvnTemplateRepository());
 
 		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
 		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
 		// katalogu bieżącym:
-		readAppTemplates(xStream, templateRepository);
-		readUsrTemplates(xStream, templateRepository);
-		readRunTemplates(xStream, templateRepository);
+		readAppTemplates(templateRepository);
+		readUsrTemplates(templateRepository);
+		readRunTemplates(templateRepository);
 	}
 
 	@Override
-	public Template get(String key) {
-		return templateRepository.get(key);
-	}
-
-	@Override
-	public Template get(String groupId, String templateId, String version) {
-		return templateRepository.get(groupId, templateId, version);
+	public Template get(String key, String groupId, String templateId, String version) {
+		return templateRepository.get(key, groupId, templateId, version);
 	}
 
 //	--------------------------------------------------------------------------
-	/**
-	 * @return
-	 */
-	private XStream prepareXStream() {
-		// Konfiguracja XStream'a:
-		// http://kickjava.com/src/com/thoughtworks/acceptance/MultipleObjectsInOneStreamTest.java.htm
-		XStream xStream = new XStream();
-		xStream.alias("properties", Map.class);
-		xStream.autodetectAnnotations(true);
-		xStream.processAnnotations(new Class[] {
-				RepositoryBean.class,
-				TemplateBean.class,
-				TemplateParamBean.class,
-				TemplateReferenceBean.class,
-				TemplateResourceBean.class
-		});
-		xStream.registerConverter(new MapEntryConverter());
-		xStream.registerConverter(new RepositoryConverter());
-		// xStream.alias("template", TemplateBean.class);
-		// xStream.useAttributeFor(TemplateBean.class, "id");
-		// xStream.alias("param", TemplateParamBean.class);
-		// xStream.useAttributeFor(TemplateParamBean.class, "id");
-
-		return xStream;
-	}
-
 	/**
 	 * @param xStream
 	 * @param templateRepository
 	 * @throws IOException
 	 */
-	private void readAppTemplates(XStream xStream, ITemplateRepository templateRepository) throws IOException {
+	private void readAppTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
 		String appSettings = getAppSettingsPath();
 		File appSettingsFile = new File(appSettings);
-		FileInputStream xmlStream = null;
+
 		try {
-			xmlStream = new FileInputStream(appSettingsFile);
-			ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-			try {
-				while(true) {
-					processObject(Template.Scope.GLOBAL, in.readObject(), templateRepository);
+			x.process(appSettingsFile, new X.IEntryProcessor() {
+				@Override
+				public void processObject(Object object) {
+					XStreamTemplateProvider.this.processObject(Template.Scope.GLOBAL, object, templateRepository);
 				}
-			} catch(EOFException e) {
-				System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
-			}
+			});
+			System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
 		} catch(Exception e) {
 			System.err.println("Błąd wczytywania ustawień globalnych: " + e.getMessage());
 			throw new RuntimeException(e);
-		} finally {
-			if(xmlStream != null) {
-				xmlStream.close();
-				xmlStream = null;
-			}
 		}
 	}
 	private String getAppSettingsPath() {
@@ -206,31 +101,22 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	 * @param templateRepository
 	 * @throws IOException
 	 */
-	private void readUsrTemplates(XStream xStream, ITemplateRepository templateRepository) throws IOException {
+	private void readUsrTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów użytkownika (katalog domowy użytkownika):
 		String usrSettings = getUsrSettingsPath();
 		File usrSettingsFile = new File(usrSettings);
-		FileInputStream xmlStream = null;
-		if(usrSettingsFile.exists() && usrSettingsFile.isFile()) {
-			try {
-				xmlStream = new FileInputStream(usrSettingsFile);
-				ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-				try {
-					while(true) {
-						processObject(Template.Scope.USER, in.readObject(), templateRepository);
-					}
-				} catch(EOFException e) {
-					System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
+
+		try {
+			x.process(usrSettingsFile, new X.IEntryProcessor() {
+				@Override
+				public void processObject(Object object) {
+					XStreamTemplateProvider.this.processObject(Template.Scope.USER, object, templateRepository);
 				}
-			} catch(Exception e) {
-				System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
-				throw new RuntimeException(e);
-			} finally {
-				if(xmlStream != null) {
-					xmlStream.close();
-					xmlStream = null;
-				}
-			}
+			});
+			System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
+		} catch(Exception e) {
+			System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 	private String getUsrSettingsPath() {
@@ -252,31 +138,22 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 	 * @param templateRepository
 	 * @throws IOException
 	 */
-	private void readRunTemplates(XStream xStream, ITemplateRepository templateRepository) throws IOException {
+	private void readRunTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów lokalnych (katalog bieżący projektu):
 		String runSettings = getRunSettingsPath();
 		File runSettingsFile = new File(runSettings);
-		FileInputStream xmlStream = null;
-		if(runSettingsFile.exists() && runSettingsFile.isFile()) {
-			try {
-				xmlStream = new FileInputStream(runSettingsFile);
-				ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-				try {
-					while(true) {
-						processObject(Template.Scope.RUNTIME, in.readObject(), templateRepository);
-					}
-				} catch(EOFException e) {
-					System.out.println("Wczytano ustawienia lokalne z pliku " + runSettingsFile.getCanonicalPath());
+
+		try {
+			x.process(runSettingsFile, new X.IEntryProcessor() {
+				@Override
+				public void processObject(Object object) {
+					XStreamTemplateProvider.this.processObject(Template.Scope.RUNTIME, object, templateRepository);
 				}
-			} catch(Exception e) {
-				System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
-				throw new RuntimeException(e);
-			} finally {
-				if(xmlStream != null) {
-					xmlStream.close();
-					xmlStream = null;
-				}
-			}
+			});
+			System.out.println("Wczytano ustawienia lokalne z pliku " + runSettingsFile.getCanonicalPath());
+		} catch(Exception e) {
+			System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 	private String getRunSettingsPath() {
@@ -338,11 +215,11 @@ public class XStreamTemplateProvider implements ITemplateProvider {
 			String gId = Temp.StringUtils_emptyIfBlank(template.getGroupId());
 			String tId = Temp.StringUtils_emptyIfBlank(template.getTemplateId());
 			String ver = Temp.StringUtils_emptyIfBlank(template.getVersion());
-			templateRepository.put(gId, tId, ver, template);
+			templateRepository.put(null, gId, tId, ver, template);
 
 			String key = template.getKey();
 			if(!Temp.StringUtils_isBlank(key)) {
-				templateRepository.put(key, template);
+				templateRepository.put(key, null, null, null, template);
 			}
 			return;
 		}

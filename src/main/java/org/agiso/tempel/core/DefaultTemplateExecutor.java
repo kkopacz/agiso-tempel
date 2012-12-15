@@ -117,16 +117,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				// stack.push(params2);
 
 				// Sprawdzanie, czy istnieje szablon opisywany przez podszablon:
+				String key = Temp.StringUtils_nullIfBlank(refTemplate.getKey());
 				String gId = Temp.StringUtils_emptyIfBlank(refTemplate.getGroupId());
 				String tId = Temp.StringUtils_emptyIfBlank(refTemplate.getTemplateId());
 				String ver = Temp.StringUtils_nullIfBlank(refTemplate.getVersion());		// dla nieokreślonej wersji null
 
-				Template subTemplate = templateProvider.get(gId, tId, ver);
+				Template subTemplate = templateProvider.get(key, gId, tId, ver);
 				if(subTemplate == null) {
-					subTemplate = templateProvider.get(refTemplate.getKey());
-					if(subTemplate == null) {
-						throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + "' szablonu '" + template.getKey() + "'" );
-					}
+					throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + "' szablonu '" + template.getKey() + "'" );
 				}
 
 				// Szablon istnieje. Kopiowanie jego standardowej definicji i aktualizowanie

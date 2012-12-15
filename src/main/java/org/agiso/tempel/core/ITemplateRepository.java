@@ -24,29 +24,28 @@ public interface ITemplateRepository {
 
 	/**
 	 * @param key
+	 * @param groupId
+	 * @param templateId
+	 * @param version
 	 * @param template
 	 */
-	public void put(String key, Template template);
+	public void put(String key, String groupId, String templateId, String version, Template template);
 
 	/**
 	 * @param key
-	 * @return
-	 */
-	public Template get(String key);
-
-	/**
-	 * @param groupId
-	 * @param templateId
-	 * @param version
-	 * @param template
-	 */
-	public void put(String groupId, String templateId, String version, Template template);
-
-	/**
 	 * @param groupId
 	 * @param templateId
 	 * @param version
 	 * @return
 	 */
-	public Template get(String groupId, String templateId, String version);
+	public Template get(String key, String groupId, String templateId, String version);
+
+	/**
+	 * @param key
+	 * @param groupId
+	 * @param templateId
+	 * @param version
+	 * @return
+	 */
+	public boolean contains(String key, String groupId, String templateId, String version);
 }

@@ -17,19 +17,14 @@ import org.agiso.tempel.core.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateProvider {
-	public void readTemplates(Map<String, Object> properties) throws IOException;
+	public void initialize(Map<String, Object> properties) throws IOException;
 
 	/**
 	 * @param key
-	 * @return
-	 */
-	public Template get(String key);
-
-	/**
 	 * @param groupId
 	 * @param templateId
 	 * @param version
 	 * @return
 	 */
-	public Template get(String groupId, String templateId, String version);
+	public Template get(String key, String groupId, String templateId, String version);
 }
