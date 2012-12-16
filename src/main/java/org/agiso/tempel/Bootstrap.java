@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 import org.agiso.tempel.core.DefaultTemplateExecutor;
 import org.agiso.tempel.core.RecursiveTemplateVerifier;
-import org.agiso.tempel.core.XStreamTemplateProvider;
+import org.agiso.tempel.core.MainTemplateProvider;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -73,7 +73,7 @@ public class Bootstrap {
 		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
 
 		Tempel tempel = new Tempel(workDir, repoDir);
-		tempel.setTemplateProvider(new XStreamTemplateProvider());
+		tempel.setTemplateProvider(new MainTemplateProvider());
 		tempel.setTemplateVerifier(new RecursiveTemplateVerifier());
 		tempel.setTemplateExecutor(new DefaultTemplateExecutor());
 		tempel.startTemplate(templateName, new HashMap<String, String>());

@@ -55,6 +55,8 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 		rMap.put(scope, repository);
 	}
 
+	// FIXME: Kod metod 'put' 'contains' i 'get' do optymalizacji!!!
+
 	@Override
 	public void put(String key, String groupId, String templateId, String version, Template template) {
 		if(key == null) {
@@ -95,24 +97,6 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 	}
 
 	@Override
-	public Template get(String key, String groupId, String templateId, String version) {
-		if(key == null) {
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
-			return vMap == null? null : vMap.get(version);
-		} else if(key.indexOf(':') > 0) {
-			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
-			groupId = tokenizer.nextToken();
-			templateId = tokenizer.nextToken();
-			version = tokenizer.nextToken();
-
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
-			return vMap == null? null : vMap.get(version);
-		} else {
-			return kMap.get(key);
-		}
-	}
-
-	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
 		if(key == null) {
 			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
@@ -127,6 +111,24 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 			return vMap == null? false : vMap.containsKey(version);
 		} else {
 			return kMap.containsKey(key);
+		}
+	}
+
+	@Override
+	public Template get(String key, String groupId, String templateId, String version) {
+		if(key == null) {
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			return vMap == null? null : vMap.get(version);
+		} else if(key.indexOf(':') > 0) {
+			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+			groupId = tokenizer.nextToken();
+			templateId = tokenizer.nextToken();
+			version = tokenizer.nextToken();
+
+			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			return vMap == null? null : vMap.get(version);
+		} else {
+			return kMap.get(key);
 		}
 	}
 }

@@ -1,6 +1,6 @@
-/* org.agiso.tempel.core.X (15-12-2012)
+/* org.agiso.tempel.core.XStreamTempelFileProcessor (15-12-2012)
  * 
- * X.java
+ * XStreamTempelFileProcessor.java
  * 
  * Copyright 2012 agiso.org
  */
@@ -36,16 +36,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class X {
-	/**
-	 * 
-	 * 
-	 * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
-	 */
-	public interface IEntryProcessor {
-		public void processObject(Object object);
-	}
-
+public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 	private static final XStream xStream;
 
 	static {
@@ -70,7 +61,8 @@ public class X {
 	}
 
 //	--------------------------------------------------------------------------
-	public void process(File file, IEntryProcessor entryProcessor) throws Exception {
+	@Override
+	public void process(File file, ITempelEntryProcessor entryProcessor) throws Exception {
 		FileInputStream xmlStream = null;
 		try {
 			xmlStream = new FileInputStream(file);

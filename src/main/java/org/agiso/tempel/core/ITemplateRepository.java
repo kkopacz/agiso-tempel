@@ -38,7 +38,7 @@ public interface ITemplateRepository {
 	 * @param version
 	 * @return
 	 */
-	public Template get(String key, String groupId, String templateId, String version);
+	public boolean contains(String key, String groupId, String templateId, String version);
 
 	/**
 	 * @param key
@@ -47,5 +47,5 @@ public interface ITemplateRepository {
 	 * @param version
 	 * @return
 	 */
-	public boolean contains(String key, String groupId, String templateId, String version);
+	public Template get(String key, String groupId, String templateId, String version);
 }

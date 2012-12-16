@@ -26,5 +26,14 @@ public interface ITemplateProvider {
 	 * @param version
 	 * @return
 	 */
+	public boolean contains(String key, String groupId, String templateId, String version);
+
+	/**
+	 * @param key
+	 * @param groupId
+	 * @param templateId
+	 * @param version
+	 * @return
+	 */
 	public Template get(String key, String groupId, String templateId, String version);
 }
