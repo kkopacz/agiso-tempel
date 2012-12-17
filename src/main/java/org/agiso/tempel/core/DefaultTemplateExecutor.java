@@ -52,9 +52,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		} else {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			index = path.lastIndexOf("/target/classes/");			// FIXME: Rodzielić katalogi repozytoriów
-			repositories.put(Scope.GLOBAL, path.substring(0, index) + "/src/test/resources/repository");
-			repositories.put(Scope.USER, path.substring(0, index) + "/src/test/resources/repository");
-			repositories.put(Scope.RUNTIME, path.substring(0, index) + "/src/test/resources/repository");
+			repositories.put(Scope.GLOBAL, path.substring(0, index) + "/src/test/resources/repository/application");
+			repositories.put(Scope.USER, path.substring(0, index) + "/src/test/resources/repository/home");
+			repositories.put(Scope.RUNTIME, path.substring(0, index) + "/src/test/resources/repository/runtime");
 		}
 	}
 
