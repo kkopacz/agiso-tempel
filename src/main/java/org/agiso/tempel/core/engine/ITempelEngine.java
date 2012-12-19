@@ -6,8 +6,9 @@
  */
 package org.agiso.tempel.core.engine;
 
-import java.io.File;
 import java.util.Map;
+
+import org.agiso.tempel.core.ITemplateSource;
 
 /**
  * Interfejs silnika generatora.
@@ -22,5 +23,5 @@ public interface ITempelEngine {
 	 * @param params Mapa parametrów szablonu.
 	 * @param target Ścieżka docelowa zasobu tworzonego w oparciu o szablon.
 	 */
-	public void run(File source, Map<String, Object> params, String target);
+	public void run(ITemplateSource source, Map<String, Object> params, String target);
 }

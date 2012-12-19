@@ -2,7 +2,7 @@
  * 
  * ITempelFileProcessor.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.core;
 
@@ -12,7 +12,7 @@ import java.io.InputStream;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITempelFileProcessor {
 	/**

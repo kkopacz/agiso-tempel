@@ -2,14 +2,14 @@
  * 
  * ITempelEntryProcessor.java
  * 
- * Copyright 2012 PPW 'ARAJ' Sp. z o. o.
+ * Copyright 2012 agiso.org
  */
 package org.agiso.tempel.core;
 
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITempelEntryProcessor {
 	public void processObject(Object object);

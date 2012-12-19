@@ -7,7 +7,6 @@
 package org.agiso.tempel.core;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -242,10 +241,10 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						srcDir = srcDir + '/' + template.getVersion();
 					}
 
-					if(!Temp.StringUtils_isBlank(resource.getSource())) {
-						srcDir = srcDir + '/' + resource.getSource();
-					}
-					doEngineRun(template.getScope(), engine, resWorkDir, srcDir, resource.getTarget(), stack);
+					doEngineRun(engine,
+							template.getScope(), srcDir, resource.getSource(),
+							resWorkDir, resource.getTarget(), stack
+					);
 				}
 			} else {
 				String resWorkDir = workDir;
@@ -264,7 +263,10 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					srcDir = srcDir + '/' + template.getVersion();
 				}
 
-				doEngineRun(template.getScope(), engine, resWorkDir, srcDir, null, stack);
+				doEngineRun(engine,
+						template.getScope(), srcDir, null,
+						resWorkDir, null, stack
+				);
 			}
 		}
 	}
@@ -309,27 +311,29 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	}
 	/**
 	 * @param engine 
-	 * @param workDir
 	 * @param srcDir
+	 * @param workDir
 	 * @param resource
 	 * @param params
 	 */
-	private void doEngineRun(Template.Scope scope, ITempelEngine engine, String workDir, String srcDir, String target, MapStack<String, Object> stack) {
+	private void doEngineRun(ITempelEngine engine, Scope scope, String srcDir, String source, String workDir, String target, MapStack<String, Object> stack) {
 		if(Temp.StringUtils_isEmpty(target)) {
 			target = workDir + "/";
 		} else {
 			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
 		}
 
-		File source = new File(getScopedSourcePath(scope, srcDir));
-		engine.run(source, stack, target);
+		ITemplateSource templateSource;
+		if(Scope.MAVEN.equals(scope)) {
+			templateSource = new JarTemplateSource(repositories.get(scope), srcDir, source);
+		} else {
+			templateSource = new FileTemplateSource(repositories.get(scope), srcDir, source);
+		}
+
+		engine.run(templateSource, stack, target);
 	}
 
 //	--------------------------------------------------------------------------
-	private final String getScopedSourcePath(Scope scope, String source) {
-		return repositories.get(scope) + "/" + source; 
-	}
-
 	/**
 	 * @param value
 	 * @param clazz

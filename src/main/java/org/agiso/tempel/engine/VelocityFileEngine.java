@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Map;
+import java.util.zip.ZipFile;
 
+import org.agiso.tempel.core.ITemplateSource;
 import org.apache.velocity.VelocityContext;
 
 /**
@@ -23,17 +25,17 @@ import org.apache.velocity.VelocityContext;
  */
 public class VelocityFileEngine extends AbstractVelocityEngine {
 	@Override
-	public void run(File resource, Map<String, Object> params, String target) {
+	public void run(ITemplateSource templateSource, Map<String, Object> params, String target) {
 		// Wyznaczanie ścieżki zasobu docelowego i sprawdzanie jego istnienia:
-		if(!resource.exists()) {
-			throw new RuntimeException("Zasób " + resource.getPath() + " nie istnieje");
+		if(!templateSource.exists()) {
+			throw new RuntimeException("Zasób " + templateSource.getResource() + " nie istnieje");
 		}
 
 		// Tworzenie kontekstu Velocity wspólnego w całym procesie obsługi:
 		VelocityContext context = createVelocityContext(params);
 
 		try {
-			processVelocityResource(resource, context, target);
+			processVelocityResource(templateSource.getEntry(), context, target);
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}

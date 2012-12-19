@@ -30,7 +30,7 @@ public abstract class AbstractTempelEngineTest {
 		// Wyznaczanie ścieżki bazowej repozytorium testowego:
 		repositoryPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		repositoryPath = repositoryPath.substring(0, repositoryPath.lastIndexOf("/target/test-classes/"));
-		repositoryPath = repositoryPath + "/src/test/resources";
+		repositoryPath = repositoryPath + "/src/test/resources/";
 
 		// Tworzenie i inicjalizacja silnika:
 		engine = createTemplerEngineInstance();
@@ -58,7 +58,7 @@ public abstract class AbstractTempelEngineTest {
 
 		String outputPath = "./target/velocity-output/"
 				+ this.getClass().getSimpleName() + "/"
-				+ timeInMillis + "/" + trace[depth].getMethodName();
+				+ timeInMillis + "/" + trace[depth].getMethodName() + "/";
 		if(create) {
 			new File(outputPath).mkdirs();
 		}

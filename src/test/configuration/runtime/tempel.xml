@@ -79,6 +79,28 @@
 
 
 
+	<template key="velocityFileTemplate1"
+			engine="org.agiso.tempel.engine.VelocityFileEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>velocityFileTemplate</templateId>
+		<version>1.0.0</version>
+	
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>value 1</value>
+			</param>
+		</params>
+
+		<resource>
+			<source>templateFile1.txt</source>
+			<target>templateFile1.txt</target>
+		</resource>
+	</template>
+
+
+
+
 	<template key="velocityDirTemplate1"
 			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
 		<groupId>org.agiso.tempel.tests</groupId>

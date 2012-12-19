@@ -24,6 +24,11 @@ public class TempelCoreITest {
 		}
 
 		Bootstrap.main(new String[] {
+				"org.agiso.tempel.tests:velocityFileTemplate:1.0.0",	// "velocityFileTemplate1",
+				"-d ./target/templer2"
+		});
+
+		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:1.0.0",		// "velocityDirTemplate1",
 				"-d ./target/templer2"
 		});

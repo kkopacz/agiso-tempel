@@ -9,6 +9,7 @@ package org.agiso.tempel.engine;
 import java.io.File;
 import java.util.Map;
 
+import org.agiso.tempel.core.ITemplateSource;
 import org.agiso.tempel.core.engine.ITempelEngine;
 
 /**
@@ -18,7 +19,7 @@ import org.agiso.tempel.core.engine.ITempelEngine;
  */
 public class MakeDirsEngine implements ITempelEngine {
 	@Override
-	public void run(File source, Map<String, Object> params, String target) {
+	public void run(ITemplateSource source, Map<String, Object> params, String target) {
 		new File(target).mkdirs();
 	}
 }

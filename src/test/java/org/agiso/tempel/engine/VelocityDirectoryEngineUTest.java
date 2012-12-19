@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.core.FileTemplateSource;
+import org.agiso.tempel.core.ITemplateSource;
 import org.agiso.tempel.test.AbstractTempelEngineTest;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
@@ -36,7 +38,10 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true);
-		engine.run(new File(repositoryPath + "/VelocityDirectoryEngineUTest/testProcessDirectory1"), modelMap, outPath);
+		ITemplateSource templateSource = new FileTemplateSource(repositoryPath,
+				"VelocityDirectoryEngineUTest", "testProcessDirectory1"
+		);
+		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "ca695792db22ea3c290a64c3339d2d13".equals(md5);
@@ -50,7 +55,10 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true) + "/testProcessFile1.txt";
-		engine.run(new File(repositoryPath + "/VelocityDirectoryEngineUTest/testProcessFile1.vm"), modelMap, outPath);
+		ITemplateSource templateSource = new FileTemplateSource(repositoryPath,
+				"VelocityDirectoryEngineUTest", "testProcessFile1.vm"
+		);
+		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "a974d0957b52ed6c80be61bbae0e2069".equals(md5);
