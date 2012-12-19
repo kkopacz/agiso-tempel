@@ -17,7 +17,7 @@ import org.agiso.tempel.core.engine.ITempelEngine;
  */
 public interface Template extends TemplateReference {
 	public enum Scope {
-		GLOBAL, USER, RUNTIME
+		GLOBAL, USER, RUNTIME, MAVEN
 	}
 
 //	--------------------------------------------------------------------------
