@@ -7,6 +7,7 @@
 package org.agiso.tempel.core;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * 
@@ -15,9 +16,23 @@ import java.io.File;
  */
 public interface ITempelFileProcessor {
 	/**
-	 * @param file
+	 * @param xmlString
 	 * @param entryProcessor
 	 * @throws Exception
 	 */
-	public void process(File file, ITempelEntryProcessor entryProcessor) throws Exception;
+	public void process(String xmlString, ITempelEntryProcessor entryProcessor) throws Exception;
+
+	/**
+	 * @param xmlFile
+	 * @param entryProcessor
+	 * @throws Exception
+	 */
+	public void process(File xmlFile, ITempelEntryProcessor entryProcessor) throws Exception;
+
+	/**
+	 * @param xmlStream
+	 * @param entryProcessor
+	 * @throws Exception
+	 */
+	public void process(InputStream xmlStream, ITempelEntryProcessor entryProcessor) throws Exception;
 }

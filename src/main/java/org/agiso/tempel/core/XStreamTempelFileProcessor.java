@@ -6,17 +6,17 @@
  */
 package org.agiso.tempel.core;
 
+import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.beans.RepositoryBean;
 import org.agiso.tempel.core.model.beans.TemplateBean;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
@@ -62,23 +62,32 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void process(File file, ITempelEntryProcessor entryProcessor) throws Exception {
+	public void process(String xmlString, ITempelEntryProcessor entryProcessor) throws Exception {
+		process(new ByteArrayInputStream(xmlString.getBytes()), entryProcessor);
+	}
+
+	@Override
+	public void process(File xmlFile, ITempelEntryProcessor entryProcessor) throws Exception {
 		FileInputStream xmlStream = null;
 		try {
-			xmlStream = new FileInputStream(file);
-			ObjectInputStream in = xStream.createObjectInputStream(new InputStreamReader(xmlStream));
-			try {
-				while(true) {
-					entryProcessor.processObject(in.readObject());
-				}
-			} catch(EOFException e) {
-				// Normalne zakończenie przetwarzania pliku szablonu
-			}
+			xmlStream = new FileInputStream(xmlFile);
+			process(xmlStream, entryProcessor);
 		} finally {
 			if(xmlStream != null) {
 				xmlStream.close();
-				xmlStream = null;
 			}
+		}
+	}
+
+	@Override
+	public void process(InputStream xmlStream, ITempelEntryProcessor entryProcessor) throws Exception {
+		ObjectInputStream in = xStream.createObjectInputStream(xmlStream);
+		try {
+			while(true) {
+				entryProcessor.processObject(in.readObject());
+			}
+		} catch(EOFException e) {
+			// Normalne zakończenie przetwarzania pliku szablonu
 		}
 	}
 
