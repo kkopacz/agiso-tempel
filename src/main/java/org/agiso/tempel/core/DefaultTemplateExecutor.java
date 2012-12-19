@@ -7,6 +7,7 @@
 package org.agiso.tempel.core;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -91,7 +92,6 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		if(template.getEngine() != null) {
 			try {
 				engine = template.getEngine().newInstance();
-				engine.initialize(repositories);
 			} catch(Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -320,10 +320,16 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		} else {
 			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
 		}
-		engine.run(scope, srcDir, stack, target);
+
+		File source = new File(getScopedSourcePath(scope, srcDir));
+		engine.run(source, stack, target);
 	}
 
 //	--------------------------------------------------------------------------
+	private final String getScopedSourcePath(Scope scope, String source) {
+		return repositories.get(scope) + "/" + source; 
+	}
+
 	/**
 	 * @param value
 	 * @param clazz

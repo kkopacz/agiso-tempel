@@ -22,18 +22,18 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 
 //	--------------------------------------------------------------------------
 	@Override
-	protected void processVelocityResource(String logTag, File resource, VelocityContext context, String target) throws IOException {
+	protected void processVelocityResource(File resource, VelocityContext context, String target) throws IOException {
 		if(resource.isDirectory()) {
 			for(File subFile : resource.listFiles()) {
-				processVelocitySubResource(logTag, subFile, context, target);
+				processVelocitySubResource(subFile, context, target);
 			}
 		} else {
-			processVelocityFile(logTag, resource, context, target);
+			processVelocityFile(resource, context, target);
 		}
 	}
 
 //	--------------------------------------------------------------------------
-	protected final void processVelocitySubResource(String logTag, File resource, VelocityContext context, String target) throws IOException {
+	protected final void processVelocitySubResource(File resource, VelocityContext context, String target) throws IOException {
 		String resourceName = resource.getName();
 
 		if(resource.isDirectory()) {
@@ -45,14 +45,14 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 			}
 
 			for(File subFile : resource.listFiles()) {
-				processVelocitySubResource(logTag + "/" + resourceName, subFile, context, targetPath);
+				processVelocitySubResource(subFile, context, targetPath);
 			}
 		} else {
 			if(resource.getName().endsWith(TEMPLATE_FILE_SUFFIX)) {
 				// Tworzenie pliku na podstawie szablonu Velocity:
 				resourceName = resourceName.substring(0, resourceName.lastIndexOf(TEMPLATE_FILE_SUFFIX));
 				String targetPath = target + '/' + processVelocityString(resourceName, resourceName, context);
-				processVelocityFile(logTag + "/" + resourceName, resource, context, targetPath);
+				processVelocityFile(resource, context, targetPath);
 			} else {
 				// Kopiownaie pliku (nie jest szablonem Velocity):
 				File targetFile = new File(target + '/' + processVelocityString(resourceName, resourceName, context));

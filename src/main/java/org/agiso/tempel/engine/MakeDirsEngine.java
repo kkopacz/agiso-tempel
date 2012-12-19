@@ -10,7 +10,6 @@ import java.io.File;
 import java.util.Map;
 
 import org.agiso.tempel.core.engine.ITempelEngine;
-import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
@@ -19,11 +18,7 @@ import org.agiso.tempel.core.model.Template.Scope;
  */
 public class MakeDirsEngine implements ITempelEngine {
 	@Override
-	public void initialize(Map<Scope, String> repositories) {
-	}
-
-	@Override
-	public void run(Scope scope, String source, Map<String, Object> params, String target) {
+	public void run(File source, Map<String, Object> params, String target) {
 		new File(target).mkdirs();
 	}
 }

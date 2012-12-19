@@ -11,7 +11,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import org.agiso.tempel.core.model.Template.Scope;
+import org.agiso.tempel.core.engine.ITempelEngine;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
@@ -20,26 +20,8 @@ import org.apache.velocity.app.VelocityEngine;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractVelocityEngine extends AbstractTempelEngine {
-//	private static Map<Scope, VelocityEngine> V_MAP;
+public abstract class AbstractVelocityEngine implements ITempelEngine {
 	private VelocityEngine engine = new VelocityEngine();
-
-//	--------------------------------------------------------------------------
-	@Override
-	public void initialize(Map<Scope, String> repositories) {
-		super.initialize(repositories);
-
-//		if(V_MAP == null) {
-//			V_MAP = new HashMap<Scope, VelocityEngine>();
-//			for(Scope scope : repositories.keySet()) {
-//				VelocityEngine engine = new VelocityEngine();
-//				engine.setProperty(RuntimeConstants.RESOURCE_LOADER, "file");
-//				engine.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_CACHE, "true");
-//				engine.init();
-//				V_MAP.put(scope, engine);
-//			}
-//		}
-	}
 
 //	--------------------------------------------------------------------------
 	protected final String processVelocityString(String logTag, String inString, VelocityContext context) {
@@ -63,21 +45,5 @@ public abstract class AbstractVelocityEngine extends AbstractTempelEngine {
 
 	protected void doVelocityTemplateMerge(String logTag, Reader reader, VelocityContext context, Writer writer) {
 		engine.evaluate(context, writer, logTag, reader);
-
-//		// Tworzenie szablonu Velocity:
-//		Template template = null;
-//		try {
-//			template = V_MAP.get(scope).getTemplate(source, "UTF-8");
-//		} catch(ResourceNotFoundException rnfe) {
-//			// couldn't find the template
-//		} catch(ParseErrorException pee) {
-//			// syntax error: problem parsing the template
-//		} catch(MethodInvocationException mie) {
-//			// something invoked in the template
-//			// threw an exception
-//		} catch (Exception e) {
-//		}
-//
-//		template.merge(context, writer);
 	}
 }

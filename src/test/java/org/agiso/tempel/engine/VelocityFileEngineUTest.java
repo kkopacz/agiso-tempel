@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.core.model.Template.Scope;
 import org.agiso.tempel.test.AbstractTempelEngineTest;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
@@ -31,7 +30,7 @@ public class VelocityFileEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true) + "/testProcessFile1.txt";
-		engine.run(Scope.RUNTIME, "/VelocityFileEngineUTest/testProcessFile1.vm", modelMap, outPath);
+		engine.run(new File(repositoryPath + "/VelocityFileEngineUTest/testProcessFile1.vm"), modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "a974d0957b52ed6c80be61bbae0e2069".equals(md5);
