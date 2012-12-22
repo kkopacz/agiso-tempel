@@ -55,6 +55,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			repositories.put(Scope.GLOBAL, path.substring(0, index) + "/src/test/resources/repository/application");
 			repositories.put(Scope.USER, path.substring(0, index) + "/src/test/resources/repository/home");
 			repositories.put(Scope.RUNTIME, path.substring(0, index) + "/src/test/resources/repository/runtime");
+			repositories.put(Scope.MAVEN, path.substring(0, index) + "/target/local-repo");
 		}
 	}
 
@@ -239,6 +240,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						srcDir = srcDir + '/' + template.getGroupId().replace('.', '/');
 						srcDir = srcDir + '/' + template.getTemplateId();
 						srcDir = srcDir + '/' + template.getVersion();
+						if(Scope.MAVEN.equals(template.getScope())) {
+							srcDir = srcDir + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
+						}
 					}
 
 					doEngineRun(engine,
@@ -261,6 +265,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					srcDir = srcDir + '/' + template.getGroupId().replace('.', '/');
 					srcDir = srcDir + '/' + template.getTemplateId();
 					srcDir = srcDir + '/' + template.getVersion();
+					if(Scope.MAVEN.equals(template.getScope())) {
+						srcDir = srcDir + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
+					}
 				}
 
 				doEngineRun(engine,
@@ -324,10 +331,16 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		}
 
 		ITemplateSource templateSource;
-		if(Scope.MAVEN.equals(scope)) {
-			templateSource = new JarTemplateSource(repositories.get(scope), srcDir, source);
-		} else {
-			templateSource = new FileTemplateSource(repositories.get(scope), srcDir, source);
+		try {
+			if(Scope.MAVEN.equals(scope)) {
+				String repository = repositories.get(scope);
+				templateSource = new JarTemplateSource(repository, srcDir, source);
+			} else {
+				String repository = repositories.get(scope);
+				templateSource = new FileTemplateSource(repository, srcDir, source);
+			}
+		} catch(Exception e) {
+			throw new RuntimeException(e);
 		}
 
 		engine.run(templateSource, stack, target);

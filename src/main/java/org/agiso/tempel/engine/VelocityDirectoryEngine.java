@@ -7,9 +7,11 @@
 package org.agiso.tempel.engine;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.core.ITemplateSource;
+import org.agiso.tempel.core.ITemplateSourceEntry;
 import org.apache.velocity.VelocityContext;
 
 /**
@@ -21,43 +23,63 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 	private static final String TEMPLATE_FILE_SUFFIX = ".vm";
 
 //	--------------------------------------------------------------------------
+	/**
+	 * Szablon może być pojedynczym plikiem (wówczas silnik działa tak jak silnik
+	 * {@link VelocityFileEngine}, lub katalogiem. W takiej sytuacji przetwarzane
+	 * są wszsytkie jego wpisy.
+	 */
 	@Override
-	protected void processVelocityResource(File resource, VelocityContext context, String target) throws IOException {
-		if(resource.isDirectory()) {
-			for(File subFile : resource.listFiles()) {
-				processVelocitySubResource(subFile, context, target);
+	protected void processVelocityResource(ITemplateSource source, VelocityContext context, String target) throws Exception {
+		if(source.isFile()) {
+			super.processVelocityFile(source.getEntry(source.getResource()), context, target);
+		} else if(source.isDirectory()) {
+			for(ITemplateSourceEntry entry : source.listEntries()) {
+				if(entry.isFile()) {
+					processVelocityFile(entry, context, target);
+				} else if(entry.isDirectory()) {
+					processVelocityDirectory(entry, context, target);
+				}
 			}
-		} else {
-			processVelocityFile(resource, context, target);
 		}
 	}
 
-//	--------------------------------------------------------------------------
-	protected final void processVelocitySubResource(File resource, VelocityContext context, String target) throws IOException {
-		String resourceName = resource.getName();
-
-		if(resource.isDirectory()) {
-			// Tworzenie katalogu:
-			String targetPath = target + '/' + processVelocityString(resourceName, resourceName, context);
-			File targetFile = new File(targetPath);
-			if(!targetFile.exists()) {
-				targetFile.mkdirs();
-			}
-
-			for(File subFile : resource.listFiles()) {
-				processVelocitySubResource(subFile, context, targetPath);
-			}
+	protected void processVelocityFile(ITemplateSourceEntry entry, VelocityContext context, String target) throws Exception {
+		String resourceName = entry.getName();
+		if(resourceName.endsWith(TEMPLATE_FILE_SUFFIX)) {
+			resourceName = resourceName.substring(0, resourceName.lastIndexOf(TEMPLATE_FILE_SUFFIX));
+			target = target + '/' + processVelocityString(resourceName, resourceName, context);
+			super.processVelocityFile(entry, context, target);
 		} else {
-			if(resource.getName().endsWith(TEMPLATE_FILE_SUFFIX)) {
-				// Tworzenie pliku na podstawie szablonu Velocity:
-				resourceName = resourceName.substring(0, resourceName.lastIndexOf(TEMPLATE_FILE_SUFFIX));
-				String targetPath = target + '/' + processVelocityString(resourceName, resourceName, context);
-				processVelocityFile(resource, context, targetPath);
-			} else {
-				// Kopiownaie pliku (nie jest szablonem Velocity):
-				File targetFile = new File(target + '/' + processVelocityString(resourceName, resourceName, context));
-				Temp.FileUtils_copyFile(resource, targetFile);
+			// Kopiownaie pliku (nie jest szablonem Velocity):
+			File targetFile = new File(target + '/' + processVelocityString(resourceName, resourceName, context));
+			InputStream is = entry.getInputStream();
+			try {
+				Temp.FileUtils_copyFile(is, targetFile);
+			} finally {
+				if(is != null) {
+					try {
+						is.close();
+					} catch(Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
 			}
+		}
+	}
+
+	protected final void processVelocityDirectory(ITemplateSourceEntry entry, VelocityContext context, String target) {
+		String resourceName = entry.getName();
+		if(!entry.isDirectory()) {
+			throw new RuntimeException("Element "
+					+ entry.getTemplate() + "/"+ resourceName
+					+ " nie jest katalogiem"
+			);
+		}
+
+		String targetPath = target + '/' + processVelocityString(resourceName, resourceName, context);
+		File targetFile = new File(targetPath);
+		if(!targetFile.exists()) {
+			targetFile.mkdirs();
 		}
 	}
 }

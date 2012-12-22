@@ -6,7 +6,7 @@
  */
 package org.agiso.tempel.core;
 
-import java.io.File;
+import java.util.Collection;
 
 /**
  * 
@@ -14,18 +14,21 @@ import java.io.File;
  * @author <a href="mailto:kkopaczz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateSource {
-	public boolean exists();
-
-
 	public String getRepository();
 
 	public String getTemplate();
 
 	public String getResource();
 
+//	--------------------------------------------------------------------------
+	public boolean exists();
 
-	/**
-	 * FIXME: Do zastąpienia getEntry(String resource);
-	 */
-	public File getEntry();
+	public boolean isFile();
+
+	public boolean isDirectory();
+
+//	--------------------------------------------------------------------------
+	public Collection<ITemplateSourceEntry> listEntries();
+
+	public ITemplateSourceEntry getEntry(String name);
 }

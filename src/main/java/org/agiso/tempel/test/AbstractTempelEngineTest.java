@@ -14,24 +14,20 @@ import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.BeforeClass;
 
 /**
- * 
+ * Klasa bazowa dla klas testujących silniki generacji szablonów. Odpowiada
+ * za instancjonowanie silnika i przygotowanie katalogu docelowego dla zasobów
+ * generowanych przez silnik.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractTempelEngineTest {
+public abstract class AbstractTempelEngineTest extends AbstractRepositoryTest {
 	private long timeInMillis = Calendar.getInstance().getTimeInMillis();
 
 	protected ITempelEngine engine;
-	protected String repositoryPath;
 
 // --------------------------------------------------------------------------
 	@BeforeClass
 	public void prepareTemplerEngine() throws Exception {
-		// Wyznaczanie ścieżki bazowej repozytorium testowego:
-		repositoryPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		repositoryPath = repositoryPath.substring(0, repositoryPath.lastIndexOf("/target/test-classes/"));
-		repositoryPath = repositoryPath + "/src/test/resources/";
-
 		// Tworzenie i inicjalizacja silnika:
 		engine = createTemplerEngineInstance();
 	}

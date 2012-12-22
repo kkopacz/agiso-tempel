@@ -100,16 +100,10 @@ public class Temp {
 	 */
 	public static final void FileUtils_copyFile(File srcFile, File dstFile) throws IOException {
 		InputStream is = null;
-		OutputStream os = null;
 		try {
 			is = new FileInputStream(srcFile);
-			os = new FileOutputStream(dstFile);
 
-			int len;
-			byte[] buf = new byte[1024];
-			while((len = is.read(buf)) > 0) {
-				os.write(buf, 0, len);
-			}
+			FileUtils_copyFile(is, dstFile);
 		} finally {
 			if(is != null) {
 				try {
@@ -118,6 +112,25 @@ public class Temp {
 					throw new RuntimeException(e);
 				}
 			}
+		}
+	}
+
+	/**
+	 * @param is
+	 * @param dstFile
+	 * @throws IOException
+	 */
+	public static final void FileUtils_copyFile(InputStream is, File dstFile) throws IOException {
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream(dstFile);
+
+			int len;
+			byte[] buf = new byte[1024];
+			while((len = is.read(buf)) > 0) {
+				os.write(buf, 0, len);
+			}
+		} finally {
 			if(os != null) {
 				try {
 					os.flush();

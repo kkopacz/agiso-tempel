@@ -29,6 +29,7 @@ public class MainTemplateProvider implements ITemplateProvider {
 		providers.add(new RunTemplateProvider());
 		providers.add(new UsrTemplateProvider());
 		providers.add(new AppTemplateProvider());
+		providers.add(new MvnTemplateProvider());
 	}
 
 //	--------------------------------------------------------------------------
