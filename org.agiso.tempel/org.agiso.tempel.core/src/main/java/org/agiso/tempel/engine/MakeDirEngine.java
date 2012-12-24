@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Map;
 
 import org.agiso.tempel.api.ITempelEngine;
-import org.agiso.tempel.api.internal.ITemplateSource;
+import org.agiso.tempel.api.ITemplateSource;
 
 /**
  * 

@@ -13,8 +13,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Map;
 
-import org.agiso.tempel.api.internal.ITemplateSource;
-import org.agiso.tempel.api.internal.ITemplateSourceEntry;
+import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.ITemplateSourceEntry;
 import org.apache.velocity.VelocityContext;
 
 /**

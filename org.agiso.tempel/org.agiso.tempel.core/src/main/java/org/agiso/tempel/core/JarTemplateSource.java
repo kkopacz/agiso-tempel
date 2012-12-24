@@ -18,8 +18,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.api.internal.ITemplateSource;
-import org.agiso.tempel.api.internal.ITemplateSourceEntry;
+import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.ITemplateSourceEntry;
 
 /**
  * 

@@ -4,7 +4,7 @@
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.api.internal;
+package org.agiso.tempel.api;
 
 import java.io.InputStream;
 

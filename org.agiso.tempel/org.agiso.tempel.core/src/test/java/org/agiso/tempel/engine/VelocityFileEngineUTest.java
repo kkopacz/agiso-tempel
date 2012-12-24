@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.api.internal.ITemplateSource;
+import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.core.FileTemplateSource;
 import org.agiso.tempel.test.AbstractTempelEngineTest;
 import org.agiso.tempel.test.annotation.TempelEngineTest;

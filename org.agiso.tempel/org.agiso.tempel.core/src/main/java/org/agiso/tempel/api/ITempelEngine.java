@@ -8,7 +8,6 @@ package org.agiso.tempel.api;
 
 import java.util.Map;
 
-import org.agiso.tempel.api.internal.ITemplateSource;
 
 /**
  * Interfejs silnika generatora.
