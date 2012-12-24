@@ -10,7 +10,7 @@
 	<artifactId>org.agiso.tempel.core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Templer</name>
+	<name>AGISO Templer CORE</name>
 
   <properties>
     <aetherVersion>1.12</aetherVersion>
@@ -130,6 +130,12 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>

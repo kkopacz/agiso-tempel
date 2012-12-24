@@ -5,7 +5,15 @@
  * Copyright 2012 agiso.org
  */
 /**
- * 
+ * Publiczne API projektu agiso.org Tempel.
+ * </br>
+ * Zawiera interfejsy komponentów rozszerzających, takich jak:
+ * <ul>
+ *     <li>silniki generacji szablonów</li>
+ *     <li>konwertery wartości</li>
+ *     <li>walidatory wartości</li>
+ *     <li>...</li>
+ * </ul>
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
