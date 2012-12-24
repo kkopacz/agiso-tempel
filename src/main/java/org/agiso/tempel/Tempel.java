@@ -17,10 +17,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import org.agiso.tempel.core.ITemplateExecutor;
-import org.agiso.tempel.core.ITemplateProvider;
-import org.agiso.tempel.core.ITemplateRepository;
-import org.agiso.tempel.core.ITemplateVerifier;
+import org.agiso.tempel.api.internal.ITemplateExecutor;
+import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.core.model.Template;
 import org.apache.commons.lang.LocaleUtils;
 

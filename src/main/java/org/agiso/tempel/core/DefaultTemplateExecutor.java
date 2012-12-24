@@ -13,8 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.core.convert.ITemplateParamConverter;
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
+import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.tempel.api.internal.IExpressionEvaluator;
+import org.agiso.tempel.api.internal.ITemplateExecutor;
+import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateSource;
 import org.agiso.tempel.core.lang.MapStack;
 import org.agiso.tempel.core.lang.SimpleMapStack;
 import org.agiso.tempel.core.model.Repository;

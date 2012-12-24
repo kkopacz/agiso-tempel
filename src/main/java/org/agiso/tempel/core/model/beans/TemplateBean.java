@@ -9,7 +9,7 @@ package org.agiso.tempel.core.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateReference;

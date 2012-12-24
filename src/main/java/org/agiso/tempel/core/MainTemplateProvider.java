@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.core.model.Template;
 
 /**

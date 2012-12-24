@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.agiso.tempel.api.internal.ITempelEntryProcessor;
+import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.core.model.beans.RepositoryBean;
 import org.agiso.tempel.core.model.beans.TemplateBean;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;

@@ -9,7 +9,9 @@ package org.agiso.tempel.core;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
+import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateReference;
 

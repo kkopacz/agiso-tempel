@@ -11,7 +11,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 

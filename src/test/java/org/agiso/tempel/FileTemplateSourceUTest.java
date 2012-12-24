@@ -6,9 +6,9 @@
  */
 package org.agiso.tempel;
 
+import org.agiso.tempel.api.internal.ITemplateSource;
+import org.agiso.tempel.api.internal.ITemplateSourceEntry;
 import org.agiso.tempel.core.FileTemplateSource;
-import org.agiso.tempel.core.ITemplateSource;
-import org.agiso.tempel.core.ITemplateSourceEntry;
 import org.agiso.tempel.test.AbstractRepositoryTest;
 import org.testng.annotations.Test;
 

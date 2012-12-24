@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.api.internal.ITempelEntryProcessor;
+import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.model.Template;
 
 /**

@@ -4,7 +4,7 @@
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.api.internal;
 
 import java.io.IOException;
 import java.util.Map;

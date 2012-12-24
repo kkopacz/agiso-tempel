@@ -8,7 +8,7 @@ package org.agiso.tempel.core.model;
 
 import java.util.List;
 
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
 
 /**
  * 

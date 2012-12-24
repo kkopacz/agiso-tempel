@@ -9,8 +9,8 @@ package org.agiso.tempel.engine;
 import java.io.File;
 import java.util.Map;
 
-import org.agiso.tempel.core.ITemplateSource;
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
+import org.agiso.tempel.api.internal.ITemplateSource;
 
 /**
  * 

@@ -6,7 +6,7 @@
  */
 package org.agiso.tempel.core.model;
 
-import org.agiso.tempel.core.convert.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
  * 

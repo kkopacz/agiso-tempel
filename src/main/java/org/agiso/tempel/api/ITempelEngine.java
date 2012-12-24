@@ -4,11 +4,11 @@
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.engine;
+package org.agiso.tempel.api;
 
 import java.util.Map;
 
-import org.agiso.tempel.core.ITemplateSource;
+import org.agiso.tempel.api.internal.ITemplateSource;
 
 /**
  * Interfejs silnika generatora.

@@ -4,7 +4,7 @@
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.convert;
+package org.agiso.tempel.api;
 
 /**
  * Interfejs konwertera parametrów.

@@ -6,11 +6,12 @@
  */
 package org.agiso.tempel.convert;
 
+import static org.jvnet.inflector.Noun.*;
+
 import java.util.Locale;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.core.convert.ITemplateParamConverter;
-import static org.jvnet.inflector.Noun.pluralOf;
+import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
  * Konwerter liczby pojedynczej na mnogą.

@@ -9,7 +9,7 @@ package org.agiso.tempel.test;
 import java.io.File;
 import java.util.Calendar;
 
-import org.agiso.tempel.core.engine.ITempelEngine;
+import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.BeforeClass;
 

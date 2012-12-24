@@ -17,6 +17,8 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.agiso.tempel.api.internal.ITempelEntryProcessor;
+import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.model.Template;
 import org.apache.maven.repository.internal.DefaultServiceLocator;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;

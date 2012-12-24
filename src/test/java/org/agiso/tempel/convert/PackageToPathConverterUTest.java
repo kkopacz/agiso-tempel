@@ -6,7 +6,7 @@
  */
 package org.agiso.tempel.convert;
 
-import org.agiso.tempel.core.convert.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamConverter;
 import org.testng.annotations.Test;
 
 /**

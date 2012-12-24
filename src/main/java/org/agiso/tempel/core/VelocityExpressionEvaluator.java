@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 

@@ -16,6 +16,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.api.internal.ITemplateSource;
+import org.agiso.tempel.api.internal.ITemplateSourceEntry;
 
 /**
  * 

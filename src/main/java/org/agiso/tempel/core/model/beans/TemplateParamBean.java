@@ -6,7 +6,7 @@
  */
 package org.agiso.tempel.core.model.beans;
 
-import org.agiso.tempel.core.convert.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.core.model.TemplateParam;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
