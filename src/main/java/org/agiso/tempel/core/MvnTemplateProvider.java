@@ -54,7 +54,7 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 	public MvnTemplateProvider() {
 		repoSystem = newRepositorySystem();
 
-		local = new RemoteRepository("local", "default", "file:///D:/work/repository/m2/repository/");
+		local = new RemoteRepository("local", "default", "file://" + System.getProperty("user.home") + "/.m2/repository/");
 		central = new RemoteRepository("central", "default", "http://repo1.maven.org/maven2/");
 	}
 
