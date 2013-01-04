@@ -1,0 +1,40 @@
+<?xml version='1.0'?>
+<book xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd"
+		xmlns:xi="http://www.w3.org/2001/XInclude"
+		version="5.0" xml:lang="pl" id="tempel-userguide">
+
+	<title>
+		<emphasis>agiso.org Tempel</emphasis> - Podręcznik użytkownika
+	</title>
+	<bookinfo>
+		<authorgroup>
+			<author>
+				<firstname>Karol</firstname>
+				<surname>Kopacz</surname>
+			</author>
+		</authorgroup>
+
+		<!-- subtitle>Podtytuł</subtitle>
+		<edition>Pierwsza</edition>
+		<isbn>?-?????-???-?</isbn -->
+
+		<pagenums>350 pages (est.)</pagenums>
+		<pubdate>(TBA)</pubdate>
+
+		<copyright>
+			<year>2013</year>
+			<holder>Karol Kopacz</holder>
+		</copyright>
+		<legalnotice><para>Legalnotice</para></legalnotice>
+	</bookinfo>
+
+	<xi:include href="chapters/forwhat.xml" />
+
+	<xi:include href="chapters/instrun.xml" />
+
+	<xi:include href="chapters/inress.xml" />
+
+	<xi:include href="chapters/stdengs.xml" />
+
+	<xi:include href="chapters/dictnry.xml" />
+</book>

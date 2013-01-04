@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<chapter xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd"
+	id="tempel-userguide-forwhat">
+
+	<title>Do czego służy tempel</title>
+
+	<para>
+		Tempel jest narzędziem, które może być stosowane wszędzie tam, gdzie wymagane jest
+		tworzenie zasobów dyskowych cechujących się:
+		<orderedlist>
+			<listitem>dużą ilością katalogów i/lub plików w strukturze tworzonych zasobów,</listitem>
+			<listitem>szablonowością (powtarzalnością) tworzonych struktur katalogów i plików,</listitem>
+			<listitem>...</listitem>
+		</orderedlist>
+
+		Doskonale nadaje się więc do generacji zasobów takich jak projekty programistyczne
+		z dużą ilością plików tekstowych różnego rodzaju, szablony dokumentacji, stron WWW, ...
+	</para>
+</chapter>
