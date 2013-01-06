@@ -135,6 +135,11 @@
 			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.exts</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
@@ -171,12 +176,6 @@
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.java.dev.inflector</groupId>
-			<artifactId>inflector</artifactId>
-			<version>0.7.0</version>
 		</dependency>
 
 
