@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.HashBasedTemplateRepository (29-10-2012)
+/* org.agiso.tempel.core.provider.HashBasedTemplateRepository (29-10-2012)
  * 
  * HashBasedTemplateRepository.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.provider;
 
 import java.util.HashMap;
 import java.util.Map;

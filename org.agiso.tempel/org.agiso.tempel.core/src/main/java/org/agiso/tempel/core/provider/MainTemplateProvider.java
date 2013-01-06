@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.MainTemplateProvider (02-10-2012)
+/* org.agiso.tempel.core.provider.MainTemplateProvider (02-10-2012)
  * 
  * MainTemplateProvider.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.provider;
 
 import java.io.IOException;
 import java.util.ArrayList;

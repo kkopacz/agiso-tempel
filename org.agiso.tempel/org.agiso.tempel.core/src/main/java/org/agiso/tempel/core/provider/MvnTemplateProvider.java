@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.MvnTemplateProvider (15-12-2012)
+/* org.agiso.tempel.core.provider.MvnTemplateProvider (15-12-2012)
  * 
  * MvnTemplateProvider.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.provider;
 
 import java.io.File;
 import java.io.InputStream;

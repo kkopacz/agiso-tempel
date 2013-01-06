@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.UsrTemplateProvider (15-12-2012)
+/* org.agiso.tempel.core.provider.UsrTemplateProvider (15-12-2012)
  * 
  * UsrTemplateProvider.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.provider;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,8 +72,8 @@ public class UsrTemplateProvider extends BaseTemplateProvider {
 		if(index != -1) {
 			path = System.getProperty("user.home") + "/.tempel/tempel.xml";
 		} else {
-			index = path.lastIndexOf("/target/classes/");
-			path = path.substring(0, index) + "/src/test/configuration/home/tempel.xml";
+			path = System.getProperty("user.dir");
+			path = path + "/src/test/configuration/home/tempel.xml";
 		}
 
 		return path;

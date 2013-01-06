@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agiso.tempel.FileTemplateSource;
+import org.agiso.tempel.JarTemplateSource;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
@@ -55,11 +57,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			repositories.put(Scope.RUNTIME, System.getProperty("user.dir") + "/.tempel");
 		} else {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
-			index = path.lastIndexOf("/target/classes/");			// FIXME: Rodzielić katalogi repozytoriów
-			repositories.put(Scope.GLOBAL, path.substring(0, index) + "/src/test/resources/repository/application");
-			repositories.put(Scope.USER, path.substring(0, index) + "/src/test/resources/repository/home");
-			repositories.put(Scope.RUNTIME, path.substring(0, index) + "/src/test/resources/repository/runtime");
-			repositories.put(Scope.MAVEN, path.substring(0, index) + "/target/local-repo");
+			path = System.getProperty("user.dir");					// FIXME: Rodzielić katalogi repozytoriów
+			repositories.put(Scope.GLOBAL, path + "/src/test/resources/repository/application");
+			repositories.put(Scope.USER, path + "/src/test/resources/repository/home");
+			repositories.put(Scope.RUNTIME, path + "/src/test/resources/repository/runtime");
+			repositories.put(Scope.MAVEN, path + "/target/local-repo");
 		}
 	}
 

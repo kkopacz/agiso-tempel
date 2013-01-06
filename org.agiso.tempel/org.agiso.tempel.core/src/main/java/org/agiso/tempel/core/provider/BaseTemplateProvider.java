@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.BaseTemplateProvider (15-12-2012)
+/* org.agiso.tempel.core.provider.BaseTemplateProvider (15-12-2012)
  * 
  * BaseTemplateProvider.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.provider;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -15,6 +15,8 @@ import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.VelocityExpressionEvaluator;
+import org.agiso.tempel.core.XStreamTempelFileProcessor;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateResource;

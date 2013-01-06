@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.RunTemplateProvider (15-12-2012)
+/* org.agiso.tempel.core.provider.RunTemplateProvider (15-12-2012)
  * 
  * RunTemplateProvider.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.provider;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,8 +72,8 @@ public class RunTemplateProvider extends BaseTemplateProvider {
 		if(index != -1) {
 			path = System.getProperty("user.dir") + "/tempel.xml";
 		} else {
-			index = path.lastIndexOf("/target/classes/");
-			path = path.substring(0, index) +"/src/test/configuration/runtime/tempel.xml";
+			path = System.getProperty("user.dir");
+			path = path + "/src/test/configuration/runtime/tempel.xml";
 		}
 
 		return path;

@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.JarTemplateSource (19-12-2012)
+/* org.agiso.tempel.JarTemplateSource (19-12-2012)
  * 
  * JarTemplateSource.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.FileTemplateSource (19-12-2012)
+/* org.agiso.tempel.FileTemplateSource (19-12-2012)
  * 
  * FileTemplateSource.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel;
 
 import java.io.File;
 import java.io.FileInputStream;

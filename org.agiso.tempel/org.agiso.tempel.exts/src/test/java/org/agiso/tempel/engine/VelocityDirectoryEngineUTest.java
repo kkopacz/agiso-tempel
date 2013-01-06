@@ -10,9 +10,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agiso.tempel.FileTemplateSource;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.core.FileTemplateSource;
 import org.agiso.tempel.test.AbstractTempelEngineTest;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
@@ -44,7 +44,7 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "ca695792db22ea3c290a64c3339d2d13".equals(md5);
+		assert "1b88794f97f0b86ceba125ef9326af9e".equals(md5);
 	}
 
 	@Test
@@ -61,6 +61,6 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "a974d0957b52ed6c80be61bbae0e2069".equals(md5);
+		assert "c1f94f832c26b7deecf9aecb292f6b91".equals(md5);
 	}
 }

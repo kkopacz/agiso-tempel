@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.agiso.tempel.core.DefaultTemplateExecutor;
-import org.agiso.tempel.core.MainTemplateProvider;
 import org.agiso.tempel.core.RecursiveTemplateVerifier;
+import org.agiso.tempel.core.provider.MainTemplateProvider;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
