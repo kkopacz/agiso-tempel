@@ -10,7 +10,7 @@
 	<artifactId>org.agiso.tempel.starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Templer Extensions</name>
+	<name>AGISO Tempel Starter</name>
 
 	<build>
 		<resources>

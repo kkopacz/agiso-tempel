@@ -10,7 +10,7 @@
 	<artifactId>org.agiso.tempel.core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Templer CORE</name>
+	<name>AGISO Tempel CORE</name>
 
   <properties>
     <aetherVersion>1.12</aetherVersion>

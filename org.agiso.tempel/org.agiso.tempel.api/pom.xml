@@ -10,7 +10,7 @@
 	<artifactId>org.agiso.tempel.api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Templer API</name>
+	<name>AGISO Tempel API</name>
 
 	<build>
 		<defaultGoal>install</defaultGoal>

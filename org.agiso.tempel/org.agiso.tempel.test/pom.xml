@@ -10,7 +10,7 @@
 	<artifactId>org.agiso.tempel.test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Templer Testing</name>
+	<name>AGISO Tempel Testing</name>
 
 	<build>
 		<resources>
