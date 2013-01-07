@@ -10,9 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.agiso.tempel.core.DefaultTemplateExecutor;
-import org.agiso.tempel.core.RecursiveTemplateVerifier;
-import org.agiso.tempel.core.provider.MainTemplateProvider;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -21,6 +18,8 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * Klasa startowa obsługująca uruchamianie aplikacji z linii komend.
@@ -59,8 +58,17 @@ public class Bootstrap {
 		}
 		templateName = String.valueOf(cmd.getArgList().get(0));
 
+		// Tworzenie kontekstu IoC kontenera Spring:
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+		ctx.register(AppConfig.class);
+		// ctx.scan("org.agiso.tempel");
+		ctx.refresh();
+		ctx.start();
+
 		// Uruchamianie generatora dla określonego szablonu:
-		doExecuteTemplate(templateName, workDir, repoDir);
+		doExecuteTemplate(ctx, templateName, workDir, repoDir);
+
+		ctx.stop();
 	}
 
 	/**
@@ -69,13 +77,10 @@ public class Bootstrap {
 	 * @param repoDir
 	 * @throws Exception
 	 */
-	private static void doExecuteTemplate(String templateName, File workDir, File repoDir) throws Exception {
+	private static void doExecuteTemplate(ApplicationContext ctx, String templateName, File workDir, File repoDir) throws Exception {
 		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
 
-		Tempel tempel = new Tempel(workDir, repoDir);
-		tempel.setTemplateProvider(new MainTemplateProvider());
-		tempel.setTemplateVerifier(new RecursiveTemplateVerifier());
-		tempel.setTemplateExecutor(new DefaultTemplateExecutor());
+		Tempel tempel = ctx.getBean(TempelFactory.class).getTempel(workDir, repoDir);
 		tempel.startTemplate(templateName, new HashMap<String, String>());
 
 		System.out.println("--- Zakonczono pomyslnie ---");
