@@ -7,10 +7,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.agiso.tempel</groupId>
-	<artifactId>org.agiso.tempel.starter</artifactId>
+	<artifactId>org.agiso.tempel.core.support.maven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Tempel Starter</name>
+	<name>AGISO Tempel CORE Maven Support</name>
+
+	<properties>
+		<aetherVersion>1.12</aetherVersion>
+		<mavenVersion>3.0.3</mavenVersion>
+		<wagonVersion>1.0-beta-7</wagonVersion>
+	</properties>
 
 	<build>
 		<resources>
@@ -64,62 +70,6 @@
 					<encoding>utf-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>appassembler-maven-plugin</artifactId>
-				<version>1.1.1</version>
-				<configuration>
-					<repositoryLayout>flat</repositoryLayout>
-					<showConsoleWindow>true</showConsoleWindow>
-					<extraJvmArguments>-Dfile.encoding=UTF-8</extraJvmArguments>
-					<assembleDirectory>${project.build.directory}/appassembler</assembleDirectory>
-					<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
-					<platforms>
-						<platform>windows</platform>
-						<platform>unix</platform>
-					</platforms>
-					<programs>
-						<program>
-							<mainClass>org.agiso.tempel.Bootstrap</mainClass>
-							<name>tpl</name>
-						</program>
-					</programs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>assemble</id>
-						<phase>package</phase>
-						<goals>
-							<goal>assemble</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<encoding>utf-8</encoding>
-				</configuration>
-				<executions>
-					<execution>
-						<id>copy-settings</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<resources>
-								<resource>
-									<directory>src/main/settings</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-							<outputDirectory>${project.build.directory}/appassembler/etc</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin -->
 		</plugins>
 	</build>
 
@@ -129,26 +79,67 @@
 			<artifactId>org.agiso.tempel.core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+
+		<!-- Wsparcie pobierania zasobów z repozytoriów Maven -->
 		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core.support.maven</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-
-
-		<dependency>
-			<groupId>commons-cli</groupId>
-			<artifactId>commons-cli</artifactId>
-			<version>1.2</version>
-			<scope>compile</scope>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-aether-provider</artifactId>
+			<version>${mavenVersion}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>3.2.0.RELEASE</version>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-api</artifactId>
+			<version>${aetherVersion}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-util</artifactId>
+			<version>${aetherVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-impl</artifactId>
+			<version>${aetherVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-connector-file</artifactId>
+			<version>${aetherVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-connector-wagon</artifactId>
+			<version>${aetherVersion}</version>
+		</dependency>
+		<!-- dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-connector-asynchttpclient</artifactId>
+			<version>${aetherVersion}</version>
+		</dependency -->
+
+		<dependency>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-file</artifactId>
+			<version>${wagonVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-http-lightweight</artifactId>
+			<version>${wagonVersion}</version>
+		</dependency>
+		<!-- dependency>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-http</artifactId>
+			<version>${wagonVersion}</version>
+		</dependency -->
+		<!-- dependency>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-ssh</artifactId>
+			<version>${wagonVersion}</version>
+		</dependency -->
+
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>

@@ -18,6 +18,7 @@
 		<module>org.agiso.tempel.test</module>
 		<module>org.agiso.tempel.exts</module>
 		<module>org.agiso.tempel.core</module>
+		<module>org.agiso.tempel.core.support.maven</module>
 
 		<module>org.agiso.tempel.starter</module>
 	</modules>
