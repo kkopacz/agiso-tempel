@@ -1,0 +1,12 @@
+Podstawowe rozszerzenia Tempel'a, tj:
+	1. Źródła szablonów, umożliwiające wczytywanie szablonów:
+		- systemu plików: FileTemplateSource,
+		- archiwów jar: JarTemplateSource.
+	2. Konwertery parametrów:
+		- nazwa klasy -> nazwa pola: ClassToFieldNameConverter,
+		- nazwa pakietu -> ścieżka: PackageToPathConverter,
+		- l. poj. -> l. mnoga: SingularToPluralConverter.
+	3. Silniki generacji:
+		- tworzenie katalogów: MakeDirEngine i MageDirsEngine,
+		- przetwarzanie pliku Velocity: VelocitFileEngine,
+		- przetwarzanie katalogu Velocity: VelocityDirectoryEngine.

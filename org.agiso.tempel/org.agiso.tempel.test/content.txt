@@ -1,0 +1,4 @@
+Wsparcie dla testów elementów Tempel'a, jt:
+	- Adnotacja TempelEngineTest,
+	- Bazowa klasa testów z repozytorium szablonów: AbstractRepositoryTest,
+	- Bazowa klasa testów silników generatorów: AbstractTempelEngineTest.

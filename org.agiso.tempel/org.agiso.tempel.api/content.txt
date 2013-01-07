@@ -1,0 +1,5 @@
+Publiczne API rozszerzeń Templer'a, tj. interfejsy:
+	- silnika generatora: ITempelEngine,
+	- konwertera parametrów szablonu: ITemplateParamConverter,
+	- źródła szablonu (katalog, archiwum): ITemplateSource,
+	- wpisu źródła szablonu (zasób w katalogu, archiwum): ITemplateSourceEntry.

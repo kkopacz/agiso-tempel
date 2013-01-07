@@ -1,0 +1,2 @@
+Uruchamianie Tempel'a z linii komend, tj:
+	- klasa startowa: Bootstrap
