@@ -62,6 +62,12 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 
 //	--------------------------------------------------------------------------
 	@Override
+	public int getOrder() {
+		return 40;
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
 		if(!cache.containsKey(key)) {
 			cache.put(key, xxxx(key, groupId, templateId, version));

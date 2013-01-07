@@ -24,6 +24,12 @@ public class UsrTemplateProvider extends BaseTemplateProvider {
 
 //	--------------------------------------------------------------------------
 	@Override
+	public int getOrder() {
+		return 20;
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
 		super.initialize(globalProperties);
 

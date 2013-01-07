@@ -8,11 +8,15 @@ package org.agiso.tempel.core.provider;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.core.model.Template;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
@@ -20,17 +24,35 @@ import org.agiso.tempel.core.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class MainTemplateProvider implements ITemplateProvider {
-	private List<ITemplateProvider> providers = new ArrayList<ITemplateProvider>();
+	private List<ITemplateProviderElement> providers;
 
 //	--------------------------------------------------------------------------
 	public MainTemplateProvider() {
-		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
-		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
-		// katalogu bieżącym (katalogu uruchomienia):
-		providers.add(new RunTemplateProvider());
-		providers.add(new UsrTemplateProvider());
-		providers.add(new AppTemplateProvider());
-		providers.add(new MvnTemplateProvider());
+//		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
+//		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
+//		// katalogu bieżącym (katalogu uruchomienia):
+//		providers.add(new RunTemplateProvider());
+//		providers.add(new UsrTemplateProvider());
+//		providers.add(new AppTemplateProvider());
+//		providers.add(new MvnTemplateProvider());
+	}
+
+//	--------------------------------------------------------------------------
+	@Autowired
+	public void setTemplateProviderElements(List<ITemplateProviderElement> providers) {
+		this.providers = new ArrayList<ITemplateProviderElement>(providers);
+
+		Collections.sort(this.providers, new Comparator<ITemplateProviderElement>() {
+			@Override
+			public int compare(ITemplateProviderElement e1, ITemplateProviderElement e2) {
+				int o1 = e1.getOrder(), o2 = e2.getOrder();
+				return ((o1 < o2)? -1 : ((o1 == o2)? 0 : 1));
+			}
+		});
+
+		for(ITemplateProviderElement provider : providers) {
+			System.out.println(provider.getOrder() + ": " + provider.getClass().getSimpleName());
+		}
 	}
 
 //	--------------------------------------------------------------------------

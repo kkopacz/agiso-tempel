@@ -24,6 +24,12 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 
 //	--------------------------------------------------------------------------
 	@Override
+	public int getOrder() {
+		return 30;
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
 		super.initialize(globalProperties);
 

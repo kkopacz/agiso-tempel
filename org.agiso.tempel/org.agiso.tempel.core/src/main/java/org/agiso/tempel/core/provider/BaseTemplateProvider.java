@@ -13,7 +13,7 @@ import java.util.Map;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
-import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.VelocityExpressionEvaluator;
 import org.agiso.tempel.core.XStreamTempelFileProcessor;
@@ -26,7 +26,7 @@ import org.agiso.tempel.core.model.TemplateResource;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class BaseTemplateProvider implements ITemplateProvider {
+public abstract class BaseTemplateProvider implements ITemplateProviderElement {
 	protected ITempelFileProcessor tempelFileProcessor = new XStreamTempelFileProcessor();
 
 	private Map<String, Object> globalProperties;

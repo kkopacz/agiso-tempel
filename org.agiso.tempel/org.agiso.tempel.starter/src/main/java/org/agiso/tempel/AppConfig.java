@@ -8,10 +8,15 @@ package org.agiso.tempel;
 
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.core.DefaultTemplateExecutor;
 import org.agiso.tempel.core.RecursiveTemplateVerifier;
+import org.agiso.tempel.core.provider.AppTemplateProvider;
 import org.agiso.tempel.core.provider.MainTemplateProvider;
+import org.agiso.tempel.core.provider.MvnTemplateProvider;
+import org.agiso.tempel.core.provider.RunTemplateProvider;
+import org.agiso.tempel.core.provider.UsrTemplateProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +31,7 @@ public class AppConfig {
 		return new TempelFactory();
 	}
 
+
 	public @Bean ITemplateProvider templateProvider() {
 		return new MainTemplateProvider();
 	}
@@ -36,5 +42,19 @@ public class AppConfig {
 
 	public @Bean ITemplateExecutor templateExecutor() {
 		return new DefaultTemplateExecutor();
+	}
+
+
+	public @Bean ITemplateProviderElement runTemplateProvider() {
+		return new RunTemplateProvider();
+	}
+	public @Bean ITemplateProviderElement usrTemplateProvider() {
+		return new UsrTemplateProvider();
+	}
+	public @Bean ITemplateProviderElement appTemplateProvider() {
+		return new AppTemplateProvider();
+	}
+	public @Bean ITemplateProviderElement mvnTemplateProvider() {
+		return new MvnTemplateProvider();
 	}
 }
