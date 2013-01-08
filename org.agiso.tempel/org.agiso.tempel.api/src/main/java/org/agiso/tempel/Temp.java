@@ -208,6 +208,7 @@ public class Temp {
 //	--------------------------------------------------------------------------
 	private static void DigestUtils_updateDirecotryDigest(String path, File file, MessageDigest md) throws Exception {
 		String relativePath = file.getCanonicalPath().substring(path.length());
+		relativePath = relativePath.replace('\\', '/');		// normalizacja ścieżki
 		if(file.isDirectory()) {
 //			System.out.print("append directory: " + relativePath + " > ");
 			md.update(relativePath.getBytes(Charset.forName("UTF8")));
