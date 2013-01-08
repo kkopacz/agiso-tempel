@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.agiso.tempel.tests</groupId>
+  <artifactId>velocityDirTemplate</artifactId>
+  <version>9.0.0</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20121222115006</lastUpdated>
+  </versioning>
+</metadata>

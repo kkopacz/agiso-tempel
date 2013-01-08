@@ -19,6 +19,7 @@ import org.agiso.tempel.core.provider.RunTemplateProvider;
 import org.agiso.tempel.core.provider.UsrTemplateProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * 
@@ -26,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Configuration
+@Import(MvnConfig.class)
 public class AppConfig {
 	public @Bean TempelFactory tempel() {
 		return new TempelFactory();
@@ -53,8 +55,5 @@ public class AppConfig {
 	}
 	public @Bean ITemplateProviderElement appTemplateProvider() {
 		return new AppTemplateProvider();
-	}
-	public @Bean ITemplateProviderElement mvnTemplateProvider() {
-		return new MvnTemplateProvider();
 	}
 }

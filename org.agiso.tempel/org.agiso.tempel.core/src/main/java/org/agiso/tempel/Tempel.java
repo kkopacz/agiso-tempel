@@ -80,6 +80,9 @@ public class Tempel {
 
 		// Pobieranie definicji szablonu do użycia:
 		Template template = templateProvider.get(name, null, null, null);
+		if(template == null) {
+			throw new RuntimeException("Nie znaleziono szablonu " + name);
+		}
 
 		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
 		// szablonów używanych. Sprawdzanie dostępność klas silników generatorów.

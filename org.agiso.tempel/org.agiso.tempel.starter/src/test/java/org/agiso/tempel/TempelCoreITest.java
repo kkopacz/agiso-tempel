@@ -68,9 +68,9 @@ public class TempelCoreITest {
 				"-d ./target/templer2"
 		});
 
-//		Bootstrap.main(new String[] {
-//				"org.agiso.tempel.tests:velocityDirTemplate:9.0.0",		// "velocityDirTemplate9",
-//				"-d ./target/templer2"
-//		});
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.tests:velocityDirTemplate:9.0.0",		// "velocityDirTemplate9",
+				"-d ./target/templer2"
+		});
 	}
 }
