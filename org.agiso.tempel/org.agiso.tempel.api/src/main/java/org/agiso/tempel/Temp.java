@@ -197,9 +197,7 @@ public class Temp {
 				DigestUtils_updateDirecotryDigest(basePath, subFile, digest);
 			}
 		} else {
-//			System.out.print("append file: " + file.getPath() + " > ");
 			DigestUtils_updateDigest(digest, new FileInputStream(file));
-//			System.out.println(HexUtils_toHexString(digest.digest()));
 		}
 
 		return HexUtils_toHexString(digest.digest());
@@ -210,9 +208,7 @@ public class Temp {
 		String relativePath = file.getCanonicalPath().substring(path.length());
 		relativePath = relativePath.replace('\\', '/');		// normalizacja ścieżki
 		if(file.isDirectory()) {
-//			System.out.print("append directory: " + relativePath + " > ");
 			md.update(relativePath.getBytes(Charset.forName("UTF8")));
-//			System.out.println(HexUtils_toHexString(md.digest()));
 
 			File[] content = file.listFiles();
 			Arrays.sort(content, new Comparator<File>() {
@@ -226,9 +222,7 @@ public class Temp {
 				DigestUtils_updateDirecotryDigest(path, subFile, md);
 			}
 		} else {
-//			System.out.print("append file: " + relativePath + " > ");
 			md.update(relativePath.getBytes(Charset.forName("UTF8")));
-//			System.out.println(HexUtils_toHexString(md.digest()));
 
 			DigestUtils_updateDigest(md, new FileInputStream(file));
 		}
@@ -252,14 +246,14 @@ public class Temp {
 	}
 
 	/**
-	 * @param tempelFileProcessor
+	 * @param b
 	 * @return
 	 */
-	public static final String HexUtils_hexDigit(byte x) {
+	public static final String HexUtils_hexDigit(byte b) {
 		StringBuilder sb = new StringBuilder();
 		char c;
 		// First nibble
-		c = (char)((x >> 4) & 0xf);
+		c = (char)((b >> 4) & 0xf);
 		if(c > 9) {
 			c = (char)((c - 10) + 'a');
 		} else {
@@ -267,7 +261,7 @@ public class Temp {
 		}
 		sb.append(c);
 		// Second nibble
-		c = (char)(x & 0xf);
+		c = (char)(b & 0xf);
 		if(c > 9) {
 			c = (char)((c - 10) + 'a');
 		} else {
