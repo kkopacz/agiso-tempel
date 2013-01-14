@@ -6,9 +6,6 @@
  */
 package org.agiso.tempel.test;
 
-import java.io.File;
-import java.util.Calendar;
-
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.BeforeClass;
@@ -21,8 +18,6 @@ import org.testng.annotations.BeforeClass;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class AbstractTempelEngineTest extends AbstractRepositoryTest {
-	private long timeInMillis = Calendar.getInstance().getTimeInMillis();
-
 	protected ITempelEngine engine;
 
 // --------------------------------------------------------------------------
@@ -40,24 +35,5 @@ public abstract class AbstractTempelEngineTest extends AbstractRepositoryTest {
 		}
 
 		return tet.value().newInstance();
-	}
-
-	protected String getOutputPath(boolean create) {
-		int depth = 0;
-		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-		for(StackTraceElement traceElement : trace) {
-			if(traceElement.getClassName().equals(this.getClass().getName())) {
-				break;
-			}
-			depth++;
-		}
-
-		String outputPath = "./target/velocity-output/"
-				+ this.getClass().getSimpleName() + "/"
-				+ timeInMillis + "/" + trace[depth].getMethodName() + "/";
-		if(create) {
-			new File(outputPath).mkdirs();
-		}
-		return outputPath;
 	}
 }

@@ -15,7 +15,7 @@ import org.testng.annotations.BeforeClass;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class AbstractRepositoryTest {
+public abstract class AbstractRepositoryTest extends AbstractOutputTest {
 	protected String repositoryPath;
 
 //	--------------------------------------------------------------------------
