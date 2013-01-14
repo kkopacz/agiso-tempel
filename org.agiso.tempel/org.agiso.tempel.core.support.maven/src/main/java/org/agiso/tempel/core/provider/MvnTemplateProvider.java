@@ -17,9 +17,12 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.core.model.Template.Scope;
 import org.apache.maven.repository.internal.DefaultServiceLocator;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
 import org.apache.maven.wagon.Wagon;
@@ -45,6 +48,9 @@ import org.sonatype.aether.util.graph.PreorderNodeListGenerator;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class MvnTemplateProvider extends BaseTemplateProvider {
+	// FIXME: Zastosować wstrzykiwanie zależności
+	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+
 	private RepositorySystem repoSystem;
 
 	private RemoteRepository local;
@@ -56,14 +62,7 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 	public MvnTemplateProvider() {
 		repoSystem = newRepositorySystem();
 
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		int index = path.lastIndexOf("/repo/");
-		if(index != -1) {
-			path = System.getProperty("user.home") + "/.m2/repository/";
-		} else {
-			path = System.getProperty("user.dir");
-			path = path + "/src/test/resources/repository/maven";
-		}
+		String path = tempelScopeInfo.getSettingsPath(Scope.MAVEN);
 		local = new RemoteRepository("local", "default", "file://" + path);
 		central = new RemoteRepository("central", "default", "http://repo1.maven.org/maven2/");
 	}

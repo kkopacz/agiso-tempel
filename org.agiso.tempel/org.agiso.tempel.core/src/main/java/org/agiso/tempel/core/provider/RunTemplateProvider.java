@@ -10,9 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
@@ -20,6 +23,9 @@ import org.agiso.tempel.core.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class RunTemplateProvider extends BaseTemplateProvider {
+	// FIXME: Zastosować wstrzykiwanie zależności
+	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -55,7 +61,7 @@ public class RunTemplateProvider extends BaseTemplateProvider {
 	 */
 	private void readRunTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów lokalnych (katalog bieżący projektu):
-		String runSettings = getRunSettingsPath();
+		String runSettings = tempelScopeInfo.getSettingsPath(Scope.RUNTIME);
 		File runSettingsFile = new File(runSettings);
 
 		try {
@@ -70,18 +76,5 @@ public class RunTemplateProvider extends BaseTemplateProvider {
 			System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
-	}
-	private String getRunSettingsPath() {
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-
-		int index = path.lastIndexOf("/repo/");
-		if(index != -1) {
-			path = System.getProperty("user.dir") + "/tempel.xml";
-		} else {
-			path = System.getProperty("user.dir");
-			path = path + "/src/test/configuration/runtime/tempel.xml";
-		}
-
-		return path;
 	}
 }

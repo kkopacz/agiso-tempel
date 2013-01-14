@@ -12,11 +12,19 @@ import org.agiso.tempel.test.AbstractOutputTest;
 import org.testng.annotations.Test;
 
 /**
- * 
+ * Testy działania szablonów testowych. Wykorzystują szablony z repozytorium
+ * testowego src/test/resources/repository/runtime/ (dla standardowych szablonów
+ * umieszczanych w repozytoriach katalogowych) oraz szablony z repozytorium
+ * maven'owego src/test/resources/repository/maven/ (dla szablonów będących
+ * zasobami w repozytoriach maven).
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class TempelCoreITest extends AbstractOutputTest {
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityFileTemplate/1.0.0
+	 */
 	@Test
 	public void testVelocityFileTemplate_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -29,6 +37,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/1.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -41,6 +53,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "b8cbf54abdf135b7000bcff1c2e0a83d".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/2.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_2_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -53,6 +69,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "06a1c46145a9170665c73a59d9d934b5".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/3.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_3_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -65,6 +85,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "ec9b716697122eef04a8521d19802bc8".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/4.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_4_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -77,6 +101,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "baf37424f517639cac4cac38defcf028".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/5.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_5_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -89,6 +117,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "e37f056869b7e3351fefa1c5cf43c523".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/6.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_6_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -101,6 +133,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "4cda7a3e71085716e3f53bff93cfcc29".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/7.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_7_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -113,6 +149,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "18454eb8cf137bfe2f05fe4b20db3e49".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/runtime/
+	 * org/agiso/tempel/tests/velocityDirTemplate/8.0.0
+	 */
 	@Test
 	public void testVelocityDirTemplate_8_0_0() throws Exception {
 		String outPath = getOutputPath(true);
@@ -125,6 +165,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "eabcbb3f24682664c844ed3a8031a3f5".equals(md5);
 	}
 
+	/**
+	 * src/test/resources/repository/maven/
+	 * org/agiso/tempel/tests/velocityDirTemplate/9.0.0/velocityDirTemplate-9.0.0.jar
+	 */
 	@Test
 	public void testVelocityDirTemplate_9_0_0() throws Exception {
 		String outPath = getOutputPath(true);

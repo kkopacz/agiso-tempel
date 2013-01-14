@@ -10,9 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
@@ -20,6 +23,9 @@ import org.agiso.tempel.core.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class AppTemplateProvider extends BaseTemplateProvider {
+	// FIXME: Zastosować wstrzykiwanie zależności
+	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -55,14 +61,14 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 	 */
 	private void readAppTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
-		String appSettings = getAppSettingsPath();
+		String appSettings = tempelScopeInfo.getSettingsPath(Scope.GLOBAL);
 		File appSettingsFile = new File(appSettings);
 
 		try {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					AppTemplateProvider.this.processObject(Template.Scope.GLOBAL, object, templateRepository);
+					AppTemplateProvider.this.processObject(Scope.GLOBAL, object, templateRepository);
 				}
 			});
 			System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
@@ -70,18 +76,5 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 			System.err.println("Błąd wczytywania ustawień globalnych: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
-	}
-	private String getAppSettingsPath() {
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-
-		int index = path.lastIndexOf("/repo/");
-		if(index != -1) {
-			path = path.substring(0, index) + "/conf/tempel.xml";
-		} else {
-			path = System.getProperty("user.dir");
-			path = path + "/src/test/configuration/application/tempel.xml";
-		}
-
-		return path;
 	}
 }

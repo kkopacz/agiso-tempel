@@ -27,17 +27,6 @@ public class MainTemplateProvider implements ITemplateProvider {
 	private List<ITemplateProviderElement> providers;
 
 //	--------------------------------------------------------------------------
-	public MainTemplateProvider() {
-//		// Budowanie mapy szablonów w oparciu o pliki konfiguracyjne templates.xml
-//		// w katalogu konfiguracyjnym aplikacji, katalogu domowym użytkownika oraz
-//		// katalogu bieżącym (katalogu uruchomienia):
-//		providers.add(new RunTemplateProvider());
-//		providers.add(new UsrTemplateProvider());
-//		providers.add(new AppTemplateProvider());
-//		providers.add(new MvnTemplateProvider());
-	}
-
-//	--------------------------------------------------------------------------
 	@Autowired
 	public void setTemplateProviderElements(List<ITemplateProviderElement> providers) {
 		this.providers = new ArrayList<ITemplateProviderElement>(providers);

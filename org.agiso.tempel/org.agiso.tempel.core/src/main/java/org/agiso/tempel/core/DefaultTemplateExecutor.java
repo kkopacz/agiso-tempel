@@ -19,6 +19,7 @@ import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.core.lang.MapStack;
@@ -36,34 +37,11 @@ import org.agiso.tempel.core.model.TemplateResource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class DefaultTemplateExecutor implements ITemplateExecutor {
-	private Map<Scope, String> repositories;
+	// FIXME: Zastosować wstrzykiwanie zależności
+	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
 
 	// FIXME: Zastosować wstrzykiwanie zależności
 	private IExpressionEvaluator expressionEvaluator = new VelocityExpressionEvaluator();
-
-//	--------------------------------------------------------------------------
-	/**
-	 * 
-	 */
-	public DefaultTemplateExecutor() {
-		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
-		repositories = new HashMap<Scope, String>();
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		int index = path.lastIndexOf("/repo/");
-		if(index != -1) {
-			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
-			repositories.put(Scope.GLOBAL, path.substring(0, index) + "/repository");
-			repositories.put(Scope.USER, System.getProperty("user.home") + "/.tempel/repository");
-			repositories.put(Scope.RUNTIME, System.getProperty("user.dir") + "/.tempel");
-		} else {
-			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
-			path = System.getProperty("user.dir");					// FIXME: Rodzielić katalogi repozytoriów
-			repositories.put(Scope.GLOBAL, path + "/src/test/resources/repository/application");
-			repositories.put(Scope.USER, path + "/src/test/resources/repository/home");
-			repositories.put(Scope.RUNTIME, path + "/src/test/resources/repository/runtime");
-			repositories.put(Scope.MAVEN, path + "/target/local-repo");
-		}
-	}
 
 //	--------------------------------------------------------------------------
 	/**
@@ -336,14 +314,21 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
 		}
 
-		ITemplateSource templateSource;
+		ITemplateSource templateSource = null;
 		try {
-			if(Scope.MAVEN.equals(scope)) {
-				String repository = repositories.get(scope);
-				templateSource = new JarTemplateSource(repository, srcDir, source);
-			} else {
-				String repository = repositories.get(scope);
-				templateSource = new FileTemplateSource(repository, srcDir, source);
+			switch(tempelScopeInfo.getRepositoryType(scope)) {
+				case FILE:
+					templateSource = new FileTemplateSource(
+							tempelScopeInfo.getRepositoryPath(scope),
+							srcDir, source
+					);
+					break;
+				case JAR:
+					templateSource = new JarTemplateSource(
+							tempelScopeInfo.getRepositoryPath(scope),
+							srcDir, source
+					);
+					break;
 			}
 		} catch(Exception e) {
 			throw new RuntimeException(e);

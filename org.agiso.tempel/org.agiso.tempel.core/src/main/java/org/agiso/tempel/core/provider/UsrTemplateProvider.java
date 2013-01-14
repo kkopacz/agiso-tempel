@@ -10,9 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
@@ -20,6 +23,9 @@ import org.agiso.tempel.core.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class UsrTemplateProvider extends BaseTemplateProvider {
+	// FIXME: Zastosować wstrzykiwanie zależności
+	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -55,14 +61,14 @@ public class UsrTemplateProvider extends BaseTemplateProvider {
 	 */
 	private void readUsrTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów użytkownika (katalog domowy użytkownika):
-		String usrSettings = getUsrSettingsPath();
+		String usrSettings = tempelScopeInfo.getSettingsPath(Scope.USER);
 		File usrSettingsFile = new File(usrSettings);
 
 		try {
 			tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					UsrTemplateProvider.this.processObject(Template.Scope.USER, object, templateRepository);
+					UsrTemplateProvider.this.processObject(Scope.USER, object, templateRepository);
 				}
 			});
 			System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
@@ -70,18 +76,5 @@ public class UsrTemplateProvider extends BaseTemplateProvider {
 			System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
-	}
-	private String getUsrSettingsPath() {
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-
-		int index = path.lastIndexOf("/repo/");
-		if(index != -1) {
-			path = System.getProperty("user.home") + "/.tempel/tempel.xml";
-		} else {
-			path = System.getProperty("user.dir");
-			path = path + "/src/test/configuration/home/tempel.xml";
-		}
-
-		return path;
 	}
 }
