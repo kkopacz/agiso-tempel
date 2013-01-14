@@ -30,7 +30,19 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_2_0_0() throws Exception {
+	public void testVelocityDirTemplate_1_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.tests:velocityDirTemplate:1.0.0",		// "velocityDirTemplate1",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "b8cbf54abdf135b7000bcff1c2e0a83d".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirTemplate_2_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:2.0.0",		// "velocityDirTemplate2",
@@ -42,7 +54,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_3_0_0() throws Exception {
+	public void testVelocityDirTemplate_3_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:3.0.0",		// "velocityDirTemplate3",
@@ -54,7 +66,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_4_0_0() throws Exception {
+	public void testVelocityDirTemplate_4_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:4.0.0",		// "velocityDirTemplate4",
@@ -66,7 +78,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_5_0_0() throws Exception {
+	public void testVelocityDirTemplate_5_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:5.0.0",		// "velocityDirTemplate5",
@@ -78,7 +90,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_6_0_0() throws Exception {
+	public void testVelocityDirTemplate_6_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:6.0.0",		// "velocityDirTemplate6",
@@ -90,7 +102,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_7_0_0() throws Exception {
+	public void testVelocityDirTemplate_7_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:7.0.0",		// "velocityDirTemplate7",
@@ -102,7 +114,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_8_0_0() throws Exception {
+	public void testVelocityDirTemplate_8_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:8.0.0",		// "velocityDirTemplate8",
@@ -114,7 +126,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	@Test
-	public void testVelocityFileTemplate_9_0_0() throws Exception {
+	public void testVelocityDirTemplate_9_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:9.0.0",		// "velocityDirTemplate9",
