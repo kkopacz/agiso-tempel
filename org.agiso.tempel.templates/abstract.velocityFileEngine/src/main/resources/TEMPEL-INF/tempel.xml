@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template engine="org.agiso.tempel.engine.VelocityFileEngine" abstract="true">
+		<!--
+		  - Uruchamianie silnika Velocity w celu genracji zasobu na podstawie
+		  - szablonu
+		  -->
+		<groupId>org.agiso.tempel.templates.abstract</groupId>
+		<templateId>velocityFileEngine</templateId>
+		<version>1.0.0</version>
+	</template>
+</tempel>

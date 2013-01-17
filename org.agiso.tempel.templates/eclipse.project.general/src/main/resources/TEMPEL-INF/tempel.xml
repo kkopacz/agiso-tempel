@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template>
+		<groupId>org.agiso.tempel.templates.eclipse</groupId>
+		<templateId>project.general</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>mkdir</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.name}</target>
+				</resource>
+			</reference>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityFileEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<source>project.vm</source>
+					<target>${top.name}/.project</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+</tempel>

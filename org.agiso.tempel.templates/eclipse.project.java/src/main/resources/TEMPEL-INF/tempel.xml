@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template>
+		<groupId>org.agiso.tempel.templates.eclipse</groupId>
+		<templateId>project.java</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>mkdirs</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.name}/.settings</target>
+				</resource>
+				<resource>
+					<target>${top.name}/src/main/java</target>
+				</resource>
+			</reference>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>velocityFileEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<source>project.vm</source>
+					<target>${top.name}/.project</target>
+				</resource>
+				<resource>
+					<source>classpath.vm</source>
+					<target>${top.name}/.classpath</target>
+				</resource>
+				<resource>
+					<source>settings/org.eclipse.jdt.core.prefs.vm</source>
+					<target>${top.name}/.settings/org.eclipse.jdt.core.prefs</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+</tempel>

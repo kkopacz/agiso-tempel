@@ -43,7 +43,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>javaProject</templateId>
 		<version>1.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name" />
 		</params>
@@ -84,7 +84,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityFileTemplate</templateId>
 		<version>1.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -106,7 +106,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>1.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -120,7 +120,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>2.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -136,7 +136,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>3.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -154,7 +154,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>4.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -169,7 +169,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>5.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -192,7 +192,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>6.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -217,7 +217,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>7.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>
@@ -242,7 +242,7 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>velocityDirTemplate</templateId>
 		<version>8.0.0</version>
-	
+
 		<params>
 			<param key="name" name="Project name">
 				<fixed>true</fixed>

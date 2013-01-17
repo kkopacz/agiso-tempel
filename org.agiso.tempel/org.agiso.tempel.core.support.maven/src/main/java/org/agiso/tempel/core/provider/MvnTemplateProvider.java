@@ -77,7 +77,7 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
 		if(!cache.containsKey(key)) {
-			cache.put(key, xxxx(key, groupId, templateId, version));
+			cache.put(key, doGet(key, groupId, templateId, version));
 		}
 		return cache.get(key) != null;
 	}
@@ -85,7 +85,7 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 	@Override
 	public Template get(String key, String groupId, String templateId, String version) {
 		if(!cache.containsKey(key)) {
-			cache.put(key, xxxx(key, groupId, templateId, version));
+			cache.put(key, doGet(key, groupId, templateId, version));
 		}
 
 		final MvnTemplate mvnTemplate = cache.get(key);
@@ -123,16 +123,18 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 	 * @param version
 	 * @return
 	 */
-	private MvnTemplate xxxx(String key, String groupId, String templateId, String version) {
-		if(key.indexOf(':') <= 0) {
-			return null;
-		}
+	private MvnTemplate doGet(String key, String groupId, String templateId, String version) {
+		if(key != null) {
+			if(key.indexOf(':') <= 0) {
+				return null;
+			}
 
-		// Wydzielamy z klucza grupę, szablon i wersję:
-		StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
-		groupId = tokenizer.nextToken();
-		templateId = tokenizer.nextToken();
-		version = tokenizer.nextToken();
+			// Wydzielamy z klucza grupę, szablon i wersję:
+			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+			groupId = tokenizer.nextToken();
+			templateId = tokenizer.nextToken();
+			version = tokenizer.nextToken();
+		}
 
 		// Pobieranie i przegląd bibliotek z repozytorium maven, wyszukiwanie biblioteki
 		// szablonu i sprawdzanie czy zawiera plik tempel.xml. Jeśli tak, to jego
