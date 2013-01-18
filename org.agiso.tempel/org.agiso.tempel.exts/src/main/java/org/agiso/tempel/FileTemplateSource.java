@@ -47,7 +47,7 @@ public class FileTemplateSource implements ITemplateSource {
 		File mainFile = new File(repository + "/" + template);
 		String mainEntryPath = mainFile.getCanonicalPath();
 		mainEntryPathLength = mainEntryPath.length() + 1;
-		if(!mainFile.isDirectory()) {
+		if(mainFile.exists() && !mainFile.isDirectory()) {
 			throw new IllegalArgumentException("Invalid template directory: " + mainEntryPath);
 		}
 
@@ -64,7 +64,11 @@ public class FileTemplateSource implements ITemplateSource {
 			mainEntryPath = mainFile.getCanonicalPath();
 			mainEntryPathLength = mainEntryPath.length() + 1;
 			mainEntry = addDirectoryEntry(entries, mainFile);
-		} else {
+		} else if(!Temp.StringUtils_isBlank(resource)) {
+			// Plik mainFile nie jest ani plikiem, ani katalogiem więc nie istnieje.
+			// Dopuszczamy taką sytuację jeśli nie jest określona wartość resource.
+			// Sytuacja ta występuje jeśli silnik nie przetwarza zasobów wejściowych,
+			// tylko np. tworzy katalogi (jak silnik MakeDirEngine).
 			throw new IllegalArgumentException("Resource "
 					+ resource + " not exists in directory " + mainEntryPath);
 		}

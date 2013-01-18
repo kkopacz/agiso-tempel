@@ -22,10 +22,12 @@
 		<version>1.0.0</version>
 
 		<params>
-			<param key="srcDir">
+			<param key="srcDir" name="Source directory">
+				<fixed>true</fixed>
 				<value>/src/main/java</value>
 			</param>
 			<param key="package" name="Package name">
+				<fixed>true</fixed>
 				<value>org.agiso.package</value>
 			</param>
 			<param key="packageDir">
@@ -33,7 +35,10 @@
 				<value>${package}</value>
 				<converter>org.agiso.tempel.convert.PackageToPathConverter</converter>
 			</param>
-			<param key="name" name="Class name" />
+			<param key="name" name="Class name">
+				<fixed>true</fixed>
+				<value>SampleClass</value>
+			</param>
 		</params>
 
 		<references>

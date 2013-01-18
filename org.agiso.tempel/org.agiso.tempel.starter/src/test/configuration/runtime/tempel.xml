@@ -3,49 +3,16 @@
 	<!-- repository>./</repository -->
 	<!-- repository>./src/test/resources/repository</repository -->
 
-	<template key="groupingTemplate">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>groupingTemplate</templateId>
-		<version>1.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<references>
-			<reference>
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>mkdirs</templateId>
-				<version>1.0.0</version>
-
-				<resource>
-					<target>bundles/${top.name}</target>
-				</resource>
-			</reference>
-
-			<reference>
-				<groupId>org.agiso.kkopacz.tempel.projects</groupId>
-				<templateId>javaProject</templateId>
-				<version>1.0.0</version>
-
-				<params>
-					<param key="name">
-						<fixed>true</fixed>
-						<value>${top.name}</value>
-					</param>
-				</params>
-
-				<workdir>bundles/${top.name}</workdir>
-			</reference>
-		</references>
-	</template>
-	<template key="javaProject">
+	<template>
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>javaProject</templateId>
 		<version>1.0.0</version>
 
 		<params>
-			<param key="name" name="Project name" />
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>SampleProject</value>
+			</param>
 		</params>
 
 		<references>
@@ -72,6 +39,45 @@
 						<value>${top.name}/src/main/java</value>
 					</param>
 				</params>
+			</reference>
+		</references>
+	</template>
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>javaBundleProject</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" name="Project name">
+				<fixed>true</fixed>
+				<value>SampleBundleProject</value>
+			</param>
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates.abstract</groupId>
+				<templateId>mkdirs</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>bundles/${top.name}</target>
+				</resource>
+			</reference>
+
+			<reference>
+				<groupId>org.agiso.tempel.tests</groupId>
+				<templateId>javaProject</templateId>
+				<version>1.0.0</version>
+
+				<params>
+					<param key="name">
+						<fixed>true</fixed>
+						<value>${top.name}</value>
+					</param>
+				</params>
+
+				<workdir>bundles/${top.name}</workdir>
 			</reference>
 		</references>
 	</template>

@@ -21,6 +21,63 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class TempelCoreITest extends AbstractOutputTest {
+
+//	--------------------------------------------------------------------------
+//	src/test/configuration/application/tempel.xml
+//	--------------------------------------------------------------------------
+
+//	--------------------------------------------------------------------------
+//	src/test/configuration/home/tempel.xml
+//	--------------------------------------------------------------------------
+	/**
+	 * src/test/resources/repository/home/
+	 * org/agiso/tempel/tests/javaClass/1.0.0
+	 */
+	@Test
+	public void testJavaClass_1_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.tests:javaClass:1.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "afc6decadb5da14f7aa120b0adf1cb96".equals(md5);
+	}
+
+//	--------------------------------------------------------------------------
+//	src/test/configuration/runtime/tempel.xml
+//	--------------------------------------------------------------------------
+	/**
+	 * Szablon grupujący org.agiso.tempel.tests:javaProject:1.0.0
+	 */
+	@Test
+	public void testJavaProject_1_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.tests:javaProject:1.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "5eab6c02e2877f31805c65e7e2aeba87".equals(md5);
+	}
+
+	/**
+	 * Szablon grupujący org.agiso.tempel.tests:javaBundleProject:1.0.0
+	 */
+//	@Test
+	public void testJavaBundleProject_1_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.tests:javaBundleProject:1.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "4370e708b6f5b640e90a5cde835aeb8b".equals(md5);
+	}
+
 	/**
 	 * src/test/resources/repository/runtime/
 	 * org/agiso/tempel/tests/velocityFileTemplate/1.0.0

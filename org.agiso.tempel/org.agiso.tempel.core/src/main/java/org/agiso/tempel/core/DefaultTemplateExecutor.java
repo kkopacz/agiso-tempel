@@ -106,6 +106,10 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				String tId = Temp.StringUtils_emptyIfBlank(refTemplate.getTemplateId());
 				String ver = Temp.StringUtils_nullIfBlank(refTemplate.getVersion());		// dla nieokreślonej wersji null
 
+				if(key == null) {
+					key = gId + ":" + tId + ":" + ver;
+				}
+
 				Template subTemplate = templateProvider.get(key, gId, tId, ver);
 				if(subTemplate == null) {
 					throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + "' szablonu '" + template.getKey() + "'" );

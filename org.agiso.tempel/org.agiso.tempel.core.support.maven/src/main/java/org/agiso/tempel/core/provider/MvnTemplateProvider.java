@@ -124,17 +124,15 @@ public class MvnTemplateProvider extends BaseTemplateProvider {
 	 * @return
 	 */
 	private MvnTemplate doGet(String key, String groupId, String templateId, String version) {
-		if(key != null) {
-			if(key.indexOf(':') <= 0) {
-				return null;
-			}
-
-			// Wydzielamy z klucza grupę, szablon i wersję:
-			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
-			groupId = tokenizer.nextToken();
-			templateId = tokenizer.nextToken();
-			version = tokenizer.nextToken();
+		if(key.indexOf(':') <= 0) {
+			return null;
 		}
+
+		// Wydzielamy z klucza grupę, szablon i wersję:
+		StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+		groupId = tokenizer.nextToken();
+		templateId = tokenizer.nextToken();
+		version = tokenizer.nextToken();
 
 		// Pobieranie i przegląd bibliotek z repozytorium maven, wyszukiwanie biblioteki
 		// szablonu i sprawdzanie czy zawiera plik tempel.xml. Jeśli tak, to jego
