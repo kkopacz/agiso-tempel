@@ -14,7 +14,7 @@ import org.agiso.tempel.core.DefaultTemplateExecutor;
 import org.agiso.tempel.core.RecursiveTemplateVerifier;
 import org.agiso.tempel.core.provider.AppTemplateProvider;
 import org.agiso.tempel.core.provider.MainTemplateProvider;
-import org.agiso.tempel.core.provider.MvnTemplateProvider;
+import org.agiso.tempel.core.provider.AetherMvnTemplateProvider;
 import org.agiso.tempel.core.provider.RunTemplateProvider;
 import org.agiso.tempel.core.provider.UsrTemplateProvider;
 import org.springframework.context.annotation.Bean;

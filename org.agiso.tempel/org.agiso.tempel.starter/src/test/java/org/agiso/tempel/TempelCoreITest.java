@@ -21,6 +21,17 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class TempelCoreITest extends AbstractOutputTest {
+//	@Test
+//	public void test_base_mkdir_1_0_0() throws Exception {
+//		String outPath = getOutputPath(true);
+//		Bootstrap.main(new String[] {
+//				"org.agiso.tempel.templates:base.mkdir:1.0.0",
+//				"-d " + outPath
+//		});
+//
+//		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+//		assert "ee791dc8ebc5a6b6a355153a5f194d61".equals(md5);
+//	}
 
 //	--------------------------------------------------------------------------
 //	src/test/configuration/application/tempel.xml

@@ -7,7 +7,7 @@
 package org.agiso.tempel;
 
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
-import org.agiso.tempel.core.provider.MvnTemplateProvider;
+import org.agiso.tempel.core.provider.AetherMvnTemplateProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +19,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MvnConfig {
 	public @Bean ITemplateProviderElement mvnTemplateProvider() {
-		return new MvnTemplateProvider();
+		return new AetherMvnTemplateProvider();
 	}
 }

@@ -13,9 +13,7 @@
 	<name>AGISO Tempel CORE Maven Support</name>
 
 	<properties>
-		<aetherVersion>1.12</aetherVersion>
-		<mavenVersion>3.0.3</mavenVersion>
-		<wagonVersion>1.0-beta-7</wagonVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
@@ -81,66 +79,6 @@
 		</dependency>
 
 
-		<!-- Wsparcie pobierania zasobów z repozytoriów Maven -->
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-aether-provider</artifactId>
-			<version>${mavenVersion}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.sonatype.aether</groupId>
-			<artifactId>aether-api</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.sonatype.aether</groupId>
-			<artifactId>aether-util</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.sonatype.aether</groupId>
-			<artifactId>aether-impl</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.sonatype.aether</groupId>
-			<artifactId>aether-connector-file</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.sonatype.aether</groupId>
-			<artifactId>aether-connector-wagon</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<!-- dependency>
-			<groupId>org.sonatype.aether</groupId>
-			<artifactId>aether-connector-asynchttpclient</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency -->
-
-		<dependency>
-			<groupId>org.apache.maven.wagon</groupId>
-			<artifactId>wagon-file</artifactId>
-			<version>${wagonVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven.wagon</groupId>
-			<artifactId>wagon-http-lightweight</artifactId>
-			<version>${wagonVersion}</version>
-		</dependency>
-		<!-- dependency>
-			<groupId>org.apache.maven.wagon</groupId>
-			<artifactId>wagon-http</artifactId>
-			<version>${wagonVersion}</version>
-		</dependency -->
-		<!-- dependency>
-			<groupId>org.apache.maven.wagon</groupId>
-			<artifactId>wagon-ssh</artifactId>
-			<version>${wagonVersion}</version>
-		</dependency -->
-
-
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.test</artifactId>
@@ -148,4 +86,93 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>shrinkwrap.mvn.resolver</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.shrinkwrap.resolver</groupId>
+					<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+					<version>2.0.0-alpha-6</version>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>aether.mvn.resolver</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<aetherVersion>1.12</aetherVersion>
+				<mavenVersion>3.0.3</mavenVersion>
+				<wagonVersion>1.0-beta-7</wagonVersion>
+			</properties>
+			<dependencies>
+				<!-- Wsparcie pobierania zasobów z repozytoriów Maven -->
+				<dependency>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-aether-provider</artifactId>
+					<version>${mavenVersion}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-api</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-util</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-impl</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-file</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-wagon</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<!-- dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-asynchttpclient</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency -->
+
+				<dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-file</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-http-lightweight</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency>
+				<!-- dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-http</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency -->
+				<!-- dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-ssh</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency -->
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

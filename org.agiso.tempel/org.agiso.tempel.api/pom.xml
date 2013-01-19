@@ -12,6 +12,10 @@
 
 	<name>AGISO Tempel API</name>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
