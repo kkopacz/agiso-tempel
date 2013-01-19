@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<template engine="org.agiso.tempel.engine.MakeDirsEngine" abstract="true">
-		<!-- Tworzenie ścieżki katalogów -->
-		<groupId>org.agiso.tempel.templates.abstract</groupId>
-		<templateId>mkdirs</templateId>
-		<version>1.0.0</version>
-	</template>
-</tempel>

@@ -6,8 +6,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.agiso.tempel.templates.eclipse</groupId>
-	<artifactId>project.java</artifactId>
-	<version>1.0.0</version>
+	<groupId>org.agiso.tempel.templates</groupId>
+	<artifactId>eclipse.project.java</artifactId>
+	<version>BUILDER</version>
+	<packaging>pom</packaging>
 
+	<name>org.agiso.tempel.templates:eclipse.project.java:BUILDER</name>
+
+	<modules>
+		<module>1.0.0</module>
+	</modules>
 </project>

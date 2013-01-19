@@ -43,8 +43,8 @@
 
 		<references>
 			<reference>
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>mkdirs</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdirs</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -52,8 +52,8 @@
 				</resource>
 			</reference>
 			<reference>
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>velocityFileEngine</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityFileEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource>

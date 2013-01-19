@@ -17,8 +17,8 @@
 
 		<references>
 			<reference>
-				<groupId>org.agiso.tempel.templates.eclipse</groupId>
-				<templateId>project.java</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>eclipse.project.java</templateId>
 				<version>1.0.0</version>
 
 				<params>
@@ -56,8 +56,8 @@
 
 		<references>
 			<reference>
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>mkdirs</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdirs</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -185,8 +185,8 @@
 
 		<references>
 			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>velocityDirectoryEngine</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
@@ -210,8 +210,8 @@
 
 		<references>
 			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>velocityDirectoryEngine</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
@@ -233,8 +233,8 @@
 
 		<references>
 			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>velocityDirectoryEngine</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -258,8 +258,8 @@
 
 		<references>
 			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates.abstract</groupId>
-				<templateId>velocityDirectoryEngine</templateId>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->

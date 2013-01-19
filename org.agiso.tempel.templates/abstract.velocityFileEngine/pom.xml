@@ -6,8 +6,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.agiso.tempel.templates.abstract</groupId>
-	<artifactId>velocityFileEngine</artifactId>
-	<version>1.0.0</version>
+	<groupId>org.agiso.tempel.templates</groupId>
+	<artifactId>abstract.velocityFileEngine</artifactId>
+	<version>BUILDER</version>
+	<packaging>pom</packaging>
 
+	<name>org.agiso.tempel.templates:abstract.velocityFileEngine:BUILDER</name>
+
+	<modules>
+		<module>1.0.0</module>
+	</modules>
 </project>
