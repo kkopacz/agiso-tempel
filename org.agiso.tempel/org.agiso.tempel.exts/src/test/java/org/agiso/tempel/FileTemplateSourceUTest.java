@@ -19,13 +19,11 @@ import org.testng.annotations.Test;
 public class FileTemplateSourceUTest extends AbstractRepositoryTest {
 	@Test
 	public void testFileSource() throws Exception {
-		final String templatePath = "FileTemplateSourceUTest/testFileSource";
+		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testFileSource";
 		final String resourceName = "testSourceFile1.txt";
 
-		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath, templatePath, resourceName);
+		ITemplateSource templateSource = new FileTemplateSource(templatePath, resourceName);
 
-		assert repositoryPath.equals(templateSource.getRepository());
 		assert templatePath.equals(templateSource.getTemplate());
 		assert resourceName.equals(templateSource.getResource());
 		assert true == templateSource.exists();
@@ -44,12 +42,10 @@ public class FileTemplateSourceUTest extends AbstractRepositoryTest {
 
 	@Test
 	public void testDirectorySource() throws Exception {
-		final String templatePath = "FileTemplateSourceUTest/testDirectorySource";
+		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testDirectorySource";
 
-		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath, templatePath, null);
+		ITemplateSource templateSource = new FileTemplateSource(templatePath, null);
 
-		assert repositoryPath.equals(templateSource.getRepository());
 		assert templatePath.equals(templateSource.getTemplate());
 		assert null == templateSource.getResource();
 		assert true == templateSource.exists();
@@ -92,12 +88,10 @@ public class FileTemplateSourceUTest extends AbstractRepositoryTest {
 
 	@Test
 	public void testDirectorySourceSubdirectory() throws Exception {
-		final String templatePath = "FileTemplateSourceUTest/testDirectorySource";
+		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testDirectorySource";
 
-		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath, templatePath, "subdirectory");
+		ITemplateSource templateSource = new FileTemplateSource(templatePath, "subdirectory");
 
-		assert repositoryPath.equals(templateSource.getRepository());
 		assert templatePath.equals(templateSource.getTemplate());
 		assert "subdirectory".equals(templateSource.getResource());
 		assert true == templateSource.exists();

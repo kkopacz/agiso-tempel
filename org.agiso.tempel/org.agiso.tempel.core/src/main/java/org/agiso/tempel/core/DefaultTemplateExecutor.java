@@ -323,14 +323,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			switch(tempelScopeInfo.getRepositoryType(scope)) {
 				case FILE:
 					templateSource = new FileTemplateSource(
-							tempelScopeInfo.getRepositoryPath(scope),
-							srcDir, source
+							tempelScopeInfo.getRepositoryPath(scope) + "/" + srcDir,
+							source
 					);
 					break;
 				case JAR:
 					templateSource = new JarTemplateSource(
-							tempelScopeInfo.getRepositoryPath(scope),
-							srcDir, source
+							tempelScopeInfo.getRepositoryPath(scope) + "/" + srcDir,
+							source
 					);
 					break;
 			}

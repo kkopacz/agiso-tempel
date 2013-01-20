@@ -28,7 +28,6 @@ public class FileTemplateSource implements ITemplateSource {
 	private static final char FILE_SEPARATOR = System.getProperty("file.separator").charAt(0);
 
 //	--------------------------------------------------------------------------
-	private String repository;
 	private String template;
 	private String resource;
 
@@ -38,13 +37,12 @@ public class FileTemplateSource implements ITemplateSource {
 	private Map<String, ITemplateSourceEntry> entries;
 
 //	--------------------------------------------------------------------------
-	public FileTemplateSource(String repository, String template, String resource) throws IOException {
-		this.repository = repository;
+	public FileTemplateSource(String template, String resource) throws IOException {
 		this.template = template;
 		this.resource = resource;
 
 		// Wyznaczamy ścieżkę i sprawdzamy istnienie katalogu szablonu:
-		File mainFile = new File(repository + "/" + template);
+		File mainFile = new File(template);
 		String mainEntryPath = mainFile.getCanonicalPath();
 		mainEntryPathLength = mainEntryPath.length() + 1;
 		if(mainFile.exists() && !mainFile.isDirectory()) {
@@ -75,11 +73,6 @@ public class FileTemplateSource implements ITemplateSource {
 	}
 
 //	--------------------------------------------------------------------------
-	@Override
-	public String getRepository() {
-		return repository;
-	}
-
 	@Override
 	public String getTemplate() {
 		return template;

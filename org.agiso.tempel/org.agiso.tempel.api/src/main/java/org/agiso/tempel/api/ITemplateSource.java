@@ -15,8 +15,6 @@ import java.util.Collection;
  * @author <a href="mailto:kkopaczz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateSource {
-	public String getRepository();
-
 	public String getTemplate();
 
 	public String getResource();

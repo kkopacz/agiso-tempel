@@ -33,7 +33,6 @@ public class JarTemplateSource implements ITemplateSource {
 	private JarFile jarFile;
 	private JarEntry baseEntry;
 
-	private String repository;
 	private String template;
 	private String resource;
 
@@ -43,13 +42,12 @@ public class JarTemplateSource implements ITemplateSource {
 	private Map<String, ITemplateSourceEntry> entries;
 
 //	--------------------------------------------------------------------------
-	public JarTemplateSource(String repository, String template, String resource) throws IOException {
-		this.repository = repository;
+	public JarTemplateSource(String template, String resource) throws IOException {
 		this.template = template;
 		this.resource = resource;
 
 		// Sprawdzamy istnienie i poprawność pliku .jar:
-		File mainFile = new File(repository + "/" + template);
+		File mainFile = new File(template);
 		String mainEntryPath = mainFile.getCanonicalPath();
 		if(!mainFile.isFile()) {
 			throw new IllegalArgumentException("Invalid template jar file: " + mainEntryPath);
@@ -106,11 +104,6 @@ public class JarTemplateSource implements ITemplateSource {
 	}
 
 //	--------------------------------------------------------------------------
-	@Override
-	public String getRepository() {
-		return repository;
-	}
-
 	@Override
 	public String getTemplate() {
 		return template;

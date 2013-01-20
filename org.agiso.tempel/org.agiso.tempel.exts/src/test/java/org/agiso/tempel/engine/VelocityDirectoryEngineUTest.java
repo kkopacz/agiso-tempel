@@ -38,8 +38,9 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true);
-		ITemplateSource templateSource = new FileTemplateSource(repositoryPath,
-				"VelocityDirectoryEngineUTest", "testProcessDirectory1"
+		ITemplateSource templateSource = new FileTemplateSource(
+				repositoryPath + "/VelocityDirectoryEngineUTest",
+				"testProcessDirectory1"
 		);
 		engine.run(templateSource, modelMap, outPath);
 
@@ -55,8 +56,9 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true) + "/testProcessFile1.txt";
-		ITemplateSource templateSource = new FileTemplateSource(repositoryPath,
-				"VelocityDirectoryEngineUTest", "testProcessFile1.vm"
+		ITemplateSource templateSource = new FileTemplateSource(
+				repositoryPath + "/VelocityDirectoryEngineUTest",
+				"testProcessFile1.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);
 

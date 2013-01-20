@@ -19,13 +19,11 @@ import org.testng.annotations.Test;
 public class JarTemplateSourceUTest extends AbstractRepositoryTest {
 	@Test
 	public void testFileSource() throws Exception {
-		final String templatePath = "JarTemplateSourceUTest/testFileSource.jar";
+		final String templatePath = repositoryPath + "/" + "JarTemplateSourceUTest/testFileSource.jar";
 		final String resourceName = /* TEMPEL-INF/template/ */ "testSourceFile1.txt";
 
-		ITemplateSource templateSource = new JarTemplateSource(
-				repositoryPath, templatePath, resourceName);
+		ITemplateSource templateSource = new JarTemplateSource(templatePath, resourceName);
 
-		assert repositoryPath.equals(templateSource.getRepository());
 		assert templatePath.equals(templateSource.getTemplate());
 		assert resourceName.equals(templateSource.getResource());
 		assert true == templateSource.exists();
@@ -44,12 +42,10 @@ public class JarTemplateSourceUTest extends AbstractRepositoryTest {
 
 	@Test
 	public void testDirectorySource() throws Exception {
-		final String templatePath = "JarTemplateSourceUTest/testDirectorySource.jar";
+		final String templatePath = repositoryPath + "/" + "JarTemplateSourceUTest/testDirectorySource.jar";
 
-		ITemplateSource templateSource = new JarTemplateSource(
-				repositoryPath, templatePath, null);
+		ITemplateSource templateSource = new JarTemplateSource(templatePath, null);
 
-		assert repositoryPath.equals(templateSource.getRepository());
 		assert templatePath.equals(templateSource.getTemplate());
 		assert null == templateSource.getResource();
 		assert true == templateSource.exists();
@@ -92,12 +88,10 @@ public class JarTemplateSourceUTest extends AbstractRepositoryTest {
 
 	@Test
 	public void testDirectorySourceSubdirectory() throws Exception {
-		final String templatePath = "JarTemplateSourceUTest/testDirectorySource.jar";
+		final String templatePath = repositoryPath + "/" + "JarTemplateSourceUTest/testDirectorySource.jar";
 
-		ITemplateSource templateSource = new JarTemplateSource(
-				repositoryPath, templatePath, "subdirectory");
+		ITemplateSource templateSource = new JarTemplateSource(templatePath, "subdirectory");
 
-		assert repositoryPath.equals(templateSource.getRepository());
 		assert templatePath.equals(templateSource.getTemplate());
 		assert "subdirectory".equals(templateSource.getResource());
 		assert true == templateSource.exists();

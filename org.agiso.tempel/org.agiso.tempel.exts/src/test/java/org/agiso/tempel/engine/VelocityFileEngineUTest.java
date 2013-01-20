@@ -32,8 +32,9 @@ public class VelocityFileEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true) + "/testProcessFile1.txt";
-		ITemplateSource templateSource = new FileTemplateSource(repositoryPath,
-				"VelocityFileEngineUTest", "testProcessFile1.vm"
+		ITemplateSource templateSource = new FileTemplateSource(
+				repositoryPath + "/VelocityFileEngineUTest",
+				"testProcessFile1.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);
 
