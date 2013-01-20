@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.agiso.tempel.templates</groupId>
+	<artifactId>test.velocityDirectoryTemplate</artifactId>
+	<version>BUILDER</version>
+	<packaging>pom</packaging>
+
+	<name>org.agiso.tempel.templates:test.velocityDirectoryTemplate:BUILDER</name>
+
+	<modules>
+		<module>1.0.0</module>
+		<module>2.0.0</module>
+		<module>3.0.0</module>
+		<module>4.0.0</module>
+		<module>5.0.0</module>
+		<module>6.0.0</module>
+		<module>7.0.0</module>
+		<module>8.0.0</module>
+	</modules>
+</project>

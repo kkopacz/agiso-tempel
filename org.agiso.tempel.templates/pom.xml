@@ -24,5 +24,8 @@
 
 		<module>eclipse.project.general</module>
 		<module>eclipse.project.java</module>
+
+		<module>test.velocityFileTemplate</module>
+		<module>test.velocityDirectoryTemplate</module>
 	</modules>
 </project>
