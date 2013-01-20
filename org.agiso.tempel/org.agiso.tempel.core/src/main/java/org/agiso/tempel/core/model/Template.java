@@ -9,6 +9,7 @@ package org.agiso.tempel.core.model;
 import java.util.List;
 
 import org.agiso.tempel.api.ITempelEngine;
+import org.agiso.tempel.api.ITemplateSource;
 
 /**
  * 
@@ -47,4 +48,13 @@ public interface Template extends TemplateReference {
 
 //	--------------------------------------------------------------------------
 	public Template clone();
+
+//	--------------------------------------------------------------------------
+	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory);
+
+	/**
+	 * @param source
+	 * @return
+	 */
+	public ITemplateSource getTemplateSource(String source);
 }

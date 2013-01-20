@@ -1,6 +1,6 @@
-/* org.agiso.tempel.core.provider.ShinkWrapMvnTemplateProvider (19-01-2013)
+/* org.agiso.tempel.core.provider.ShrinkWrapMvnTemplateProvider (19-01-2013)
  * 
- * ShinkWrapMvnTemplateProvider.java
+ * ShrinkWrapMvnTemplateProvider.java
  * 
  * Copyright 2013 agiso.org
  */
@@ -28,7 +28,7 @@ import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenSettingsBuilder;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class ShinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
+public class ShrinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
 	// FIXME: Zastosować wstrzykiwanie zależności
 	// private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
 
@@ -39,7 +39,7 @@ public class ShinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
 	/**
 	 * 
 	 */
-	public ShinkWrapMvnTemplateProvider() {
+	public ShrinkWrapMvnTemplateProvider() {
 //		String userSettingsPaht = System.getProperty("user.home").concat("/.m2/settings.xml");
 //		String globalSettingsPath = "/work/tools/maven/maven/conf/settings.xml";
 //		// String localRepositoryPath = tempelScopeInfo.getSettingsPath(Scope.MAVEN);
@@ -66,7 +66,7 @@ public class ShinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
 	}
 
 	@Override
-	protected void setupTemplatePath(Template template) {
+	protected String getTemplatePath(Template template) {
 		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon SWRAP bez groupId");
 		}
@@ -83,6 +83,6 @@ public class ShinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
 		path = path + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
-		template.setPath(path);
+		return path;
 	}
 }

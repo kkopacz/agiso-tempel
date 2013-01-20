@@ -10,9 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.FileTemplateSource;
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
@@ -22,7 +26,7 @@ import org.agiso.tempel.core.model.Template.Scope;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class AppTemplateProvider extends BaseTemplateProvider {
+public class AppTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -65,7 +69,18 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					AppTemplateProvider.this.processObject(Scope.GLOBAL, object, templateRepository);
+					AppTemplateProvider.this.processObject(Scope.GLOBAL, object, templateRepository,
+							new ITemplateSourceFactory() {
+								@Override
+								public ITemplateSource createTemplateSource(Template template, String source) {
+									try {
+										return new FileTemplateSource(getTemplatePath(template), source);
+									} catch(IOException e) {
+										throw new RuntimeException(e);
+									}
+								}
+							}
+					);
 				}
 			});
 			System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
@@ -75,8 +90,7 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 		}
 	}
 
-	@Override
-	protected void setupTemplatePath(Template template) {
+	private String getTemplatePath(Template template) {
 		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon GLOBAL bez groupId");
 		}
@@ -92,6 +106,6 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
-		template.setPath(path);
+		return path;
 	}
 }

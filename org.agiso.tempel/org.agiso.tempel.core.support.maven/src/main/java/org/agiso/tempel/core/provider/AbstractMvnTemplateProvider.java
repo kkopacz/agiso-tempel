@@ -7,6 +7,7 @@
 package org.agiso.tempel.core.provider;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -17,8 +18,12 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.agiso.tempel.JarTemplateSource;
+import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
 
 /**
@@ -26,12 +31,8 @@ import org.agiso.tempel.core.model.Template;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider {
+public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
 	private Map<String, MvnTemplate> cache = new HashMap<String, MvnTemplate>();
-
-//	--------------------------------------------------------------------------
-	public AbstractMvnTemplateProvider() {
-	}
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -54,7 +55,7 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider {
 			cache.put(key, doGet(key, groupId, templateId, version));
 		}
 
-		final MvnTemplate mvnTemplate = cache.get(key);
+		final MvnTemplate mvnTemplate = getMvnTemplate(key);
 		if(mvnTemplate == null) {
 			return null;
 		}
@@ -66,7 +67,18 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider {
 				tempelFileProcessor.process(mvnTemplate.definition, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						AbstractMvnTemplateProvider.this.processObject(Template.Scope.MAVEN, object, templateRepository);
+						AbstractMvnTemplateProvider.this.processObject(Template.Scope.MAVEN, object, templateRepository,
+								new ITemplateSourceFactory() {
+									@Override
+									public ITemplateSource createTemplateSource(Template template, String source) {
+										try {
+											return new JarTemplateSource(getTemplatePath(template), source);
+										} catch(IOException e) {
+											throw new RuntimeException(e);
+										}
+									}
+								}
+						);
 					}
 				});
 				System.out.println("Wczytano ustawienia z biblioteki szablonu " + key);
@@ -80,6 +92,12 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider {
 
 		return mvnTemplate.repository.get(key, groupId, templateId, version);
 	}
+
+	protected final MvnTemplate getMvnTemplate(String key) {
+		return cache.get(key);
+	}
+
+	protected abstract String getTemplatePath(Template template);
 
 //	--------------------------------------------------------------------------
 	/**
@@ -126,6 +144,7 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider {
 						InputStream is = jarFile.getInputStream(tempel_xml);
 
 						MvnTemplate mvnTemplate = new MvnTemplate();
+						mvnTemplate.path = file.getCanonicalPath();
 						mvnTemplate.definition = convertStreamToString(is);
 						mvnTemplate.classpath = files;
 
@@ -155,15 +174,16 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider {
 	protected abstract List<File> resolve(String groupId, String templateId, String version) throws Exception;
 
 //	---------------------------------------------------------------------------
-	private static String convertStreamToString(java.io.InputStream is) {
+	protected static String convertStreamToString(java.io.InputStream is) {
 		Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\A");
 		return s.hasNext() ? s.next() : "";
 	}
 
 //	--------------------------------------------------------------------------
-	static class MvnTemplate {
-		String definition;
-		List<File> classpath;
-		ITemplateRepository repository;
+	public static class MvnTemplate {
+		public String path;
+		public String definition;
+		public List<File> classpath;
+		public ITemplateRepository repository;
 	}
 }

@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.agiso.tempel.api.ITempelEngine;
+import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
+import org.agiso.tempel.core.TempelScopeInfo;
+import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateReference;
@@ -143,7 +147,23 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 
 		clone.repository = repository == null? null : repository.clone();
 		clone.path = path;
+		clone.templateSourceFactory = templateSourceFactory;
 
 		return clone;
+	}
+
+//	--------------------------------------------------------------------------
+	private static final ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+
+	private ITemplateSourceFactory templateSourceFactory;
+
+	@Override
+	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory) {
+		this.templateSourceFactory = templateSourceFactory;
+	}
+
+	@Override
+	public ITemplateSource getTemplateSource(String source) {
+		return templateSourceFactory.createTemplateSource(this, source);
 	}
 }

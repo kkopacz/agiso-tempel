@@ -14,22 +14,22 @@ import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.api.internal.ITempelScopeInfo;
-import org.agiso.tempel.api.internal.ITemplateProviderElement;
+import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.VelocityExpressionEvaluator;
 import org.agiso.tempel.core.XStreamTempelFileProcessor;
+import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateResource;
-import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class BaseTemplateProvider implements ITemplateProviderElement {
+public abstract class BaseTemplateProvider implements ITemplateProvider {
 	// FIXME: Zastosować wstrzykiwanie zależności
 	protected ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
 	protected ITempelFileProcessor tempelFileProcessor = new XStreamTempelFileProcessor();
@@ -51,7 +51,7 @@ public abstract class BaseTemplateProvider implements ITemplateProviderElement {
 	 * @param object
 	 * @param templateRepository
 	 */
-	protected void processObject(Template.Scope scope, Object object, ITemplateRepository templateRepository) {
+	protected void processObject(Template.Scope scope, Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
 		// Ścieżka repozytorium pliku tempel.xml:
 		if(object instanceof Repository) {
 			Repository repository = (Repository)object;
@@ -97,12 +97,10 @@ public abstract class BaseTemplateProvider implements ITemplateProviderElement {
 				templateRepository.put(key, null, null, null, template);
 			}
 
-			// Na końcu, gdy wywołano template.setRepository(...) ustawianie ścieżki:
-			setupTemplatePath(template);
+			// Na końcu, gdy wywołano template.setRepository(...):
+			template.setTemplateSourceFactory(templateSourceFactory);
 
 			return;
 		}
 	}
-
-	protected abstract void setupTemplatePath(Template template);
 }

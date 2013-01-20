@@ -56,6 +56,15 @@ public class Tempel {
 	}
 
 //	--------------------------------------------------------------------------
+	public void setWorkDir(File workDir) {
+		this.workDir = workDir;
+	}
+
+	public void setRepoDir(File repoDir) {
+		this.repoDir = repoDir;
+	}
+
+//	--------------------------------------------------------------------------
 	/**
 	 * @param cmd
 	 */

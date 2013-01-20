@@ -12,21 +12,15 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.agiso.tempel.FileTemplateSource;
-import org.agiso.tempel.JarTemplateSource;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
-import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
-import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.core.lang.MapStack;
 import org.agiso.tempel.core.lang.SimpleMapStack;
-import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
 import org.agiso.tempel.core.model.TemplateParam;
 import org.agiso.tempel.core.model.TemplateReference;
 import org.agiso.tempel.core.model.TemplateResource;
@@ -37,9 +31,6 @@ import org.agiso.tempel.core.model.TemplateResource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class DefaultTemplateExecutor implements ITemplateExecutor {
-	// FIXME: Zastosować wstrzykiwanie zależności
-	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
-
 	// FIXME: Zastosować wstrzykiwanie zależności
 	private IExpressionEvaluator expressionEvaluator = new VelocityExpressionEvaluator();
 
@@ -211,16 +202,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				for(TemplateResource resource : template.getResources()) {
 					template = resource.getParentTemplateReference();
 
-					doEngineRun(engine,
-							template.getScope(), template.getPath(), resource.getSource(),
+					doEngineRun(
+							engine, template, resource.getSource(),
 							workDir, resource.getTarget(), stack
 					);
 				}
 			} else {
-				doEngineRun(engine,
-						template.getScope(), template.getPath(), null,
-						workDir, null, stack
-				);
+				doEngineRun(engine, template, null, workDir, null, stack);
 			}
 		}
 	}
@@ -270,34 +258,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param resource
 	 * @param params
 	 */
-	private void doEngineRun(ITempelEngine engine, Scope scope, String srcDir, String source, String workDir, String target, MapStack<String, Object> stack) {
+	private void doEngineRun(ITempelEngine engine, Template template, String source, String workDir, String target, MapStack<String, Object> stack) {
 		if(Temp.StringUtils_isEmpty(target)) {
 			target = workDir + "/";
 		} else {
 			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
 		}
 
-		ITemplateSource templateSource = null;
-		try {
-			switch(tempelScopeInfo.getRepositoryType(scope)) {
-				case FILE:
-					templateSource = new FileTemplateSource(
-							srcDir,
-							source
-					);
-					break;
-				case JAR:
-					templateSource = new JarTemplateSource(
-							srcDir,
-							source
-					);
-					break;
-			}
-		} catch(Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		engine.run(templateSource, stack, target);
+		engine.run(template.getTemplateSource(source), stack, target);
 	}
 
 //	--------------------------------------------------------------------------

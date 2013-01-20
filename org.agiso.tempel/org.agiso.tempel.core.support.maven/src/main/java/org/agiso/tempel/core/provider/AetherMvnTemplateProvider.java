@@ -86,7 +86,7 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 	}
 
 	@Override
-	protected void setupTemplatePath(Template template) {
+	protected String getTemplatePath(Template template) {
 		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon MAVEN bez groupId");
 		}
@@ -103,7 +103,7 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
 		path = path + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
-		template.setPath(path);
+		return path;
 	}
 
 //	---------------------------------------------------------------------------
