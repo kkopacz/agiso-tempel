@@ -205,62 +205,21 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 			// Uruchomienie silnika do generacji zasobów tworzonych przez szablon:
 			if(template.getResources() != null && !template.getResources().isEmpty()) {
-				// Wyznaczanie katalogu roboczego dla wszystkich zasobów geneorowanych przez
-				// aktualnie wykonywany szablon. Jest określany na poziomie całego szablonu,
-				// więc jest wspólny dla wszystkich zdefiniowanych w nim zasobów:
-				String resWorkDir = workDir;
-//				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
-//					resWorkDir = workDir + "/" + template.getWorkDir();
-//				}
-
+				// Katalog roboczy dla wszystkich zasobów geneorowanych przez aktualnie
+				// wykonywany szablon jest określany na poziomie tego szablonu i jest
+				// wspólny dla wszystkich zdefiniowanych w nim zasobów:
 				for(TemplateResource resource : template.getResources()) {
 					template = resource.getParentTemplateReference();
 
-					String srcDir = null;
-					if(!Temp.StringUtils_isEmpty(template.getGroupId())) {
-						// Szablony bez określonej grupy, identyfikatora i wersji mogą generować zasoby
-						// o ile nie wymagają do tego celu żadnych plików źródłowych (np. szablonów velocity).
-						// Nie mają one bowiem określonej ścieżki w repozytorium.
-						// Przykładem tego typu szablonów są szablony tworzące katalogi.
-						Repository r = template.getRepository();
-
-						srcDir = (r == null? "" : r.getValue());
-						srcDir = srcDir + '/' + template.getGroupId().replace('.', '/');
-						srcDir = srcDir + '/' + template.getTemplateId();
-						srcDir = srcDir + '/' + template.getVersion();
-						if(Scope.MAVEN.equals(template.getScope())) {
-							srcDir = srcDir + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
-						}
-					}
-
 					doEngineRun(engine,
-							template.getScope(), srcDir, resource.getSource(),
-							resWorkDir, resource.getTarget(), stack
+							template.getScope(), template.getPath(), resource.getSource(),
+							workDir, resource.getTarget(), stack
 					);
 				}
 			} else {
-				String resWorkDir = workDir;
-
-				String srcDir = null;
-				if(!Temp.StringUtils_isEmpty(template.getGroupId())) {
-					// Szablony bez określonej grupy, identyfikatora i wersji mogą generować zasoby
-					// o ile nie wymagają do tego celu żadnych plików źródłowych (np. szablonów velocity).
-					// Nie mają one bowiem określonej ścieżki w repozytorium.
-					// Przykładem tego typu szablonów są szablony tworzące katalogi.
-					Repository r = template.getRepository();
-
-					srcDir = (r == null? "" : r.getValue());
-					srcDir = srcDir + '/' + template.getGroupId().replace('.', '/');
-					srcDir = srcDir + '/' + template.getTemplateId();
-					srcDir = srcDir + '/' + template.getVersion();
-					if(Scope.MAVEN.equals(template.getScope())) {
-						srcDir = srcDir + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
-					}
-				}
-
 				doEngineRun(engine,
-						template.getScope(), srcDir, null,
-						resWorkDir, null, stack
+						template.getScope(), template.getPath(), null,
+						workDir, null, stack
 				);
 			}
 		}
@@ -323,13 +282,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			switch(tempelScopeInfo.getRepositoryType(scope)) {
 				case FILE:
 					templateSource = new FileTemplateSource(
-							tempelScopeInfo.getRepositoryPath(scope) + "/" + srcDir,
+							srcDir,
 							source
 					);
 					break;
 				case JAR:
 					templateSource = new JarTemplateSource(
-							tempelScopeInfo.getRepositoryPath(scope) + "/" + srcDir,
+							srcDir,
 							source
 					);
 					break;

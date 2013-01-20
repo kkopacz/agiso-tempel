@@ -9,8 +9,11 @@ package org.agiso.tempel.core.provider;
 import java.io.File;
 import java.util.List;
 
+import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.core.TempelScopeInfo;
+import org.agiso.tempel.core.model.Repository;
+import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
 import org.apache.maven.repository.internal.DefaultServiceLocator;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
@@ -80,6 +83,27 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 		PreorderNodeListGenerator nlg = new PreorderNodeListGenerator();
 		node.accept(nlg);
 		return nlg.getFiles();
+	}
+
+	@Override
+	protected void setupTemplatePath(Template template) {
+		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
+			throw new RuntimeException("Szablon MAVEN bez groupId");
+		}
+
+		Repository repository = template.getRepository();
+		if(repository != null) {
+			if(!repository.getValue().equals(tempelScopeInfo.getRepositoryPath(Scope.MAVEN))) {
+				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
+			}
+		}
+
+		String path = tempelScopeInfo.getRepositoryPath(Scope.MAVEN);
+		path = path + '/' + template.getGroupId().replace('.', '/');
+		path = path + '/' + template.getTemplateId();
+		path = path + '/' + template.getVersion();
+		path = path + '/' + template.getTemplateId() + '-' +  template.getVersion() + ".jar";
+		template.setPath(path);
 	}
 
 //	---------------------------------------------------------------------------

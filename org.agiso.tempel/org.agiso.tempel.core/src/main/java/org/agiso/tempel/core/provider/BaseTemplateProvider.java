@@ -13,13 +13,16 @@ import java.util.Map;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
+import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.VelocityExpressionEvaluator;
 import org.agiso.tempel.core.XStreamTempelFileProcessor;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateResource;
+import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
@@ -27,6 +30,8 @@ import org.agiso.tempel.core.model.TemplateResource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class BaseTemplateProvider implements ITemplateProviderElement {
+	// FIXME: Zastosować wstrzykiwanie zależności
+	protected ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
 	protected ITempelFileProcessor tempelFileProcessor = new XStreamTempelFileProcessor();
 
 	private Map<String, Object> globalProperties;
@@ -74,12 +79,14 @@ public abstract class BaseTemplateProvider implements ITemplateProviderElement {
 			Template template = (Template)object;
 			template.setScope(scope);
 
+			// Ustawianie referencji we wszystkich podszablonach:
 			if(template.getResources() != null) {
 				for(TemplateResource resource : template.getResources()) {
 					resource.setParentTemplateReference(template);
 				}
 			}
 
+			// Dodawanie do repozytorium (z wywołaniem template.setRepository(...))
 			String gId = Temp.StringUtils_emptyIfBlank(template.getGroupId());
 			String tId = Temp.StringUtils_emptyIfBlank(template.getTemplateId());
 			String ver = Temp.StringUtils_emptyIfBlank(template.getVersion());
@@ -89,7 +96,13 @@ public abstract class BaseTemplateProvider implements ITemplateProviderElement {
 			if(!Temp.StringUtils_isBlank(key)) {
 				templateRepository.put(key, null, null, null, template);
 			}
+
+			// Na końcu, gdy wywołano template.setRepository(...) ustawianie ścieżki:
+			setupTemplatePath(template);
+
 			return;
 		}
 	}
+
+	protected abstract void setupTemplatePath(Template template);
 }

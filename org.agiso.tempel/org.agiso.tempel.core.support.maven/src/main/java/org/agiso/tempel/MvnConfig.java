@@ -8,6 +8,7 @@ package org.agiso.tempel;
 
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.core.provider.AetherMvnTemplateProvider;
+import org.agiso.tempel.core.provider.ShinkWrapMvnTemplateProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MvnConfig {
 	public @Bean ITemplateProviderElement mvnTemplateProvider() {
-		return new AetherMvnTemplateProvider();
+		// return new AetherMvnTemplateProvider();
+		return new ShinkWrapMvnTemplateProvider();
 	}
 }

@@ -10,10 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.TempelScopeInfo;
+import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
 
@@ -76,5 +78,32 @@ public class UsrTemplateProvider extends BaseTemplateProvider {
 			System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	protected void setupTemplatePath(Template template) {
+		if(Temp.StringUtils_isEmpty(template.getGroupId())) {	// dopuszczone w repozytorium USER
+			// Szablony bez określonej grupy, identyfikatora i wersji mogą generować zasoby
+			// o ile nie wymagają do tego celu żadnych plików źródłowych (np. szablonów velocity).
+			// Nie mają one bowiem określonej ścieżki w repozytorium.
+			// Przykładem tego typu szablonów są szablony tworzące katalogi.
+
+			template.setPath(null);		// nadmiarowo, bo w nowym obiekcie jest null
+
+			return;
+		}
+
+		Repository repository = template.getRepository();
+		if(repository != null) {
+			if(!repository.getValue().equals(tempelScopeInfo.getRepositoryPath(Scope.USER))) {
+				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
+			}
+		}
+
+		String path = tempelScopeInfo.getRepositoryPath(Scope.USER);
+		path = path + '/' + template.getGroupId().replace('.', '/');
+		path = path + '/' + template.getTemplateId();
+		path = path + '/' + template.getVersion();
+		template.setPath(path);
 	}
 }
