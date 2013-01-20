@@ -30,7 +30,8 @@ public class TempelCoreITest extends AbstractOutputTest {
 //		});
 //
 //		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-//		assert "ee791dc8ebc5a6b6a355153a5f194d61".equals(md5);
+//		System.out.println(md5);
+//		assert "31c287aec4ff50269de4523bdfc4707b".equals(md5);
 //	}
 
 //	--------------------------------------------------------------------------
@@ -94,7 +95,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	 * org/agiso/tempel/tests/velocityFileTemplate/1.0.0
 	 */
 	@Test
-	public void testVelocityFileTemplate_1_0_0() throws Exception {
+	public void testVelocityFileTemplate_1_0_0_old() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:velocityFileTemplate:1.0.0",	// "velocityFileTemplate1",
@@ -233,19 +234,119 @@ public class TempelCoreITest extends AbstractOutputTest {
 		assert "eabcbb3f24682664c844ed3a8031a3f5".equals(md5);
 	}
 
-	/**
-	 * src/test/resources/repository/maven/
-	 * org/agiso/tempel/tests/velocityDirTemplate/9.0.0/velocityDirTemplate-9.0.0.jar
-	 */
+
+
+//	--------------------------------------------------------------------------
+//	Testy szablonów org.agiso.tempel.templates:test.*
+//	(do przeniesienia do projektów z poszczególnymi szablonami)
+//	--------------------------------------------------------------------------
 	@Test
-	public void testVelocityDirTemplate_9_0_0() throws Exception {
+	public void testVelocityDirectoryTemplate_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:9.0.0",		// "velocityDirTemplate9",
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:1.0.0",
 				"-d " + outPath
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "ee791dc8ebc5a6b6a355153a5f194d61".equals(md5);
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
 	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_2_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:2.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_3_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:3.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath + "/subdir"));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_4_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:4.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath + "/subdir"));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_5_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:5.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_6_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:6.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath + "/subdir"));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_7_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:7.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath + "/subdir"));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+	@Test
+	public void testVelocityDirectoryTemplate_8_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:8.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath + "/subdir"));
+		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5);
+	}
+
+
+	@Test
+	public void testVelocityFileTemplate_1_0_0() throws Exception {
+		String outPath = getOutputPath(true);
+		Bootstrap.main(new String[] {
+				"org.agiso.tempel.templates:test.velocityFileTemplate:1.0.0",
+				"-d " + outPath
+		});
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "1de00333e6819030285a9283f87e165c".equals(md5);
+	}
+
 }
