@@ -78,6 +78,13 @@ public class JarTemplateSource implements ITemplateSource {
 			}
 		}
 		if(baseEntry == null) {
+			if(Temp.StringUtils_isBlank(resource)) {
+				// Wpis baseEntry nie istnieje. Dopuszczamy taką sytuację jeśli nie jest
+				// określona wartość resource. Sytuacja ta występuje jeśli silnik nie
+				// przetwarza zasobów wejściowych, tylko np. tworzy katalogi (jak silnik
+				// MakeDirEngine).
+				return;
+			}
 			throw new IllegalArgumentException("Resource "
 					+ resource + " not exists in directory " + BASE_PATH);
 		}
