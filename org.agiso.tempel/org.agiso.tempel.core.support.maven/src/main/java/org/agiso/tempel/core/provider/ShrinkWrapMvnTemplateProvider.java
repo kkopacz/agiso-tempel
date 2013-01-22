@@ -11,14 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.api.internal.ITempelScopeInfo;
-import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
-import org.apache.maven.settings.Server;
 import org.apache.maven.settings.Settings;
-import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
-import org.apache.maven.settings.building.SettingsBuildingRequest;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenSettingsBuilder;

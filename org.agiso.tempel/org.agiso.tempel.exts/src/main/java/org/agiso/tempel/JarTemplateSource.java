@@ -54,7 +54,7 @@ public class JarTemplateSource implements ITemplateSource {
 		}
 		jarFile = new JarFile(mainFile);
 
-		// Wyszukujemy wpis pliku .jar odpowiadający dokładnie wskazanemu zasobowi.
+		// Wyszukujemy wpis pliku .jar odpowiadający wskazanemu zasobowi:
 		String basePath = BASE_PATH + Temp.StringUtils_emptyIfBlank(resource);
 		Enumeration<JarEntry> jarEntries = jarFile.entries();
 		while(jarEntries.hasMoreElements()) {

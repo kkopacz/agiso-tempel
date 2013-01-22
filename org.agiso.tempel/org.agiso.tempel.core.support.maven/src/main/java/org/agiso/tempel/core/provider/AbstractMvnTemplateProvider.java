@@ -10,20 +10,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.agiso.tempel.JarTemplateSource;
+import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
-import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
 
 /**
@@ -31,8 +26,8 @@ import org.agiso.tempel.core.model.Template;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
-	private Map<String, MvnTemplate> cache = new HashMap<String, MvnTemplate>();
+public abstract class AbstractMvnTemplateProvider extends CachingTemplateProvider
+		implements ITemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -42,72 +37,8 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider i
 
 //	--------------------------------------------------------------------------
 	@Override
-	public boolean contains(String key, String groupId, String templateId, String version) {
-		if(!cache.containsKey(key)) {
-			cache.put(key, doGet(key, groupId, templateId, version));
-		}
-		return cache.get(key) != null;
-	}
-
-	@Override
-	public Template get(String key, String groupId, String templateId, String version) {
-		if(!cache.containsKey(key)) {
-			cache.put(key, doGet(key, groupId, templateId, version));
-		}
-
-		final MvnTemplate mvnTemplate = getMvnTemplate(key);
-		if(mvnTemplate == null) {
-			return null;
-		}
-
-		if(mvnTemplate.repository == null) {
-			final ITemplateRepository templateRepository = new HashBasedTemplateRepository();
-
-			try {
-				tempelFileProcessor.process(mvnTemplate.definition, new ITempelEntryProcessor() {
-					@Override
-					public void processObject(Object object) {
-						AbstractMvnTemplateProvider.this.processObject(Template.Scope.MAVEN, object, templateRepository,
-								new ITemplateSourceFactory() {
-									@Override
-									public ITemplateSource createTemplateSource(Template template, String source) {
-										try {
-											return new JarTemplateSource(getTemplatePath(template), source);
-										} catch(IOException e) {
-											throw new RuntimeException(e);
-										}
-									}
-								}
-						);
-					}
-				});
-				System.out.println("Wczytano ustawienia z biblioteki szablonu " + key);
-			} catch(Exception e) {
-				System.err.println("Błąd wczytywania ustawień z biblioteki szablonu '" + key + "': " + e.getMessage());
-				throw new RuntimeException(e);
-			}
-
-			mvnTemplate.repository = templateRepository;
-		}
-
-		return mvnTemplate.repository.get(key, groupId, templateId, version);
-	}
-
-	protected final MvnTemplate getMvnTemplate(String key) {
-		return cache.get(key);
-	}
-
-	protected abstract String getTemplatePath(Template template);
-
-//	--------------------------------------------------------------------------
-	/**
-	 * @param key
-	 * @param groupId
-	 * @param templateId
-	 * @param version
-	 * @return
-	 */
-	protected MvnTemplate doGet(String key, String groupId, String templateId, String version) {
+	@SuppressWarnings("unchecked")
+	protected MvnCacheEntry doGet(String key, String groupId, String templateId, String version) {
 		if(key.indexOf(':') <= 0) {
 			return null;
 		}
@@ -143,12 +74,12 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider i
 
 						InputStream is = jarFile.getInputStream(tempel_xml);
 
-						MvnTemplate mvnTemplate = new MvnTemplate();
-						mvnTemplate.path = file.getCanonicalPath();
-						mvnTemplate.definition = convertStreamToString(is);
-						mvnTemplate.classpath = files;
+						MvnCacheEntry cacheEntry = new MvnCacheEntry();
+						cacheEntry.definition = Temp.ConvertUtils_convertStreamToString(is);
+						cacheEntry.path = file.getCanonicalPath();
+						cacheEntry.classpath = files;
 
-						return mvnTemplate;
+						return cacheEntry;
 					} finally {
 						if(jarFile != null) {
 							jarFile.close();
@@ -156,7 +87,6 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider i
 					}
 				}
 			}
-
 		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -173,17 +103,21 @@ public abstract class AbstractMvnTemplateProvider extends BaseTemplateProvider i
 	 */
 	protected abstract List<File> resolve(String groupId, String templateId, String version) throws Exception;
 
-//	---------------------------------------------------------------------------
-	protected static String convertStreamToString(java.io.InputStream is) {
-		Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\A");
-		return s.hasNext() ? s.next() : "";
+//	--------------------------------------------------------------------------
+	@Override
+	public ITemplateSource createTemplateSource(Template template, String source) {
+		try {
+			return new JarTemplateSource(getTemplatePath(template), source);
+		} catch(IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
+	protected abstract String getTemplatePath(Template template);
+
 //	--------------------------------------------------------------------------
-	public static class MvnTemplate {
+	public static class MvnCacheEntry extends CacheEntry {
 		public String path;
-		public String definition;
 		public List<File> classpath;
-		public ITemplateRepository repository;
 	}
 }

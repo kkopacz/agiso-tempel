@@ -19,6 +19,7 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Scanner;
 
 /**
  * Klasa tymczasowa (do usunięcia). Zawiera statyczne metody narzędziowe do
@@ -269,5 +270,13 @@ public class Temp {
 		}
 		sb.append(c);
 		return sb.toString();
+	}
+
+//	--------------------------------------------------------------------------
+//	ConvertUtils
+//	--------------------------------------------------------------------------
+	public static final String ConvertUtils_convertStreamToString(InputStream is) {
+		Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\A");
+		return s.hasNext() ? s.next() : "";
 	}
 }
