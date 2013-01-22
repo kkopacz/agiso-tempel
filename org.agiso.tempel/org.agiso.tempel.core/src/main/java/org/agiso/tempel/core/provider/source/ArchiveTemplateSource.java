@@ -1,6 +1,6 @@
-/* org.agiso.tempel.templates.test.JarArchiveTemplateSource (21-01-2013)
+/* org.agiso.tempel.core.provider.source.ArchiveTemplateSource (21-01-2013)
  * 
- * JarArchiveTemplateSource.java
+ * ArchiveTemplateSource.java
  * 
  * Copyright 2013 agiso.org
  */
@@ -16,20 +16,20 @@ import java.util.Map;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
+import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Node;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class JarArchiveTemplateSource implements ITemplateSource {
+public class ArchiveTemplateSource implements ITemplateSource {
 	private static final String BASE_PATH = "/TEMPEL-INF/template";
 
 //	--------------------------------------------------------------------------
-	private JavaArchive archive;
+	private Archive<?> archive;
 	private Node baseEntry;
 
 	private String resource;
@@ -40,7 +40,7 @@ public class JarArchiveTemplateSource implements ITemplateSource {
 	private Map<String, ITemplateSourceEntry> entries;
 
 //	--------------------------------------------------------------------------
-	public JarArchiveTemplateSource(JavaArchive archive, String resource) throws IOException{
+	public ArchiveTemplateSource(Archive<?> archive, String resource) throws IOException{
 		this.archive = archive;
 		this.resource = resource;
 

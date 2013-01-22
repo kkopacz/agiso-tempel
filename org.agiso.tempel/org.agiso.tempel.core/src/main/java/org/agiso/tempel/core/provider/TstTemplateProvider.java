@@ -8,46 +8,44 @@ package org.agiso.tempel.core.provider;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.provider.source.JarArchiveTemplateSource;
+import org.agiso.tempel.core.provider.source.ArchiveTemplateSource;
+import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class TstTemplateProvider extends CachingTemplateProvider {
-	// FIXME: Zastosować wstrzykiwanie zależności
-	// private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
-
-//	private Settings settings;
-//	private MavenResolverSystem resolver = Maven.resolver();
+public class TstTemplateProvider extends CachingTemplateProvider implements ITemplateProviderElement {
+	private Map<String, Archive<?>> repository;
 
 //	--------------------------------------------------------------------------
 	/**
 	 * 
 	 */
 	public TstTemplateProvider() {
-//		String userSettingsPaht = System.getProperty("user.home").concat("/.m2/settings.xml");
-//		String globalSettingsPath = "/work/tools/maven/maven/conf/settings.xml";
-//		// String localRepositoryPath = tempelScopeInfo.getSettingsPath(Scope.MAVEN);
-//
-//		SettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
-//		request.setUserSettingsFile(new File(userSettingsPaht));
-//		request.setGlobalSettingsFile(new File(globalSettingsPath));
-//
-//		settings = new MavenSettingsBuilder().buildSettings(request);
-//		// settings.setLocalRepository(localRepositoryPath);
-//
-//		settings = new MavenSettingsBuilder().buildDefaultSettings();
+		repository = new HashMap<String, Archive<?>>();
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
+	public int getOrder() {
+		return -1;
+	}
+
+//	--------------------------------------------------------------------------
+	public void addArchive(String groupId, String templateId, String version,
+			Archive<?> archive) {
+		repository.put(groupId + ":" + templateId + ":" + version, archive);
 	}
 
 //	--------------------------------------------------------------------------
@@ -56,7 +54,7 @@ public class TstTemplateProvider extends CachingTemplateProvider {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected JavaArchiveCacheEntry doGet(String key, String groupId, String templateId, String version) {
+	protected ArchiveCacheEntry doGet(String key, String groupId, String templateId, String version) {
 		if(key.indexOf(':') <= 0) {
 			return null;
 		}
@@ -71,7 +69,10 @@ public class TstTemplateProvider extends CachingTemplateProvider {
 		// szablonu i sprawdzanie czy zawiera plik tempel.xml. Jeśli tak, to jego
 		// odczytywanie i parsowanie w celu przygotowania obiektu Template:
 		try {
-			JavaArchive archive = resolve(groupId, templateId, version);
+			Archive<?> archive = resolve(groupId, templateId, version);
+			if(archive == null) {
+				return null;
+			}
 
 			Node tempel_xml = archive.get("/TEMPEL-INF/tempel.xml");
 			if(tempel_xml == null) {
@@ -80,7 +81,7 @@ public class TstTemplateProvider extends CachingTemplateProvider {
 
 			InputStream is = tempel_xml.getAsset().openStream();
 
-			JavaArchiveCacheEntry cacheEntry = new JavaArchiveCacheEntry();
+			ArchiveCacheEntry cacheEntry = new ArchiveCacheEntry();
 			cacheEntry.definition = Temp.ConvertUtils_convertStreamToString(is);
 			cacheEntry.archive = archive;
 
@@ -91,35 +92,26 @@ public class TstTemplateProvider extends CachingTemplateProvider {
 		}
 	}
 
-	protected JavaArchive resolve(String groupId, String templateId, String version) throws Exception {
-		JavaArchive archive = ShrinkWrap.create(JavaArchive.class, templateId + ":" + version + ".jar");
-		archive.as(ExplodedImporter.class).importDirectory("src/main/resources");
-
-		return archive;
-
-//		File[] files = resolver.resolve(
-//				groupId + ":" + templateId + ":" + version
-//		).withTransitivity().asFile();
-//
-//		return Arrays.asList(files);
+	protected Archive<?> resolve(String groupId, String templateId, String version) throws Exception {
+		return repository.get(groupId + ":" + templateId + ":" + version);
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
 	public ITemplateSource createTemplateSource(Template template, String source) {
-		JavaArchiveCacheEntry cacheEntry = getCacheEntry(
+		ArchiveCacheEntry cacheEntry = getCacheEntry(
 				template.getGroupId() + ":" + template.getTemplateId() + ":" + template.getVersion()
 		);
 
 		try {
-			return new JarArchiveTemplateSource(cacheEntry.archive, source);
+			return new ArchiveTemplateSource(cacheEntry.archive, source);
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 //	--------------------------------------------------------------------------
-	public static class JavaArchiveCacheEntry extends CacheEntry {
-		public JavaArchive archive;
+	public static class ArchiveCacheEntry extends CacheEntry {
+		public Archive<?> archive;
 	}
 }
