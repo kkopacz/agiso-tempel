@@ -40,6 +40,19 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.jboss.shrinkwrap</groupId>
+			<artifactId>shrinkwrap-api</artifactId>
+			<version>1.0.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap</groupId>
+			<artifactId>shrinkwrap-impl-base</artifactId>
+			<version>1.0.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
