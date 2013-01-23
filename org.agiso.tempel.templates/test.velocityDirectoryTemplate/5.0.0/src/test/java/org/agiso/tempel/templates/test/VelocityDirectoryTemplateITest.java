@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.test.AbstractTemplateTest;
 import org.testng.annotations.Test;
 
 /**

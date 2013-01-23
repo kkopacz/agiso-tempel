@@ -10,11 +10,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.Tempel;
-import org.agiso.tempel.core.DefaultTemplateExecutor;
-import org.agiso.tempel.core.RecursiveTemplateVerifier;
-import org.agiso.tempel.core.provider.TstTemplateProvider;
-import org.agiso.tempel.test.AbstractOutputTest;
+import org.agiso.tempel.test.AbstractTemplateTest;
 import org.testng.annotations.Test;
 
 /**
@@ -22,22 +18,14 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class VelocityDirectoryTemplateITest extends AbstractOutputTest {
-	private Tempel tempel;
-	private TstTemplateProvider tstTemplateProvider;
+public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
+	private static final String GROUP_ID    = "org.agiso.tempel.templates";
+	private static final String TEMPLATE_ID = "test.velocityDirectoryTemplate";
+	private static final String VERSION     = "2.0.0";
 
 //	--------------------------------------------------------------------------
 	public VelocityDirectoryTemplateITest() {
-		File workDir = new File(".");
-		File repoDir = new File("./src/test/resources/repository");
-
-		tempel = new Tempel(workDir, repoDir);
-
-		tstTemplateProvider = new TstTemplateProvider();
-
-		tempel.setTemplateProvider(tstTemplateProvider);
-		tempel.setTemplateVerifier(new RecursiveTemplateVerifier());
-		tempel.setTemplateExecutor(new DefaultTemplateExecutor());
+		super(GROUP_ID, TEMPLATE_ID, VERSION);
 	}
 
 //	--------------------------------------------------------------------------
@@ -47,7 +35,7 @@ public class VelocityDirectoryTemplateITest extends AbstractOutputTest {
 
 		tempel.setWorkDir(new File(outPath));
 		tempel.startTemplate(
-				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:2.0.0",
+				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
 				new HashMap<String, String>()
 		);
 

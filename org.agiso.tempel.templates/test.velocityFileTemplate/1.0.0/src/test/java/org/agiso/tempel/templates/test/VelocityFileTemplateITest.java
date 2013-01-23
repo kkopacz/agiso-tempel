@@ -1,6 +1,6 @@
-/* org.agiso.tempel.templates.test.VelocityDirectoryTemplateITest (20-01-2013)
+/* org.agiso.tempel.templates.test.VelocityFileTemplateITest (20-01-2013)
  * 
- * VelocityDirectoryTemplateITest.java
+ * VelocityFileTemplateITest.java
  * 
  * Copyright 2013 agiso.org
  */
@@ -18,19 +18,19 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
+public class VelocityFileTemplateITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";
-	private static final String TEMPLATE_ID = "test.velocityDirectoryTemplate";
-	private static final String VERSION     = "4.0.0";
+	private static final String TEMPLATE_ID = "test.velocityFileTemplate";
+	private static final String VERSION     = "1.0.0";
 
 //	--------------------------------------------------------------------------
-	public VelocityDirectoryTemplateITest() {
+	public VelocityFileTemplateITest() {
 		super(GROUP_ID, TEMPLATE_ID, VERSION);
 	}
 
 //	--------------------------------------------------------------------------
 	@Test
-	public void testVelocityDirectoryTemplate_4_0_0() throws Exception {
+	public void testVelocityDirectoryTemplate_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 
 		tempel.setWorkDir(new File(outPath));
@@ -40,6 +40,6 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "554cd5d1a8d91902a6315f11f1f98887".equals(md5);
+		assert "1de00333e6819030285a9283f87e165c".equals(md5);
 	}
 }

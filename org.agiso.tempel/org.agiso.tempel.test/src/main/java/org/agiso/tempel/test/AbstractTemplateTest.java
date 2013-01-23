@@ -1,10 +1,10 @@
-/* org.agiso.tempel.templates.test.AbstractTemplateTest (22-01-2013)
+/* org.agiso.tempel.test.AbstractTemplateTest (22-01-2013)
  * 
  * AbstractTemplateTest.java
  * 
  * Copyright 2013 agiso.org
  */
-package org.agiso.tempel.templates.test;
+package org.agiso.tempel.test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -16,22 +16,31 @@ import org.agiso.tempel.core.RecursiveTemplateVerifier;
 import org.agiso.tempel.core.provider.MainTemplateProvider;
 import org.agiso.tempel.core.provider.ShrinkWrapMvnTemplateProvider;
 import org.agiso.tempel.core.provider.TstTemplateProvider;
-import org.agiso.tempel.test.AbstractOutputTest;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
- * 
+ * Klasa bazowa dla klas testujących szablony przechowywane w repozytoriach
+ * Maven. Sablony te posiadają dedykowane projekty z plikami pom.xml, które
+ * po kompilacji w formie plików .jar umieszczane są w repozytoriach Maven.
+ * </br>
+ * Przed uruchomieniem testów szablonu, jego archiwum jest przygotowywane
+ * za pomocą mechanizmów biblioteki {@link ShrinkWrap} i rejestrowane w
+ * provider'ze {@link TstTemplateProvider}. Szablony zależne (podszablony)
+ * muszą się znajdować w repozytoriach Maven i dostarczane są poprzez
+ * {@link ShrinkWrapMvnTemplateProvider};
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractTemplateTest extends  AbstractOutputTest {
+public abstract class AbstractTemplateTest extends AbstractOutputTest {
 
 //	--------------------------------------------------------------------------
 	private String templateId;
 	private String version;
+
+	private TstTemplateProvider tstTemplateProvider;
 
 	protected Tempel tempel;
 
@@ -45,14 +54,11 @@ public abstract class AbstractTemplateTest extends  AbstractOutputTest {
 
 		tempel = new Tempel(workDir, repoDir);
 
-		TstTemplateProvider tstTemplateProvider;
+		tstTemplateProvider = new TstTemplateProvider();
 
 		MainTemplateProvider mainTemplateProvider = new MainTemplateProvider();
 		mainTemplateProvider.setTemplateProviderElements(
-				Arrays.asList(new ITemplateProviderElement[] {
-						tstTemplateProvider = new TstTemplateProvider(),
-						new ShrinkWrapMvnTemplateProvider()
-				})
+				Arrays.asList(getTemplateProviders())
 		);
 
 		Archive<?> archive = createTemplateArchive();
@@ -64,6 +70,13 @@ public abstract class AbstractTemplateTest extends  AbstractOutputTest {
 	}
 
 //	--------------------------------------------------------------------------
+	protected ITemplateProviderElement[] getTemplateProviders() {
+		return new ITemplateProviderElement[] {
+				tstTemplateProvider,
+				new ShrinkWrapMvnTemplateProvider()
+		};
+	}
+
 	protected JavaArchive createTemplateArchive() {
 		JavaArchive archive = ShrinkWrap.create(
 				JavaArchive.class, templateId + ":" + version + ".jar"

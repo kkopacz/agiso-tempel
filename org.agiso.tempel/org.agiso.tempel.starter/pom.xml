@@ -135,6 +135,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.exts</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.core.support.maven</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

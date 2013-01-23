@@ -1,14 +1,15 @@
-/* org.agiso.tempel.FileTemplateSourceUTest (21-12-2012)
+/* org.agiso.tempel.core.provider.source.FileTemplateSourceUTest (21-12-2012)
  * 
  * FileTemplateSourceUTest.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel;
+package org.agiso.tempel.core.provider.source;
 
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
-import org.agiso.tempel.test.AbstractRepositoryTest;
+import org.agiso.tempel.core.provider.source.FileTemplateSource;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -16,7 +17,19 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class FileTemplateSourceUTest extends AbstractRepositoryTest {
+public class FileTemplateSourceUTest {
+	protected String repositoryPath;
+
+//	--------------------------------------------------------------------------
+	@BeforeClass
+	public void determineRepositoryPath() throws Exception {
+		// Wyznaczanie ścieżki bazowej repozytorium testowego:
+		repositoryPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		repositoryPath = repositoryPath.substring(0, repositoryPath.lastIndexOf("/target/test-classes/"));
+		repositoryPath = repositoryPath + "/src/test/resources/";
+	}
+
+//	--------------------------------------------------------------------------
 	@Test
 	public void testFileSource() throws Exception {
 		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testFileSource";

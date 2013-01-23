@@ -77,11 +77,11 @@
 			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.exts</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -127,11 +127,11 @@
 		</dependency>
 
 
-		<dependency>
+		<!-- dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency -->
 	</dependencies>
 </project>

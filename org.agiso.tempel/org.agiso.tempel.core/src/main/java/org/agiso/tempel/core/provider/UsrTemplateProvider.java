@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import org.agiso.tempel.FileTemplateSource;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.ITempelScopeInfo;
@@ -22,6 +21,7 @@ import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
+import org.agiso.tempel.core.provider.source.FileTemplateSource;
 
 /**
  * 

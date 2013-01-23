@@ -117,7 +117,7 @@ public class ArchiveTemplateSource implements ITemplateSource {
 
 	@Override
 	public ITemplateSourceEntry getEntry(String name) {
-		return entries.get(name);
+		return entries.get("/" + name);
 	}
 
 	@Override
