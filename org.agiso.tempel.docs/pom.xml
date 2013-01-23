@@ -6,13 +6,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.agiso.blog</groupId>
-	<artifactId>maven-docbook-fop</artifactId>
+	<groupId>org.agiso.tempel</groupId>
+	<artifactId>org.agiso.tempel.docs</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-
-	<name>maven-docbook-fop</name>
-	<url>http://blog.agiso.org/articles/maven-docbook-fop</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
