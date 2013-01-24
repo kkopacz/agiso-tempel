@@ -19,7 +19,7 @@ import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.core.provider.source.JarTemplateSource;
+import org.agiso.tempel.exts.base.provider.source.JarTemplateSource;
 
 /**
  * 

@@ -17,7 +17,7 @@ import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.core.provider.source.FileTemplateSource;
+import org.agiso.tempel.exts.base.provider.source.FileTemplateSource;
 
 /**
  * 

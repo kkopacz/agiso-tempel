@@ -1,14 +1,14 @@
-/* org.agiso.tempel.core.provider.source.JarTemplateSourceUTest (21-12-2012)
+/* org.agiso.tempel.exts.base.provider.source.FileTemplateSourceUTest (21-12-2012)
  * 
- * JarTemplateSourceUTest.java
+ * FileTemplateSourceUTest.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.provider.source;
+package org.agiso.tempel.exts.base.provider.source;
 
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
-import org.agiso.tempel.core.provider.source.JarTemplateSource;
+import org.agiso.tempel.exts.base.provider.source.FileTemplateSource;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class JarTemplateSourceUTest {
+public class FileTemplateSourceUTest {
 	protected String repositoryPath;
 
 //	--------------------------------------------------------------------------
@@ -32,10 +32,10 @@ public class JarTemplateSourceUTest {
 //	--------------------------------------------------------------------------
 	@Test
 	public void testFileSource() throws Exception {
-		final String templatePath = repositoryPath + "/" + "JarTemplateSourceUTest/testFileSource.jar";
-		final String resourceName = /* TEMPEL-INF/template/ */ "testSourceFile1.txt";
+		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testFileSource";
+		final String resourceName = "testSourceFile1.txt";
 
-		ITemplateSource templateSource = new JarTemplateSource(templatePath, resourceName);
+		ITemplateSource templateSource = new FileTemplateSource(templatePath, resourceName);
 
 		assert templatePath.equals(templateSource.getTemplate());
 		assert resourceName.equals(templateSource.getResource());
@@ -55,9 +55,9 @@ public class JarTemplateSourceUTest {
 
 	@Test
 	public void testDirectorySource() throws Exception {
-		final String templatePath = repositoryPath + "/" + "JarTemplateSourceUTest/testDirectorySource.jar";
+		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testDirectorySource";
 
-		ITemplateSource templateSource = new JarTemplateSource(templatePath, null);
+		ITemplateSource templateSource = new FileTemplateSource(templatePath, null);
 
 		assert templatePath.equals(templateSource.getTemplate());
 		assert null == templateSource.getResource();
@@ -101,9 +101,9 @@ public class JarTemplateSourceUTest {
 
 	@Test
 	public void testDirectorySourceSubdirectory() throws Exception {
-		final String templatePath = repositoryPath + "/" + "JarTemplateSourceUTest/testDirectorySource.jar";
+		final String templatePath = repositoryPath + "/" + "FileTemplateSourceUTest/testDirectorySource";
 
-		ITemplateSource templateSource = new JarTemplateSource(templatePath, "subdirectory");
+		ITemplateSource templateSource = new FileTemplateSource(templatePath, "subdirectory");
 
 		assert templatePath.equals(templateSource.getTemplate());
 		assert "subdirectory".equals(templateSource.getResource());

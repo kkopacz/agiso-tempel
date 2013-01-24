@@ -7,10 +7,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.agiso.tempel</groupId>
-	<artifactId>org.agiso.tempel.exts</artifactId>
+	<artifactId>org.agiso.tempel.exts.base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Tempel Extensions</name>
+	<name>AGISO Tempel Maven Extensions Base</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,33 +77,7 @@
 			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.exts.base</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<!-- Inflector. Dla org.agiso.tempel.convert.SingularToPluralConverter'a -->
-		<dependency>
-			<groupId>net.java.dev.inflector</groupId>
-			<artifactId>inflector</artifactId>
-			<version>0.7.0</version>
-		</dependency>
-
-		<!-- Velocity. Dla org.agiso.tempel.engine.VelocityFileEngine'a i VelocityDirectoryEngine'a -->
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.7</version>
-		</dependency>
 
 
-
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 </project>

@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.core.provider.source.FileTemplateSource;
+import org.agiso.tempel.exts.base.provider.source.FileTemplateSource;
 import org.agiso.tempel.test.AbstractTempelEngineTest;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
