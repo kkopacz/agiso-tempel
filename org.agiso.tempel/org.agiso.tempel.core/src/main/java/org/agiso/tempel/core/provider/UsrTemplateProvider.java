@@ -12,11 +12,11 @@ import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.model.ITemplateSourceFactory;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
 
 /**

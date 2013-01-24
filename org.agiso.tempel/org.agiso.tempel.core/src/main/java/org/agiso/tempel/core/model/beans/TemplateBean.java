@@ -11,9 +11,9 @@ import java.util.List;
 
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.core.model.ITemplateSourceFactory;
-import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.TemplateReference;
+import org.agiso.tempel.api.ITemplateSourceFactory;
+import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.api.model.TemplateReference;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;

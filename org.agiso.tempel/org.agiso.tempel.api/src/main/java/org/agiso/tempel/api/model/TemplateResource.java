@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.model.TemplateResource (17-10-2012)
+/* org.agiso.tempel.api.model.TemplateResource (17-10-2012)
  * 
  * TemplateResource.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.model;
+package org.agiso.tempel.api.model;
 
 /**
  * 
@@ -16,7 +16,6 @@ public interface TemplateResource extends Cloneable {
 	 * @return Plik szablonu przetwarzany przez silnik generatora.
 	 */
 	public String getSource();
-//	public void setSource(String source);
 
 	/**
 	 * @return Zasób tworzony w wyniku wypełnienia szablonu przez silnik

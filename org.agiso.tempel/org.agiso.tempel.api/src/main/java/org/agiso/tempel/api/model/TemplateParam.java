@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.model.TemplateParam (15-09-2012)
+/* org.agiso.tempel.api.model.TemplateParam (15-09-2012)
  * 
  * TemplateParam.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.model;
+package org.agiso.tempel.api.model;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
 

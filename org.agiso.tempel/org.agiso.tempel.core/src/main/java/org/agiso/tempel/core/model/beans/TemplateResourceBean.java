@@ -6,8 +6,8 @@
  */
 package org.agiso.tempel.core.model.beans;
 
-import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.TemplateResource;
+import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.api.model.TemplateResource;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;

@@ -1,12 +1,12 @@
-/* org.agiso.tempel.core.model.ITemplateSourceFactory (20-01-2013)
+/* org.agiso.tempel.api.ITemplateSourceFactory (20-01-2013)
  * 
  * ITemplateSourceFactory.java
  * 
  * Copyright 2013 agiso.org
  */
-package org.agiso.tempel.core.model;
+package org.agiso.tempel.api;
 
-import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.model.Template;
 
 /**
  * 

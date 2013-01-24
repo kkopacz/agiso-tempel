@@ -20,7 +20,7 @@ import java.util.Properties;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateVerifier;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.apache.commons.lang.LocaleUtils;
 
 /**

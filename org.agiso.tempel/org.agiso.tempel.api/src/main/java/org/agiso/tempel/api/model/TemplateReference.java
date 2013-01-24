@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.model.TemplateReference (02-10-2012)
+/* org.agiso.tempel.api.model.TemplateReference (02-10-2012)
  * 
  * TemplateReference.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.model;
+package org.agiso.tempel.api.model;
 
 import java.util.List;
 

@@ -18,7 +18,7 @@ import java.util.jar.JarFile;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.core.provider.source.JarTemplateSource;
 
 /**

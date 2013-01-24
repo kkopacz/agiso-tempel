@@ -9,7 +9,7 @@ package org.agiso.tempel.api.internal;
 import java.io.IOException;
 import java.util.Map;
 
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 
 /**
  * 

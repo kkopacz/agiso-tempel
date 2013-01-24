@@ -7,7 +7,7 @@
 package org.agiso.tempel.core.model.beans;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
-import org.agiso.tempel.core.model.TemplateParam;
+import org.agiso.tempel.api.model.TemplateParam;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;

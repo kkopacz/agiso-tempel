@@ -9,9 +9,9 @@ package org.agiso.tempel.core.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.agiso.tempel.core.model.TemplateParam;
-import org.agiso.tempel.core.model.TemplateReference;
-import org.agiso.tempel.core.model.TemplateResource;
+import org.agiso.tempel.api.model.TemplateParam;
+import org.agiso.tempel.api.model.TemplateReference;
+import org.agiso.tempel.api.model.TemplateResource;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;

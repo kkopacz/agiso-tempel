@@ -1,15 +1,16 @@
-/* org.agiso.tempel.core.model.Template (14-09-2012)
+/* org.agiso.tempel.api.model.Template (14-09-2012)
  * 
  * Template.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.core.model;
+package org.agiso.tempel.api.model;
 
 import java.util.List;
 
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateSource;
+import org.agiso.tempel.api.ITemplateSourceFactory;
 
 /**
  * 

@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.core.provider.source.ArchiveTemplateSource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;

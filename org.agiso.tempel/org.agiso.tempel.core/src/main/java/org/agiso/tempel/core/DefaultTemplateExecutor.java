@@ -18,12 +18,12 @@ import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.api.model.TemplateParam;
+import org.agiso.tempel.api.model.TemplateReference;
+import org.agiso.tempel.api.model.TemplateResource;
 import org.agiso.tempel.core.lang.MapStack;
 import org.agiso.tempel.core.lang.SimpleMapStack;
-import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.TemplateParam;
-import org.agiso.tempel.core.model.TemplateReference;
-import org.agiso.tempel.core.model.TemplateResource;
 
 /**
  * 

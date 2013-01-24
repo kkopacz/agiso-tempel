@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

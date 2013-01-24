@@ -11,16 +11,16 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.api.model.TemplateResource;
 import org.agiso.tempel.core.VelocityExpressionEvaluator;
 import org.agiso.tempel.core.XStreamTempelFileProcessor;
-import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Repository;
-import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.TemplateResource;
 
 /**
  * 

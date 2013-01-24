@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.List;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.apache.maven.repository.internal.DefaultServiceLocator;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
 import org.apache.maven.wagon.Wagon;

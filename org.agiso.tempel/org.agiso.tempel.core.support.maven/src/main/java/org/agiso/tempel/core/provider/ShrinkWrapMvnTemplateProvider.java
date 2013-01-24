@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 import org.apache.maven.settings.Settings;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.model.Template;
+import org.agiso.tempel.api.model.Template;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
