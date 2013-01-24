@@ -16,7 +16,6 @@ import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
-import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
@@ -95,9 +94,9 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 			throw new RuntimeException("Szablon GLOBAL bez groupId");
 		}
 
-		Repository repository = template.getRepository();
+		String repository = template.getRepository();
 		if(repository != null) {
-			if(!repository.getValue().equals(tempelScopeInfo.getRepositoryPath(Scope.GLOBAL))) {
+			if(!repository.equals(tempelScopeInfo.getRepositoryPath(Scope.GLOBAL))) {
 				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
 			}
 		}

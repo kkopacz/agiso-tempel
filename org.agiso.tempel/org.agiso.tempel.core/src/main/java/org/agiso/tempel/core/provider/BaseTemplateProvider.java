@@ -56,7 +56,7 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 		if(object instanceof Repository) {
 			Repository repository = (Repository)object;
 
-			templateRepository.setRepository(scope, repository);
+			templateRepository.setRepository(scope, repository.getValue());
 			return;
 		}
 

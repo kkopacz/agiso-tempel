@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
 
@@ -24,7 +23,7 @@ import com.google.common.collect.Table;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class HashBasedTemplateRepository implements ITemplateRepository {
-	private Map<Scope, Repository> rMap;
+	private Map<Scope, String> rMap;
 
 	// key -> template
 	private Map<String, Template> kMap;
@@ -34,14 +33,14 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 
 //	--------------------------------------------------------------------------
 	public HashBasedTemplateRepository() {
-		rMap = new HashMap<Template.Scope, Repository>();
+		rMap = new HashMap<Template.Scope, String>();
 		kMap = new HashMap<String, Template>();
 		gtvTable = HashBasedTable.create();
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void setRepository(Scope scope, Repository repository) {
+	public void setRepository(Scope scope, String repository) {
 		// Przeglądamy wszystkie szablony i ustawiamy repozytorium dla tych,
 		// które są przyporządkowane do zadanego zasięgu:
 		for(Map<String, Template> row : gtvTable.values()) {

@@ -107,9 +107,9 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 			return null;
 		}
 
-		Repository repository = template.getRepository();
+		String repository = template.getRepository();
 		if(repository != null) {
-			if(!repository.getValue().equals(tempelScopeInfo.getRepositoryPath(Scope.RUNTIME))) {
+			if(!repository.equals(tempelScopeInfo.getRepositoryPath(Scope.RUNTIME))) {
 				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
 			}
 		}

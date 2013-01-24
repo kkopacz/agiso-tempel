@@ -38,7 +38,7 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	private List<TemplateReference> references;
 
 	@XStreamOmitField
-	private Repository repository;
+	private String repository;
 
 //	--------------------------------------------------------------------------
 	public TemplateBean() {
@@ -90,15 +90,15 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	}
 
 	@Override
-	public Repository getRepository() {
+	public String getRepository() {
 		return repository;
 	}
 	@Override
-	public void setRepository(Repository repository) {
+	public void setRepository(String repository) {
 		this.repository = repository;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends TemplateBean> T withRepository(Repository repository) {
+	public <T extends TemplateBean> T withRepository(String repository) {
 		this.repository = repository;
 		return (T)this;
 	}
@@ -128,7 +128,7 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 			}
 		}
 
-		clone.repository = repository == null? null : repository.clone();
+		clone.repository = repository;
 		clone.templateSourceFactory = templateSourceFactory;
 
 		return clone;

@@ -36,8 +36,8 @@ public interface Template extends TemplateReference {
 	 */
 	public List<TemplateReference> getReferences();
 
-	public void setRepository(Repository repository);
-	public Repository getRepository();
+	public void setRepository(String repository);
+	public String getRepository();
 
 //	--------------------------------------------------------------------------
 	public Template clone();

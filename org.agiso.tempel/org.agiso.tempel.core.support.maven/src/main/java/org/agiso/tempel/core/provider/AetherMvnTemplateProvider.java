@@ -12,7 +12,6 @@ import java.util.List;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.core.TempelScopeInfo;
-import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.Template.Scope;
 import org.apache.maven.repository.internal.DefaultServiceLocator;
@@ -91,9 +90,9 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 			throw new RuntimeException("Szablon MAVEN bez groupId");
 		}
 
-		Repository repository = template.getRepository();
+		String repository = template.getRepository();
 		if(repository != null) {
-			if(!repository.getValue().equals(tempelScopeInfo.getRepositoryPath(Scope.MAVEN))) {
+			if(!repository.equals(tempelScopeInfo.getRepositoryPath(Scope.MAVEN))) {
 				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
 			}
 		}
