@@ -20,7 +20,6 @@ import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateResource;
 import org.agiso.tempel.core.VelocityExpressionEvaluator;
 import org.agiso.tempel.core.XStreamTempelFileProcessor;
-import org.agiso.tempel.core.model.Repository;
 
 /**
  * 
@@ -28,8 +27,6 @@ import org.agiso.tempel.core.model.Repository;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class BaseTemplateProvider implements ITemplateProvider {
-	protected String repository;
-
 	// FIXME: Zastosować wstrzykiwanie zależności
 	protected ITempelFileProcessor tempelFileProcessor = new XStreamTempelFileProcessor();
 
@@ -50,14 +47,6 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 	 * @param object
 	 */
 	protected void processObject(String scope, Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
-		// Ścieżka repozytorium pliku tempel.xml:
-		if(object instanceof Repository) {
-			Repository repository = (Repository)object;
-
-			this.repository = repository.getValue();
-			return;
-		}
-
 		// Mapa parametrów pliku tempel.xml:
 		if(object instanceof Map) {
 			@SuppressWarnings("unchecked")

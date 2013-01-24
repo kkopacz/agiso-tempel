@@ -19,7 +19,6 @@ import java.util.Map.Entry;
 
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
-import org.agiso.tempel.core.model.beans.RepositoryBean;
 import org.agiso.tempel.core.model.beans.TemplateBean;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
 import org.agiso.tempel.core.model.beans.TemplateReferenceBean;
@@ -29,7 +28,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
-import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
@@ -43,23 +41,16 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 
 	static {
 		// Konfiguracja XStream'a:
-		// http://kickjava.com/src/com/thoughtworks/acceptance/MultipleObjectsInOneStreamTest.java.htm
 		xStream = new XStream();
 		xStream.alias("properties", Map.class);
 		xStream.autodetectAnnotations(true);
 		xStream.processAnnotations(new Class[] {
-				RepositoryBean.class,
 				TemplateBean.class,
 				TemplateParamBean.class,
 				TemplateReferenceBean.class,
 				TemplateResourceBean.class
 		});
 		xStream.registerConverter(new MapEntryConverter());
-		xStream.registerConverter(new RepositoryConverter());
-		// xStream.alias("template", TemplateBean.class);
-		// xStream.useAttributeFor(TemplateBean.class, "id");
-		// xStream.alias("param", TemplateParamBean.class);
-		// xStream.useAttributeFor(TemplateParamBean.class, "id");
 	}
 
 //	--------------------------------------------------------------------------
@@ -128,22 +119,22 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 		}
 	}
 
-	/**
-	 * 
-	 * 
-	 * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
-	 */
-	private static class RepositoryConverter extends AbstractSingleValueConverter {
-		@Override
-		public boolean canConvert(@SuppressWarnings("rawtypes") Class type) {
-			return type.equals(RepositoryBean.class);
-		}
-
-		@Override
-		public Object fromString(String str) {
-			RepositoryBean repository = new RepositoryBean();
-			repository.setValue(str);
-			return repository;
-		}
-	}
+//	/**
+//	 * 
+//	 * 
+//	 * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+//	 */
+//	private static class RepositoryConverter extends AbstractSingleValueConverter {
+//		@Override
+//		public boolean canConvert(@SuppressWarnings("rawtypes") Class type) {
+//			return type.equals(RepositoryBean.class);
+//		}
+//
+//		@Override
+//		public Object fromString(String str) {
+//			RepositoryBean repository = new RepositoryBean();
+//			repository.setValue(str);
+//			return repository;
+//		}
+//	}
 }
