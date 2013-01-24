@@ -40,13 +40,6 @@ public interface Template extends TemplateReference {
 	public Repository getRepository();
 
 //	--------------------------------------------------------------------------
-	/**
-	 * @return Pełna ścieżka w repozytorium w którym znajdują się zasoby szablonu.
-	 */
-	public String getPath();
-	public void setPath(String path);
-
-//	--------------------------------------------------------------------------
 	public Template clone();
 
 //	--------------------------------------------------------------------------

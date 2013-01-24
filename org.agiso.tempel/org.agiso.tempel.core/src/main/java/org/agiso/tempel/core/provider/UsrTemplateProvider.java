@@ -61,7 +61,10 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 
 //	--------------------------------------------------------------------------
 	/**
-	 * @param xStream
+	 * Odczytuje szablony repozytorium użytkownika (katalogu .tempel w lokalizacji
+	 * domowej użytkownika) opisane w pliku .tempel/template.xml. Jeśli pliku nie
+	 * ma zakłada odpowiednie struktury w katalogu domowym.
+	 * 
 	 * @param templateRepository
 	 * @throws IOException
 	 */
@@ -69,6 +72,10 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 		// Mapa szablonów użytkownika (katalog domowy użytkownika):
 		String usrSettings = tempelScopeInfo.getSettingsPath(Scope.USER);
 		File usrSettingsFile = new File(usrSettings);
+		if(!usrSettingsFile.exists()) {
+			// TODO Tworzenie pustego repozytorium użytkownika:
+			
+		}
 
 		try {
 			tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {

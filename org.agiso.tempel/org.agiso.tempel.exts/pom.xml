@@ -74,7 +74,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
+			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

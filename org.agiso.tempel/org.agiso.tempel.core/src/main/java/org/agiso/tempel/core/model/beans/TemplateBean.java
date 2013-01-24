@@ -40,9 +40,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	@XStreamOmitField
 	private Repository repository;
 
-	@XStreamOmitField
-	private String path;
-
 //	--------------------------------------------------------------------------
 	public TemplateBean() {
 		super();
@@ -106,20 +103,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 		return (T)this;
 	}
 
-	@Override
-	public String getPath() {
-		return path;
-	}
-	@Override
-	public void setPath(String path) {
-		this.path = path;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateBean> T withPath(String path) {
-		this.path = path;
-		return (T)this;
-	}
-
 //	--------------------------------------------------------------------------
 	@Override
 	public TemplateBean clone() {
@@ -146,15 +129,12 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 		}
 
 		clone.repository = repository == null? null : repository.clone();
-		clone.path = path;
 		clone.templateSourceFactory = templateSourceFactory;
 
 		return clone;
 	}
 
 //	--------------------------------------------------------------------------
-	private static final ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
-
 	private ITemplateSourceFactory templateSourceFactory;
 
 	@Override

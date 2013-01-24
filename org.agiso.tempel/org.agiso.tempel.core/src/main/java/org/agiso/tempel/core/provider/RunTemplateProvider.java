@@ -61,7 +61,10 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 
 //	--------------------------------------------------------------------------
 	/**
-	 * @param xStream
+	 * Odczytuje szablony repozytorium uruchomienowego (katalogu, w którym zostało
+	 * wywołane polecenie tpl) opisane w pliku template.xml. Jeśli pliku nie ma
+	 * w bieżącym katalogu, repozytorium uruchomieniowe jest puste.
+	 * 
 	 * @param templateRepository
 	 * @throws IOException
 	 */
@@ -69,8 +72,7 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 		// Mapa szablonów lokalnych (katalog bieżący projektu):
 		String runSettings = tempelScopeInfo.getSettingsPath(Scope.RUNTIME);
 		File runSettingsFile = new File(runSettings);
-
-		try {
+		if(runSettingsFile.exists()) try {
 			tempelFileProcessor.process(runSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
