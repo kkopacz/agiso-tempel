@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.agiso.tempel.api.internal.ITemplateRepository;
+import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.model.Template;
 
 import com.google.common.collect.HashBasedTable;

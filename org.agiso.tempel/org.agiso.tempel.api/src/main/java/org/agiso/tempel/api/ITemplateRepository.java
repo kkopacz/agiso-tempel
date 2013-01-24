@@ -1,10 +1,10 @@
-/* org.agiso.tempel.core.ITemplateRepository (29-10-2012)
+/* org.agiso.tempel.api.ITemplateRepository (29-10-2012)
  * 
  * ITemplateRepository.java
  * 
  * Copyright 2012 agiso.org
  */
-package org.agiso.tempel.api.internal;
+package org.agiso.tempel.api;
 
 import org.agiso.tempel.api.model.Template;
 

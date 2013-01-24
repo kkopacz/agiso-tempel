@@ -9,9 +9,9 @@ package org.agiso.tempel.core.provider;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
-import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.api.model.Template;
 
 /**
