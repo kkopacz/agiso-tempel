@@ -94,13 +94,6 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 			throw new RuntimeException("Szablon GLOBAL bez groupId");
 		}
 
-		String repository = template.getRepository();
-		if(repository != null) {
-			if(!repository.equals(tempelScopeInfo.getRepositoryPath(Scope.GLOBAL))) {
-				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
-			}
-		}
-
 		String path = tempelScopeInfo.getRepositoryPath(Scope.GLOBAL);
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();

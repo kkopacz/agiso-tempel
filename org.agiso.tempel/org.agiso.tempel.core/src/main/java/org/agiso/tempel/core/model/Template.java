@@ -22,9 +22,6 @@ public interface Template extends TemplateReference {
 	}
 
 //	--------------------------------------------------------------------------
-	public Scope getScope();
-	public void setScope(Scope scope);
-
 	/**
 	 * @return Klasa silnika generatora.
 	 */
@@ -35,9 +32,6 @@ public interface Template extends TemplateReference {
 	 *     celu utworzenia katalogu dla pliku tworzonego na podstawie szablonu).
 	 */
 	public List<TemplateReference> getReferences();
-
-	public void setRepository(String repository);
-	public String getRepository();
 
 //	--------------------------------------------------------------------------
 	public Template clone();

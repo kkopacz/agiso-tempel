@@ -90,13 +90,6 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 			throw new RuntimeException("Szablon MAVEN bez groupId");
 		}
 
-		String repository = template.getRepository();
-		if(repository != null) {
-			if(!repository.equals(tempelScopeInfo.getRepositoryPath(Scope.MAVEN))) {
-				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
-			}
-		}
-
 		String path = tempelScopeInfo.getRepositoryPath(Scope.MAVEN);
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();

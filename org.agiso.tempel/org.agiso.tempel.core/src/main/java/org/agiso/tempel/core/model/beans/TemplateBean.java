@@ -11,16 +11,12 @@ import java.util.List;
 
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.api.internal.ITempelScopeInfo;
-import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
-import org.agiso.tempel.core.model.Repository;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.model.TemplateReference;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
  * 
@@ -29,16 +25,10 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 @XStreamAlias("template")
 public class TemplateBean extends TemplateReferenceBean implements Template {
-	@XStreamOmitField
-	private Scope scope;
-
 	@XStreamAsAttribute
 	private Class<? extends ITempelEngine> engine;
 
 	private List<TemplateReference> references;
-
-	@XStreamOmitField
-	private String repository;
 
 //	--------------------------------------------------------------------------
 	public TemplateBean() {
@@ -46,15 +36,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	}
 
 //	--------------------------------------------------------------------------
-	@Override
-	public Scope getScope() {
-		return scope;
-	}
-	@Override
-	public void setScope(Scope scope) {
-		this.scope = scope;
-	}
-
 	@Override
 	public Class<? extends ITempelEngine> getEngine() {
 		return engine;
@@ -89,20 +70,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 		return (T)this;
 	}
 
-	@Override
-	public String getRepository() {
-		return repository;
-	}
-	@Override
-	public void setRepository(String repository) {
-		this.repository = repository;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateBean> T withRepository(String repository) {
-		this.repository = repository;
-		return (T)this;
-	}
-
 //	--------------------------------------------------------------------------
 	@Override
 	public TemplateBean clone() {
@@ -110,8 +77,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	}
 	protected TemplateBean fillClone(TemplateBean clone) {
 		super.fillClone(clone);
-
-		clone.scope = scope;
 
 		clone.engine = engine;
 
@@ -128,7 +93,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 			}
 		}
 
-		clone.repository = repository;
 		clone.templateSourceFactory = templateSourceFactory;
 
 		return clone;

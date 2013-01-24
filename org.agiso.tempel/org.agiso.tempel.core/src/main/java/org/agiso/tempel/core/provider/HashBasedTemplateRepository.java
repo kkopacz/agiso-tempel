@@ -41,16 +41,6 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 //	--------------------------------------------------------------------------
 	@Override
 	public void setRepository(Scope scope, String repository) {
-		// Przeglądamy wszystkie szablony i ustawiamy repozytorium dla tych,
-		// które są przyporządkowane do zadanego zasięgu:
-		for(Map<String, Template> row : gtvTable.values()) {
-			for(Template template: row.values()) {
-				if(scope.equals(template.getScope())) {
-					template.setRepository(repository);
-				}
-			}
-		}
-
 		// Zapamiętujemy repozytorium dla zakresu:
 		rMap.put(scope, repository);
 	}
@@ -68,8 +58,6 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
 			}
 			vMap.put(version, template);
-
-			template.setRepository(rMap.get(template.getScope()));
 		} else if(key.indexOf(':') > 0) {
 			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
 			groupId = tokenizer.nextToken();
@@ -84,15 +72,11 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
 			}
 			vMap.put(version, template);
-
-			template.setRepository(rMap.get(template.getScope()));
 		} else {
 			if(kMap.containsKey(key)) {
 				throw new IllegalStateException("Powtórzony klucz szablonu: " + key);
 			}
 			kMap.put(key, template);
-
-			template.setRepository(rMap.get(template.getScope()));
 		}
 	}
 

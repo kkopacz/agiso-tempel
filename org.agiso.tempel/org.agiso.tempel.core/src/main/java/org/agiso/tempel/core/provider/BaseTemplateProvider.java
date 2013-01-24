@@ -77,7 +77,6 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 		// Definicja szabloun z pliku tempel.xml:
 		if(object instanceof Template) {
 			Template template = (Template)object;
-			template.setScope(scope);
 
 			// Ustawianie referencji we wszystkich podszablonach:
 			if(template.getResources() != null) {

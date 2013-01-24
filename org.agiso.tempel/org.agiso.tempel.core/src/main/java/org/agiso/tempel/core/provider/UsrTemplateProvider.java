@@ -111,13 +111,6 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 			return null;
 		}
 
-		String repository = template.getRepository();
-		if(repository != null) {
-			if(!repository.equals(tempelScopeInfo.getRepositoryPath(Scope.USER))) {
-				throw new RuntimeException("Zmodyfikowane repozytorium szablonu!");
-			}
-		}
-
 		String path = tempelScopeInfo.getRepositoryPath(Scope.USER);
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
