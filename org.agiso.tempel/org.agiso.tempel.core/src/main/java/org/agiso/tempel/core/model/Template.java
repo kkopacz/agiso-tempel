@@ -29,9 +29,6 @@ public interface Template extends TemplateReference {
 	public List<TemplateReference> getReferences();
 
 //	--------------------------------------------------------------------------
-	public Template clone();
-
-//	--------------------------------------------------------------------------
 	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory);
 
 	/**
@@ -39,4 +36,7 @@ public interface Template extends TemplateReference {
 	 * @return
 	 */
 	public ITemplateSource getTemplateSource(String source);
+
+//	--------------------------------------------------------------------------
+	public Template clone();
 }

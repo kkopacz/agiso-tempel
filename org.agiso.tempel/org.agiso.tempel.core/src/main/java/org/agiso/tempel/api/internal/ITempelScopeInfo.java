@@ -12,17 +12,6 @@ package org.agiso.tempel.api.internal;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITempelScopeInfo {
-	public enum RepostoryType {
-		FILE, JAR
-	}
-
-//	--------------------------------------------------------------------------
-	/**
-	 * @param scope
-	 * @return
-	 */
-	public RepostoryType getRepositoryType(String scope);
-
 	/**
 	 * @param scope
 	 * @return

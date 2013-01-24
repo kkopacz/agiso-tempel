@@ -30,6 +30,8 @@ import org.agiso.tempel.core.model.TemplateResource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class BaseTemplateProvider implements ITemplateProvider {
+	protected String repository;
+
 	// FIXME: Zastosować wstrzykiwanie zależności
 	protected ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
 	protected ITempelFileProcessor tempelFileProcessor = new XStreamTempelFileProcessor();
@@ -49,14 +51,13 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 	 * 
 	 * @param scope
 	 * @param object
-	 * @param templateRepository
 	 */
 	protected void processObject(String scope, Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
 		// Ścieżka repozytorium pliku tempel.xml:
 		if(object instanceof Repository) {
 			Repository repository = (Repository)object;
 
-			templateRepository.setRepository(scope, repository.getValue());
+			this.repository = repository.getValue();
 			return;
 		}
 

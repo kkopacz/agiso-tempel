@@ -17,6 +17,7 @@ import org.agiso.tempel.core.model.TemplateReference;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
  * 
@@ -29,6 +30,9 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	private Class<? extends ITempelEngine> engine;
 
 	private List<TemplateReference> references;
+
+	@XStreamOmitField
+	private ITemplateSourceFactory templateSourceFactory;
 
 //	--------------------------------------------------------------------------
 	public TemplateBean() {
@@ -72,6 +76,17 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 
 //	--------------------------------------------------------------------------
 	@Override
+	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory) {
+		this.templateSourceFactory = templateSourceFactory;
+	}
+
+	@Override
+	public ITemplateSource getTemplateSource(String source) {
+		return templateSourceFactory.createTemplateSource(this, source);
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
 	public TemplateBean clone() {
 		return fillClone(new TemplateBean());
 	}
@@ -96,18 +111,5 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 		clone.templateSourceFactory = templateSourceFactory;
 
 		return clone;
-	}
-
-//	--------------------------------------------------------------------------
-	private ITemplateSourceFactory templateSourceFactory;
-
-	@Override
-	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory) {
-		this.templateSourceFactory = templateSourceFactory;
-	}
-
-	@Override
-	public ITemplateSource getTemplateSource(String source) {
-		return templateSourceFactory.createTemplateSource(this, source);
 	}
 }

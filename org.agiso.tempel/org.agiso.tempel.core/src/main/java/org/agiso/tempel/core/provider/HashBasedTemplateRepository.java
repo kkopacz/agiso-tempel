@@ -22,8 +22,6 @@ import com.google.common.collect.Table;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class HashBasedTemplateRepository implements ITemplateRepository {
-	private Map<String, String> rMap;
-
 	// key -> template
 	private Map<String, Template> kMap;
 
@@ -32,20 +30,12 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 
 //	--------------------------------------------------------------------------
 	public HashBasedTemplateRepository() {
-		rMap = new HashMap<String, String>();
 		kMap = new HashMap<String, Template>();
 		gtvTable = HashBasedTable.create();
 	}
 
 //	--------------------------------------------------------------------------
-	@Override
-	public void setRepository(String scope, String repository) {
-		// Zapamiętujemy repozytorium dla zakresu:
-		rMap.put(scope, repository);
-	}
-
 	// FIXME: Kod metod 'put' 'contains' i 'get' do optymalizacji!!!
-
 	@Override
 	public void put(String key, String groupId, String templateId, String version, Template template) {
 		if(key == null) {

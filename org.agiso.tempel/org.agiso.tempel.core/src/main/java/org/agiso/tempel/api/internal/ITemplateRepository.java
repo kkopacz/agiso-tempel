@@ -15,12 +15,6 @@ import org.agiso.tempel.core.model.Template;
  */
 public interface ITemplateRepository {
 	/**
-	 * @param scope
-	 * @param repository
-	 */
-	public void setRepository(String scope, String repository);
-
-	/**
 	 * @param key
 	 * @param groupId
 	 * @param templateId

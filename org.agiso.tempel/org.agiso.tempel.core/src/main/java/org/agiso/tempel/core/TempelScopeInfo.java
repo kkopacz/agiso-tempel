@@ -55,11 +55,6 @@ public class TempelScopeInfo implements ITempelScopeInfo {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public RepostoryType getRepositoryType(String scope) {
-		return "MAVEN".equals(scope)? RepostoryType.JAR : RepostoryType.FILE;
-	}
-
-	@Override
 	public String getSettingsPath(String scope) {
 		return settings.get(scope);
 	}
