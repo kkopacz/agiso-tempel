@@ -13,7 +13,6 @@ import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
 import org.apache.maven.repository.internal.DefaultServiceLocator;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
 import org.apache.maven.wagon.Wagon;
@@ -51,7 +50,7 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 	public AetherMvnTemplateProvider() {
 		repoSystem = newRepositorySystem();
 
-		String path = tempelScopeInfo.getSettingsPath(Scope.MAVEN);
+		String path = tempelScopeInfo.getSettingsPath("MAVEN");
 		local = new RemoteRepository("local", "default", "file://" + path);
 		central = new RemoteRepository("central", "default", "http://repo1.maven.org/maven2/");
 	}
@@ -90,7 +89,7 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 			throw new RuntimeException("Szablon MAVEN bez groupId");
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath(Scope.MAVEN);
+		String path = tempelScopeInfo.getRepositoryPath("MAVEN");
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();

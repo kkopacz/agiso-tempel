@@ -51,7 +51,7 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 	 * @param object
 	 * @param templateRepository
 	 */
-	protected void processObject(Template.Scope scope, Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
+	protected void processObject(String scope, Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
 		// Ścieżka repozytorium pliku tempel.xml:
 		if(object instanceof Repository) {
 			Repository repository = (Repository)object;
@@ -70,7 +70,7 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 				// CHECK: scopeProperties.put(key, value);	// aktualizacja wartości po rozwinięciu
 				globalProperties.put(key, value);
 			}
-			globalProperties.put(scope.name(), Collections.unmodifiableMap(scopeProperties));
+			globalProperties.put(scope, Collections.unmodifiableMap(scopeProperties));
 			return;
 		}
 

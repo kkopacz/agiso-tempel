@@ -17,11 +17,6 @@ import org.agiso.tempel.api.ITemplateSource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface Template extends TemplateReference {
-	public enum Scope {
-		GLOBAL, USER, RUNTIME, MAVEN
-	}
-
-//	--------------------------------------------------------------------------
 	/**
 	 * @return Klasa silnika generatora.
 	 */

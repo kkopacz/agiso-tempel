@@ -7,7 +7,6 @@
 package org.agiso.tempel.api.internal;
 
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
 
 /**
  * 
@@ -19,7 +18,7 @@ public interface ITemplateRepository {
 	 * @param scope
 	 * @param repository
 	 */
-	public void setRepository(Scope scope, String repository);
+	public void setRepository(String scope, String repository);
 
 	/**
 	 * @param key

@@ -50,7 +50,7 @@ public abstract class CachingTemplateProvider extends BaseTemplateProvider
 				tempelFileProcessor.process(cacheEntry.definition, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						CachingTemplateProvider.this.processObject(Template.Scope.MAVEN,
+						CachingTemplateProvider.this.processObject("MAVEN",
 								object, templateRepository, CachingTemplateProvider.this
 						);
 					}

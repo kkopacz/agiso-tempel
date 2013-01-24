@@ -19,7 +19,6 @@ import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
 
 /**
@@ -69,7 +68,7 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 	 */
 	private void readUsrTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów użytkownika (katalog domowy użytkownika):
-		String usrSettings = tempelScopeInfo.getSettingsPath(Scope.USER);
+		String usrSettings = tempelScopeInfo.getSettingsPath("USER");
 		File usrSettingsFile = new File(usrSettings);
 		if(!usrSettingsFile.exists()) {
 			// TODO Tworzenie pustego repozytorium użytkownika:
@@ -80,7 +79,7 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 			tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					UsrTemplateProvider.this.processObject(Scope.USER, object, templateRepository,
+					UsrTemplateProvider.this.processObject("USER", object, templateRepository,
 							new ITemplateSourceFactory() {
 								@Override
 								public ITemplateSource createTemplateSource(Template template, String source) {
@@ -111,7 +110,7 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 			return null;
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath(Scope.USER);
+		String path = tempelScopeInfo.getRepositoryPath("USER");
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();

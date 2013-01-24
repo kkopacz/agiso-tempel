@@ -19,7 +19,6 @@ import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
 
 /**
@@ -69,13 +68,13 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 	 */
 	private void readRunTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów lokalnych (katalog bieżący projektu):
-		String runSettings = tempelScopeInfo.getSettingsPath(Scope.RUNTIME);
+		String runSettings = tempelScopeInfo.getSettingsPath("RUNTIME");
 		File runSettingsFile = new File(runSettings);
 		if(runSettingsFile.exists()) try {
 			tempelFileProcessor.process(runSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					RunTemplateProvider.this.processObject(Template.Scope.RUNTIME, object, templateRepository,
+					RunTemplateProvider.this.processObject("RUNTIME", object, templateRepository,
 							new ITemplateSourceFactory() {
 								@Override
 								public ITemplateSource createTemplateSource(Template template, String source) {
@@ -106,7 +105,7 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 			return null;
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath(Scope.RUNTIME);
+		String path = tempelScopeInfo.getRepositoryPath("RUNTIME");
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();

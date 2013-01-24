@@ -17,7 +17,6 @@ import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
-import org.agiso.tempel.core.model.Template.Scope;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
 
 /**
@@ -61,14 +60,14 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 	 */
 	private void readAppTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
-		String appSettings = tempelScopeInfo.getSettingsPath(Scope.GLOBAL);
+		String appSettings = tempelScopeInfo.getSettingsPath("GLOBAL");
 		File appSettingsFile = new File(appSettings);
 
 		try {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					AppTemplateProvider.this.processObject(Scope.GLOBAL, object, templateRepository,
+					AppTemplateProvider.this.processObject("GLOBAL", object, templateRepository,
 							new ITemplateSourceFactory() {
 								@Override
 								public ITemplateSource createTemplateSource(Template template, String source) {
@@ -94,7 +93,7 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 			throw new RuntimeException("Szablon GLOBAL bez groupId");
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath(Scope.GLOBAL);
+		String path = tempelScopeInfo.getRepositoryPath("GLOBAL");
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();

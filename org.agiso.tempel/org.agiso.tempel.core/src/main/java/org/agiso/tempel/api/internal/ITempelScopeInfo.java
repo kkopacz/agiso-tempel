@@ -6,8 +6,6 @@
  */
 package org.agiso.tempel.api.internal;
 
-import org.agiso.tempel.core.model.Template.Scope;
-
 /**
  * 
  * 
@@ -23,13 +21,13 @@ public interface ITempelScopeInfo {
 	 * @param scope
 	 * @return
 	 */
-	public RepostoryType getRepositoryType(Scope scope);
+	public RepostoryType getRepositoryType(String scope);
 
 	/**
 	 * @param scope
 	 * @return
 	 */
-	public String getSettingsPath(Scope scope);
+	public String getSettingsPath(String scope);
 
 	/**
 	 * Zwraca pełną ścieżkę do katalogu zawierającego repozytorium
@@ -39,5 +37,5 @@ public interface ITempelScopeInfo {
 	 * @param scope
 	 * @return
 	 */
-	public String getRepositoryPath(Scope scope);
+	public String getRepositoryPath(String scope);
 }
