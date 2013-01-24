@@ -12,11 +12,9 @@ import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
@@ -27,9 +25,10 @@ import org.agiso.tempel.core.provider.source.FileTemplateSource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class RunTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
-	// FIXME: Zastosować wstrzykiwanie zależności
-	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+	private String settingsPath;
+	private String repositoryPath;
 
+	// FIXME: Zastosować wstrzykiwanie zależności
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -42,6 +41,23 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
 		super.initialize(globalProperties);
+
+
+		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		int index = path.lastIndexOf("/repo/");
+		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
+		if(index != -1) {
+			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
+			settingsPath = System.getProperty("user.dir") + "/tempel.xml";
+			repositoryPath = System.getProperty("user.dir") + "/.tempel";
+		} else {
+			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
+			path = System.getProperty("user.dir");					// FIXME: Rodzielić katalogi repozytoriów
+
+			settingsPath = path + "/src/test/configuration/runtime/tempel.xml";
+			repositoryPath = path + "/src/test/resources/repository/runtime";
+		}
+
 
 		readRunTemplates(templateRepository);
 	}
@@ -68,8 +84,7 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 	 */
 	private void readRunTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów lokalnych (katalog bieżący projektu):
-		String runSettings = tempelScopeInfo.getSettingsPath("RUNTIME");
-		File runSettingsFile = new File(runSettings);
+		File runSettingsFile = new File(settingsPath);
 		if(runSettingsFile.exists()) try {
 			tempelFileProcessor.process(runSettingsFile, new ITempelEntryProcessor() {
 				@Override
@@ -105,7 +120,7 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 			return null;
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath("RUNTIME");
+		String path = repositoryPath;
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();

@@ -25,6 +25,9 @@ import org.agiso.tempel.core.provider.source.FileTemplateSource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class AppTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
+	private String settingsPath;
+	private String repositoryPath;
+
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -37,6 +40,23 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
 		super.initialize(globalProperties);
+
+
+		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		int index = path.lastIndexOf("/repo/");
+		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
+		if(index != -1) {
+			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
+			settingsPath = path.substring(0, index) + "/conf/tempel.xml";
+			repositoryPath = path.substring(0, index) + "/repository";
+		} else {
+			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
+			path = System.getProperty("user.dir");					// FIXME: Rodzielić katalogi repozytoriów
+
+			settingsPath = path + "/src/test/configuration/application/tempel.xml";
+			repositoryPath = path + "/src/test/resources/repository/application";
+		}
+
 
 		readAppTemplates(templateRepository);
 	}
@@ -60,8 +80,7 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 	 */
 	private void readAppTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
-		String appSettings = tempelScopeInfo.getSettingsPath("GLOBAL");
-		File appSettingsFile = new File(appSettings);
+		File appSettingsFile = new File(settingsPath);
 
 		try {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
@@ -93,7 +112,7 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 			throw new RuntimeException("Szablon GLOBAL bez groupId");
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath("GLOBAL");
+		String path = repositoryPath;
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();

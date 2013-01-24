@@ -13,10 +13,8 @@ import java.util.Map;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
-import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.VelocityExpressionEvaluator;
 import org.agiso.tempel.core.XStreamTempelFileProcessor;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
@@ -33,7 +31,6 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 	protected String repository;
 
 	// FIXME: Zastosować wstrzykiwanie zależności
-	protected ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
 	protected ITempelFileProcessor tempelFileProcessor = new XStreamTempelFileProcessor();
 
 	private Map<String, Object> globalProperties;

@@ -12,11 +12,9 @@ import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.api.internal.ITempelScopeInfo;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.internal.ITemplateRepository;
-import org.agiso.tempel.core.TempelScopeInfo;
 import org.agiso.tempel.core.model.ITemplateSourceFactory;
 import org.agiso.tempel.core.model.Template;
 import org.agiso.tempel.core.provider.source.FileTemplateSource;
@@ -27,9 +25,10 @@ import org.agiso.tempel.core.provider.source.FileTemplateSource;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class UsrTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
-	// FIXME: Zastosować wstrzykiwanie zależności
-	private ITempelScopeInfo tempelScopeInfo = new TempelScopeInfo();
+	private String settingsPath;
+	private String repositoryPath;
 
+	// FIXME: Zastosować wstrzykiwanie zależności
 	private ITemplateRepository templateRepository = new HashBasedTemplateRepository();
 
 //	--------------------------------------------------------------------------
@@ -42,6 +41,23 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
 		super.initialize(globalProperties);
+
+
+		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		int index = path.lastIndexOf("/repo/");
+		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
+		if(index != -1) {
+			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
+			settingsPath = System.getProperty("user.home") + "/.tempel/tempel.xml";
+			repositoryPath = System.getProperty("user.home") + "/.tempel/repository";
+		} else {
+			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
+			path = System.getProperty("user.dir");					// FIXME: Rodzielić katalogi repozytoriów
+
+			settingsPath = path + "/src/test/configuration/home/tempel.xml";
+			repositoryPath = path + "/src/test/resources/repository/home";
+		}
+
 
 		readUsrTemplates(templateRepository);
 	}
@@ -68,8 +84,7 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 	 */
 	private void readUsrTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów użytkownika (katalog domowy użytkownika):
-		String usrSettings = tempelScopeInfo.getSettingsPath("USER");
-		File usrSettingsFile = new File(usrSettings);
+		File usrSettingsFile = new File(settingsPath);
 		if(!usrSettingsFile.exists()) {
 			// TODO Tworzenie pustego repozytorium użytkownika:
 			
@@ -110,7 +125,7 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 			return null;
 		}
 
-		String path = tempelScopeInfo.getRepositoryPath("USER");
+		String path = repositoryPath;
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
