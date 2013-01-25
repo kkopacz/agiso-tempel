@@ -11,7 +11,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>AGISO Tempel API</name>
+	<url>http://agiso.org/tempel</url>
+	<inceptionYear>2012</inceptionYear>
 
+	<organization>
+		<name>agiso.org</name>
+		<url>http://agiso.org</url>
+	</organization>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>

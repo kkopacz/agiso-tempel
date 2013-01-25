@@ -12,7 +12,13 @@
 	<packaging>jar</packaging>
 
 	<name>AGISO Tempel Documentation</name>
+	<url>http://agiso.org/tempel</url>
+	<inceptionYear>2012</inceptionYear>
 
+	<organization>
+		<name>agiso.org</name>
+		<url>http://agiso.org</url>
+	</organization>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
