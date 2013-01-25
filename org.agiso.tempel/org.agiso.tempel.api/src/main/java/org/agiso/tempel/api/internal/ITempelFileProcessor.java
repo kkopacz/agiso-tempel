@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.ITempelFileProcessor (16-12-2012)
+/* org.agiso.tempel.api.internal.ITempelFileProcessor (16-12-2012)
  * 
  * ITempelFileProcessor.java
  * 
@@ -8,7 +8,6 @@ package org.agiso.tempel.api.internal;
 
 import java.io.File;
 import java.io.InputStream;
-
 
 /**
  * 

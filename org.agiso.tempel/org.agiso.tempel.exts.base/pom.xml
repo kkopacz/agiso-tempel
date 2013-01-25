@@ -10,7 +10,14 @@
 	<artifactId>org.agiso.tempel.exts.base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AGISO Tempel Maven Extensions Base</name>
+	<name>AGISO Tempel Extensions Base</name>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,14 +42,6 @@
 			<testResource>
 				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>TEST-INF/spring/*</exclude>
-				</excludes>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources/TEST-INF/spring</directory>
-				<filtering>false</filtering>
-				<targetPath>TEST-INF/spring</targetPath>
 			</testResource>
 		</testResources>
 
@@ -73,11 +72,25 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 
-
+		<!-- Dla HashBasedTemplateRepository -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>13.0.1</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>

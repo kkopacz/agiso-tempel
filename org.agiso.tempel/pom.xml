@@ -13,15 +13,24 @@
 
 	<name>AGISO Tempel</name>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<modules>
 		<module>org.agiso.tempel.api</module>
-		<module>org.agiso.tempel.test</module>
-
-		<module>org.agiso.tempel.exts.base</module>
-		<module>org.agiso.tempel.exts</module>
 
 		<module>org.agiso.tempel.core</module>
-		<module>org.agiso.tempel.core.support.maven</module>
+		<module>org.agiso.tempel.core.exts</module>
+
+		<module>org.agiso.tempel.exts.base</module>
+		<module>org.agiso.tempel.exts.core</module>
+		<module>org.agiso.tempel.exts.maven</module>
+		<module>org.agiso.tempel.exts.test</module>
+		<module>org.agiso.tempel.test</module>
 
 		<module>org.agiso.tempel.templates</module>
 

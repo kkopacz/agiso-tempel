@@ -12,6 +12,13 @@
 
 	<name>AGISO Tempel API</name>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -47,6 +54,8 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.7</version>
+			<!-- scope>test</scope -->
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

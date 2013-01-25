@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.ITempelEntryProcessor (16-12-2012)
+/* org.agiso.tempel.api.internal.ITempelEntryProcessor (16-12-2012)
  * 
  * ITempelEntryProcessor.java
  * 

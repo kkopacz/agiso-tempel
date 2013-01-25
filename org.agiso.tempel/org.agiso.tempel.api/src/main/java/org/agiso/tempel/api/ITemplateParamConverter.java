@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.convert.ITemplateParamConverter (19-09-2012)
+/* org.agiso.tempel.api.ITemplateParamConverter (19-09-2012)
  * 
  * ITemplateParamConverter.java
  * 

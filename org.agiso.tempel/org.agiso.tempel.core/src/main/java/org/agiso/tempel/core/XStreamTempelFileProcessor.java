@@ -23,6 +23,7 @@ import org.agiso.tempel.core.model.beans.TemplateBean;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
 import org.agiso.tempel.core.model.beans.TemplateReferenceBean;
 import org.agiso.tempel.core.model.beans.TemplateResourceBean;
+import org.springframework.stereotype.Component;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -36,6 +37,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
+@Component
 public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 	private static final XStream xStream;
 

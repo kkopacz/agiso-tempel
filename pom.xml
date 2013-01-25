@@ -13,6 +13,13 @@
 
 	<name>AGISO Tempel Builder</name>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<modules>
 		<module>org.agiso.tempel</module>
 		<module>org.agiso.tempel.docs</module>

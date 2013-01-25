@@ -7,20 +7,16 @@
 package org.agiso.tempel.test;
 
 import java.io.File;
-import java.util.Arrays;
 
-import org.agiso.tempel.Tempel;
-import org.agiso.tempel.api.internal.ITemplateProvider;
-import org.agiso.tempel.api.internal.ITemplateProviderElement;
-import org.agiso.tempel.core.DefaultTemplateExecutor;
-import org.agiso.tempel.core.RecursiveTemplateVerifier;
-import org.agiso.tempel.core.provider.MainTemplateProvider;
-import org.agiso.tempel.core.provider.ShrinkWrapMvnTemplateProvider;
-import org.agiso.tempel.core.provider.TstTemplateProvider;
+import org.agiso.core.test.AbstractOutputTest;
+import org.agiso.tempel.ITempel;
+import org.agiso.tempel.exts.test.provider.IArchiveTemplateProvider;
+import org.agiso.tempel.exts.test.provider.ArchiveTemplateProvider;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Klasa bazowa dla klas testujących szablony przechowywane w repozytoriach
@@ -28,7 +24,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * po kompilacji w formie plików .jar umieszczane są w repozytoriach Maven.
  * </br>
  * Jeśli klasa testowa znajduje się w projekcie szablonu (zawierającym katalog
- * src/main/resources/TEMPEL-INF), wykorzystuje {@link TstTemplateProvider}'a
+ * src/main/resources/TEMPEL-INF), wykorzystuje {@link ArchiveTemplateProvider}'a
  * i dodaje do niego archiwum bieżącego szablonu przygotowywane za pomocą
  * biblioteki {@link ShrinkWrap}. Szablony zależne (podszablony) muszą się
  * znajdować w repozytoriach Maven i dostarczane są poprzez klasę {@link
@@ -40,13 +36,11 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class AbstractTemplateTest extends AbstractOutputTest {
-
-//	--------------------------------------------------------------------------
 	private String groupId;
 	private String templateId;
 	private String version;
 
-	protected Tempel tempel;
+	protected ITempel tempel;
 
 //	--------------------------------------------------------------------------
 	/**
@@ -62,7 +56,7 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 	/**
 	 * Konstruktor dla klas testów umieszczonych wewnątrz projektów szablonów.
 	 * Tworzy obiekt {@link Tempel} i rejestruje w nim provider'y {@link
-	 * TstTemplateProvider} i {@link ShrinkWrapMvnTemplateProvider}. Pierwszy
+	 * ArchiveTemplateProvider} i {@link ShrinkWrapMvnTemplateProvider}. Pierwszy
 	 * z nich odpowiada za dostarczenie biblioteki testowanego szablonu (która
 	 * jest tworzona w metodzie {@link #createTemplateArchive()} za pomocą
 	 * mechanizmów {@link ShrinkWrap}. Drugi dostarcza podszablonów testowanego
@@ -81,40 +75,35 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 	}
 
 //	--------------------------------------------------------------------------
-	protected Tempel createTempelInstance() {
-		File workDir = new File(".");
-		File repoDir = new File("./src/test/resources/repository");
+	protected ITempel createTempelInstance() {
+		ClassPathXmlApplicationContext ctx = null;
+		try {
+			ctx = new ClassPathXmlApplicationContext(getContextConfigLocations());
 
-		Tempel tempel = new Tempel(workDir, repoDir);
-		tempel.setTemplateProvider(getTemplateProvider());
-		tempel.setTemplateVerifier(new RecursiveTemplateVerifier());
-		tempel.setTemplateExecutor(new DefaultTemplateExecutor());
-		return tempel;
-	}
+			File tempelInf = new File("src/main/resources/TEMPEL-INF");
+			if(tempelInf.exists() && tempelInf.isDirectory()) {
+				Archive<?> archive = createTemplateArchive();
 
-	protected ITemplateProvider getTemplateProvider() {
-		MainTemplateProvider mainTemplateProvider = new MainTemplateProvider();
-		mainTemplateProvider.setTemplateProviderElements(
-				Arrays.asList(getTemplateProviders())
-		);
-		return mainTemplateProvider;
-	}
+				// Mamy do czynienia z testem projektu szablonu:
+				IArchiveTemplateProvider atp = ctx.getBean(IArchiveTemplateProvider.class);
+				atp.addArchive(groupId, templateId, version, archive);
+			}
 
-	protected ITemplateProviderElement[] getTemplateProviders() {
-		File tempelInf = new File("src/main/resources/TEMPEL-INF");
-		if(tempelInf.exists() && tempelInf.isDirectory()) {
-			Archive<?> archive = createTemplateArchive();
 
-			TstTemplateProvider tstTemplateProvider = new TstTemplateProvider();
-			tstTemplateProvider.addArchive(groupId, templateId, version, archive);
-
-			return new ITemplateProviderElement[] {
-					tstTemplateProvider,
-					new ShrinkWrapMvnTemplateProvider()
-			};
+			return ctx.getBean(ITempel.class);
+		} finally {
+			if(ctx != null) {
+				try {
+					ctx.close();
+				} catch(Exception e) {
+				}
+			}
 		}
-		return new ITemplateProviderElement[] {
-				new ShrinkWrapMvnTemplateProvider()
+	}
+
+	protected String[] getContextConfigLocations() {
+		return new String[] {
+				"classpath*:/META-INF/spring/tempel-context.xml"
 		};
 	}
 

@@ -14,12 +14,14 @@ import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateReference;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
+@Component
 public class RecursiveTemplateVerifier implements ITemplateVerifier {
 	@Override
 	public void verifyTemplate(Template template, ITemplateProvider templateProvider) throws Exception {

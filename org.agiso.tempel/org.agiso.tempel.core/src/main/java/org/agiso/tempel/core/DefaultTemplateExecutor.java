@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agiso.core.lang.MapStack;
+import org.agiso.core.lang.SimpleMapStack;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
@@ -22,36 +24,36 @@ import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateParam;
 import org.agiso.tempel.api.model.TemplateReference;
 import org.agiso.tempel.api.model.TemplateResource;
-import org.agiso.tempel.core.lang.MapStack;
-import org.agiso.tempel.core.lang.SimpleMapStack;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
+@Component
 public class DefaultTemplateExecutor implements ITemplateExecutor {
-	// FIXME: Zastosować wstrzykiwanie zależności
-	private IExpressionEvaluator expressionEvaluator = new VelocityExpressionEvaluator();
+	@Autowired
+	private IExpressionEvaluator expressionEvaluator;
 
 //	--------------------------------------------------------------------------
 	/**
 	 * Uruchamia proces generacji treści w oparciu o szablon.
 	 * 
 	 * @param workDir Ścieżka do katalogu roboczego.
-	 * @param repoDir Ścieżka bazowa repozytorium szablonów.
 	 * @param template Szablon do uruchomienia.
 	 * @param templates Mapa wszystkich dostępnych szablonów.
 	 */
 	@Override
-	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) {
+	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) {
 		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
 
 		stack.push(new HashMap<String, Object>(globalProperties));
-		executeTemplate(workDir, repoDir, template, templateProvider, stack, globalProperties, "");
+		executeTemplate(workDir, template, templateProvider, stack, globalProperties, "");
 		stack.pop();
 	}
-	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> globalProperties, String depth) {
+	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> globalProperties, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -181,7 +183,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
-				executeTemplate(subWorkDir, repoDir, subTemplate, templateProvider, stack, globalProperties, "  " + depth);
+				executeTemplate(subWorkDir, subTemplate, templateProvider, stack, globalProperties, "  " + depth);
 
 				stack.pop();
 			}

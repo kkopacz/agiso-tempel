@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.IExpressionEvaluator (07-11-2012)
+/* org.agiso.tempel.api.internal.IExpressionEvaluator (07-11-2012)
  * 
  * IExpressionEvaluator.java
  * 

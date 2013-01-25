@@ -16,6 +16,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<build>
 		<resources>
 			<resource>
@@ -35,14 +42,6 @@
 			<testResource>
 				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>TEST-INF/spring/*</exclude>
-				</excludes>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources/TEST-INF/spring</directory>
-				<filtering>false</filtering>
-				<targetPath>TEST-INF/spring</targetPath>
 			</testResource>
 		</testResources>
 
@@ -74,31 +73,24 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
+			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core.support.maven</artifactId>
+			<artifactId>org.agiso.tempel.exts.test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-api</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-impl-base</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.7</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

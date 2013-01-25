@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.engine.ITemplateSource (19-12-2012)
+/* org.agiso.tempel.api.ITemplateSource (19-12-2012)
  * 
  * ITemplateSource.java
  * 

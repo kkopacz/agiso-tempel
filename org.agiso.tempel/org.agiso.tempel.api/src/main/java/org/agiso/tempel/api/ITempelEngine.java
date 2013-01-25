@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.engine.ITempelEngine (14-09-2012)
+/* org.agiso.tempel.api.ITempelEngine (14-09-2012)
  * 
  * ITempelEngine.java
  * 

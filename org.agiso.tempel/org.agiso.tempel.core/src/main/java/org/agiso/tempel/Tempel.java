@@ -6,7 +6,6 @@
  */
 package org.agiso.tempel;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,53 +21,48 @@ import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.api.model.Template;
 import org.apache.commons.lang.LocaleUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class Tempel {
-	private File workDir;
-	private File repoDir;
-
+@Component
+@Scope("prototype")
+public class Tempel implements ITempel {
 	private ITemplateProvider templateProvider;
 	private ITemplateVerifier templateVerifier;
 	private ITemplateExecutor templateExecutor;
 
 //	--------------------------------------------------------------------------
-	public Tempel(File workDir, File repoDir) {
-		this.workDir = workDir;
-		this.repoDir = repoDir;
+	public Tempel() {
 	}
 
 //	--------------------------------------------------------------------------
+	// @Autowired  wstrzykujemy przez xml
 	public void setTemplateProvider(ITemplateProvider templateProvider) {
 		this.templateProvider = templateProvider;
 	}
 
+	@Autowired
 	public void setTemplateVerifier(ITemplateVerifier templateVerifier) {
 		this.templateVerifier = templateVerifier;
 	}
 
+	@Autowired
 	public void setTemplateExecutor(ITemplateExecutor templateExecutor) {
 		this.templateExecutor = templateExecutor;
-	}
-
-//	--------------------------------------------------------------------------
-	public void setWorkDir(File workDir) {
-		this.workDir = workDir;
-	}
-
-	public void setRepoDir(File repoDir) {
-		this.repoDir = repoDir;
 	}
 
 //	--------------------------------------------------------------------------
 	/**
 	 * @param cmd
 	 */
-	public void startTemplate(String name, Map<String, String> params) throws Exception {
+	@Override
+	public void startTemplate(String name, Map<String, String> params, String workDir) throws Exception {
 		Map<String, Object> globalProperties = new HashMap<String, Object>();
 
 		// Odczytujemy właściwości systemowe i dodajemy je do globalnej mapy właściwości
@@ -98,9 +92,8 @@ public class Tempel {
 		templateVerifier.verifyTemplate(template, templateProvider);
 
 		// Uruchamianie procesu generacji w oparciu o wskazany szablon:
-		templateExecutor.executeTemplate(workDir.getCanonicalPath(), repoDir.getCanonicalPath(),
-				template, templateProvider,
-				Collections.unmodifiableMap(globalProperties)
+		templateExecutor.executeTemplate(workDir, template,
+				templateProvider, Collections.unmodifiableMap(globalProperties)
 		);
 	}
 

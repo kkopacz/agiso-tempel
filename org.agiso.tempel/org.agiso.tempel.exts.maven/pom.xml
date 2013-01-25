@@ -12,6 +12,13 @@
 
 	<name>AGISO Tempel Maven Extensions</name>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -35,14 +42,6 @@
 			<testResource>
 				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>TEST-INF/spring/*</exclude>
-				</excludes>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources/TEST-INF/spring</directory>
-				<filtering>false</filtering>
-				<targetPath>TEST-INF/spring</targetPath>
 			</testResource>
 		</testResources>
 
@@ -73,20 +72,99 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>3.2.0.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.exts.base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>shrinkwrap.mvn.resolver</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.shrinkwrap.resolver</groupId>
+					<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+					<version>2.0.0-alpha-6</version>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>aether.mvn.resolver</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<aetherVersion>1.12</aetherVersion>
+				<mavenVersion>3.0.3</mavenVersion>
+				<wagonVersion>1.0-beta-7</wagonVersion>
+			</properties>
+			<dependencies>
+				<!-- Wsparcie pobierania zasobów z repozytoriów Maven -->
+				<dependency>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-aether-provider</artifactId>
+					<version>${mavenVersion}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-api</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-util</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-impl</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-file</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-wagon</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency>
+				<!-- dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-asynchttpclient</artifactId>
+					<version>${aetherVersion}</version>
+				</dependency -->
+
+				<dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-file</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-http-lightweight</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency>
+				<!-- dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-http</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency -->
+				<!-- dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-ssh</artifactId>
+					<version>${wagonVersion}</version>
+				</dependency -->
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

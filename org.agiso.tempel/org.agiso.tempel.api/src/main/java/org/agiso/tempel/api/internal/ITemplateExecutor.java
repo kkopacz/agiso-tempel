@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.ITemplateExecutor (02-10-2012)
+/* org.agiso.tempel.api.internal.ITemplateExecutor (02-10-2012)
  * 
  * ITemplateExecutor.java
  * 
@@ -16,5 +16,5 @@ import org.agiso.tempel.api.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateExecutor {
-	public void executeTemplate(String workDir, String repoDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) throws Exception;
+	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) throws Exception;
 }

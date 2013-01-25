@@ -13,12 +13,14 @@ import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
+@Component
 public class VelocityExpressionEvaluator implements IExpressionEvaluator {
 	@Override
 	public String evaluate(String expression, Map<String, Object> model) {

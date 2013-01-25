@@ -1,4 +1,4 @@
-/* org.agiso.tempel.engine.AbstractEngineTest (16-11-2012)
+/* org.agiso.tempel.test.AbstractEngineTest (16-11-2012)
  * 
  * AbstractTempelEngineTest.java
  * 
@@ -6,6 +6,7 @@
  */
 package org.agiso.tempel.test;
 
+import org.agiso.core.test.AbstractRepositoryTest;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.BeforeClass;

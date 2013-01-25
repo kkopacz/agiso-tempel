@@ -33,10 +33,9 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 	public void testVelocityDirectoryTemplate_5_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 
-		tempel.setWorkDir(new File(outPath));
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
-				new HashMap<String, String>()
+				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));

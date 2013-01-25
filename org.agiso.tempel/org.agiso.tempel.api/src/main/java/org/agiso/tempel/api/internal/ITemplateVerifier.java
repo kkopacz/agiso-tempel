@@ -1,4 +1,4 @@
-/* org.agiso.tempel.core.ITemplateVerifier (02-10-2012)
+/* org.agiso.tempel.api.internal.ITemplateVerifier (02-10-2012)
  * 
  * ITemplateVerifier.java
  * 

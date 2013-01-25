@@ -7,16 +7,16 @@
 package org.agiso.tempel;
 
 import java.io.File;
+import java.util.Calendar;
 
-import org.agiso.tempel.test.AbstractOutputTest;
+import org.agiso.tempel.starter.Bootstrap;
 import org.testng.annotations.Test;
 
 /**
- * Testy działania szablonów testowych. Wykorzystują szablony z repozytorium
- * testowego src/test/resources/repository/runtime/ (dla standardowych szablonów
- * umieszczanych w repozytoriach katalogowych) oraz szablony z repozytorium
- * maven'owego src/test/resources/repository/maven/ (dla szablonów będących
- * zasobami w repozytoriach maven).
+ * Testy działania szablonów testowych. Wykorzystują szablony z repozytoriów
+ * testowych src/test/repository/ (dla standardowych szablonów umieszczanych
+ * w repozytoriach katalogowych) oraz szablony z repozytorium maven'owego
+ * (dla szablonów będących zasobami w repozytoriach maven).
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
@@ -42,7 +42,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 //	src/test/configuration/home/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
-	 * src/test/resources/repository/home/
+	 * src/test/repository/home/
 	 * org/agiso/tempel/tests/javaClass/1.0.0
 	 */
 	@Test
@@ -78,7 +78,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	/**
 	 * Szablon grupujący org.agiso.tempel.tests:javaBundleProject:1.0.0
 	 */
-//	@Test
+	@Test
 	public void testJavaBundleProject_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
@@ -87,11 +87,11 @@ public class TempelCoreITest extends AbstractOutputTest {
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "4370e708b6f5b640e90a5cde835aeb8b".equals(md5);
+		assert "7adef6b68dbba75ceff3dbafc1435465".equals(md5);
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityFileTemplate/1.0.0
 	 */
 	@Test
@@ -107,7 +107,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/1.0.0
 	 */
 	@Test
@@ -123,7 +123,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/2.0.0
 	 */
 	@Test
@@ -139,7 +139,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/3.0.0
 	 */
 	@Test
@@ -155,7 +155,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/4.0.0
 	 */
 	@Test
@@ -171,7 +171,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/5.0.0
 	 */
 	@Test
@@ -187,7 +187,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/6.0.0
 	 */
 	@Test
@@ -203,7 +203,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/7.0.0
 	 */
 	@Test
@@ -219,7 +219,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/resources/repository/runtime/
+	 * src/test/repository/runtime/
 	 * org/agiso/tempel/tests/velocityDirTemplate/8.0.0
 	 */
 	@Test

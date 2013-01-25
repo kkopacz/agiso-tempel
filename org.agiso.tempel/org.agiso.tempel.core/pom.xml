@@ -12,6 +12,13 @@
 
 	<name>AGISO Tempel CORE</name>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -35,14 +42,6 @@
 			<testResource>
 				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>TEST-INF/spring/*</exclude>
-				</excludes>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources/TEST-INF/spring</directory>
-				<filtering>false</filtering>
-				<targetPath>TEST-INF/spring</targetPath>
 			</testResource>
 		</testResources>
 
@@ -73,22 +72,22 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.exts.base</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>3.2.0.RELEASE</version>
+			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- XStream.
+		  - Dla org.agiso.tempel.core.XStreamTempelFileProcessor'a
+		  -->
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
@@ -96,42 +95,14 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>13.0.1</version>
-			<scope>compile</scope>
-		</dependency>
-
+		<!-- Apache Velocity.
+		  - Dla org.agiso.tempel.core.VelocityExpressionEvaluator'a
+		  -->
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
-		</dependency>
-
-
-		<!-- ShrinkWrap jest wymagany dla TstTemplateProvider'a -->
-		<dependency>
-			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-api</artifactId>
-			<version>1.0.1</version>
 			<scope>compile</scope>
-			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-impl-base</artifactId>
-			<version>1.0.1</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-
-
-		<!-- dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency -->
 	</dependencies>
 </project>
