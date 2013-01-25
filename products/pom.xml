@@ -10,22 +10,16 @@
 		<groupId>org.agiso.tempel</groupId>
 		<artifactId>org.agiso.tempel.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
-	<groupId>org.agiso.tempel</groupId>
-	<artifactId>org.agiso.tempel.builder</artifactId>
+	<artifactId>org.agiso.tempel.products</artifactId>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel Builder</name>
+	<name>AGISO Tempel</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>pom/org.agiso.tempel.pom</module>
-		<module>bundles</module>
-		<module>templates</module>
-		<module>products</module>
-		<module>tests</module>
-		<module>docs</module>
+		<module>org.agiso.tempel.starter</module>
 	</modules>
 </project>

@@ -10,22 +10,18 @@
 		<groupId>org.agiso.tempel</groupId>
 		<artifactId>org.agiso.tempel.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
-	<groupId>org.agiso.tempel</groupId>
-	<artifactId>org.agiso.tempel.builder</artifactId>
+	<groupId>org.agiso.tempel.templates</groupId>
+	<artifactId>test.velocityFileTemplate</artifactId>
+	<version>BUILDER</version>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel Builder</name>
+	<name>org.agiso.tempel.templates:test.velocityFileTemplate:BUILDER</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>pom/org.agiso.tempel.pom</module>
-		<module>bundles</module>
-		<module>templates</module>
-		<module>products</module>
-		<module>tests</module>
-		<module>docs</module>
+		<module>1.0.0</module>
 	</modules>
 </project>

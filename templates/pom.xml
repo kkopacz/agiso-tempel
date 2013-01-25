@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.agiso.tempel</groupId>
+		<artifactId>org.agiso.tempel.pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom/org.agiso.tempel.pom/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>org.agiso.tempel.templates</artifactId>
+	<packaging>pom</packaging>
+
+	<name>AGISO Tempel Templates</name>
+	<inceptionYear>2012</inceptionYear>
+
+	<modules>
+		<module>abstract.mkdir</module>
+		<module>abstract.mkdirs</module>
+		<module>abstract.velocityFileEngine</module>
+		<module>abstract.velocityDirectoryEngine</module>
+
+		<module>base.mkdir</module>
+		<module>base.mkdirs</module>
+
+		<module>eclipse.project.general</module>
+		<module>eclipse.project.java</module>
+
+		<module>test.velocityFileTemplate</module>
+		<module>test.velocityDirectoryTemplate</module>
+	</modules>
+</project>
