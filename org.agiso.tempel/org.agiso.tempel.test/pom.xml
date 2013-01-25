@@ -78,6 +78,13 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.2.0.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+	
+		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -86,7 +93,7 @@
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.exts.test</artifactId>
+			<artifactId>org.agiso.tempel.support.test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 			<optional>true</optional>

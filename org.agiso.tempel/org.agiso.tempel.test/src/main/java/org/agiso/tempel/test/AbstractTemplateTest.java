@@ -22,8 +22,8 @@ import java.io.File;
 
 import org.agiso.core.test.AbstractOutputTest;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.exts.test.provider.IArchiveTemplateProvider;
-import org.agiso.tempel.exts.test.provider.ArchiveTemplateProvider;
+import org.agiso.tempel.support.test.provider.IArchiveTemplateProvider;
+import org.agiso.tempel.support.test.provider.ArchiveTemplateProvider;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;

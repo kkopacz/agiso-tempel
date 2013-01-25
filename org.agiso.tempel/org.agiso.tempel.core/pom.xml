@@ -82,6 +82,7 @@
 			<artifactId>spring-context</artifactId>
 			<version>3.2.0.RELEASE</version>
 			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>

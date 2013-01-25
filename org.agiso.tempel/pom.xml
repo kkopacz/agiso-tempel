@@ -30,13 +30,15 @@
 		<module>org.agiso.tempel.api</module>
 
 		<module>org.agiso.tempel.core</module>
-		<module>org.agiso.tempel.core.exts</module>
 
-		<module>org.agiso.tempel.exts.base</module>
-		<module>org.agiso.tempel.exts.core</module>
-		<module>org.agiso.tempel.exts.maven</module>
-		<module>org.agiso.tempel.exts.test</module>
+		<module>org.agiso.tempel.support.base</module>
+		<module>org.agiso.tempel.support.file</module>
+		<module>org.agiso.tempel.support.maven</module>
+
+		<module>org.agiso.tempel.support.test</module>
 		<module>org.agiso.tempel.test</module>
+
+		<module>org.agiso.tempel.core.exts</module>
 
 		<module>org.agiso.tempel.templates</module>
 
