@@ -1,4 +1,7 @@
+agiso.org Tempel is licensed under Apache License, Version 2.0:
 
+```
+-------------------------------------------------------------------------
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -175,51 +178,99 @@
       of your accepting any such warranty or additional liability.
 
    END OF TERMS AND CONDITIONS
+```
 
-Lists of third-party dependencies:
-     (Public Domain) AOP alliance (aopalliance:aopalliance:1.0 - http://aopalliance.sourceforge.net)
-     (The Apache Software License, Version 2.0) JCommander (com.beust:jcommander:1.12 - http://beust.com/jcommander)
-     (The Apache Software License, Version 2.0) Guava: Google Core Libraries for Java (com.google.guava:guava:13.0.1 - http://code.google.com/p/guava-libraries/guava)
-     (BSD style) XStream Core (com.thoughtworks.xstream:xstream:1.4.3 - http://codehaus.org/xstream-parent/xstream/)
-     (The Apache Software License, Version 2.0) Commons CLI (commons-cli:commons-cli:1.2 - http://commons.apache.org/cli/)
-     (The Apache Software License, Version 2.0) Commons Collections (commons-collections:commons-collections:3.2.1 - http://commons.apache.org/collections/)
-     (The Apache Software License, Version 2.0) Commons IO (commons-io:commons-io:2.0.1 - http://commons.apache.org/io/)
-     (The Apache Software License, Version 2.0) Commons Lang (commons-lang:commons-lang:2.4 - http://commons.apache.org/lang/)
-     (The Apache Software License, Version 2.0) Commons Logging (commons-logging:commons-logging:1.1.1 - http://commons.apache.org/logging)
-     (Common Public License Version 1.0) JUnit (junit:junit:4.10 - http://junit.org)
-     (Apache License, Version 2.0) inflector (net.java.dev.inflector:inflector:0.7.0 - no url defined)
-     (Apache License) HttpCore (org.apache.httpcomponents:httpcore:4.1.2 - http://hc.apache.org/httpcomponents-core-ga)
-     (The Apache Software License, Version 2.0) Maven Aether Provider (org.apache.maven:maven-aether-provider:3.0.4 - http://maven.apache.org/ref/3.0.4//maven-aether-provider)
-     (The Apache Software License, Version 2.0) Maven Model (org.apache.maven:maven-model:3.0.4 - http://maven.apache.org/ref/3.0.4//maven-model)
-     (The Apache Software License, Version 2.0) Maven Model Builder (org.apache.maven:maven-model-builder:3.0.4 - http://maven.apache.org/ref/3.0.4//maven-model-builder)
-     (The Apache Software License, Version 2.0) Maven Repository Metadata Model (org.apache.maven:maven-repository-metadata:3.0.4 - http://maven.apache.org/ref/3.0.4//maven-repository-metadata)
-     (The Apache Software License, Version 2.0) Maven Settings (org.apache.maven:maven-settings:3.0.4 - http://maven.apache.org/ref/3.0.4//maven-settings)
-     (The Apache Software License, Version 2.0) Maven Settings Builder (org.apache.maven:maven-settings-builder:3.0.4 - http://maven.apache.org/ref/3.0.4//maven-settings-builder)
-     (The Apache Software License, Version 2.0) Apache Maven Wagon :: Providers :: File Provider (org.apache.maven.wagon:wagon-file:2.2 - http://maven.apache.org/wagon//wagon-providers/wagon-file)
-     (The Apache Software License, Version 2.0) Apache Maven Wagon :: Providers :: Lightweight HTTP Provider (org.apache.maven.wagon:wagon-http-lightweight:2.2 - http://maven.apache.org/wagon//wagon-providers/wagon-http-lightweight)
-     (The Apache Software License, Version 2.0) Apache Maven Wagon :: Providers :: HTTP Shared Library 4 (org.apache.maven.wagon:wagon-http-shared4:2.2 - http://maven.apache.org/wagon//wagon-providers/wagon-http-shared4)
-     (The Apache Software License, Version 2.0) Apache Maven Wagon :: API (org.apache.maven.wagon:wagon-provider-api:2.2 - http://maven.apache.org/wagon//wagon-provider-api)
-     (The Apache Software License, Version 2.0) Apache Velocity (org.apache.velocity:velocity:1.7 - http://velocity.apache.org/engine/devel/)
-     (GNU LESSER GENERAL PUBLIC LICENSE) BeanShell (org.beanshell:bsh:2.0b4 - no url defined)
-     (The Apache Software License, Version 2.0) Plexus Interpolation API (org.codehaus.plexus:plexus-interpolation:1.14 - http://plexus.codehaus.org/plexus-components/plexus-interpolation)
-     (The Apache Software License, Version 2.0) Plexus Common Utilities (org.codehaus.plexus:plexus-utils:2.0.6 - http://plexus.codehaus.org/plexus-utils)
-     (BSD style) Hamcrest Core (org.hamcrest:hamcrest-core:1.1 - no url defined)
-     (Apache License, Version 2.0) ShrinkWrap Resolver API (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api:2.0.0-alpha-6 - http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-api)
-     (Apache License, Version 2.0) ShrinkWrap Resolver Maven API (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven:2.0.0-alpha-6 - http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-api-maven)
-     (Apache License, Version 2.0) ShrinkWrap Resolver Maven Implementation (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven:2.0.0-alpha-6 - http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-impl-maven)
-     (Apache License, Version 2.0) ShrinkWrap Resolver SPI (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi:2.0.0-alpha-6 - http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-spi)
-     (The MIT License) jsoup (org.jsoup:jsoup:1.6.1 - http://jsoup.org/)
-     (Eclipse Public License, Version 1.0) Aether :: API (org.sonatype.aether:aether-api:1.13.1 - http://aether.sonatype.org/aether-api/)
-     (Eclipse Public License, Version 1.0) Aether :: Connector :: Wagon (org.sonatype.aether:aether-connector-wagon:1.13.1 - http://aether.sonatype.org/aether-connector-wagon/)
-     (Eclipse Public License, Version 1.0) Aether :: Implementation (org.sonatype.aether:aether-impl:1.13.1 - http://aether.sonatype.org/aether-impl/)
-     (Eclipse Public License, Version 1.0) Aether :: SPI (org.sonatype.aether:aether-spi:1.13.1 - http://aether.sonatype.org/aether-spi/)
-     (Eclipse Public License, Version 1.0) Aether :: Utilities (org.sonatype.aether:aether-util:1.13.1 - http://aether.sonatype.org/aether-util/)
-     (The Apache Software License, Version 2.0) Spring AOP (org.springframework:spring-aop:3.2.0.RELEASE - https://github.com/SpringSource/spring-framework)
-     (The Apache Software License, Version 2.0) Spring Beans (org.springframework:spring-beans:3.2.0.RELEASE - https://github.com/SpringSource/spring-framework)
-     (The Apache Software License, Version 2.0) Spring Context (org.springframework:spring-context:3.2.0.RELEASE - https://github.com/SpringSource/spring-framework)
-     (The Apache Software License, Version 2.0) Spring Core (org.springframework:spring-core:3.2.0.RELEASE - https://github.com/SpringSource/spring-framework)
-     (The Apache Software License, Version 2.0) Spring Expression Language (SpEL) (org.springframework:spring-expression:3.2.0.RELEASE - https://github.com/SpringSource/spring-framework)
-     (Apache License, Version 2.0) TestNG (org.testng:testng:6.7 - http://testng.org)
-     (Apache License Version 2.0) SnakeYAML (org.yaml:snakeyaml:1.6 - http://code.google.com/p/snakeyaml/)
-     (Public Domain) XML Pull Parsing API (xmlpull:xmlpull:1.1.3.1 - http://www.xmlpull.org)
-     (Indiana University Extreme! Lab Software License, vesion 1.1.1) (Public Domain) MXP1: Xml Pull Parser 3rd Edition (XPP3) (xpp3:xpp3_min:1.1.4c - http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/)
+External libraries, if used, include their own licenses:
+
+* [AOP alliance (aopalliance:aopalliance:1.0)](http://aopalliance.sourceforge.net) &mdash;
+  Public Domain,
+* [JCommander (com.beust:jcommander:1.12)](http://beust.com/jcommander) &mdash;
+  The Apache Software License, Version 2.0,
+* [Guava: Google Core Libraries for Java (com.google.guava:guava:13.0.1)](http://code.google.com/p/guava-libraries/guava) &mdash;
+  The Apache Software License, Version 2.0,
+* [XStream Core (com.thoughtworks.xstream:xstream:1.4.3)](http://codehaus.org/xstream-parent/xstream/) &mdash;
+  BSD style,
+* [Commons CLI (commons-cli:commons-cli:1.2)](http://commons.apache.org/cli/) &mdash;
+  The Apache Software License, Version 2.0,
+* [Commons Collections (commons-collections:commons-collections:3.2.1)](http://commons.apache.org/collections/) &mdash;
+  The Apache Software License, Version 2.0,
+* [Commons IO (commons-io:commons-io:2.0.1)](http://commons.apache.org/io/) &mdash;
+  The Apache Software License, Version 2.0,
+* [Commons Lang (commons-lang:commons-lang:2.4)](http://commons.apache.org/lang/) &mdash;
+  The Apache Software License, Version 2.0,
+* [Commons Logging (commons-logging:commons-logging:1.1.1)](http://commons.apache.org/logging) &mdash;
+  The Apache Software License, Version 2.0,
+* [JUnit (junit:junit:4.10)](http://junit.org) &mdash;
+  Common Public License Version 1.0,
+* [inflector (net.java.dev.inflector:inflector:0.7.0)](no url defined) &mdash;
+  Apache License, Version 2.0,
+* [HttpCore (org.apache.httpcomponents:httpcore:4.1.2)](http://hc.apache.org/httpcomponents-core-ga) &mdash;
+  Apache License,
+* [Maven Aether Provider (org.apache.maven:maven-aether-provider:3.0.4)](http://maven.apache.org/ref/3.0.4//maven-aether-provider) &mdash;
+  The Apache Software License, Version 2.0,
+* [Maven Model (org.apache.maven:maven-model:3.0.4)](http://maven.apache.org/ref/3.0.4//maven-model) &mdash;
+  The Apache Software License, Version 2.0,
+* [Maven Model Builder (org.apache.maven:maven-model-builder:3.0.4)](http://maven.apache.org/ref/3.0.4//maven-model-builder) &mdash;
+  The Apache Software License, Version 2.0,
+* [Maven Repository Metadata Model (org.apache.maven:maven-repository-metadata:3.0.4)](http://maven.apache.org/ref/3.0.4//maven-repository-metadata) &mdash;
+  The Apache Software License, Version 2.0,
+* [Maven Settings (org.apache.maven:maven-settings:3.0.4)](http://maven.apache.org/ref/3.0.4//maven-settings) &mdash;
+  The Apache Software License, Version 2.0,
+* [Maven Settings Builder (org.apache.maven:maven-settings-builder:3.0.4)](http://maven.apache.org/ref/3.0.4//maven-settings-builder) &mdash;
+  The Apache Software License, Version 2.0,
+* [Apache Maven Wagon :: Providers :: File Provider (org.apache.maven.wagon:wagon-file:2.2)](http://maven.apache.org/wagon//wagon-providers/wagon-file) &mdash;
+  The Apache Software License, Version 2.0,
+* [Apache Maven Wagon :: Providers :: Lightweight HTTP Provider (org.apache.maven.wagon:wagon-http-lightweight:2.2)](http://maven.apache.org/wagon//wagon-providers/wagon-http-lightweight) &mdash;
+  The Apache Software License, Version 2.0,
+* [Apache Maven Wagon :: Providers :: HTTP Shared Library 4 (org.apache.maven.wagon:wagon-http-shared4:2.2)](http://maven.apache.org/wagon//wagon-providers/wagon-http-shared4) &mdash;
+  The Apache Software License, Version 2.0,
+* [Apache Maven Wagon :: API (org.apache.maven.wagon:wagon-provider-api:2.2)](http://maven.apache.org/wagon//wagon-provider-api) &mdash;
+  The Apache Software License, Version 2.0,
+* [Apache Velocity (org.apache.velocity:velocity:1.7)](http://velocity.apache.org/engine/devel/) &mdash;
+  The Apache Software License, Version 2.0,
+* [BeanShell (org.beanshell:bsh:2.0b4)](no url defined) &mdash;
+  GNU LESSER GENERAL PUBLIC LICENSE,
+* [Plexus Interpolation API (org.codehaus.plexus:plexus-interpolation:1.14)](http://plexus.codehaus.org/plexus-components/plexus-interpolation) &mdash;
+  The Apache Software License, Version 2.0,
+* [Plexus Common Utilities (org.codehaus.plexus:plexus-utils:2.0.6)](http://plexus.codehaus.org/plexus-utils) &mdash;
+  The Apache Software License, Version 2.0,
+* [Hamcrest Core (org.hamcrest:hamcrest-core:1.1)](no url defined) &mdash;
+  BSD style,
+* [ShrinkWrap Resolver API (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api:2.0.0-alpha-6)](http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-api) &mdash;
+  Apache License, Version 2.0,
+* [ShrinkWrap Resolver Maven API (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven:2.0.0-alpha-6)](http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-api-maven) &mdash;
+  Apache License, Version 2.0,
+* [ShrinkWrap Resolver Maven Implementation (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven:2.0.0-alpha-6)](http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-impl-maven) &mdash;
+  Apache License, Version 2.0,
+* [ShrinkWrap Resolver SPI (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi:2.0.0-alpha-6)](http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-spi) &mdash;
+  Apache License, Version 2.0,
+* [jsoup (org.jsoup:jsoup:1.6.1)](http://jsoup.org/) &mdash;
+  The MIT License,
+* [Aether :: API (org.sonatype.aether:aether-api:1.13.1)](http://aether.sonatype.org/aether-api/) &mdash;
+  Eclipse Public License, Version 1.0,
+* [Aether :: Connector :: Wagon (org.sonatype.aether:aether-connector-wagon:1.13.1)](http://aether.sonatype.org/aether-connector-wagon/) &mdash;
+  Eclipse Public License, Version 1.0,
+* [Aether :: Implementation (org.sonatype.aether:aether-impl:1.13.1)](http://aether.sonatype.org/aether-impl/) &mdash;
+  Eclipse Public License, Version 1.0,
+* [Aether :: SPI (org.sonatype.aether:aether-spi:1.13.1)](http://aether.sonatype.org/aether-spi/) &mdash;
+  Eclipse Public License, Version 1.0,
+* [Aether :: Utilities (org.sonatype.aether:aether-util:1.13.1)](http://aether.sonatype.org/aether-util/) &mdash;
+  Eclipse Public License, Version 1.0,
+* [Spring AOP (org.springframework:spring-aop:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+  The Apache Software License, Version 2.0,
+* [Spring Beans (org.springframework:spring-beans:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+  The Apache Software License, Version 2.0,
+* [Spring Context (org.springframework:spring-context:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+  The Apache Software License, Version 2.0,
+* [Spring Core (org.springframework:spring-core:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+  The Apache Software License, Version 2.0,
+* [Spring Expression Language (SpEL) (org.springframework:spring-expression:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+  The Apache Software License, Version 2.0,
+* [TestNG (org.testng:testng:6.7)](http://testng.org) &mdash;
+  Apache License, Version 2.0,
+* [SnakeYAML (org.yaml:snakeyaml:1.6)](http://code.google.com/p/snakeyaml/) &mdash;
+  Apache License Version 2.0,
+* [XML Pull Parsing API (xmlpull:xmlpull:1.1.3.1)](http://www.xmlpull.org) &mdash;
+  Public Domain,
+* [MXP1: Xml Pull Parser 3rd Edition (XPP3) (xpp3:xpp3_min:1.1.4c)](http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/) &mdash;
+  Indiana University Extreme! Lab Software License, vesion 1.1.1, Public Domain.
