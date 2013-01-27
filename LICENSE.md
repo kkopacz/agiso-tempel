@@ -202,7 +202,7 @@ External libraries, if used, include their own licenses:
   The Apache Software License, Version 2.0,
 * [JUnit (junit:junit:4.10)](http://junit.org) &mdash;
   Common Public License Version 1.0,
-* [inflector (net.java.dev.inflector:inflector:0.7.0)](no url defined) &mdash;
+* Inflector (net.java.dev.inflector:inflector:0.7.0) &mdash;
   Apache License, Version 2.0,
 * [HttpCore (org.apache.httpcomponents:httpcore:4.1.2)](http://hc.apache.org/httpcomponents-core-ga) &mdash;
   Apache License,
@@ -228,13 +228,13 @@ External libraries, if used, include their own licenses:
   The Apache Software License, Version 2.0,
 * [Apache Velocity (org.apache.velocity:velocity:1.7)](http://velocity.apache.org/engine/devel/) &mdash;
   The Apache Software License, Version 2.0,
-* [BeanShell (org.beanshell:bsh:2.0b4)](no url defined) &mdash;
+* BeanShell (org.beanshell:bsh:2.0b4) &mdash;
   GNU LESSER GENERAL PUBLIC LICENSE,
 * [Plexus Interpolation API (org.codehaus.plexus:plexus-interpolation:1.14)](http://plexus.codehaus.org/plexus-components/plexus-interpolation) &mdash;
   The Apache Software License, Version 2.0,
 * [Plexus Common Utilities (org.codehaus.plexus:plexus-utils:2.0.6)](http://plexus.codehaus.org/plexus-utils) &mdash;
   The Apache Software License, Version 2.0,
-* [Hamcrest Core (org.hamcrest:hamcrest-core:1.1)](no url defined) &mdash;
+* Hamcrest Core (org.hamcrest:hamcrest-core:1.1) &mdash;
   BSD style,
 * [ShrinkWrap Resolver API (org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api:2.0.0-alpha-6)](http://www.jboss.org/shrinkwrap-resolver-parent/shrinkwrap-resolver-api) &mdash;
   Apache License, Version 2.0,
