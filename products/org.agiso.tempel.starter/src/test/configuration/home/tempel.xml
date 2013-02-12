@@ -14,6 +14,8 @@
 		<!-- date_format_medium></date_format_medium -->
 		<!-- date_format_long></date_format_long -->
 		<!-- date_format_full></date_format_full -->
+
+		<!-- maven_settings>/home/kkopacz/.tempel/maven.xml</maven_settings -->
 	</properties>
 
 	<template>

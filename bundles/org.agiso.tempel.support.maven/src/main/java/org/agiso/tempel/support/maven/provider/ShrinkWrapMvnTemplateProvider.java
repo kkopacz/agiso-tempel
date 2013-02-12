@@ -19,15 +19,22 @@
 package org.agiso.tempel.support.maven.provider;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.model.Template;
 import org.apache.maven.settings.Settings;
+import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
+import org.apache.maven.settings.building.SettingsBuildingRequest;
+import org.jboss.shrinkwrap.resolver.api.Resolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
+import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenRepositorySystem;
 import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenSettingsBuilder;
+import org.sonatype.aether.RepositorySystemSession;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,24 +44,52 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ShrinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
-	private final Settings settings;
-	private final MavenResolverSystem resolver = Maven.resolver();
+	/** Nazwa zmiennej przechowującej ścieżkę do ustawień Maven'a */
+	private static final String MAVEN_SETTINS_PATH_PROPERTY = "maven_settings";
+
+	/** Domyślna lokalizacja ustawień Maven'a poziomu użytkownika */
+	private static final String DEFAULT_MAVEN_SETTINGS_PATH = System.getProperty("user.home")
+			.concat("/.m2/settings.xml");
 
 //	--------------------------------------------------------------------------
-	/**
-	 * 
-	 */
-	public ShrinkWrapMvnTemplateProvider() {
-		settings = new MavenSettingsBuilder().buildDefaultSettings();
+	private Settings settings;
+	private MavenResolverSystem resolver;
+
+//	--------------------------------------------------------------------------
+	@Override
+	public void initialize(Map<String, Object> globalProperties) throws IOException {
+		SettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
+
+		File mavenSettingsFile = null;
+		if(globalProperties.containsKey(MAVEN_SETTINS_PATH_PROPERTY)) {
+			mavenSettingsFile = new File(
+					globalProperties.get(MAVEN_SETTINS_PATH_PROPERTY).toString()
+			);
+		} else {
+			mavenSettingsFile = new File(DEFAULT_MAVEN_SETTINGS_PATH);
+		}
+		if(mavenSettingsFile.exists()) {
+			request.setUserSettingsFile(mavenSettingsFile);
+			resolver = Maven.configureResolver().fromFile(mavenSettingsFile);
+
+			System.out.println("Using Maven settings file " + mavenSettingsFile.getCanonicalPath());
+		} else {
+			resolver = Maven.resolver();
+
+			System.out.println("!!!! Maven settings file " + mavenSettingsFile.getCanonicalPath() + " not found !!!!");
+		}
+
+		settings = new MavenSettingsBuilder().buildSettings(request);
+
+		System.out.println("Maven local repository: " + settings.getLocalRepository());
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
 	protected List<File> resolve(String groupId, String templateId, String version) throws Exception {
-
 		File[] files = resolver.resolve(
 				groupId + ":" + templateId + ":" + version
-		).withTransitivity().asFile();
+		).withoutTransitivity().asFile();
 
 		return Arrays.asList(files);
 	}

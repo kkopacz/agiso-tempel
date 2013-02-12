@@ -21,14 +21,26 @@ package org.agiso.tempel.api.internal;
 import java.io.IOException;
 import java.util.Map;
 
+import org.agiso.tempel.ITempel;
 import org.agiso.tempel.api.model.Template;
 
 /**
- * 
+ * Interfejs dostarczyciela szablonów. Jego implementacja odpowiada za wyszukiwanie
+ * i dostarczanie szablonów do wykonania.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateProvider {
+	/**
+	 * Inicjalizuje dostarczyciela szablonów przed pobraniem i uruchomieniem pierwszego
+	 * szablonu do wykonania (każdorazowo w metodzie {@link ITempel#startTemplate(String,
+	 * Map, String)}. W trakcie inicjalizacji może korzystać z przekazanej mapy parametrów,
+	 * może też do niej dodawać własne parametry (np. odczytane z pliku konfiguracyjnego
+	 * dostarczyciela).
+	 * 
+	 * @param properties Mapa parametrów środowiska/uruchomienia narzędzia Tempel.
+	 * @throws IOException W razie błędu przetwarzania zasobów wymaganych do inicjalizacji.
+	 */
 	public void initialize(Map<String, Object> properties) throws IOException;
 
 	/**
