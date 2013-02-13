@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>template.add.maven</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="groupId" name="Template groupId">
+				<value>aa.bb.cc</value>
+				<fixed>true</fixed>
+			</param>
+			<param key="templateId" name="Template templateId">
+				<value>xx.yy</value>
+				<fixed>true</fixed>
+			</param>
+			<param key="version" name="Template version">
+				<value>1.0.0</value>
+				<fixed>true</fixed>
+			</param>
+			<param key="packagePath">
+				<converter>org.agiso.tempel.convert.PackageToPathConverter</converter>
+				<value>${groupId}.${templateId}</value>
+				<fixed>true</fixed>
+			</param>
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+</tempel>

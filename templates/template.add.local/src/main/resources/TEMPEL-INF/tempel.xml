@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>template.add.local</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="groupId" name="Template groupId">
+				<converter>org.agiso.tempel.convert.PackageToPathConverter</converter>
+				<value>aa.bb.cc</value>
+				<fixed>true</fixed>
+			</param>
+			<param key="templateId" name="Template templateId">
+				<value>xx.yy</value>
+				<fixed>true</fixed>
+			</param>
+			<param key="version" name="Template version">
+				<value>1.0.0</value>
+				<fixed>true</fixed>
+			</param>
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdirs</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>.tempel/${top.groupId}/${top.templateId}/${top.version}</target>
+				</resource>
+			</reference>
+
+			<!-- TODO: Funkcjonalność rozbudowy pliku template.xml -->
+		</references>
+	</template>
+</tempel>
