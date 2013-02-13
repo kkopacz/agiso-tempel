@@ -20,9 +20,15 @@ package org.agiso.tempel.api;
 
 import java.util.Collection;
 
-
 /**
- * 
+ * Interfej źródła szablonu.
+ * </br>
+ * Źródło szablonu stanowi reprezentację struktury zasobów szablonu (które są
+ * przetwarzane przez silnik generacji szablonu) niezależną od typu szablonu,
+ * jego lokalizacji i sposobu przechowywania w repozytorium. Umożliwia taki
+ * sam sposób przetarzania szablonów ze standardowych repozytorów plikowych
+ * (zwykła struktura plików i katalogów dyskowych), szablonów z repozytoriów
+ * Apache Maven (archiwa jar o odpowiedniej strukturze wewnętrznej) i innych.
  * 
  * @author <a href="mailto:kkopaczz@agiso.org">Karol Kopacz</a>
  */
@@ -39,6 +45,14 @@ public interface ITemplateSource {
 	public boolean isDirectory();
 
 //	--------------------------------------------------------------------------
+	/**
+	 * Zwraca kolekcję wpisów źródła szablonu. Kolejność elementów kolekcji
+	 * zwracanych przez jej iterator musi być zgodna ze strukturą drzewa
+	 * katalogowego zasobów źródła szablonu, tzn. wpis reprezentujący katalog
+	 * musi się znaleźć przed wpisami opisującymi jego zawartość.
+	 * 
+	 * @return Kolekcja wpisów źródła szablonu.
+	 */
 	public Collection<ITemplateSourceEntry> listEntries();
 
 	public ITemplateSourceEntry getEntry(String name);

@@ -24,8 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
@@ -46,6 +47,7 @@ public class FileTemplateSource implements ITemplateSource {
 	private int mainEntryPathLength;
 	private ITemplateSourceEntry mainEntry;
 
+	// TODO: Przenieść do klasy bazowej AbstractTemplateSource
 	private Map<String, ITemplateSourceEntry> entries;
 
 //	--------------------------------------------------------------------------
@@ -61,7 +63,12 @@ public class FileTemplateSource implements ITemplateSource {
 			throw new IllegalArgumentException("Invalid template directory: " + mainEntryPath);
 		}
 
-		entries = new LinkedHashMap<String, ITemplateSourceEntry>();
+		entries = new TreeMap<String, ITemplateSourceEntry>(new Comparator<String>() {
+			@Override
+			public int compare(String path1, String path2) {	// mapa musi być posortowana tak, aby
+				return path1.compareTo(path2);					// wpisy plików były po katalogach w
+			}													// których się znajdują
+		});
 
 		// Pobieramy plik odpowiadający wskazanemu zasobowi szablonu i na jego
 		// podstawie budujemy listę wszystkich wpsiów szablonu:

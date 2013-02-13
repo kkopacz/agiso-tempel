@@ -22,8 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
@@ -49,6 +50,7 @@ public class ArchiveTemplateSource implements ITemplateSource {
 	private int basePathLength;
 	private ITemplateSourceEntry mainEntry;
 
+	// TODO: Przenieść do klasy bazowej AbstractTemplateSource
 	private Map<String, ITemplateSourceEntry> entries;
 
 //	--------------------------------------------------------------------------
@@ -80,7 +82,12 @@ public class ArchiveTemplateSource implements ITemplateSource {
 					+ resource + " not exists in directory " + BASE_PATH);
 		}
 
-		entries = new LinkedHashMap<String, ITemplateSourceEntry>();
+		entries = new TreeMap<String, ITemplateSourceEntry>(new Comparator<String>() {
+			@Override
+			public int compare(String path1, String path2) {	// mapa musi być posortowana tak, aby
+				return path1.compareTo(path2);					// wpisy plików były po katalogach w
+			}													// których się znajdują
+		});
 
 		if(baseEntry.getAsset() == null) {
 			basePathLength = baseEntry.getPath().get().length();
