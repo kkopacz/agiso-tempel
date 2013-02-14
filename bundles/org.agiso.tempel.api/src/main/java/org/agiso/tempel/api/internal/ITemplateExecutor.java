@@ -28,5 +28,19 @@ import org.agiso.tempel.api.model.Template;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface ITemplateExecutor {
+	/**
+	 * Umożliwia modyfikację standardowej implemtacji {@link IParamReader}'a
+	 * odpowiedzialnego za odczyt parametrów wejściowych wymaganych do wykonania
+	 * szablonu.
+	 * </br>
+	 * Metoda wykorzystywana głównie w kodzie testowym w celu wstrzyknięcia
+	 * instancji klasy {@link IParamReader} (lub jej pozornej implementacji),
+	 * która automatycznie dostarcza wartości parametrów, które przy normalnym
+	 * uruchomieniu szablonu podawane są ręcznie w konsoli ekranowej.
+	 * 
+	 * @param paramReader {@link IParamReader} dostarczający wartości parametrów.
+	 */
+	public void setParamReader(IParamReader paramReader);
+
 	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) throws Exception;
 }

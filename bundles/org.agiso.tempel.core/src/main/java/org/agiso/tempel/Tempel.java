@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateVerifier;
@@ -70,6 +71,11 @@ public class Tempel implements ITempel {
 	}
 
 //	--------------------------------------------------------------------------
+	@Override
+	public void setParamReader(IParamReader paramReader) {
+		templateExecutor.setParamReader(paramReader);
+	}
+
 	/**
 	 * @param cmd
 	 */

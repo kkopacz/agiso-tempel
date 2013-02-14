@@ -18,9 +18,6 @@
  */
 package org.agiso.tempel.core;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +27,7 @@ import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
+import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.model.Template;
@@ -46,8 +44,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DefaultTemplateExecutor implements ITemplateExecutor {
-	@Autowired
+	private IParamReader paramReader;
 	private IExpressionEvaluator expressionEvaluator;
+
+//	--------------------------------------------------------------------------
+	@Override
+	@Autowired
+	public void setParamReader(IParamReader paramReader) {
+		this.paramReader = paramReader;
+	}
+
+	@Autowired
+	public void setExpressionEvaluator(IExpressionEvaluator expressionEvaluator) {
+		this.expressionEvaluator = expressionEvaluator;
+	}
 
 //	--------------------------------------------------------------------------
 	/**
@@ -241,27 +251,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			}
 		} else {
 			// Wartości pozostałych parametrów są określane w trakcie wykonania:
-			String name;
-			if(Temp.StringUtils_isBlank(param.getName())) {
-				name = "Param '" + param.getKey() + "'";
-			} else {
-				name = param.getName();
-			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			try {
-				if(value == null) {
-					System.out.print(name + " []: ");
-				} else {
-					System.out.print(name + " [" + value + "]: ");
-				}
-				String line = br.readLine();
-				if(!Temp.StringUtils_isEmpty(line)) {
-					value = line;
-				}
-			} catch(IOException e) {
-				throw new RuntimeException(e);
-			}
+			value = paramReader.getParamValue(param.getKey(), param.getName(), value);
 		}
 		return value;
 	}

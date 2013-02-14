@@ -18,11 +18,16 @@
  */
 package org.agiso.tempel.templates.template.add.maven;
 
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+
 import java.io.File;
 import java.util.HashMap;
 
 import org.agiso.tempel.Temp;
+import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.test.AbstractTemplateTest;
+import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
 /**
@@ -45,13 +50,30 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 	public void testTemplateAddLocal() throws Exception {
 		String outPath = getOutputPath(true);
 
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("groupId"), anyString(), anyString()))
+			.thenReturn("aaa.bbb.ccc");
+		when(paramReader.getParamValue(eq("templateId"), anyString(), anyString()))
+			.thenReturn("xxx.yyy.zzz");
+		when(paramReader.getParamValue(eq("version"), anyString(), anyString()))
+			.thenReturn("1.0.0");
+
+		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
+		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
 
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("groupId", "Template groupId", "org.agiso.tempel.templates");
+		inOrder.verify(paramReader, times(1)).getParamValue("templateId", "Template templateId", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("version", "Template version", "1.0.0");
+		verifyNoMoreInteractions(paramReader);
+
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		System.out.println(md5);
-		// assert "e81e17876652c7875b538f9db7157c1e".equals(md5);
+		assert "1eb86a1978df9f4e987e255dac1ca956".equals(md5);
 	}
 }

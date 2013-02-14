@@ -1,8 +1,8 @@
-/* org.agiso.tempel.ITempel (25-01-2013)
+/* org.agiso.tempel.api.internal.IParamReader (13-02-2013)
  * 
- * ITempel.java
+ * IParamReader.java
  * 
- * Copyright 2013 agiso.org
+ * Copyright 2013 PPW 'ARAJ' Sp. z o. o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel;
-
-import java.util.Map;
-
-import org.agiso.tempel.api.internal.IParamReader;
-import org.agiso.tempel.api.internal.ITemplateExecutor;
+package org.agiso.tempel.api.internal;
 
 /**
+ * Obsługuje polecenia odczytu parametrów przygotowania do wywołania szablonu.
+ * Parametry te znajdują się w sekcji &lt;params&gt; definicji szablonu.
  * 
- * 
- * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ * @author <a href="mailto:kkopacz@araj.pl">Karol Kopacz</a>
  */
-public interface ITempel {
+public interface IParamReader {
 	/**
-	 * @see ITemplateExecutor#setParamReader(IParamReader)
+	 * @param key
+	 * @param name
+	 * @param value
+	 * @return
 	 */
-	public void setParamReader(IParamReader paramReader);
-
-	public void startTemplate(String name, Map<String, String> params, String workDir) throws Exception;
+	public String getParamValue(String key, String name, String value);
 }

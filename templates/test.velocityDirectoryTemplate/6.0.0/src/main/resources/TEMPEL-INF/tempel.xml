@@ -6,10 +6,7 @@
 		<version>6.0.0</version>
 
 		<params>
-			<param key="name">
-				<fixed>true</fixed>
-				<value>value</value>
-			</param>
+			<param key="name" />
 		</params>
 
 		<workdir>subdir</workdir>

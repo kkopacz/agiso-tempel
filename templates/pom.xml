@@ -31,6 +31,10 @@
 		<module>eclipse.project.general</module>
 		<module>eclipse.project.java</module>
 
+		<module>tempel.add</module>
+		<module>template.add.local</module>
+		<module>template.add.maven</module>
+
 		<module>test.velocityFileTemplate</module>
 		<module>test.velocityDirectoryTemplate</module>
 	</modules>

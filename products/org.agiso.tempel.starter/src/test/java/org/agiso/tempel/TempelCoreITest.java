@@ -7,7 +7,6 @@
 package org.agiso.tempel;
 
 import java.io.File;
-import java.util.Calendar;
 
 import org.agiso.tempel.starter.Bootstrap;
 import org.testng.annotations.Test;
@@ -47,6 +46,17 @@ public class TempelCoreITest extends AbstractOutputTest {
 	 */
 	@Test
 	public void testJavaClass_1_0_0() throws Exception {
+		// Test wywołania z wykorzystaniem klasy Bootstrap. Nie ma możliwości
+		// przedefiniowania IParamReader'a w starndardowy sposób (tj. przez
+		// wywołanie metody ITempel#setParamReader(IParamReader)). Można
+		// spróbować umieścić instancję IParamReader'a w kontekści wątku i
+		// dodać kod w inicjalizacji klasy Tempel, który sprawdza istnienie
+		// takiej instancji w kontekście wątku i ją wykorzystuje.
+
+		// TODO: Przekazanie pozornego ParamReader'a przez kontekst wątku
+
+		// ALBO: Ustawić/przkazać ParamReader'a dla klasy Bootstrap
+		
 		String outPath = getOutputPath(true);
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:javaClass:1.0.0",
