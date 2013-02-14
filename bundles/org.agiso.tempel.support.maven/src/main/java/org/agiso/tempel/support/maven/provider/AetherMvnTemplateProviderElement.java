@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.maven.provider.AetherMvnTemplateProvider (15-12-2012)
+/* org.agiso.tempel.support.maven.provider.AetherMvnTemplateProviderElement (15-12-2012)
  * 
- * AetherMvnTemplateProvider.java
+ * AetherMvnTemplateProviderElement.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -49,7 +49,7 @@ import org.sonatype.aether.util.graph.PreorderNodeListGenerator;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
+public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
 	private String settingsPath;
 	private String repositoryPath;
 

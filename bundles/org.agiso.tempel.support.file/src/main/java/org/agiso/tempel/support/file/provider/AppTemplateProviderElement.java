@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.file.provider.AppTemplateProvider (15-12-2012)
+/* org.agiso.tempel.support.file.provider.AppTemplateProviderElement (15-12-2012)
  * 
- * AppTemplateProvider.java
+ * AppTemplateProviderElement.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -28,9 +28,8 @@ import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
-import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.support.base.provider.BaseTemplateProvider;
+import org.agiso.tempel.support.base.provider.BaseTemplateProviderElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +39,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class AppTemplateProvider extends BaseTemplateProvider {
+public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -102,7 +101,7 @@ public class AppTemplateProvider extends BaseTemplateProvider {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					AppTemplateProvider.this.processObject("GLOBAL", object, templateRepository,
+					AppTemplateProviderElement.this.processObject("GLOBAL", object, templateRepository,
 							new ITemplateSourceFactory() {
 								@Override
 								public ITemplateSource createTemplateSource(Template template, String source) {

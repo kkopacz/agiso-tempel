@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.maven.provider.ShrinkWrapMvnTemplateProvider (19-01-2013)
+/* org.agiso.tempel.support.maven.provider.ShrinkWrapMvnTemplateProviderElement (19-01-2013)
  * 
- * ShrinkWrapMvnTemplateProvider.java
+ * ShrinkWrapMvnTemplateProviderElement.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -29,12 +29,9 @@ import org.agiso.tempel.api.model.Template;
 import org.apache.maven.settings.Settings;
 import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
 import org.apache.maven.settings.building.SettingsBuildingRequest;
-import org.jboss.shrinkwrap.resolver.api.Resolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
-import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenRepositorySystem;
 import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenSettingsBuilder;
-import org.sonatype.aether.RepositorySystemSession;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +40,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class ShrinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
+public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
 	/** Nazwa zmiennej przechowującej ścieżkę do ustawień Maven'a */
 	private static final String MAVEN_SETTINS_PATH_PROPERTY = "maven_settings";
 

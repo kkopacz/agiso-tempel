@@ -30,7 +30,7 @@ import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.support.base.provider.BaseTemplateProvider;
+import org.agiso.tempel.support.base.provider.BaseTemplateProviderElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class RunTemplateProvider extends BaseTemplateProvider {
+public class RunTemplateProvider extends BaseTemplateProviderElement {
 	private String settingsPath;
 	private String repositoryPath;
 

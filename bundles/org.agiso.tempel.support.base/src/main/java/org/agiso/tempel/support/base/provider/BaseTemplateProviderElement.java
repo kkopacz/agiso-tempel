@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.base.provider.BaseTemplateProvider (15-12-2012)
+/* org.agiso.tempel.support.base.provider.BaseTemplateProviderElement (15-12-2012)
  * 
- * BaseTemplateProvider.java
+ * BaseTemplateProviderElement.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class BaseTemplateProvider implements ITemplateProviderElement {
+public abstract class BaseTemplateProviderElement implements ITemplateProviderElement {
 	private boolean active;
 	private Map<String, Object> globalProperties;
 

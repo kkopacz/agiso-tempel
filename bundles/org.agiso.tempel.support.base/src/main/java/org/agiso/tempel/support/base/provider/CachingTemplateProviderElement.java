@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.base.provider.CachingTemplateProvider (21-01-2013)
+/* org.agiso.tempel.support.base.provider.CachingTemplateProviderElement (21-01-2013)
  * 
- * CachingTemplateProvider.java
+ * CachingTemplateProviderElement.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -32,7 +32,7 @@ import org.agiso.tempel.support.base.repository.HashBasedTemplateRepository;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class CachingTemplateProvider extends BaseTemplateProvider implements ITemplateSourceFactory {
+public abstract class CachingTemplateProviderElement extends BaseTemplateProviderElement implements ITemplateSourceFactory {
 	private final Map<String, CacheEntry> cache = new HashMap<String, CacheEntry>();
 
 //	--------------------------------------------------------------------------
@@ -62,8 +62,8 @@ public abstract class CachingTemplateProvider extends BaseTemplateProvider imple
 				tempelFileProcessor.process(cacheEntry.definition, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						CachingTemplateProvider.this.processObject("MAVEN",
-								object, templateRepository, CachingTemplateProvider.this
+						CachingTemplateProviderElement.this.processObject("MAVEN",
+								object, templateRepository, CachingTemplateProviderElement.this
 						);
 					}
 				});

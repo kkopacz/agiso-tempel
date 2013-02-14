@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.test.provider.IArchiveTemplateProvider (25-01-2013)
+/* org.agiso.tempel.support.test.provider.IArchiveTemplateProviderElement (25-01-2013)
  * 
- * IArchiveTemplateProvider.java
+ * IArchiveTemplateProviderElement.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -26,6 +26,6 @@ import org.jboss.shrinkwrap.api.Archive;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface IArchiveTemplateProvider extends ITemplateProviderElement {
+public interface IArchiveTemplateProviderElement extends ITemplateProviderElement {
 	public void addArchive(String groupId, String templateId, String version, Archive<?> archive);
 }

@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.maven.provider.AbstractMvnTemplateProvider (19-01-2013)
+/* org.agiso.tempel.support.maven.provider.AbstractMvnTemplateProviderElement (19-01-2013)
  * 
- * AbstractMvnTemplateProvider.java
+ * AbstractMvnTemplateProviderElement.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -30,16 +30,15 @@ import java.util.jar.JarFile;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.JarTemplateSource;
-import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.support.base.provider.CachingTemplateProvider;
+import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractMvnTemplateProvider extends CachingTemplateProvider {
+public abstract class AbstractMvnTemplateProviderElement extends CachingTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	@Override

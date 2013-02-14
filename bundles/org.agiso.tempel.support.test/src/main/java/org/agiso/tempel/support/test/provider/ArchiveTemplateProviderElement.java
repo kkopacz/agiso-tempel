@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.test.provider.ArchiveTemplateProvider (20-01-2013)
+/* org.agiso.tempel.support.test.provider.ArchiveTemplateProviderElement (20-01-2013)
  * 
- * ArchiveTemplateProvider.java
+ * ArchiveTemplateProviderElement.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.support.base.provider.CachingTemplateProvider;
+import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
 import org.agiso.tempel.support.test.provider.source.ArchiveTemplateSource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
@@ -39,7 +39,8 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class ArchiveTemplateProvider extends CachingTemplateProvider implements IArchiveTemplateProvider {
+public class ArchiveTemplateProviderElement extends CachingTemplateProviderElement
+		implements IArchiveTemplateProviderElement {
 	private final Map<String, Archive<?>> repository = new HashMap<String, Archive<?>>();
 
 //	--------------------------------------------------------------------------

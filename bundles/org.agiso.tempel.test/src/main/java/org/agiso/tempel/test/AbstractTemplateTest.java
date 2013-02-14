@@ -22,8 +22,8 @@ import java.io.File;
 
 import org.agiso.core.test.AbstractOutputTest;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.support.test.provider.IArchiveTemplateProvider;
-import org.agiso.tempel.support.test.provider.ArchiveTemplateProvider;
+import org.agiso.tempel.support.test.provider.IArchiveTemplateProviderElement;
+import org.agiso.tempel.support.test.provider.ArchiveTemplateProviderElement;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
@@ -36,7 +36,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * po kompilacji w formie plików .jar umieszczane są w repozytoriach Maven.
  * </br>
  * Jeśli klasa testowa znajduje się w projekcie szablonu (zawierającym katalog
- * src/main/resources/TEMPEL-INF), wykorzystuje {@link ArchiveTemplateProvider}'a
+ * src/main/resources/TEMPEL-INF), wykorzystuje {@link ArchiveTemplateProviderElement}'a
  * i dodaje do niego archiwum bieżącego szablonu przygotowywane za pomocą
  * biblioteki {@link ShrinkWrap}. Szablony zależne (podszablony) muszą się
  * znajdować w repozytoriach Maven i dostarczane są poprzez klasę {@link
@@ -68,7 +68,7 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 	/**
 	 * Konstruktor dla klas testów umieszczonych wewnątrz projektów szablonów.
 	 * Tworzy obiekt {@link Tempel} i rejestruje w nim provider'y {@link
-	 * ArchiveTemplateProvider} i {@link ShrinkWrapMvnTemplateProvider}. Pierwszy
+	 * ArchiveTemplateProviderElement} i {@link ShrinkWrapMvnTemplateProvider}. Pierwszy
 	 * z nich odpowiada za dostarczenie biblioteki testowanego szablonu (która
 	 * jest tworzona w metodzie {@link #createTemplateArchive()} za pomocą
 	 * mechanizmów {@link ShrinkWrap}. Drugi dostarcza podszablonów testowanego
@@ -97,7 +97,7 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 				Archive<?> archive = createTemplateArchive();
 
 				// Mamy do czynienia z testem projektu szablonu:
-				IArchiveTemplateProvider atp = ctx.getBean(IArchiveTemplateProvider.class);
+				IArchiveTemplateProviderElement atp = ctx.getBean(IArchiveTemplateProviderElement.class);
 				atp.addArchive(groupId, templateId, version, archive);
 			}
 
