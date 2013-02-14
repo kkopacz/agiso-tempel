@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class RunTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
+public class RunTemplateProvider extends BaseTemplateProvider {
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -75,7 +75,7 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 		}
 
 
-		readRunTemplates(templateRepository);
+		setActive(readRunTemplates(templateRepository));
 	}
 
 //	--------------------------------------------------------------------------
@@ -98,7 +98,7 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 	 * @param templateRepository
 	 * @throws IOException
 	 */
-	private void readRunTemplates(final ITemplateRepository templateRepository) throws IOException {
+	private boolean readRunTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów lokalnych (katalog bieżący projektu):
 		File runSettingsFile = new File(settingsPath);
 		if(runSettingsFile.exists()) try {
@@ -120,10 +120,13 @@ public class RunTemplateProvider extends BaseTemplateProvider implements ITempla
 				}
 			});
 			System.out.println("Wczytano ustawienia lokalne z pliku " + runSettingsFile.getCanonicalPath());
+
+			return true;
 		} catch(Exception e) {
 			System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
+		return false;
 	}
 
 	private String getTemplatePath(Template template) {

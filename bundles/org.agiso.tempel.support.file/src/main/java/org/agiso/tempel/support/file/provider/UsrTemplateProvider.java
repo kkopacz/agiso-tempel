@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class UsrTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
+public class UsrTemplateProvider extends BaseTemplateProvider {
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -75,7 +75,7 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 		}
 
 
-		readUsrTemplates(templateRepository);
+		setActive(readUsrTemplates(templateRepository));
 	}
 
 //	--------------------------------------------------------------------------
@@ -98,36 +98,39 @@ public class UsrTemplateProvider extends BaseTemplateProvider implements ITempla
 	 * @param templateRepository
 	 * @throws IOException
 	 */
-	private void readUsrTemplates(final ITemplateRepository templateRepository) throws IOException {
+	private boolean readUsrTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów użytkownika (katalog domowy użytkownika):
 		File usrSettingsFile = new File(settingsPath);
-		if(!usrSettingsFile.exists()) {
-			// TODO Tworzenie pustego repozytorium użytkownika:
-			
-		}
-
-		try {
-			tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
-				@Override
-				public void processObject(Object object) {
-					UsrTemplateProvider.this.processObject("USER", object, templateRepository,
-							new ITemplateSourceFactory() {
-								@Override
-								public ITemplateSource createTemplateSource(Template template, String source) {
-									try {
-										return new FileTemplateSource(getTemplatePath(template), source);
-									} catch(IOException e) {
-										throw new RuntimeException(e);
+		if(usrSettingsFile.exists()) {
+			try {
+				tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
+					@Override
+					public void processObject(Object object) {
+						UsrTemplateProvider.this.processObject("USER", object, templateRepository,
+								new ITemplateSourceFactory() {
+									@Override
+									public ITemplateSource createTemplateSource(Template template, String source) {
+										try {
+											return new FileTemplateSource(getTemplatePath(template), source);
+										} catch(IOException e) {
+											throw new RuntimeException(e);
+										}
 									}
 								}
-							}
-					);
-				}
-			});
-			System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
-		} catch(Exception e) {
-			System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
-			throw new RuntimeException(e);
+						);
+					}
+				});
+				System.out.println("Wczytano ustawienia użytkownika z pliku " + usrSettingsFile.getCanonicalPath());
+
+				return true;
+			} catch(Exception e) {
+				System.err.println("Błąd wczytywania ustawień użytkownika: " + e.getMessage());
+				throw new RuntimeException(e);
+			}
+		} else {
+			// TODO: Tworzenie pustego repozytorium użytkownika
+
+			return false;
 		}
 	}
 

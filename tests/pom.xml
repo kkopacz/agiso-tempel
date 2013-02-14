@@ -55,6 +55,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.support.file</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.support.maven</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>

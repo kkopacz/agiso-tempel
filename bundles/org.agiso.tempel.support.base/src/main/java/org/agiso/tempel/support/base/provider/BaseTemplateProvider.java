@@ -27,7 +27,7 @@ import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
-import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class BaseTemplateProvider implements ITemplateProvider {
+public abstract class BaseTemplateProvider implements ITemplateProviderElement {
+	private boolean active;
 	private Map<String, Object> globalProperties;
 
 	@Autowired
@@ -53,6 +54,14 @@ public abstract class BaseTemplateProvider implements ITemplateProvider {
 	}
 
 //	--------------------------------------------------------------------------
+	@Override
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	/**
 	 * Przetwarza obiekt odczytany z pliku tempel.xml
 	 * 

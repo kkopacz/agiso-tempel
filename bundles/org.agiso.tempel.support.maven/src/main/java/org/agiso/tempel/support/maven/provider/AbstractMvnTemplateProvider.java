@@ -39,8 +39,7 @@ import org.agiso.tempel.support.base.provider.CachingTemplateProvider;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class AbstractMvnTemplateProvider extends CachingTemplateProvider
-		implements ITemplateProviderElement {
+public abstract class AbstractMvnTemplateProvider extends CachingTemplateProvider {
 
 //	--------------------------------------------------------------------------
 	@Override

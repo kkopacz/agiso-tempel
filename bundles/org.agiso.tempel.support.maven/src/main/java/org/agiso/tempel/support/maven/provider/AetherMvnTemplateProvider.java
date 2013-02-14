@@ -19,7 +19,9 @@
 package org.agiso.tempel.support.maven.provider;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.model.Template;
@@ -57,7 +59,10 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 	private RemoteRepository central;
 
 //	--------------------------------------------------------------------------
-	public AetherMvnTemplateProvider() {
+	@Override
+	public void initialize(Map<String, Object> globalProperties) throws IOException {
+		super.initialize(globalProperties);
+
 		repoSystem = newRepositorySystem();
 
 
@@ -78,6 +83,8 @@ public class AetherMvnTemplateProvider extends AbstractMvnTemplateProvider {
 
 		local = new RemoteRepository("local", "default", "file://" + settingsPath);
 		central = new RemoteRepository("central", "default", "http://repo1.maven.org/maven2/");
+
+		setActive(true);
 	}
 
 //	--------------------------------------------------------------------------

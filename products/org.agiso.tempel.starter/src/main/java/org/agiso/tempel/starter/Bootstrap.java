@@ -21,6 +21,7 @@ package org.agiso.tempel.starter;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.agiso.tempel.ITempel;
 import org.apache.commons.cli.CommandLine;
@@ -74,7 +75,8 @@ public class Bootstrap {
 		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
 
 		ITempel tempel = createTempelInstance();
-		tempel.startTemplate(templateName, new HashMap<String, String>(), workDir);
+		Map<String, String> params = new HashMap<String, String>();
+		tempel.startTemplate(templateName, params, workDir);
 
 		System.out.println("--- Zakonczono pomyslnie ---");
 	}

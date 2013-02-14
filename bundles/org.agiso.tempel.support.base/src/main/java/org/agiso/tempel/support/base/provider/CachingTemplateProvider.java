@@ -32,8 +32,7 @@ import org.agiso.tempel.support.base.repository.HashBasedTemplateRepository;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public abstract class CachingTemplateProvider extends BaseTemplateProvider
-		implements ITemplateSourceFactory {
+public abstract class CachingTemplateProvider extends BaseTemplateProvider implements ITemplateSourceFactory {
 	private final Map<String, CacheEntry> cache = new HashMap<String, CacheEntry>();
 
 //	--------------------------------------------------------------------------

@@ -35,16 +35,12 @@ import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.api.model.Template;
 import org.apache.commons.lang.LocaleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-@Component
-@Scope("prototype")
 public class Tempel implements ITempel {
 	private ITemplateProvider templateProvider;
 	private ITemplateVerifier templateVerifier;
@@ -55,7 +51,7 @@ public class Tempel implements ITempel {
 	}
 
 //	--------------------------------------------------------------------------
-	// @Autowired  wstrzykujemy przez xml
+	@Autowired
 	public void setTemplateProvider(ITemplateProvider templateProvider) {
 		this.templateProvider = templateProvider;
 	}
@@ -116,60 +112,174 @@ public class Tempel implements ITempel {
 	}
 
 //	--------------------------------------------------------------------------
-	// Tworzenie parametrów predefiniowanych przechowujących aktualną datę:
-	private void addPredeifnedProperties(Map<String, Object> globalProperties) {
+//	Obsługa parametrów szablonów.
+//	RP_ - Parametry linii poleceń wykonania programu. W oparciu o ich wartości
+//	      wyznaczane są parametry TP_ wykorzystywane w szablonach.
+//	UP_ - Parametry konfiguracyjne (użytkownika). Określają sposób wyznaczania
+//	      parametrów TP_ wykorzystywanych w szablonach.
+//	TP_ - Parametry szablonów. Przeznaczone do bezpośredniego uzycia w treści
+//	      szablonów.
+//	--------------------------------------------------------------------------
+	public static final String RP_DATE = "date";
+	public static final String RP_DATE_FORMAT = "date_format";
+
+	public static final String UP_DATE_LOCALE = "date_locale";
+	public static final String UP_DATE_FORMAT_SHORT  = "date_format_short";
+	public static final String UP_DATE_FORMAT_MEDIUM = "date_format_medium";
+	public static final String UP_DATE_FORMAT_LONG   = "date_format_long";
+	public static final String UP_DATE_FORMAT_FULL   = "date_format_full";
+	public static final String UP_TIME_FORMAT_SHORT  = "time_format_short";
+	public static final String UP_TIME_FORMAT_MEDIUM = "time_format_medium";
+	public static final String UP_TIME_FORMAT_LONG   = "time_format_long";
+	public static final String UP_TIME_FORMAT_FULL   = "time_format_full";
+
+	public static final String TP_YEAR  = "year";
+	public static final String TP_MONTH = "month";
+	public static final String TP_DAY   = "day";
+	public static final String TP_DATE_SHORT  = "date_short";
+	public static final String TP_DATE_MEDIUM = "date_medium";
+	public static final String TP_DATE_LONG   = "date_long";
+	public static final String TP_DATE_FULL   = "date_full";
+	public static final String TP_TIME_SHORT  = "time_short";
+	public static final String TP_TIME_MEDIUM = "time_medium";
+	public static final String TP_TIME_LONG   = "time_long";
+	public static final String TP_TIME_FULL   = "time_full";
+
+	/**
+	 * 
+	 * 
+	 * @param globalProperties
+	 * @throws Exception 
+	 */
+	private void addPredeifnedProperties(Map<String, Object> globalProperties) throws Exception {
+		// Określanie lokalizacji daty/czasu używanej do wypełnienia paramtrów szablonów
+		// zawierających datę/czas w formatach DateFormat.SHORT, .MEDIUM, .LONG i .FULL:
 		Locale date_locale;
-		if(globalProperties.containsKey("date_locale")) {
-			date_locale = LocaleUtils.toLocale((String)globalProperties.get("date_locale"));
+		if(globalProperties.containsKey(UP_DATE_LOCALE)) {
+			date_locale = LocaleUtils.toLocale((String)globalProperties.get(UP_DATE_LOCALE));
 		} else {
 			date_locale = Locale.getDefault();
 		}
 
-		Calendar calendar = Calendar.getInstance();
-		Date now = calendar.getTime();
-
-		if(!globalProperties.containsKey("year")) {
-			globalProperties.put("year", calendar.get(Calendar.YEAR));
+		// Wyznaczanie daty, na podstawie której zostaną wypełnione parametry szablonów
+		// przechowujące datę/czas w formatach DateFormat.SHORT, .MEDIUM, .LONG i .FULL:
+		Calendar calendar = Calendar.getInstance(date_locale);
+		if(globalProperties.containsKey(RP_DATE)) {
+			String date_string = (String)globalProperties.get(RP_DATE);
+			if(globalProperties.containsKey(RP_DATE_FORMAT)) {
+				String date_format = (String)globalProperties.get(RP_DATE_FORMAT);
+				DateFormat formatter = new SimpleDateFormat(date_format);
+				calendar.setTime(formatter.parse(date_string));
+			} else {
+				DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.LONG,
+						DateFormat.LONG, date_locale);
+				calendar.setTime(formatter.parse(date_string));
+			}
 		}
 
-		if(!globalProperties.containsKey("date_short")) {
-			String date_short;
-			if(globalProperties.containsKey("date_format_short")) {
-				date_short = new SimpleDateFormat((String)globalProperties.get("date_format_short"), date_locale).format(now);
-			} else {
-				date_short = DateFormat.getDateInstance(DateFormat.SHORT, date_locale).format(new Date());
-			}
-			globalProperties.put("date_short", date_short);
+		// Jeśli nie określono, wypełnianie parametrów przechowujących poszczególne
+		// składniki daty, tj. rok, miesiąc i dzień:
+		if(!globalProperties.containsKey(TP_YEAR)) {
+			globalProperties.put(TP_YEAR, calendar.get(Calendar.YEAR));
+		}
+		if(!globalProperties.containsKey(TP_MONTH)) {
+			globalProperties.put(TP_MONTH, calendar.get(Calendar.MONTH));
+		}
+		if(!globalProperties.containsKey(TP_DAY)) {
+			globalProperties.put(TP_DAY, calendar.get(Calendar.DAY_OF_MONTH));
 		}
 
-		if(!globalProperties.containsKey("date_medium")) {
-			String date_medium;
-			if(globalProperties.containsKey("date_format_medium")) {
-				date_medium = new SimpleDateFormat((String)globalProperties.get("date_format_medium"), date_locale).format(now);
+		// Jeśli nie określono, wypełnianie parametrów przechowujących datę i czas w
+		// formatach SHORT, MEDIUM, LONG i FULL (na podstawie wyznaczonej lokalizacji):
+		Date date = calendar.getTime();
+		if(!globalProperties.containsKey(TP_DATE_SHORT)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_DATE_FORMAT_SHORT)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_DATE_FORMAT_SHORT), date_locale
+				);
 			} else {
-				date_medium = DateFormat.getDateInstance(DateFormat.MEDIUM, date_locale).format(new Date());
+				formatter = DateFormat.getDateInstance(DateFormat.SHORT, date_locale);
 			}
-			globalProperties.put("date_medium", date_medium);
+			globalProperties.put(TP_DATE_SHORT, formatter.format(date));
+		}
+		if(!globalProperties.containsKey(TP_DATE_MEDIUM)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_DATE_FORMAT_MEDIUM)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_DATE_FORMAT_MEDIUM), date_locale
+				);
+			} else {
+				formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, date_locale);
+			}
+			globalProperties.put(TP_DATE_MEDIUM, formatter.format(date));
+		}
+		if(!globalProperties.containsKey(TP_DATE_LONG)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_DATE_FORMAT_LONG)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_DATE_FORMAT_LONG), date_locale
+				);
+			} else {
+				formatter = DateFormat.getDateInstance(DateFormat.LONG, date_locale);
+			}
+			globalProperties.put(TP_DATE_LONG, formatter.format(date));
+		}
+		if(!globalProperties.containsKey(TP_DATE_FULL)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_DATE_FORMAT_FULL)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_DATE_FORMAT_FULL), date_locale
+				);
+			} else {
+				formatter = DateFormat.getDateInstance(DateFormat.FULL, date_locale);
+			}
+			globalProperties.put(TP_DATE_FULL, formatter.format(date));
 		}
 
-		if(!globalProperties.containsKey("date_long")) {
-			String date_long;
-			if(globalProperties.containsKey("date_format_long")) {
-				date_long = new SimpleDateFormat((String)globalProperties.get("date_format_long"), date_locale).format(now);
+		if(!globalProperties.containsKey(TP_TIME_SHORT)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_TIME_FORMAT_SHORT)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_TIME_FORMAT_SHORT), date_locale
+				);
 			} else {
-				date_long = DateFormat.getDateInstance(DateFormat.LONG, date_locale).format(new Date());
+				formatter = DateFormat.getTimeInstance(DateFormat.SHORT, date_locale);
 			}
-			globalProperties.put("date_long", date_long);
+			globalProperties.put(TP_TIME_SHORT, formatter.format(date));
 		}
-
-		if(!globalProperties.containsKey("date_full")) {
-			String date_full;
-			if(globalProperties.containsKey("date_format_full")) {
-				date_full = new SimpleDateFormat((String)globalProperties.get("date_format_full"), date_locale).format(now);
+		if(!globalProperties.containsKey(TP_TIME_MEDIUM)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_TIME_FORMAT_MEDIUM)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_TIME_FORMAT_MEDIUM), date_locale
+				);
 			} else {
-				date_full = DateFormat.getDateInstance(DateFormat.FULL, date_locale).format(new Date());
+				formatter = DateFormat.getTimeInstance(DateFormat.MEDIUM, date_locale);
 			}
-			globalProperties.put("date_full", date_full);
+			globalProperties.put(TP_TIME_MEDIUM, formatter.format(date));
+		}
+		if(!globalProperties.containsKey(TP_TIME_LONG)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_TIME_FORMAT_LONG)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_TIME_FORMAT_LONG), date_locale
+				);
+			} else {
+				formatter = DateFormat.getTimeInstance(DateFormat.LONG, date_locale);
+			}
+			globalProperties.put(TP_TIME_LONG, formatter.format(date));
+		}
+		if(!globalProperties.containsKey(TP_TIME_FULL)) {
+			DateFormat formatter;
+			if(globalProperties.containsKey(UP_TIME_FORMAT_FULL)) {
+				formatter = new SimpleDateFormat(
+						(String)globalProperties.get(UP_TIME_FORMAT_FULL), date_locale
+				);
+			} else {
+				formatter = DateFormat.getTimeInstance(DateFormat.FULL, date_locale);
+			}
+			globalProperties.put(TP_TIME_FULL, formatter.format(date));
 		}
 	}
 }

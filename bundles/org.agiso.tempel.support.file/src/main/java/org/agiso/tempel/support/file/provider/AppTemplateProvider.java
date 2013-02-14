@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class AppTemplateProvider extends BaseTemplateProvider implements ITemplateProviderElement {
+public class AppTemplateProvider extends BaseTemplateProvider {
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -75,7 +75,7 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 		}
 
 
-		readAppTemplates(templateRepository);
+		setActive(readAppTemplates(templateRepository));
 	}
 
 //	--------------------------------------------------------------------------
@@ -95,11 +95,10 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 	 * @param templateRepository
 	 * @throws IOException
 	 */
-	private void readAppTemplates(final ITemplateRepository templateRepository) throws IOException {
+	private boolean readAppTemplates(final ITemplateRepository templateRepository) throws IOException {
 		// Mapa szablonów globalnych (katalog konfiguracyjny aplikacji):
 		File appSettingsFile = new File(settingsPath);
-
-		try {
+		if(appSettingsFile.exists()) try {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
@@ -118,10 +117,13 @@ public class AppTemplateProvider extends BaseTemplateProvider implements ITempla
 				}
 			});
 			System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
+
+			return true;
 		} catch(Exception e) {
 			System.err.println("Błąd wczytywania ustawień globalnych: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
+		return false;
 	}
 
 	private String getTemplatePath(Template template) {

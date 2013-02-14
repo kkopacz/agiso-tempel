@@ -58,6 +58,8 @@ public class ShrinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
 //	--------------------------------------------------------------------------
 	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
+		super.initialize(globalProperties);
+
 		SettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
 
 		File mavenSettingsFile = null;
@@ -82,6 +84,8 @@ public class ShrinkWrapMvnTemplateProvider extends AbstractMvnTemplateProvider {
 		settings = new MavenSettingsBuilder().buildSettings(request);
 
 		System.out.println("Maven local repository: " + settings.getLocalRepository());
+
+		setActive(true);
 	}
 
 //	--------------------------------------------------------------------------

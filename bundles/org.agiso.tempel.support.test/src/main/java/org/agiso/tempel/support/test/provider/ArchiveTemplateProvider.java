@@ -26,7 +26,6 @@ import java.util.StringTokenizer;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.support.base.provider.CachingTemplateProvider;
 import org.agiso.tempel.support.test.provider.source.ArchiveTemplateSource;
@@ -40,14 +39,18 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class ArchiveTemplateProvider extends CachingTemplateProvider
-		implements ITemplateProviderElement, IArchiveTemplateProvider {
+public class ArchiveTemplateProvider extends CachingTemplateProvider implements IArchiveTemplateProvider {
 	private final Map<String, Archive<?>> repository = new HashMap<String, Archive<?>>();
 
 //	--------------------------------------------------------------------------
 	@Override
 	public int getOrder() {
 		return -1;
+	}
+
+	@Override
+	public boolean isActive() {
+		return true;
 	}
 
 //	--------------------------------------------------------------------------

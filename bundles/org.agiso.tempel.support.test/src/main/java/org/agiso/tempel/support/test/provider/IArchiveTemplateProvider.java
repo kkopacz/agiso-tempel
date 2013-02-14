@@ -18,7 +18,7 @@
  */
 package org.agiso.tempel.support.test.provider;
 
-import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.jboss.shrinkwrap.api.Archive;
 
 /**
@@ -26,6 +26,6 @@ import org.jboss.shrinkwrap.api.Archive;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface IArchiveTemplateProvider extends ITemplateProvider {
+public interface IArchiveTemplateProvider extends ITemplateProviderElement {
 	public void addArchive(String groupId, String templateId, String version, Archive<?> archive);
 }

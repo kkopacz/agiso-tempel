@@ -29,23 +29,24 @@ import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-// @Component (wstrzykujemy poprzez xml)
+@Component
 public class CoreTemplateProvider implements ITemplateProvider {
 	@SuppressWarnings("unchecked")
-	private List<ITemplateProviderElement> providers = Collections.EMPTY_LIST;
+	private List<ITemplateProviderElement> elements = Collections.EMPTY_LIST;
 
 //	--------------------------------------------------------------------------
 	@Autowired(required = false)
 	public void setTemplateProviderElements(List<ITemplateProviderElement> providers) {
-		this.providers = new ArrayList<ITemplateProviderElement>(providers);
+		this.elements = new ArrayList<ITemplateProviderElement>(providers);
 
-		Collections.sort(this.providers, new Comparator<ITemplateProviderElement>() {
+		Collections.sort(this.elements, new Comparator<ITemplateProviderElement>() {
 			@Override
 			public int compare(ITemplateProviderElement e1, ITemplateProviderElement e2) {
 				int o1 = e1.getOrder(), o2 = e2.getOrder();
@@ -61,15 +62,15 @@ public class CoreTemplateProvider implements ITemplateProvider {
 //	--------------------------------------------------------------------------
 	@Override
 	public void initialize(Map<String, Object> globalProperties) throws IOException {
-		for(ITemplateProvider provider : providers) {
+		for(ITemplateProviderElement provider : elements) {
 			provider.initialize(globalProperties);
 		}
 	}
 
 	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
-		for(ITemplateProvider provider : providers) {
-			if(provider.contains(key, groupId, templateId, version)) {
+		for(ITemplateProviderElement provider : elements) {
+			if(provider.isActive() && provider.contains(key, groupId, templateId, version)) {
 				return true;
 			}
 		}
@@ -78,8 +79,8 @@ public class CoreTemplateProvider implements ITemplateProvider {
 
 	@Override
 	public Template get(String key, String groupId, String templateId, String version) {
-		for(ITemplateProvider provider : providers) {
-			if(provider.contains(key, groupId, templateId, version)) {
+		for(ITemplateProviderElement provider : elements) {
+			if(provider.isActive() && provider.contains(key, groupId, templateId, version)) {
 				return provider.get(key, groupId, templateId, version);
 			}
 		}
