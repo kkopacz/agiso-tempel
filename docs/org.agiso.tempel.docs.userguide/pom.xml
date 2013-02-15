@@ -13,9 +13,9 @@
 		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>org.agiso.tempel.devguide</artifactId>
+	<artifactId>org.agiso.tempel.docs.userguide</artifactId>
 
-	<name>AGISO Tempel Developer Guide</name>
+	<name>AGISO Tempel User Guide</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<build>

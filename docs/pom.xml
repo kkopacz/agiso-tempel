@@ -20,7 +20,7 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>org.agiso.tempel.devguide</module>
-		<module>org.agiso.tempel.userguide</module>
+		<module>org.agiso.tempel.docs.devguide</module>
+		<module>org.agiso.tempel.docs.userguide</module>
 	</modules>
 </project>
