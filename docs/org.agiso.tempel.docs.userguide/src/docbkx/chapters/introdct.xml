@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="tempel-userguide-introdct" xml:lang="pl" status="DRAFT"
+	xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0"
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:m="http://www.w3.org/1998/Math/MathML"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<title>Wstęp</title>
+<!--
+	<para>Welcome to the getting started with Maven documentation. Congratulations you
+	have successfully downloaded and built the example.</para>
+
+	<para>For more details on the Product Name service, please refer to
+	<linkxl:href="http://www.rackspacecloud.com/cloud_hosting_products/files"
+	>http://www.rackspacecloud.com/cloud_hosting_products/product name</link></para>
+
+	<para>We welcome feedback, comments, and bug reports at
+	<linkxl:href="mailto:support@rackspacecloud.com">support@rackspacecloud.com</link>.
+	</para>
+ -->
+	<section>
+		<title>Czym jest Tempel?</title>
+
+		<para>Najogólniej mówiąc Tempel jest narzędziem służącym do uruchamiania kodu
+		zawartego w klasach nazywanych <emphasis>silnikami generatorów</emphasis>. Z
+		założenia kod ten ma za zadanie przetworzenie określonego zasobu wejściowego
+		(zwanego <emphasis>szablonem wejściowym</emphasis>) znajdującego się w pewnej
+		lokalizacji źródłowej w <emphasis>repozytorium szablonów</emphasis>, przygotowanie
+		na jego podstawie <emphasis>zasobu wyjściowego</emphasis> i umieszczenie go
+		w określonej lokalizacji docelowej.</para>
+
+		<para>Zarówno przetwarzany szablon wejściowy jak i generowany zasób wyjściowy
+		mogą być pojedynczymi plikami, katalogami lub bardziej złożonymi strukturami
+		składającymi się z wielu plików i katalogów. Mogą też być zasobami innego typu
+		niż struktury lokalnego systemu plików.</para>
+
+		<para>W trakcie przetwarzania szablonu wejściowego uruchamiany przez Tempel
+		silnik generacji może wykorzystywać wartości pewnych parametrów wejściowych.
+		To jakie to będą parametry, jakie będą miały typy, wartości domyślne, etc.
+		odczytuje z <emphasis>definicji szablonu</emphasis>. Wypełnianie wartości
+		tych parametrów odbywa się w czasie trakcie przygotowania do uruchomienia silnika.
+		Proces ten zwany jest <emphasis role="strong-italic">uruchamiania szablonu</emphasis>.
+		</para>
+	</section>
+
+	<section>
+		<title>Do czego może być wykorzystywany Tempel?</title>
+
+		<para>Tempel uruchamia kod silników generatorów, który z założenia ma za zadanie
+		generację pewnych zasobów w oparciu o szablony. Może więc znaleźć zastosowanie
+		wszędzie tam, gdzie wymagane jest wielokrotne, często powtarzane przygotowywanie
+		pewnych treści, struktur dyskowych czy zestawów plików cechujących się:
+		<orderedlist numeration="arabic" spacing="compact">
+			<listitem>
+				<para>zauważalnym podobieństwem tworzonych zasobów,</para>
+			</listitem>
+			<listitem>
+				<para>na tyle dużą złożonością generowanej struktury, że jej ręczne
+				tworzenie jest trudne i żmudne,</para>
+			</listitem>
+			<listitem>
+				<para>...</para>
+			</listitem>
+		</orderedlist></para>
+
+		<para>Tempel został stworzony z zamiarem jego wykorzystania do generacji zasobów
+		takich jak projekty programistyczne i ich elementy (moduły, zestawy klas, etc.),
+		szablony dokumentacji czy strony WWW. Przy takich zastosowaniach generowane pliki
+		są przeważnie plikami tekstowymi w różnych formatach (txt, java, xml, html, ...)
+		tworzonymi poprzez wypełnienie szablonów Velocity, lub prostymi plikami binarnymi
+		(np. grafikami jpg, png, ...) kopiowanymi ze struktur repozytorium szablonu do
+		lokalizacji docelowej. Nic jednak nie stoi na przeszkodzie, aby tempel był używany
+		do generowania zasobów binarnych takich jak archiwa, czy  dokumenty w formatach
+		dedykowanych takich jak pdf. Wymagane jest jedynie dostarczenie odpowiedniego
+		(dedykowanego) silnika generacji.</para>
+	</section>
+
+	<section>
+		<title>Wymagania</title>
+
+		<para>Tempel jest uruchamiany w środowisku maszyny wirtualnej Java. Dlatego do
+		jego działania konieczna jest instalacja Javy. Minimalna wymagana wersja maszyny
+		wirtualnej to 1.6</para>
+	</section>
+
+	<section>
+		<title>Instalacja</title>
+
+		<para>Instalacja narzędzia agiso.org Tempel sprowadza się do jego pobrania spod
+		adresu <link xl:href="ftp://agiso.org/pub/tempel/">ftp://agiso.org/pub/tempel/</link>,
+		rozpakowania w dogodnym miejscu oraz dodania powstałego katalogu <filename>bin</filename>
+		do ścieżki uruchomieniowej systemu operacyjnego (Dodanie katalogu <filename>bin</filename>
+		do ścieżki uruchomieniowej nie jest wymagane do poprawnego działania. Pozwala
+		jednak na wygodne wywoływanie polecenia <command>tpl</command> w konsoli systemowej
+		niezależnie od lokalizacji w systemie plików). Najnowsza wersja tempel jest zawsze
+		udostępniana pod nazwą <link xl:href="ftp://agiso.org/pub/tempel/tempel-current.zip">
+		tempel-current.zip</link> (lub <link xl:href="ftp://agiso.org/pub/tempel/tempel-current.tar.gz">
+		tempel-current.tar.gz</link>).</para>
+
+		<para>W wyniku rozpakowania archiwum dystrybucyjnego tworzona jest następująca
+		struktura katalogów i plików:<screen>
+			tempel
+			├── bin
+			│   ├── <filename>tpl.bat</filename>
+			│   └── <filename>tpl.sh</filename>
+			├── repo
+			│   ├── org.agiso.tempel.api.jar
+			│   ├── org.agiso.tempel.core.jar
+			│   ├── org.agiso.tempel.exts.jar
+			│   ├── org.agiso.tempel.core.support.maven.jar
+			│   ├── org.agiso.tempel.starter.jar
+			│   └── ...
+			├── conf
+			│   ├── tempel.xml
+			│   └── maven.xml
+			└── repository
+			    └── ...
+		</screen></para>
+
+		<para>Katalog <filename>bin</filename> zawiera skrypty powłoki umożliwiające
+		uruchomienie narzędzia w środowiku Windows (plik <filename>tpl.bat</filename>)
+		oraz Linux (<filename>tpl.sh</filename>).</para>
+
+		<para>Katalog <filename>repo</filename> przechowuje wszystkie biblioteki .jar
+		progamu tempel oraz biblioteki wymagane do jego działania.</para>
+
+		<para>Katalogi <filename>conf</filename> i <filename>repository</filename> stanowią
+		aplikacyjne (instalacyjne) repozytorium szablonów. W pierwszym z nich znajduje
+		się plik tempel.xml z konfiguracją globalną i definicjami szablonów. W drugim
+		przechowywane są zasoby tych szablonów.</para>
+	</section>
+
+	<section>
+		<title>Konfiguracja</title>
+
+		<section>
+			<title>Poziomy konfiguracji</title>
+
+			<para>Konfiguracja narzędzia tempel odbywa się poprzez edycję plików
+			konfiguracyjnych na poziomie globalnym (w katalogu gdzie tempel został
+			zainstalowany) oraz na poziomie użytkownika (w katalogu domowym użytkownika).
+			Dodatkowo szablony lokalne definiuje się w katalogu bieżącym, w którym
+			następuje uruchomienie narzędzia.</para>
+
+			<para>Wiele poziomów konfiguracyjnych powoduje, że konfiguracja brana pod
+			uwagę w trakcie uruchamiania szablonu jest dynamicznie wyznaczana dopiero
+			po wywołaniu polecenia <command>tpl</command>. Najwyższy priorytet ma
+			konfiguracja uruchomieniowa, następnie konfiguracja użytkownika, i ostatecznie
+			- konfiguracja globalna. Oznacza to, że ustawienia (i szablony) globalne
+			mogą być przedefiniowane na poziomie użytkownika, a te z kolei na poziomie
+			uruchomieniowym.</para>
+
+			<para>Konfiguracja globalna:
+			<itemizedlist spacing="compact">
+				<listitem>
+					<para><filename>/katalog/instalacyjny/tempel/conf/tempel.xml</filename></para>
+				</listitem>
+				<listitem>
+					<para><filename>/katalog/instalacyjny/tempel/conf/maven.xml</filename></para>
+				</listitem>
+			</itemizedlist></para>
+
+			<para>Konfiguracja użytkownika:
+			<itemizedlist spacing="compact">
+				<listitem>
+					<para><filename>/katalog/domowy/użytkownika/.tempel/tempel.xm</filename></para>
+				</listitem>
+			</itemizedlist></para>
+
+			<para>Konfiguracja lokalna:
+			<itemizedlist spacing="compact">
+				<listitem>
+					<para><filename>./tempel.xml</filename> (w katalogu bieżącym (uruchomienia))</para>
+				</listitem>
+			</itemizedlist></para>
+		</section>
+
+		<section>
+			<title>Pliki konfiguracyjne</title>
+
+			<para>Podstawowa konfiguracja agiso.org Tempel odbywa się przez edycję plików
+			<filename>tempel.xml</filename> na poszczególnych poziomach konfguracyjnych.
+			Struktura tych plików jest niezależna od poziomu na którym występują i wygląda
+			następująco:
+			<programlisting language="xml">
+			<![CDATA[
+				TODO
+			]]>
+			</programlisting></para>
+
+			<para><filename>maven.xml</filename></para>
+		</section>
+	</section>
+
+	<section>
+		<title>Uruchamianie</title>
+
+		<para>Uruchamianie i używanie narzędzia Tempel odbywa się z poziomu linii komend
+		systemu operacyjnego i polega na wywoływaniu polecenia <command>tpl</command> z
+		odpowiednimi przełącznikami. W większości przypadków i przy normalnym użytkowaniu,
+		gdy wywołanie ma na celu wykonanie szablonu w trybie interaktywnym, określenie
+		parametrów wywołania sprowadza się jedynie do wskazania szablonu do uruchomienia.
+		</para>
+
+		<para>
+			<screen>
+				<prompt>#</prompt> <userinput>tpl</userinput>
+			</screen>
+		</para>
+
+	</section>
+</chapter>

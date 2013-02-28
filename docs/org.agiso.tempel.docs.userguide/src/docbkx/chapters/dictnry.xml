@@ -1,19 +1,32 @@
-<?xml version='1.0'?>
-<chapter xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd"
-	id="tempel-userguide-dictnry">
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="tempel-userguide-dictnry" xml:lang="pl" status="DRAFT"
+	xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0"
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:m="http://www.w3.org/1998/Math/MathML"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<title>Słownik</title>
 
-	<para>
-		<emphasis role="strong">tempel</emphasis> - narzędzie do generacji zasobów wyjściowych w oparciu o szablony wejściowe przetwarzane przez silniki generatora z wykorzystaniem parametrów wejściowych.
-	</para>
-	<para>
-		<emphasis role="strong">silnik generatora</emphasis> - program/skrypt/polecenie uruchamiane przez tempel w celu wygenerowania zasbów wyjściowych w oparciu o szablony wejściowe i z użyciem parametrów wejściowych. Silnik szablonów można traktować jak funkcję, której atrybuty stanowią parametry i szablony wejściowe, a wynikiem działania są utworzone zasoby wyjściowe.
-	</para>
-	<para>
-		<emphasis role="strong">zasoby wyjściowe</emphasis> - w ogólności zasoby dyskowe różnego typu (najczęściej katalogi oraz pliki tekstowe, ale również pliki innych typów, dokumenty, archiwa, …) tworzone w efekcie wywołania silnika szablonów w oparciu o szablony wejściowe (choć nie zawsze).
-	</para>
-	<para>
-		<emphasis role="strong">szablony wejściowe</emphasis> - pliki dyskowe, w oparciu o które silnik generatora szablonów tworzy zasoby wyjściowe. Pliki te najczęściej zawierają miejsca, które są wypełniane w oparciu o dostarczone przez użytkownika wartości parametrów wejściowych.
-	</para>
-</chapter>
+	<para><emphasis role="strong">tempel</emphasis> - narzędzie do generacji zasobów wyjściowych
+	w oparciu o szablony wejściowe przetwarzane przez silniki generatora z wykorzystaniem
+	parametrów wejściowych.</para>
+
+	<para><emphasis role="strong">silnik generatora</emphasis> - program/skrypt/polecenie
+	uruchamiane przez tempel w celu wygenerowania zasbów wyjściowych w oparciu o szablony
+	wejściowe i z użyciem parametrów wejściowych. Silnik szablonów można traktować jak funkcję,
+	której atrybuty stanowią parametry i szablony wejściowe, a wynikiem działania są utworzone
+	zasoby wyjściowe.</para>
+
+	<para><emphasis role="strong">zasoby wyjściowe</emphasis> - w ogólności zasoby dyskowe
+	różnego typu (najczęściej katalogi oraz pliki tekstowe, ale również pliki innych typów,
+	dokumenty, archiwa, ...) tworzone w efekcie wywołania silnika szablonów w oparciu o
+	szablony wejściowe (choć nie zawsze).</para>
+
+	<para><emphasis role="strong">szablony wejściowe</emphasis> - pliki dyskowe, w oparciu o
+	które silnik generatora szablonów tworzy zasoby wyjściowe. Pliki te najczęściej zawierają
+	miejsca, które są wypełniane w oparciu o dostarczone przez użytkownika wartości parametrów
+	wejściowych.</para>
+</appendix>

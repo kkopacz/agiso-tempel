@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="tempel-userguide-reposits" xml:lang="pl" status="DRAFT"
+	xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0"
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:m="http://www.w3.org/1998/Math/MathML"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<title>Repozytoria szablonów</title>
+
+	<section>
+		<title>Uruchomieniowe</title>
+
+	</section>
+
+	<section>
+		<title>Użytkownika</title>
+
+	</section>
+
+	<section>
+		<title>Aplikacyjne</title>
+
+	</section>
+
+	<section>
+		<title>Apache Maven</title>
+
+	</section>
+</chapter>

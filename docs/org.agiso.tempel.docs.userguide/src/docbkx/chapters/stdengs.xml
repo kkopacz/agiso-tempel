@@ -1,47 +1,60 @@
-<?xml version='1.0'?>
-<chapter xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd"
-	id="tempel-userguide-stdengs">
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="tempel-userguide-stdengs" xml:lang="pl" status="DRAFT"
+	xmlns="http://docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0"
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:m="http://www.w3.org/1998/Math/MathML"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<title>Silniki i szablony standardowe</title>
-	<sect1>
+	<title>Silniki i szablony</title>
+
+	<section>
 		<title>Silniki standardowe</title>
-		<para>
-			Tempel posiada zestaw standardowych silników generatorów umożliwiających tworzenie katalogów
-			dyskowych i generację zasobów w oparciu o szablony Velocity. Są to:
-		</para>
-		<sect2>
-			<title>org.agiso.tempel.engine.MakeDirEngine</title>
-			<para>
-				Prosty silnik generatora pozwalający na tworzenie pojedynczych katalogów. Tworzy jedynie
-				jeden poziom katalogów, więc wymaga istnienia katalogu nadrzędnego dla katalogu tworzonego.
-				Do uruchomienia silnika wymagane jest jedynie podanie nazwy katalogu. Silnik nie przetwarza
-				żadnych zasobów wejściowych ani parametrów wejściowych.
-			</para>
-		</sect2>
-		<sect2>
-			<title>org.agiso.tempel.engine.MakeDirsEngine</title>
-			<para>
-				Silnik generatora działający analogicznie do silnika MakeDirEngine z tą różnicą, że pozwala
-				tworzyć ścieżki katalogów, więc nie wymaga istnienia katalogu nadrzędnego.
-			</para>
-		</sect2>
-		<sect2>
-			<title>org.agiso.tempel.engine.VelocityFileEngine</title>
-			<para>
-				Silnik generatora wykorzystywany do tworzenia pojedynczych plików wyjściowych w oparciu o pliki
-				szablonów. Generacja plików wyjściowych odbywa się w oparciu o zasób wejściowy będący szablonem
-				Velocity i z wykorzystaniem mapy parametrów wejściowych.
-			</para>
-		</sect2>
-		<sect2>
-			<title>org.agiso.tempel.engine.VelocityDirectoryEngine</title>
-			<para>
-				Silnik generatora przetwarzający strukturę katalogów zawierających szablony Velocity i tworzących
-				w oparciu o nią strukturę zasobów wyjściowych.
-			</para>
-		</sect2>
-	</sect1>
-	<sect1>
+
+		<para>Tempel posiada zestaw standardowych silników generatorów
+		umożliwiających tworzenie katalogów dyskowych i generację zasobów
+		w oparciu o szablony Velocity. Są to:</para>
+
+		<section>
+			<title><classname>org.agiso.tempel.engine.MakeDirEngine</classname></title>
+
+			<para>Prosty silnik generatora pozwalający na tworzenie pojedynczych
+			katalogów. Tworzy jedynie jeden poziom katalogów, więc wymaga istnienia
+			katalogu nadrzędnego dla katalogu tworzonego. Do uruchomienia silnika
+			wymagane jest jedynie podanie nazwy katalogu. Silnik nie przetwarza
+			żadnych zasobów wejściowych ani parametrów wejściowych.</para>
+		</section>
+
+		<section>
+			<title><classname>org.agiso.tempel.engine.MakeDirsEngine</classname></title>
+
+			<para>Silnik generatora działający analogicznie do silnika
+			MakeDirEngine z tą różnicą, że pozwala tworzyć ścieżki katalogów,
+			więc nie wymaga istnienia katalogu nadrzędnego.</para>
+		</section>
+
+		<section>
+			<title><classname>org.agiso.tempel.engine.VelocityFileEngine</classname></title>
+
+			<para>Silnik generatora wykorzystywany do tworzenia pojedynczych
+			plików wyjściowych w oparciu o pliki szablonów. Generacja plików
+			wyjściowych odbywa się w oparciu o zasób wejściowy będący szablonem
+			Velocity i z wykorzystaniem mapy parametrów wejściowych.</para>
+		</section>
+
+		<section>
+			<title><classname>org.agiso.tempel.engine.VelocityDirectoryEngine</classname></title>
+
+			<para>Silnik generatora przetwarzający strukturę katalogów zawierających
+			szablony Velocity i tworzących w oparciu o nią strukturę zasobów
+			wyjściowych.</para>
+		</section>
+	</section>
+
+	<section>
 		<title>Szablony standardowe</title>
-	</sect1>
-</chapter>
+
+	</section>
+</appendix>
