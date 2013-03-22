@@ -32,6 +32,7 @@
 						<goals>
 							<goal>generate-pdf</goal>
 							<goal>generate-html</goal>
+							<goal>generate-epub</goal>
 							<goal>generate-webhelp</goal>
 						</goals>
 						<configuration>
@@ -58,7 +59,7 @@
 
 					<paperType>A4</paperType>
 					<fop1Extensions>1</fop1Extensions>
-					<foCustomization>src/docbkx-stylesheet/fo/docbook.xsl</foCustomization>
+					<!-- foCustomization>src/docbkx-stylesheet/fo/docbook.xsl</foCustomization -->
 
 					<customizationParameters>
 						<!-- additional XSLT parameters
