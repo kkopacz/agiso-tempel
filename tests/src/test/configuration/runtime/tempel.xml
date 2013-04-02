@@ -19,11 +19,11 @@
 		<!-- maven_settings>/home/kkopacz/.tempel/maven.xml</maven_settings -->
 	</properties>
 
-	<template>
+	<!-- template>
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>template1</templateId>
 		<version>1.0.0</version>
 
-	</template>
+	</template -->
 
 </tempel>

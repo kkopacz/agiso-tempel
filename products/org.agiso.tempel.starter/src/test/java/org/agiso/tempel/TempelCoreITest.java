@@ -6,9 +6,14 @@
  */
 package org.agiso.tempel;
 
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+
 import java.io.File;
 
+import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
+import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
 /**
@@ -46,22 +51,29 @@ public class TempelCoreITest extends AbstractOutputTest {
 	 */
 	@Test
 	public void testJavaClass_1_0_0() throws Exception {
-		// Test wywołania z wykorzystaniem klasy Bootstrap. Nie ma możliwości
-		// przedefiniowania IParamReader'a w starndardowy sposób (tj. przez
-		// wywołanie metody ITempel#setParamReader(IParamReader)). Można
-		// spróbować umieścić instancję IParamReader'a w kontekści wątku i
-		// dodać kod w inicjalizacji klasy Tempel, który sprawdza istnienie
-		// takiej instancji w kontekście wątku i ją wykorzystuje.
-
-		// TODO: Przekazanie pozornego ParamReader'a przez kontekst wątku
-
-		// ALBO: Ustawić/przkazać ParamReader'a dla klasy Bootstrap
-		
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("srcDir"), anyString(), anyString()))
+			.thenReturn("/src/main/java");
+		when(paramReader.getParamValue(eq("package"), anyString(), anyString()))
+			.thenReturn("org.agiso.package");
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("SampleClass");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:javaClass:1.0.0",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("srcDir", "Source directory", "/src/main/java");
+		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Class name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "afc6decadb5da14f7aa120b0adf1cb96".equals(md5);
@@ -76,10 +88,25 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testJavaProject_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("SampleProject");
+		when(paramReader.getParamValue(eq("package"), anyString(), anyString()))
+			.thenReturn("org.agiso.package");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:javaProject:1.0.0",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "5eab6c02e2877f31805c65e7e2aeba87".equals(md5);
@@ -91,10 +118,25 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testJavaBundleProject_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("SampleBundleProject");
+		when(paramReader.getParamValue(eq("package"), anyString(), anyString()))
+			.thenReturn("org.agiso.package");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:javaBundleProject:1.0.0",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "7adef6b68dbba75ceff3dbafc1435465".equals(md5);
@@ -107,10 +149,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityFileTemplate_1_0_0_old() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 1");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityFileTemplate:1.0.0",	// "velocityFileTemplate1",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5);
@@ -123,10 +177,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_1_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 1");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:1.0.0",		// "velocityDirTemplate1",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "b8cbf54abdf135b7000bcff1c2e0a83d".equals(md5);
@@ -139,10 +205,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_2_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 2");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:2.0.0",		// "velocityDirTemplate2",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "06a1c46145a9170665c73a59d9d934b5".equals(md5);
@@ -155,10 +233,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_3_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 3");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:3.0.0",		// "velocityDirTemplate3",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "ec9b716697122eef04a8521d19802bc8".equals(md5);
@@ -171,10 +261,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_4_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 4");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:4.0.0",		// "velocityDirTemplate4",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "baf37424f517639cac4cac38defcf028".equals(md5);
@@ -187,10 +289,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_5_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 5");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:5.0.0",		// "velocityDirTemplate5",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "e37f056869b7e3351fefa1c5cf43c523".equals(md5);
@@ -203,10 +317,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_6_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 6");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:6.0.0",		// "velocityDirTemplate6",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "4cda7a3e71085716e3f53bff93cfcc29".equals(md5);
@@ -219,10 +345,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_7_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 7");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:7.0.0",		// "velocityDirTemplate7",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "18454eb8cf137bfe2f05fe4b20db3e49".equals(md5);
@@ -235,10 +373,22 @@ public class TempelCoreITest extends AbstractOutputTest {
 	@Test
 	public void testVelocityDirTemplate_8_0_0() throws Exception {
 		String outPath = getOutputPath(true);
-		Bootstrap.main(new String[] {
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value 8");
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:velocityDirTemplate:8.0.0",		// "velocityDirTemplate8",
 				"-d " + outPath
 		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		assert "eabcbb3f24682664c844ed3a8031a3f5".equals(md5);

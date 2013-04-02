@@ -1,0 +1,24 @@
+date:        ${date}
+date_format: ${date_format}
+
+date_locale:        ${date_locale}
+date_format_short:  ${date_format_short}
+date_format_medium: ${date_format_medium}
+date_format_long:   ${date_format_long}
+date_format_full:   ${date_format_full}
+time_format_short:  ${time_format_short}
+time_format_medium: ${time_format_medium}
+time_format_long:   ${time_format_long}
+time_format_full:   ${time_format_full}
+
+year:        ${year}
+month:       ${month}
+day:         ${day}
+date_short:  ${date_short}
+date_medium: ${date_medium}
+date_long:   ${date_long}
+date_full:   ${date_full}
+time_short:  ${time_short}
+time_medium: ${time_medium}
+time_long:   ${time_long}
+time_full:   ${time_full}

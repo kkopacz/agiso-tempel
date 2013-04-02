@@ -54,16 +54,16 @@ public class CoreTemplateProvider implements ITemplateProvider {
 			}
 		});
 
-		for(ITemplateProviderElement provider : providers) {
+		for(ITemplateProviderElement provider : elements) {
 			System.out.println(provider.getOrder() + ": " + provider.getClass().getSimpleName());
 		}
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> globalProperties) throws IOException {
+	public void initialize(Map<String, Object> properties) throws IOException {
 		for(ITemplateProviderElement provider : elements) {
-			provider.initialize(globalProperties);
+			provider.initialize(properties);
 		}
 	}
 

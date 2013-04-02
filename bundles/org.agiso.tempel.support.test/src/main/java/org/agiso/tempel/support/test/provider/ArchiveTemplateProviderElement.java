@@ -56,6 +56,11 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 
 //	--------------------------------------------------------------------------
 	@Override
+	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
 	public void addArchive(String groupId, String templateId, String version, Archive<?> archive) {
 		repository.put(groupId + ":" + templateId + ":" + version, archive);
 	}

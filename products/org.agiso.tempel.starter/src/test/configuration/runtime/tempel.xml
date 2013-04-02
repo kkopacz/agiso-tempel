@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Ustawienia lokalne (uruchomieniowe), specyficzne dla lokalizacji.
+  -->
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!-- repository>./</repository -->
 	<!-- repository>./src/test/repository</repository -->
 
+
+	<!-- 
+	  - Szablony wykorzystywane do testowania poprawności obsługi parametrów.
+	  - Wykorzystywane przez klasę org.agiso.tempel.TempelParamsITest.
+	  -->
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>paramsTestTemplate</templateId>
+		<version>1.0.0</version>
+	</template>
+
+
+	<!-- 
+	  - Szablony wykorzystywane do sprawdzania zależności pomiędzy szablonami.
+	  - Wykorzystywane przez klasę org.agiso.tempel.TempelCoreITest.
+	  -->
 	<template>
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>javaProject</templateId>
 		<version>1.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>SampleProject</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<references>
@@ -38,6 +54,10 @@
 						<fixed>true</fixed>
 						<value>${top.name}/src/main/java</value>
 					</param>
+					<param key="name">
+						<fixed>true</fixed>
+						<value>SampleClass</value>
+					</param>
 				</params>
 			</reference>
 		</references>
@@ -48,10 +68,7 @@
 		<version>1.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>SampleBundleProject</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<references>
@@ -83,8 +100,11 @@
 	</template>
 
 
-
-
+	<!-- 
+	  - Szablony wykorzystywane do sprawdzania różnych wariantów definiowania
+	  - szablonu w oparciu o podszablony (użycie resource, wokdir, reference).
+	  - Wykorzystywane przez klasę org.agiso.tempel.TempelCoreITest.
+	  -->
 	<template key="velocityFileTemplate1"
 			engine="org.agiso.tempel.engine.VelocityFileEngine">
 		<groupId>org.agiso.tempel.tests</groupId>
@@ -92,10 +112,7 @@
 		<version>1.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 1</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<resource>
@@ -104,9 +121,6 @@
 		</resource>
 	</template>
 
-
-
-
 	<template key="velocityDirTemplate1"
 			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
 		<groupId>org.agiso.tempel.tests</groupId>
@@ -114,10 +128,7 @@
 		<version>1.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 1</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 	</template>
 
@@ -128,10 +139,7 @@
 		<version>2.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 2</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<resource />
@@ -144,10 +152,7 @@
 		<version>3.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 3</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<resource>
@@ -162,10 +167,7 @@
 		<version>4.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 4</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<workdir>subdir</workdir>
@@ -177,10 +179,7 @@
 		<version>5.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 5</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<references>
@@ -200,10 +199,7 @@
 		<version>6.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 6</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<workdir>subdir</workdir>
@@ -225,10 +221,7 @@
 		<version>7.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 7</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<references>
@@ -250,10 +243,7 @@
 		<version>8.0.0</version>
 
 		<params>
-			<param key="name" name="Project name">
-				<fixed>true</fixed>
-				<value>value 8</value>
-			</param>
+			<param key="name" name="Project name" />
 		</params>
 
 		<references>

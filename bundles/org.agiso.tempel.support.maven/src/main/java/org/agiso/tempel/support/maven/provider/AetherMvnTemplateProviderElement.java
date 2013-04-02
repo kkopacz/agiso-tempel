@@ -60,9 +60,7 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> globalProperties) throws IOException {
-		super.initialize(globalProperties);
-
+	protected void doInitialize(Map<String, Object> properties) throws IOException {
 		repoSystem = newRepositorySystem();
 
 

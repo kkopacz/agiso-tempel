@@ -22,7 +22,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
@@ -49,7 +49,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:1.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -74,7 +74,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:2.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -99,7 +99,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:3.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -124,7 +124,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:4.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -149,7 +149,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:5.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -174,7 +174,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:6.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -199,7 +199,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:7.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -224,7 +224,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				"org.agiso.tempel.templates:test.velocityDirectoryTemplate:8.0.0",
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				Collections.EMPTY_MAP, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:

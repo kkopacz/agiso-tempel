@@ -36,7 +36,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * po kompilacji w formie plików .jar umieszczane są w repozytoriach Maven.
  * </br>
  * Jeśli klasa testowa znajduje się w projekcie szablonu (zawierającym katalog
- * src/main/resources/TEMPEL-INF), wykorzystuje {@link ArchiveTemplateProviderElement}'a
+ * src/main/resources/TEMPEL-INF), wykorzystuje {@link ArchiveTemplateProviderElement}
  * i dodaje do niego archiwum bieżącego szablonu przygotowywane za pomocą
  * biblioteki {@link ShrinkWrap}. Szablony zależne (podszablony) muszą się
  * znajdować w repozytoriach Maven i dostarczane są poprzez klasę {@link

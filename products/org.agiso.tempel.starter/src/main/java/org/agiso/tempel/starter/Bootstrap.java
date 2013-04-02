@@ -20,10 +20,13 @@ package org.agiso.tempel.starter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.agiso.tempel.ITempel;
+import org.agiso.tempel.api.internal.IParamReader;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -40,7 +43,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class Bootstrap {
+	private static IParamReader PARAM_READER = null;
+
+//	--------------------------------------------------------------------------
+	public static void setParamReader(IParamReader paramReader) {
+		PARAM_READER = paramReader;
+	}
+
+//	--------------------------------------------------------------------------
 	public static void main(String[] args) throws Exception {
+		main(PARAM_READER, args);
+	}
+	public static void main(IParamReader paramReader, String[] args) throws Exception {
 		// Obsługa wywołania bezargumentowego:
 		if(args.length == 0) {
 			printTempelInfo();
@@ -70,18 +84,28 @@ public class Bootstrap {
 		}
 		templateName = String.valueOf(cmd.getArgList().get(0));
 
+		// Budowanie mapy parametrów dodatkowych (określanych przez -Dkey=value):
+		Map<String, String> params = new HashMap<String, String>();
+		Properties properties = cmd.getOptionProperties("D");
+		Enumeration<?> propertiesEnumeration = properties.propertyNames();
+		while(propertiesEnumeration.hasMoreElements()) {
+			String key = (String)propertiesEnumeration.nextElement();
+			params.put(key, properties.getProperty(key));
+		}
 
 		// Uruchamianie generatora dla określonego szablonu:
 		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
 
 		ITempel tempel = createTempelInstance();
-		Map<String, String> params = new HashMap<String, String>();
+		if(paramReader != null) {
+			tempel.setParamReader(paramReader);
+		}
 		tempel.startTemplate(templateName, params, workDir);
 
 		System.out.println("--- Zakonczono pomyslnie ---");
 	}
 
-	protected static ITempel createTempelInstance() {
+	private static ITempel createTempelInstance() {
 		ClassPathXmlApplicationContext ctx = null;
 		try {
 			ctx = new ClassPathXmlApplicationContext(

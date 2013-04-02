@@ -54,15 +54,13 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> globalProperties) throws IOException {
-		super.initialize(globalProperties);
-
+	protected void doInitialize(Map<String, Object> properties) throws IOException {
 		SettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
 
 		File mavenSettingsFile = null;
-		if(globalProperties.containsKey(MAVEN_SETTINS_PATH_PROPERTY)) {
+		if(properties.containsKey(MAVEN_SETTINS_PATH_PROPERTY)) {
 			mavenSettingsFile = new File(
-					globalProperties.get(MAVEN_SETTINS_PATH_PROPERTY).toString()
+					properties.get(MAVEN_SETTINS_PATH_PROPERTY).toString()
 			);
 		} else {
 			mavenSettingsFile = new File(DEFAULT_MAVEN_SETTINGS_PATH);

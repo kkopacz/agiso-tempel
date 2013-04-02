@@ -54,10 +54,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> globalProperties) throws IOException {
-		super.initialize(globalProperties);
-
-
+	protected void doInitialize(Map<String, Object> properties) throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		int index = path.lastIndexOf("/repo/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:

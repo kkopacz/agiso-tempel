@@ -42,12 +42,22 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class Tempel implements ITempel {
+	private final Map<String, Object> systemProperties;
+
+//	--------------------------------------------------------------------------
 	private ITemplateProvider templateProvider;
 	private ITemplateVerifier templateVerifier;
 	private ITemplateExecutor templateExecutor;
 
 //	--------------------------------------------------------------------------
 	public Tempel() {
+		// Odczytujemy właściwości systemowe i zapamiętujemy je w mapie systemProperties:
+		Properties properties = System.getProperties();
+		Map<String, Object> map = new HashMap<String, Object>(properties.size());
+		for(String key : properties.stringPropertyNames()) {
+			map.put(key.replace('.', '_'), properties.getProperty(key));
+		}
+		systemProperties = Collections.unmodifiableMap(new HashMap<String, Object>(map));
 	}
 
 //	--------------------------------------------------------------------------
@@ -73,27 +83,25 @@ public class Tempel implements ITempel {
 	}
 
 	/**
-	 * @param cmd
+	 * 
 	 */
 	@Override
 	public void startTemplate(String name, Map<String, String> params, String workDir) throws Exception {
-		Map<String, Object> globalProperties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<String, Object>();
 
-		// Odczytujemy właściwości systemowe i dodajemy je do globalnej mapy właściwości
-		// (będzie ona aktualizowana/uzupełniana/modifikowana w oparciu właściwości odczytane
-		// z poszczególnych plików konfiguracyjnych). Oryginalne wartości parametrów syste-
-		// mowych zapamiętujemy pod kluczem "SYSTEM":
-		Properties systemProperties = System.getProperties();
-		for(String key : systemProperties.stringPropertyNames()) {
-			globalProperties.put(key.replace('.', '_'), systemProperties.getProperty(key));
-		}
-		globalProperties.put("SYSTEM", Collections.unmodifiableMap(new HashMap<String, Object>(globalProperties)));
+		// 1. Parametry systemowe wywołania maszyny wirtualnej Java:
+		properties.putAll(systemProperties);
+		properties.put("SYSTEM", systemProperties);
 
-		// Dodajemy parametry predefiniowane (locale, data, ...):
-		addPredeifnedProperties(globalProperties);
+		// 2. Parametry wywołania określone przez użytkownika:
+		properties.putAll(params);
+
+		// 3. W oparciu o parametry użytkownika budujemy parametry uruchomienia:
+		Map<String, Object> runtimeProperties = addInstanceProperties(params);
+		properties.putAll(runtimeProperties);
 
 		// Inicjalizujemy provider'a szablonów:
-		templateProvider.initialize(globalProperties);
+		templateProvider.initialize(properties);
 
 		// Pobieranie definicji szablonu do użycia:
 		Template template = templateProvider.get(name, null, null, null);
@@ -107,7 +115,7 @@ public class Tempel implements ITempel {
 
 		// Uruchamianie procesu generacji w oparciu o wskazany szablon:
 		templateExecutor.executeTemplate(workDir, template,
-				templateProvider, Collections.unmodifiableMap(globalProperties)
+				templateProvider, Collections.unmodifiableMap(properties)
 		);
 	}
 
@@ -148,15 +156,17 @@ public class Tempel implements ITempel {
 	/**
 	 * 
 	 * 
-	 * @param globalProperties
+	 * @param properties
 	 * @throws Exception 
 	 */
-	private void addPredeifnedProperties(Map<String, Object> globalProperties) throws Exception {
+	private Map<String, Object> addInstanceProperties(Map<String, String> properties) throws Exception {
+		Map<String, Object> props = new HashMap<String, Object>();
+
 		// Określanie lokalizacji daty/czasu używanej do wypełnienia paramtrów szablonów
 		// zawierających datę/czas w formatach DateFormat.SHORT, .MEDIUM, .LONG i .FULL:
 		Locale date_locale;
-		if(globalProperties.containsKey(UP_DATE_LOCALE)) {
-			date_locale = LocaleUtils.toLocale((String)globalProperties.get(UP_DATE_LOCALE));
+		if(properties.containsKey(UP_DATE_LOCALE)) {
+			date_locale = LocaleUtils.toLocale((String)properties.get(UP_DATE_LOCALE));
 		} else {
 			date_locale = Locale.getDefault();
 		}
@@ -164,10 +174,10 @@ public class Tempel implements ITempel {
 		// Wyznaczanie daty, na podstawie której zostaną wypełnione parametry szablonów
 		// przechowujące datę/czas w formatach DateFormat.SHORT, .MEDIUM, .LONG i .FULL:
 		Calendar calendar = Calendar.getInstance(date_locale);
-		if(globalProperties.containsKey(RP_DATE)) {
-			String date_string = (String)globalProperties.get(RP_DATE);
-			if(globalProperties.containsKey(RP_DATE_FORMAT)) {
-				String date_format = (String)globalProperties.get(RP_DATE_FORMAT);
+		if(properties.containsKey(RP_DATE)) {
+			String date_string = (String)properties.get(RP_DATE);
+			if(properties.containsKey(RP_DATE_FORMAT)) {
+				String date_format = (String)properties.get(RP_DATE_FORMAT);
 				DateFormat formatter = new SimpleDateFormat(date_format);
 				calendar.setTime(formatter.parse(date_string));
 			} else {
@@ -179,107 +189,109 @@ public class Tempel implements ITempel {
 
 		// Jeśli nie określono, wypełnianie parametrów przechowujących poszczególne
 		// składniki daty, tj. rok, miesiąc i dzień:
-		if(!globalProperties.containsKey(TP_YEAR)) {
-			globalProperties.put(TP_YEAR, calendar.get(Calendar.YEAR));
+		if(!properties.containsKey(TP_YEAR)) {
+			props.put(TP_YEAR, calendar.get(Calendar.YEAR));
 		}
-		if(!globalProperties.containsKey(TP_MONTH)) {
-			globalProperties.put(TP_MONTH, calendar.get(Calendar.MONTH));
+		if(!properties.containsKey(TP_MONTH)) {
+			props.put(TP_MONTH, calendar.get(Calendar.MONTH));
 		}
-		if(!globalProperties.containsKey(TP_DAY)) {
-			globalProperties.put(TP_DAY, calendar.get(Calendar.DAY_OF_MONTH));
+		if(!properties.containsKey(TP_DAY)) {
+			props.put(TP_DAY, calendar.get(Calendar.DAY_OF_MONTH));
 		}
 
 		// Jeśli nie określono, wypełnianie parametrów przechowujących datę i czas w
 		// formatach SHORT, MEDIUM, LONG i FULL (na podstawie wyznaczonej lokalizacji):
 		Date date = calendar.getTime();
-		if(!globalProperties.containsKey(TP_DATE_SHORT)) {
+		if(!properties.containsKey(TP_DATE_SHORT)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_DATE_FORMAT_SHORT)) {
+			if(properties.containsKey(UP_DATE_FORMAT_SHORT)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_DATE_FORMAT_SHORT), date_locale
+						(String)properties.get(UP_DATE_FORMAT_SHORT), date_locale
 				);
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.SHORT, date_locale);
 			}
-			globalProperties.put(TP_DATE_SHORT, formatter.format(date));
+			props.put(TP_DATE_SHORT, formatter.format(date));
 		}
-		if(!globalProperties.containsKey(TP_DATE_MEDIUM)) {
+		if(!properties.containsKey(TP_DATE_MEDIUM)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_DATE_FORMAT_MEDIUM)) {
+			if(properties.containsKey(UP_DATE_FORMAT_MEDIUM)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_DATE_FORMAT_MEDIUM), date_locale
+						(String)properties.get(UP_DATE_FORMAT_MEDIUM), date_locale
 				);
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, date_locale);
 			}
-			globalProperties.put(TP_DATE_MEDIUM, formatter.format(date));
+			props.put(TP_DATE_MEDIUM, formatter.format(date));
 		}
-		if(!globalProperties.containsKey(TP_DATE_LONG)) {
+		if(!properties.containsKey(TP_DATE_LONG)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_DATE_FORMAT_LONG)) {
+			if(properties.containsKey(UP_DATE_FORMAT_LONG)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_DATE_FORMAT_LONG), date_locale
+						(String)properties.get(UP_DATE_FORMAT_LONG), date_locale
 				);
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.LONG, date_locale);
 			}
-			globalProperties.put(TP_DATE_LONG, formatter.format(date));
+			props.put(TP_DATE_LONG, formatter.format(date));
 		}
-		if(!globalProperties.containsKey(TP_DATE_FULL)) {
+		if(!properties.containsKey(TP_DATE_FULL)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_DATE_FORMAT_FULL)) {
+			if(properties.containsKey(UP_DATE_FORMAT_FULL)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_DATE_FORMAT_FULL), date_locale
+						(String)properties.get(UP_DATE_FORMAT_FULL), date_locale
 				);
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.FULL, date_locale);
 			}
-			globalProperties.put(TP_DATE_FULL, formatter.format(date));
+			props.put(TP_DATE_FULL, formatter.format(date));
 		}
 
-		if(!globalProperties.containsKey(TP_TIME_SHORT)) {
+		if(!properties.containsKey(TP_TIME_SHORT)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_TIME_FORMAT_SHORT)) {
+			if(properties.containsKey(UP_TIME_FORMAT_SHORT)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_TIME_FORMAT_SHORT), date_locale
+						(String)properties.get(UP_TIME_FORMAT_SHORT), date_locale
 				);
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.SHORT, date_locale);
 			}
-			globalProperties.put(TP_TIME_SHORT, formatter.format(date));
+			props.put(TP_TIME_SHORT, formatter.format(date));
 		}
-		if(!globalProperties.containsKey(TP_TIME_MEDIUM)) {
+		if(!properties.containsKey(TP_TIME_MEDIUM)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_TIME_FORMAT_MEDIUM)) {
+			if(properties.containsKey(UP_TIME_FORMAT_MEDIUM)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_TIME_FORMAT_MEDIUM), date_locale
+						(String)properties.get(UP_TIME_FORMAT_MEDIUM), date_locale
 				);
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.MEDIUM, date_locale);
 			}
-			globalProperties.put(TP_TIME_MEDIUM, formatter.format(date));
+			props.put(TP_TIME_MEDIUM, formatter.format(date));
 		}
-		if(!globalProperties.containsKey(TP_TIME_LONG)) {
+		if(!properties.containsKey(TP_TIME_LONG)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_TIME_FORMAT_LONG)) {
+			if(properties.containsKey(UP_TIME_FORMAT_LONG)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_TIME_FORMAT_LONG), date_locale
+						(String)properties.get(UP_TIME_FORMAT_LONG), date_locale
 				);
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.LONG, date_locale);
 			}
-			globalProperties.put(TP_TIME_LONG, formatter.format(date));
+			props.put(TP_TIME_LONG, formatter.format(date));
 		}
-		if(!globalProperties.containsKey(TP_TIME_FULL)) {
+		if(!properties.containsKey(TP_TIME_FULL)) {
 			DateFormat formatter;
-			if(globalProperties.containsKey(UP_TIME_FORMAT_FULL)) {
+			if(properties.containsKey(UP_TIME_FORMAT_FULL)) {
 				formatter = new SimpleDateFormat(
-						(String)globalProperties.get(UP_TIME_FORMAT_FULL), date_locale
+						(String)properties.get(UP_TIME_FORMAT_FULL), date_locale
 				);
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.FULL, date_locale);
 			}
-			globalProperties.put(TP_TIME_FULL, formatter.format(date));
+			props.put(TP_TIME_FULL, formatter.format(date));
 		}
+
+		return props;
 	}
 }

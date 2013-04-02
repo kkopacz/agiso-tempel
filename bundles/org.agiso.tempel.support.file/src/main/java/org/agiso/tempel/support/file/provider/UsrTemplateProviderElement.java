@@ -1,6 +1,6 @@
-/* org.agiso.tempel.support.file.provider.UsrTemplateProvider (15-12-2012)
+/* org.agiso.tempel.support.file.provider.UsrTemplateProviderElement (15-12-2012)
  * 
- * UsrTemplateProvider.java
+ * UsrTemplateProviderElement.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -28,7 +28,6 @@ import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
-import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.support.base.provider.BaseTemplateProviderElement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @Component
-public class UsrTemplateProvider extends BaseTemplateProviderElement {
+public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -55,10 +54,7 @@ public class UsrTemplateProvider extends BaseTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> globalProperties) throws IOException {
-		super.initialize(globalProperties);
-
-
+	protected void doInitialize(Map<String, Object> properties) throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		int index = path.lastIndexOf("/repo/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
@@ -77,7 +73,6 @@ public class UsrTemplateProvider extends BaseTemplateProviderElement {
 
 		setActive(readUsrTemplates(templateRepository));
 	}
-
 //	--------------------------------------------------------------------------
 	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
@@ -106,7 +101,7 @@ public class UsrTemplateProvider extends BaseTemplateProviderElement {
 				tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						UsrTemplateProvider.this.processObject("USER", object, templateRepository,
+						UsrTemplateProviderElement.this.processObject("USER", object, templateRepository,
 								new ITemplateSourceFactory() {
 									@Override
 									public ITemplateSource createTemplateSource(Template template, String source) {

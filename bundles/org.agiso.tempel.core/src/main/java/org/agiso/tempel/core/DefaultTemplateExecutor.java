@@ -68,14 +68,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param templates Mapa wszystkich dostępnych szablonów.
 	 */
 	@Override
-	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> globalProperties) {
+	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> properties) {
 		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
 
-		stack.push(new HashMap<String, Object>(globalProperties));
-		executeTemplate(workDir, template, templateProvider, stack, globalProperties, "");
+		stack.push(new HashMap<String, Object>(properties));
+		executeTemplate(workDir, template, templateProvider, stack, properties, "");
 		stack.pop();
 	}
-	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> globalProperties, String depth) {
+	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -138,7 +138,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				subTemplate = subTemplate.clone();								// kopia podszablonu z repozytorium (do modyfikacji)
 				// subTemplate.setScope(template.getScope());						// podszablon ma to samo repozytorium co szablon
 
-				Map<String, Object> subParams = new HashMap<String, Object>(globalProperties);	// parametry dodane podzablonu
+				Map<String, Object> subParams = new HashMap<String, Object>(properties);	// parametry dodane podzablonu
 				subParams.put("top", params);
 				stack.push(subParams);
 
@@ -205,7 +205,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
-				executeTemplate(subWorkDir, subTemplate, templateProvider, stack, globalProperties, "  " + depth);
+				executeTemplate(subWorkDir, subTemplate, templateProvider, stack, properties, "  " + depth);
 
 				stack.pop();
 			}
@@ -251,6 +251,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			}
 		} else {
 			// Wartości pozostałych parametrów są określane w trakcie wykonania:
+			System.out.println(paramReader.getClass().getSimpleName() + 
+					"#getParamValue(" + param.getKey() +", " + param.getName() + ", " + value +")"
+			);
 			value = paramReader.getParamValue(param.getKey(), param.getName(), value);
 		}
 		return value;

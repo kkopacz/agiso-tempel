@@ -39,7 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseTemplateProviderElement implements ITemplateProviderElement {
 	private boolean active;
-	private Map<String, Object> globalProperties;
+	private Map<String, Object> properties;
 
 	@Autowired
 	private IExpressionEvaluator expressionEvaluator;
@@ -49,9 +49,13 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> globalProperties) throws IOException {
-		this.globalProperties = globalProperties;
+	public void initialize(Map<String, Object> properties) throws IOException {
+		this.properties = properties;
+
+		doInitialize(properties);
 	}
+
+	protected abstract void doInitialize(Map<String, Object> properties) throws IOException;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -75,11 +79,11 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			Map<String, String> scopeProperties = (Map<String, String>)object;
 			for(String key : scopeProperties.keySet()) {
 				String value = scopeProperties.get(key);
-				value = expressionEvaluator.evaluate(value, globalProperties);
+				value = expressionEvaluator.evaluate(value, properties);
 				// CHECK: scopeProperties.put(key, value);	// aktualizacja wartości po rozwinięciu
-				globalProperties.put(key, value);
+				properties.put(key, value);
 			}
-			globalProperties.put(scope, Collections.unmodifiableMap(scopeProperties));
+			properties.put(scope, Collections.unmodifiableMap(scopeProperties));
 			return;
 		}
 

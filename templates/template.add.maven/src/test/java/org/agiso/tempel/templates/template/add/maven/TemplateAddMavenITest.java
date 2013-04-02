@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
@@ -60,10 +61,14 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 			.thenReturn("1.0.0");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
+		Map<String, String> cmdParams = new HashMap<String, String>();
+		cmdParams.put("date_format", "yyyy-MM-dd HH:mm:ss");
+		cmdParams.put("date", "2010-12-21 11:12:13");
+
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+				cmdParams, new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -74,6 +79,6 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1eb86a1978df9f4e987e255dac1ca956".equals(md5);
+		assert "829d6fe8dd17be3342fe92c8ed8d7c29".equals(md5);
 	}
 }
