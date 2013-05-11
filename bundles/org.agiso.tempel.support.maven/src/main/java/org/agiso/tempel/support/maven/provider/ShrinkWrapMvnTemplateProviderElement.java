@@ -54,7 +54,11 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 
 //	--------------------------------------------------------------------------
 	@Override
-	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	protected void doInitialize() throws IOException {
+	}
+
+	@Override
+	protected void doConfigure(Map<String, Object> properties) throws IOException {
 		SettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
 
 		File mavenSettingsFile = null;
@@ -69,7 +73,7 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 			request.setUserSettingsFile(mavenSettingsFile);
 			resolver = Maven.configureResolver().fromFile(mavenSettingsFile);
 
-			System.out.println("Using Maven settings file " + mavenSettingsFile.getCanonicalPath());
+			System.out.println("Maven settings file: " + mavenSettingsFile.getCanonicalPath());
 		} else {
 			resolver = Maven.resolver();
 
@@ -77,8 +81,8 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 		}
 
 		settings = new MavenSettingsBuilder().buildSettings(request);
-
 		System.out.println("Maven local repository: " + settings.getLocalRepository());
+
 
 		setActive(true);
 	}

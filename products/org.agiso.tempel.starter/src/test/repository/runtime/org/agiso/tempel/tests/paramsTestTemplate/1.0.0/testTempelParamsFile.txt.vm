@@ -22,3 +22,13 @@ time_short:  ${time_short}
 time_medium: ${time_medium}
 time_long:   ${time_long}
 time_full:   ${time_full}
+
+GLOBAL.property_01:  ${GLOBAL.property_01}
+USER.property_01:    ${USER.property_01}
+RUNTIME.property_01: ${RUNTIME.property_01}
+property_01:         ${property_01}
+
+property_02: ${property_02}
+
+user_name: ${user_name}
+SYSTEM.user_name: ${SYSTEM.user_name}

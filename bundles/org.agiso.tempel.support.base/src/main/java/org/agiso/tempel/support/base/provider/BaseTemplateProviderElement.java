@@ -19,8 +19,8 @@
 package org.agiso.tempel.support.base.provider;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateRepository;
@@ -39,7 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseTemplateProviderElement implements ITemplateProviderElement {
 	private boolean active;
-	private Map<String, Object> properties;
+	private Map<String, String> properties = new TreeMap<String, String>();
 
 	@Autowired
 	private IExpressionEvaluator expressionEvaluator;
@@ -49,13 +49,19 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void initialize(Map<String, Object> properties) throws IOException {
-		this.properties = properties;
-
-		doInitialize(properties);
+	public Map<String, String> initialize() throws IOException {
+		doInitialize();
+		return properties;
 	}
 
-	protected abstract void doInitialize(Map<String, Object> properties) throws IOException;
+	@Override
+	public void configure(Map<String, Object> properties) throws IOException {
+		doConfigure(properties);
+	}
+
+	protected abstract void doInitialize() throws IOException;
+
+	protected abstract void doConfigure(Map<String, Object> properties) throws IOException;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -72,18 +78,18 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 	 * @param scope
 	 * @param object
 	 */
-	protected void processObject(String scope, Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
+	protected void processObject(/* String scope, */ Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
 		// Mapa parametrów pliku tempel.xml:
 		if(object instanceof Map) {
 			@SuppressWarnings("unchecked")
 			Map<String, String> scopeProperties = (Map<String, String>)object;
 			for(String key : scopeProperties.keySet()) {
 				String value = scopeProperties.get(key);
-				value = expressionEvaluator.evaluate(value, properties);
+//				value = expressionEvaluator.evaluate(value, properties);
 				// CHECK: scopeProperties.put(key, value);	// aktualizacja wartości po rozwinięciu
 				properties.put(key, value);
 			}
-			properties.put(scope, Collections.unmodifiableMap(scopeProperties));
+//			properties.put(scope, Collections.unmodifiableMap(scopeProperties));
 			return;
 		}
 

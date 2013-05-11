@@ -40,6 +40,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RunTemplateProviderElement extends BaseTemplateProviderElement {
+	private boolean initialized;
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -52,9 +53,14 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 		return 10;
 	}
 
+	@Override
+	public String getScope() {
+		return "RUNTIME";
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
-	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	protected void doInitialize() throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		int index = path.lastIndexOf("/repo/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
@@ -71,7 +77,12 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 		}
 
 
-		setActive(readRunTemplates(templateRepository));
+		initialized = readRunTemplates(templateRepository);
+	}
+
+	@Override
+	protected void doConfigure(Map<String, Object> properties) throws IOException {
+		setActive(initialized);
 	}
 
 //	--------------------------------------------------------------------------
@@ -101,7 +112,7 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 			tempelFileProcessor.process(runSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					RunTemplateProviderElement.this.processObject("RUNTIME", object, templateRepository,
+					RunTemplateProviderElement.this.processObject(object, templateRepository,
 							new ITemplateSourceFactory() {
 								@Override
 								public ITemplateSource createTemplateSource(Template template, String source) {

@@ -27,7 +27,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
+import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
@@ -49,6 +51,9 @@ public class Tempel implements ITempel {
 	private ITemplateVerifier templateVerifier;
 	private ITemplateExecutor templateExecutor;
 
+	@Autowired
+	private IExpressionEvaluator expressionEvaluator;
+
 //	--------------------------------------------------------------------------
 	public Tempel() {
 		// Odczytujemy właściwości systemowe i zapamiętujemy je w mapie systemProperties:
@@ -57,7 +62,7 @@ public class Tempel implements ITempel {
 		for(String key : properties.stringPropertyNames()) {
 			map.put(key.replace('.', '_'), properties.getProperty(key));
 		}
-		systemProperties = Collections.unmodifiableMap(new HashMap<String, Object>(map));
+		systemProperties = Collections.unmodifiableMap(map);
 	}
 
 //	--------------------------------------------------------------------------
@@ -87,21 +92,40 @@ public class Tempel implements ITempel {
 	 */
 	@Override
 	public void startTemplate(String name, Map<String, String> params, String workDir) throws Exception {
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new TreeMap<String, Object>();
 
-		// 1. Parametry systemowe wywołania maszyny wirtualnej Java:
+		// Wypełniamy mapę properties dodając do niej parametry poszczególnych
+		// poziomów tak, że parametry wyższego poziomu przykrywają parametry
+		// niższego poziomu (przedefiniowywanie parametrów):
+
+		// Parametry systemowe wywołania maszyny wirtualnej Java (1):
 		properties.putAll(systemProperties);
 		properties.put("SYSTEM", systemProperties);
 
-		// 2. Parametry wywołania określone przez użytkownika:
+		// Parametry ustawień globalnych (2), użytkownika (3) i lokalnych (4):
+		templateProvider.initialize(properties);
+
+		// Parametry uruchomieniowe (5):
 		properties.putAll(params);
 
-		// 3. W oparciu o parametry użytkownika budujemy parametry uruchomienia:
-		Map<String, Object> runtimeProperties = addInstanceProperties(params);
-		properties.putAll(runtimeProperties);
+		// W oparciu o parametry użytkownika budujemy parametry uruchomienia:
+		properties.putAll(addRuntimeProperties(properties));
 
-		// Inicjalizujemy provider'a szablonów:
-		templateProvider.initialize(properties);
+		// Po zbudowaniu mapy properties przeglądamy ją i rozwijamy parametry:
+		for(String key : properties.keySet()) {
+			Object value = properties.get(key);
+			if(value instanceof String) {
+				String oldValue = (String)value;
+				String newValue = expressionEvaluator.evaluate(oldValue, properties);
+				if(!oldValue.equals(newValue)) {
+					System.out.println(oldValue + " --> " + newValue);
+					properties.put(key, newValue);
+				}
+			}
+		}
+
+		// Po rozwinięciu parametrów inicjalizujemy provider'a szablonów:
+		templateProvider.configure(properties);
 
 		// Pobieranie definicji szablonu do użycia:
 		Template template = templateProvider.get(name, null, null, null);
@@ -159,7 +183,7 @@ public class Tempel implements ITempel {
 	 * @param properties
 	 * @throws Exception 
 	 */
-	private Map<String, Object> addInstanceProperties(Map<String, String> properties) throws Exception {
+	private Map<String, Object> addRuntimeProperties(Map<String, Object> properties) throws Exception {
 		Map<String, Object> props = new HashMap<String, Object>();
 
 		// Określanie lokalizacji daty/czasu używanej do wypełnienia paramtrów szablonów
@@ -172,13 +196,26 @@ public class Tempel implements ITempel {
 		}
 
 		// Wyznaczanie daty, na podstawie której zostaną wypełnione parametry szablonów
-		// przechowujące datę/czas w formatach DateFormat.SHORT, .MEDIUM, .LONG i .FULL:
+		// przechowujące datę/czas w formatach DateFormat.SHORT, .MEDIUM, .LONG i .FULL.
+		// Odbywa się w oparciu o wartości parametrów 'date_format' i 'date'. Parametr
+		// 'date_format' definiuje format używany do parsowania łańcucha reprezentującego
+		// datę określoną parametrem 'date'. Parametr 'date_format' może nie być określony.
+		// W takiej sytuacji użyty jest format DateFormat.LONG aktywnej lokalizacji (tj.
+		// systemowej, która może być przedefiniowana przez parametr 'date_locale'), który
+		// może być przedefiniowany przez parametry 'date_format_long' i 'time_format_long':
 		Calendar calendar = Calendar.getInstance(date_locale);
 		if(properties.containsKey(RP_DATE)) {
 			String date_string = (String)properties.get(RP_DATE);
 			if(properties.containsKey(RP_DATE_FORMAT)) {
 				String date_format = (String)properties.get(RP_DATE_FORMAT);
 				DateFormat formatter = new SimpleDateFormat(date_format);
+				calendar.setTime(formatter.parse(date_string));
+			} else if(properties.containsKey(UP_DATE_FORMAT_LONG) && properties.containsKey(UP_TIME_FORMAT_LONG)) {
+				// TODO: Założenie, że format data-czas jest złożony z łańcucha daty i czasu rozdzelonych spacją:
+				// 'UP_DATE_FORMAT_LONG UP_TIME_FORMAT_LONG'
+				DateFormat formatter = new SimpleDateFormat(
+						(String)properties.get(UP_DATE_FORMAT_LONG) + " " +
+						(String)properties.get(UP_TIME_FORMAT_LONG), date_locale);
 				calendar.setTime(formatter.parse(date_string));
 			} else {
 				DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.LONG,

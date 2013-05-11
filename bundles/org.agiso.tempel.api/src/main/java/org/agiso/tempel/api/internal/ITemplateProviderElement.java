@@ -47,9 +47,19 @@ public interface ITemplateProviderElement {
 	public boolean isActive();
 
 	/**
-	 * @see org.agiso.tempel.api.internal.ITemplateProvider#initialize(Map)
+	 * @return
 	 */
-	public void initialize(Map<String, Object> properties) throws IOException;
+	public String getScope();
+
+	/**
+	 * @see org.agiso.tempel.api.internal.ITemplateProvider#initialize()
+	 */
+	public Map<String, String> initialize() throws IOException;
+
+	/**
+	 * @see org.agiso.tempel.api.internal.ITemplateProvider#configure(Map)
+	 */
+	public void configure(Map<String, Object> properties) throws IOException;
 
 	/**
 	 * @see org.agiso.tempel.api.internal.ITemplateProvider#contains(String, String, String, String)

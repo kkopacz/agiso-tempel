@@ -22,8 +22,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
@@ -62,8 +64,22 @@ public class CoreTemplateProvider implements ITemplateProvider {
 //	--------------------------------------------------------------------------
 	@Override
 	public void initialize(Map<String, Object> properties) throws IOException {
+		for(int index = elements.size() - 1; index >= 0; index--) {
+			ITemplateProviderElement provider = elements.get(index);
+			System.out.println(provider.getOrder() + " initialize: " + provider.getClass().getSimpleName());
+			Map<String, String> providerProperties = provider.initialize();
+			if(providerProperties != null) {
+				properties.putAll(providerProperties);
+				properties.put(provider.getScope(), Collections.unmodifiableMap(providerProperties));
+			}
+		}
+	}
+
+	@Override
+	public void configure(Map<String, Object> properties) throws IOException {
 		for(ITemplateProviderElement provider : elements) {
-			provider.initialize(properties);
+			System.out.println(provider.getOrder() + " configure: " + provider.getClass().getSimpleName());
+			provider.configure(properties);
 		}
 	}
 

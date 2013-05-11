@@ -54,9 +54,19 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 		return true;
 	}
 
-//	--------------------------------------------------------------------------
 	@Override
-	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	public String getScope() {
+		return "TEST";
+	}
+
+//	--------------------------------------------------------------------------
+
+	@Override
+	protected void doInitialize() throws IOException {
+	}
+
+	@Override
+	protected void doConfigure(Map<String, Object> properties) throws IOException {
 	}
 
 //	--------------------------------------------------------------------------

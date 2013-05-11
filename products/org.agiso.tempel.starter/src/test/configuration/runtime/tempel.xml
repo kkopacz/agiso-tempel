@@ -6,6 +6,9 @@
 	<!-- repository>./</repository -->
 	<!-- repository>./src/test/repository</repository -->
 
+	<properties>
+		<property_01>value 01 (local)</property_01>
+	</properties>
 
 	<!-- 
 	  - Szablony wykorzystywane do testowania poprawności obsługi parametrów.

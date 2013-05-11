@@ -60,7 +60,11 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 
 //	--------------------------------------------------------------------------
 	@Override
-	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	protected void doInitialize() throws IOException {
+	}
+
+	@Override
+	protected void doConfigure(Map<String, Object> properties) throws IOException {
 		repoSystem = newRepositorySystem();
 
 
@@ -81,6 +85,7 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 
 		local = new RemoteRepository("local", "default", "file://" + settingsPath);
 		central = new RemoteRepository("central", "default", "http://repo1.maven.org/maven2/");
+
 
 		setActive(true);
 	}

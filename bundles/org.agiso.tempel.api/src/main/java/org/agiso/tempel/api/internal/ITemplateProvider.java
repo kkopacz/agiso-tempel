@@ -44,6 +44,18 @@ public interface ITemplateProvider {
 	public void initialize(Map<String, Object> properties) throws IOException;
 
 	/**
+	 * Inicjalizuje dostarczyciela szablonów przed pobraniem i uruchomieniem pierwszego
+	 * szablonu do wykonania (każdorazowo w metodzie {@link ITempel#startTemplate(String,
+	 * Map, String)}. W trakcie inicjalizacji może korzystać z przekazanej mapy parametrów,
+	 * może też do niej dodawać własne parametry (np. odczytane z pliku konfiguracyjnego
+	 * dostarczyciela).
+	 * 
+	 * @param properties Mapa parametrów środowiska/uruchomienia narzędzia Tempel.
+	 * @throws IOException W razie błędu przetwarzania zasobów wymaganych do inicjalizacji.
+	 */
+	public void configure(Map<String, Object> properties) throws IOException;
+
+	/**
 	 * @param key
 	 * @param groupId
 	 * @param templateId

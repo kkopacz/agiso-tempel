@@ -46,6 +46,11 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 		return 40;
 	}
 
+	@Override
+	public String getScope() {
+		return "MAVEN";
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
 	@SuppressWarnings("unchecked")

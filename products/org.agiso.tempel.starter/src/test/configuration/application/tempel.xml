@@ -3,4 +3,8 @@
   - Ustawienia globalne (systemowe), wspólne dla całej instalacji.
   -->
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<properties>
+		<property_01>value 01 (system)</property_01>
+		<property_02>value 02: ${property_01}</property_02>
+	</properties>
 </tempel>

@@ -40,6 +40,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
+	private boolean initialized;
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -52,9 +53,14 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 		return 20;
 	}
 
+	@Override
+	public String getScope() {
+		return "USER";
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
-	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	protected void doInitialize() throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		int index = path.lastIndexOf("/repo/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
@@ -71,8 +77,14 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 		}
 
 
-		setActive(readUsrTemplates(templateRepository));
+		initialized = readUsrTemplates(templateRepository);
 	}
+
+	@Override
+	protected void doConfigure(Map<String, Object> properties) throws IOException {
+		setActive(initialized);
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
@@ -101,7 +113,7 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 				tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						UsrTemplateProviderElement.this.processObject("USER", object, templateRepository,
+						UsrTemplateProviderElement.this.processObject(object, templateRepository,
 								new ITemplateSourceFactory() {
 									@Override
 									public ITemplateSource createTemplateSource(Template template, String source) {

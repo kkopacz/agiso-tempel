@@ -40,6 +40,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AppTemplateProviderElement extends BaseTemplateProviderElement {
+	private boolean initialized;
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -52,9 +53,14 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 		return 30;
 	}
 
+	@Override
+	public String getScope() {
+		return "GLOBAL";
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
-	protected void doInitialize(Map<String, Object> properties) throws IOException {
+	protected void doInitialize() throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		int index = path.lastIndexOf("/repo/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
@@ -71,7 +77,12 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 		}
 
 
-		setActive(readAppTemplates(templateRepository));
+		initialized = readAppTemplates(templateRepository);
+	}
+
+	@Override
+	protected void doConfigure(Map<String, Object> properties) throws IOException {
+		setActive(initialized);
 	}
 
 //	--------------------------------------------------------------------------
@@ -98,7 +109,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 			tempelFileProcessor.process(appSettingsFile, new ITempelEntryProcessor() {
 				@Override
 				public void processObject(Object object) {
-					AppTemplateProviderElement.this.processObject("GLOBAL", object, templateRepository,
+					AppTemplateProviderElement.this.processObject(object, templateRepository,
 							new ITemplateSourceFactory() {
 								@Override
 								public ITemplateSource createTemplateSource(Template template, String source) {
