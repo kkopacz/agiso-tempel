@@ -8,23 +8,79 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<title>Szablony</title>
+	<title><!--Przegląd/-->Szablony</title>
+	
+	<para>Tempel w trakcie uruchomienia wykonuje kod zawarty w silniku
+	generacji w celu utworzenia pewnego zasobu wyjściowego w oparciu o
+	zasów wejściowy i wartości wymaganych parametrów. Proces ten, dla
+	uproszczenia nomenklatrury, nazywany jest uruchamianiem szablonu
+	(jego szczegółowy przebieg przedstawiony jest w rodziale TODO).</para>
+
+	<para>Zgodnie z powyższym nazewnictwem, za uruchamiane przez Tempel
+	szablon uwarzane będzie przetwarzany zasób wejściowy wraz z
+	definicją, która określa jaki silnik ma zostać uruchomiony, jake
+	parametry mają zostać do niego dostarczone oraz jaka jest unikatowa
+	identyfikacja szablonu w repozytorium, w którym jest przechowywany.</para>
 
 	<section>
-		<title>Zasoby</title>
+		<title><!--Przegląd/Szablony/-->Zasoby</title>
+
+		<para>Zasoby odgrywają w koncepcji funkcjonowania narzędzia Tempel
+		kluczową rolę. Silniki generacji transformują jedne zasoby w inne,
+		lub po prostu tworzą nowe zasoby jedynie w oparciu o zebrane
+		wartości parametrów.</para>
+
+		<para>Widać więc, że zasoby występujące w procesie uruchamiania
+		szablonu Tempel można podzielić na dwa zasadnicze rodzaje, tj.
+		zasoby wejściowe i zasoby wyjściowe.</para>
 
 		<section>
-			<title>Wejściowe</title>
+			<title><!--Przegląd/Szablony/Zasoby/-->Wejściowe</title>
+
+			<para>Zasoby wejściowe transformowane są przez silniki generacji
+			w celu wytworzenia zasobów wyjściowych. To jakiego rodzaju mogą
+			to być zasoby zależy jedynie od możliwości działających na nich
+			silników generacji. Z założenia zasoby wejściowe są strukturami
+			systemu plików (katalogami i plikami, przeważnie tekstowymi).
+			Nic nie stoi jednak na przeszkodzie, aby były np. wczytywane z
+			bazy danych.</para>
+	
+			<para>W trakcie wykonywania uruchomionego szablonu Tempel
+			przekazuje przeznaczony do przetworzenia zasób wejściowy do
+			silnika generacji szablonu. Lokalizacja tego zasobu jest
+			jednoznacznie określana w oparciu o zasady przechowywania
+			zasobów w repozytorium, w którym szablon został odnaleziony.
+			Mogą one się różnić w różnych typach repozytoriów, jednak w
+			każdym z nich lokalizacja ta jest wyznaczana na podstawie grupy,
+			identyfikatora i wersji szablonu.</para>
+
+			<para>Tempel może wykorzystywać repozytoria szablonów różnego
+			typu, przechowujące zasoby wejściowe w różny sposób. Z tego
+			powodu konieczna jest normalizacja sposobu dostępu do pobranych
+			z repozytorium zasobów przed ich przekazaniem do silnika
+			generacji. Normalizacja ta jest uzyskiwana poprzez interfejs
+			<interface>ITemplateSource</interface>.</para>
+
+			<para>Należy pamiętać, że mogą istnieć szablony, które nie
+			wykorzystują żadnych zasobów wejściowych. Korzystają one z
+			silników generacji, które do poprawnego działania i wytworzenia
+			zasobu wyjściowego wymagają jedynie wartości parametrów
+			wejściowych. Pzykładem takiego silnika jest silkik tworzący
+			katalogi.</para> 
+		</section>
+
+		<section>
+			<title><!--Przegląd/Szablony/Zasoby/-->Wyjściowe</title>
+
+			<para>Zasoby wyjściowe tworzone są przez silniki generacji w
+			oparciu o zasoby wejściowe i wartości parametrów wejściowych.
+			Z założenia są one strukturami systemu plików, tj. katalogami
+			i plikami w różnch formatach (przeażnie tekstowych).</para>
 
 		</section>
 
 		<section>
-			<title>Wyjściowe</title>
-
-		</section>
-
-		<section>
-			<title>Podszablony</title>
+			<title><!--Przegląd/Szablony/Zasoby/-->Podszablony</title>
 
 		</section>
 	</section>
