@@ -16,7 +16,7 @@
 	<artifactId>org.agiso.tempel.bundles</artifactId>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel</name>
+	<name>AGISO Tempel Bundles Builder</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
