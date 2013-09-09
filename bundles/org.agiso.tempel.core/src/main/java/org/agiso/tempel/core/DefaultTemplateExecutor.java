@@ -243,19 +243,25 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @return
 	 */
 	private String getParamValue(TemplateParam param, Map<String, Object> params) {
+		boolean fixed = param.getFixed() != null && param.getFixed() == true;
 		String value = expressionEvaluator.evaluate(param.getValue(), params);
-		if(param.getFixed() != null && param.getFixed() == true) {
-			// Parametr oznaczony musi mieć zdefiniowaną wartość:
-			if(Temp.StringUtils_isEmpty(value)) {
-				throw new IllegalStateException("Brak wartości dla parametru oznaczonego '" + param.getKey() + "'");
-			}
-		} else {
+
+		// Parametr oznaczony musi mieć zdefiniowaną wartość:
+		if(fixed && Temp.StringUtils_isEmpty(value)) {
+			throw new IllegalStateException("Brak wartości dla parametru oznaczonego '" + param.getKey() + "'");
+		}
+
+		if(params.containsKey(param.getKey())) {
+			// Parametr może być zdefiniowany jako parametr wywołania (przez -Dkey=value):
+			value = expressionEvaluator.evaluate(params.get(param.getKey()).toString(), params);
+		} else if(!fixed) {
 			// Wartości pozostałych parametrów są określane w trakcie wykonania:
 			System.out.println(paramReader.getClass().getSimpleName() + 
 					"#getParamValue(" + param.getKey() +", " + param.getName() + ", " + value +")"
 			);
 			value = paramReader.getParamValue(param.getKey(), param.getName(), value);
 		}
+
 		return value;
 	}
 	/**

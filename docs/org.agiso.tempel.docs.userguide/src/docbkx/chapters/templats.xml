@@ -9,7 +9,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<title><!--Przegląd/-->Szablony</title>
-	
+
 	<para>Tempel w trakcie uruchomienia wykonuje kod zawarty w silniku
 	generacji w celu utworzenia pewnego zasobu wyjściowego w oparciu o
 	zasów wejściowy i wartości wymaganych parametrów. Proces ten, dla
@@ -75,42 +75,176 @@
 			<para>Zasoby wyjściowe tworzone są przez silniki generacji w
 			oparciu o zasoby wejściowe i wartości parametrów wejściowych.
 			Z założenia są one strukturami systemu plików, tj. katalogami
-			i plikami w różnch formatach (przeażnie tekstowych).</para>
-
-		</section>
-
-		<section>
-			<title><!--Przegląd/Szablony/Zasoby/-->Podszablony</title>
-
+			i plikami w różnch formatach (przeażnie tekstowych). Mogą też
+			być plikami binarnymi (np. dokumentami pdf lub archiwami zip),
+			rekrodami tworzonymi w bazie danych bądź wiadomościami e-mail.
+			Takie "nietypowe" rodzaje zasobów wymagają jedynie dostarczenia
+			specjalizowanych silników generacji.</para>
 		</section>
 	</section>
 
 	<section>
-		<title>Definicja</title>
+		<title><!--Przegląd/Szablony/-->Definicja</title>
 
 		<section>
-			<title>Pliki <filename>tempel.xml</filename></title>
+			<title><!--Przegląd/Szablony/Definicja/-->Pliki
+			<filename>tempel.xml</filename></title>
 
 		</section>
 
 		<section>
-			<title>Silnik generacji</title>
+			<title><!--Przegląd/Szablony/Definicja/-->Silnik generacji</title>
 
 		</section>
 
 		<section>
-			<title>Parametry</title>
+			<title><!--Przegląd/Szablony/Definicja/-->Parametry</title>
+
+			<para>Parametry w są parami w których nazwanemu kluczowi
+			znakowemu przypisywana jest konkretna wartość będąca łańcuchem
+			znakowym (typu String) bądź obiektem dowolnego typu (naczęściej
+			prostym obiektem POJO).</para>
+
+			<para>W systemie tempel mechanizm obsługi parametrów, tj. ich
+			gromadzenia, walidacji, konwersji i wykorzystania stanowi jeden
+			z ważniejszych elementów jego działania. Parametry są bowiem
+			wykorzystywane w niemal każdym jego elemencie. Są definiowane
+			i używane w plikach tempel.xml wszystkich poziomów
+			konfiguracyjnych, stanowią podstawowy element wprowadzający
+			zmienność generowanych zasobów wyjściowych w oparciu o zasoby
+			wejściowe (w których są używane). Określanie ich wartości odbywa
+			się w trakcie uruchamniania szablonu na podstawie parametrów
+			linii komend i w trybie interakcji z użytkownikiem.</para>
+
+			<section>
+				<title>Poziomy parametrów</title>
+
+				<para>SYSTEM - parametry systemowe uruchomienia maszyny
+				wirtualnej JAVA. Ponieważ odwołania do parametrów mogą mieć
+				formę ścieżek JavaBeans, oryginalne nazwy kluczy parametrów
+				systemowch zmodyfikowane są przez zastąpienie wszystkich
+				wystąpień znaku '.' (kropka) znakiem '_' (podkreślnik).
+				Parametry systemowe są parametrami najniższego poziomu,
+				co oznacza, że przykrywane są przez parametry wszystkich
+				innych poziomów.</para>
+
+				<para>GLOBAL - parametry globalne zdefiniowane w sekcji
+				'properties' pliku tempel.xml znajdującym się w podkatalogu
+				conf ścieżki instalacyjnej aplikacji. Są to głównie parametry
+				konfiguracyjne wykorzystywane przez samą aplikację określające
+				np. lokalizację lub formaty łańcuhów dat i czasów używane w
+				szablonach, oraz parametry dostarczycieli szablonów (np.
+				parametry wskazujące lokalizację konfiguracji maven
+				odczytywane przez provider'a MvnTemplateProvider
+				umożliwiającego pobieranie szablonów z repozytoriów Apache
+				Maven).</para>
+
+				<para>USER - parametry użytkownika zdefiniowane w sekcji
+				'properties' pliku tempel.xml znajdującego się w podkatalogu
+				.tempel katalogu domowego biężącego użytkownika. Najczęściej
+				są to parametry szablonów identyfikuące osobę uruchamiającą
+				narzędzie tempel, takie jak nazwa użytkownika czy jego adres
+				email.
+				Parametry poziomu użytkownika przykrywają parametry globalne.
+				</para>
+	
+				<para>LOCAL - parametry lokalne zdefiniowane w sekcji
+				'properties' pliku tempel.xml znajdującego się w katalogu
+				uruchomienia polecenia tpl. Są to parametry specyficzne dla
+				lokalizacji (projektu). Mogą być wykorzystywane do
+				przeciążania parametrów globalnych i użytkownika (np. gdy w
+				projekcie używany jest inny format daty niż zdefiniowany
+				globlanie, lub gdy adres email użytkownika w danym projekcie
+				jest inny niż zdefiniowany w jego katalogu domowym).</para>
+	
+				<para>RUNTIME - Parametry uruchomieniowe określane są w
+				trakcie uruchamiania polecenia <command>tpl</command> jako
+				parametry jego wywołania. Wykorzystywane są do dostarczenia
+				już w trakcie wywołania wartości parametrów, które normalnie
+				określane są w trybie interaktywnym w trakcie uruchamiania
+				szablonu. Mogą też być użyte do określenia wartości
+				parametrów, które normalnie są dynamicznie wyznaczane podczas
+				uruchamiania apikacji takich jak data i czas uruchomienia).
+				</para>
+			</section>
+
+			<section>
+				<title>Parametry wewnętrzne</title>
+
+				<para>Tempel definiuje i wykorzystuje kilka standardowych
+				parametrów, których wartości wyznaczane są w trakcie jego
+				uruchamiania. Są to następujące parametry:</para>
+
+				<para>date (typu java.util.Date) - zawiera datę i czas
+				uruchomienia polecenia tpl. Może być określony w trakcie
+				wywołania polecenia tpl w następujący sposób:
+				<command>
+				tpl -Ddate=lancuch_data_czas -Ddate_format=... -Dtime_format=...b 
+				</command>
+				</para>
+
+				<para>date_locale (typu java.util.String) - zawiera kod
+				lokalizacji zgodny z Java Locale (IETF BCP 47) użyty podczas
+				wyznaczania parametrów zawierających reprezentację wartości
+				przechowywanej w parametrze <command>code</command> takich jak
+				<command>date_short</command> czy <command>time_full</command>.
+				Często jest określany w globalnym (dla całego systemu) bądź
+				lokalnym (dla projektu) pliku <filename>tempel.xml</filename>.
+				</para>
+
+				<para>date_short
+				</para>
+
+				<para>date_medium
+				</para>
+
+				<para>date_long
+				</para>
+
+				<para>date_full
+				</para>
+
+				<para>time_short
+				</para>
+
+				<para>time_medium
+				</para>
+
+				<para>time_long
+				</para>
+
+				<para>time_full
+				</para>
+
+				<para>
+				</para>
+
+				<para>
+				</para>
+
+				<para>
+				</para>
+
+			</section>
+
+			<para>Parametry gromadzone w trakcie uruchomienia ...
+			</para>
+		</section>
+
+		<section>
+			<title><!--Przegląd/Szablony/Definicja/-->Walidatory</title>
 
 		</section>
 
 		<section>
-			<title>Walidatory</title>
+			<title><!--Przegląd/Szablony/Definicja/-->Konwertery</title>
 
 		</section>
 
 		<section>
-			<title>Konwertery</title>
+			<title><!--Przegląd/Szablony/Definicja/-->Podszablony</title>
 
+			<para></para>
 		</section>
 	</section>
 </chapter>

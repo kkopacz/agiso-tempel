@@ -18,6 +18,18 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>paramsTestTemplate</templateId>
 		<version>1.0.0</version>
+
+		<params>
+			<param key="param_01" name="Parameter 1" />
+			<param key="param_02" name="Parameter 2">
+				<fixed>true</fixed>
+				<value>param value 02 (tempel.xml)</value>
+			</param>
+			<param key="param_03" name="Parameter 3">
+				<fixed>true</fixed>
+				<value>${param_01}</value>
+			</param>
+		</params>
 	</template>
 
 

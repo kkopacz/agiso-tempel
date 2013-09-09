@@ -32,3 +32,7 @@ property_02: ${property_02}
 
 user_name: ${user_name}
 SYSTEM.user_name: ${SYSTEM.user_name}
+
+param_01: ${param_01}
+param_02: ${param_02}
+param_03 (param_01): ${param_03}

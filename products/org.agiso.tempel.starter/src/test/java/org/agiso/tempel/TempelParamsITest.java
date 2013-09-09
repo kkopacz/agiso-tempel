@@ -33,24 +33,29 @@ import org.testng.annotations.Test;
 public class TempelParamsITest extends AbstractOutputTest {
 	@Test
 	public void testTempelParams_01() throws Exception {
-		String outPath = "target/velocity-output/TempelParamsITest/0000000000000"; // getOutputPath(true);
+		String outPath = getOutputPath(true);
 		File outDir = new File(outPath);
 		if(!outDir.exists()) {
 			outDir.mkdirs();
 		}
+
+		System.setProperty("user.name", "sysuser");
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(new String[] {
 				"org.agiso.tempel.tests:paramsTestTemplate:1.0.0",
 				"-d " + outPath,
 				"-Ddate_format=yyyy-MM-dd HH:mm:ss",
+				"-Ddate_format_short=dd/MM/yyyy",
 				"-Ddate=2010-12-21 11:12:13",
-				"-Dproperty_01=value 01 (runtime)",
-				"-Ddate_locale=fr_FR"
+				"-Dproperty_01=property value 01 (runtime)",
+				"-Ddate_locale=fr_FR",
+				"-Duser_name=tpluser",
+				"-Dparam_01=param value 01 (command)",
+				"-Dparam_02=param value 02 (command)"
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		System.out.println(md5);
-		// assert "eabcbb3f24682664c844ed3a8031a3f5".equals(md5);
+		assert "8d62aef1a8129630429fab32cb8efdf3".equals(md5);
 	}
 }
