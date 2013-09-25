@@ -10,6 +10,29 @@
 
 	<title>Repozytoria szablonów</title>
 
+	Definicja szablonu
+	Definicje szablonów umieszczane są w sekcjach template w plikach tempel.xml.
+	Pliki te znajdują się w standardowych lokalizacjach konfiguracyjnych (tj.
+	aplikacyjnej, użytkownika i uruchomieniowej), gdzie opisują szablony w powiązanych
+	z tymi lokalizacjami repozytoriów zbiorczych i gdzie są plikami zbiorczymi (tzn.
+	opisują więcej niż jeden szablon). Istnieją też wewnątrz archiwów szablonów w
+	repozytoriach typu Maven, gdzie każdy szablon ma własny plik tempel.xml opisujący
+	tylko ten szablon.
+
+	Repozytoria zbiorcze - są to repozytoria szablonów opisywane poprzez pojedynczy
+	plik tempel.xml
+
+	Repozytoria  typu Maven - są to repozytoria o strukturze takiej jak struktura
+	repozytorów Maven, w których szablony (definicje, zasoby i kod) umieszczane są
+	w archiwach .jar
+
+	Szablon tempel - jest to zestaw składający się definicji szablonu (znajdującej
+	się w pliku tempel.xml, którego lokalziacja jest zależna od typu repozytorium),
+	zasobów wejściowych wykorzystywanych przez silnik generacji, implementacji
+	silnika generacji, konwerterów 
+
+	Struktura tych plików jest niezależna od poziomu na którym występują i wygląda następująco:
+
 	<section>
 		<title>Uruchomieniowe</title>
 

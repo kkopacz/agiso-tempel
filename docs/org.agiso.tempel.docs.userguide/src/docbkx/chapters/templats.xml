@@ -13,7 +13,7 @@
 	<para>Tempel w trakcie uruchomienia wykonuje kod zawarty w silniku
 	generacji w celu utworzenia pewnego zasobu wyjściowego w oparciu o
 	zasów wejściowy i wartości wymaganych parametrów. Proces ten, dla
-	uproszczenia nomenklatrury, nazywany jest uruchamianiem szablonu
+	uproszczenia nomenklatury, nazywany jest uruchamianiem szablonu
 	(jego szczegółowy przebieg przedstawiony jest w rodziale TODO).</para>
 
 	<para>Zgodnie z powyższym nazewnictwem, za uruchamiane przez Tempel
@@ -43,7 +43,10 @@
 			silników generacji. Z założenia zasoby wejściowe są strukturami
 			systemu plików (katalogami i plikami, przeważnie tekstowymi).
 			Nic nie stoi jednak na przeszkodzie, aby były np. wczytywane z
-			bazy danych.</para>
+			bazy danych<footnote><para>TODO: Do weryfikacji. To silnik generacji
+			może sobie doczytywać coś z bazy, ale do niego są przkazywane
+			standardowe zasoby dyskowe (no chyba, że zrobimy nowy typ
+			repozytorium).</para></footnote>.</para>
 	
 			<para>W trakcie wykonywania uruchomionego szablonu Tempel
 			przekazuje przeznaczony do przetworzenia zasób wejściowy do
@@ -75,20 +78,39 @@
 			<para>Zasoby wyjściowe tworzone są przez silniki generacji w
 			oparciu o zasoby wejściowe i wartości parametrów wejściowych.
 			Z założenia są one strukturami systemu plików, tj. katalogami
-			i plikami w różnch formatach (przeażnie tekstowych). Mogą też
-			być plikami binarnymi (np. dokumentami pdf lub archiwami zip),
-			rekrodami tworzonymi w bazie danych bądź wiadomościami e-mail.
-			Takie "nietypowe" rodzaje zasobów wymagają jedynie dostarczenia
-			specjalizowanych silników generacji.</para>
+			i plikami w różnch formatach (przeważnie tekstowych). Mogą też
+			być plikami binarnymi (np. dokumentami <filename>pdf</filename>
+			lub archiwami <filename>zip</filename>), rekrodami tworzonymi
+			w bazie danych bądź wiadomościami e-mail. Takie "nietypowe"
+			rodzaje zasobów wymagają jedynie dostarczenia specjalizowanych
+			silników do ich generacji.</para>
 		</section>
 	</section>
 
 	<section>
 		<title><!--Przegląd/Szablony/-->Definicja</title>
 
+		<para></para>
+
 		<section>
 			<title><!--Przegląd/Szablony/Definicja/-->Pliki
 			<filename>tempel.xml</filename></title>
+
+			<programlisting language="xml"><![CDATA[
+<template engine="org.agiso.tempel.engine.MakeDirEngine">
+    <groupId>org.agiso.tempel.templates</groupId>
+    <templateId>base.mkdir</templateId>
+    <version>1.0.0</version>
+
+    <params>
+      <param key="name" name="Directory name" />
+    </params>
+
+    <resource>
+        <target>${name}</target>
+    </resource>
+</template>
+			]]></programlisting>
 
 		</section>
 
