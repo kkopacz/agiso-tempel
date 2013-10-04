@@ -256,15 +256,15 @@ External libraries, if used, include their own licenses:
   Eclipse Public License, Version 1.0,
 * [Aether :: Utilities (org.sonatype.aether:aether-util:1.13.1)](http://aether.sonatype.org/aether-util/) &mdash;
   Eclipse Public License, Version 1.0,
-* [Spring AOP (org.springframework:spring-aop:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+* [Spring AOP (org.springframework:spring-aop:3.2.4.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
   The Apache Software License, Version 2.0,
-* [Spring Beans (org.springframework:spring-beans:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+* [Spring Beans (org.springframework:spring-beans:3.2.4.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
   The Apache Software License, Version 2.0,
-* [Spring Context (org.springframework:spring-context:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+* [Spring Context (org.springframework:spring-context:3.2.4.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
   The Apache Software License, Version 2.0,
-* [Spring Core (org.springframework:spring-core:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+* [Spring Core (org.springframework:spring-core:3.2.4.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
   The Apache Software License, Version 2.0,
-* [Spring Expression Language (SpEL) (org.springframework:spring-expression:3.2.0.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
+* [Spring Expression Language (SpEL) (org.springframework:spring-expression:3.2.4.RELEASE)](https://github.com/SpringSource/spring-framework) &mdash;
   The Apache Software License, Version 2.0,
 * [TestNG (org.testng:testng:6.7)](http://testng.org) &mdash;
   Apache License, Version 2.0,
