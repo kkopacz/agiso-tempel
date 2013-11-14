@@ -7,7 +7,7 @@
 
 		<params>
 			<param key="groupId" name="Template groupId">
-				<converter>org.agiso.tempel.convert.PackageToPathConverter</converter>
+				<converter class="org.agiso.tempel.convert.PackageToPathConverter" />
 				<value>org.agiso.tempel.templates</value>
 			</param>
 			<param key="templateId" name="Template templateId" />

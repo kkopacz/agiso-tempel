@@ -25,6 +25,7 @@ import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.api.model.TemplateEngine;
 import org.agiso.tempel.api.model.TemplateReference;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -38,8 +39,12 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 @XStreamAlias("template")
 public class TemplateBean extends TemplateReferenceBean implements Template {
-	@XStreamAsAttribute
-	private Class<? extends ITempelEngine> engine;
+	private TemplateEngineBean engine;
+
+//	@XStreamAsAttribute
+//	@XStreamAlias("engine")
+	@XStreamOmitField	// XStreamTempelFileProcessor.TemplateConverter
+	private Class<? extends ITempelEngine> engineClass;
 
 	private List<TemplateReference> references;
 
@@ -53,15 +58,31 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public Class<? extends ITempelEngine> getEngine() {
+	public TemplateEngineBean getEngine() {
 		return engine;
 	}
-	public void setEngine(Class<? extends ITempelEngine> engine) {
+	public void setEngine(TemplateEngineBean engine) {
 		this.engine = engine;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends TemplateBean> T withEngine(Class<? extends ITempelEngine> engine) {
+	public <T extends TemplateBean> T withEngine(TemplateEngineBean engine) {
 		this.engine = engine;
+		return (T)this;
+	}
+
+	@Override
+	public Class<? extends ITempelEngine> getEngineClass() {
+		if(engine != null) {
+			return engine.getEngineClass();
+		}
+		return engineClass;
+	}
+	public void setEngineClass(Class<? extends ITempelEngine> engineClass) {
+		this.engineClass = engineClass;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateBean> T withEngineClass(Class<? extends ITempelEngine> engineClass) {
+		this.engineClass = engineClass;
 		return (T)this;
 	}
 
@@ -105,7 +126,10 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	protected TemplateBean fillClone(TemplateBean clone) {
 		super.fillClone(clone);
 
-		clone.engine = engine;
+		if(engine != null) {
+			clone.engine = engine.clone();
+		}
+		clone.engineClass = engineClass;
 
 		// TODO: Zweryfikować:
 		// Z punktu widzenia aktualizacji parametrów podszablonu klonowanie

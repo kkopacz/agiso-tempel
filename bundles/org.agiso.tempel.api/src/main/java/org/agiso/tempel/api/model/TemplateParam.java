@@ -19,6 +19,7 @@
 package org.agiso.tempel.api.model;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamValidator;
 
 /**
  * 
@@ -37,9 +38,25 @@ public interface TemplateParam extends Cloneable {
 	public String getName();
 
 	/**
-	 * @return Pełna nazwa klasy typu generatora. Domyślnie {@link String}.
+	 * @return Pełna nazwa klasy typu parametru. Domyślnie {@link String}.
 	 */
 	public String getType();
+
+	public TemplateParamConverter getConverter();
+
+	/**
+	 * @return Pełna nazwa klasy konwertera parametru.
+	 */
+	public Class<? extends ITemplateParamConverter<?>> getConverterClass();
+	public void setConverterClass(Class<? extends ITemplateParamConverter<?>> converterClass);
+
+	public TemplateParamValidator getValidator();
+
+	/**
+	 * @return Pełna nazwa klasy walidatora parametru.
+	 */
+	public Class<? extends ITemplateParamValidator<?>> getValidatorClass();
+	public void setValidatorClass(Class<? extends ITemplateParamValidator<?>> validatorClass);
 
 	/**
 	 * Zwraca informację, czy parametr jest oznaczony, tzn. czy jego wartość
@@ -58,12 +75,6 @@ public interface TemplateParam extends Cloneable {
 	 */
 	public String getValue();
 	public void setValue(String value);
-
-	/**
-	 * @return Pełna nazwa klasy konwertera generatora.
-	 */
-	public Class<? extends ITemplateParamConverter<?>> getConverter();
-	public void setConverter(Class<? extends ITemplateParamConverter<?>> converter);
 
 //	--------------------------------------------------------------------------
 	public TemplateParam clone();

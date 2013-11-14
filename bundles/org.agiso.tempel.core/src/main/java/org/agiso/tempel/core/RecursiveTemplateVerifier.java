@@ -66,7 +66,7 @@ public class RecursiveTemplateVerifier implements ITemplateVerifier {
 		}
 
 		// Sprawdzanie dostępności i poprawności klasy silnika generatora szablonu:
-		Class<? extends ITempelEngine> engine = template.getEngine();
+		Class<? extends ITempelEngine> engine = template.getEngineClass();
 		if(engine != null && !ITempelEngine.class.isAssignableFrom(engine)) {
 			throw new IllegalStateException("Niepoprawny typ silnika generatora szablonu '" + id + "': '" + engine + "'");
 		}

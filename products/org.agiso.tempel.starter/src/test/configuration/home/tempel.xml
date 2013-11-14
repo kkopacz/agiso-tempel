@@ -37,10 +37,9 @@
 				<value>/src/main/java</value>
 			</param>
 			<param key="package" name="Package name" />
-			<param key="packageDir">
+			<param key="packageDir" converter="org.agiso.tempel.convert.PackageToPathConverter">
 				<fixed>true</fixed>
 				<value>${package}</value>
-				<converter>org.agiso.tempel.convert.PackageToPathConverter</converter>
 			</param>
 			<param key="name" name="Class name" />
 		</params>

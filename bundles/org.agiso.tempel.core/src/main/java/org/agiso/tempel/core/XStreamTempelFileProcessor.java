@@ -29,20 +29,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.agiso.tempel.api.ITempelEngine;
+import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamValidator;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.core.model.beans.TemplateBean;
+import org.agiso.tempel.core.model.beans.TemplateEngineBean;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
+import org.agiso.tempel.core.model.beans.TemplateParamValidatorBean;
+import org.agiso.tempel.core.model.beans.TemplateParamConverterBean;
 import org.agiso.tempel.core.model.beans.TemplateReferenceBean;
 import org.agiso.tempel.core.model.beans.TemplateResourceBean;
 import org.springframework.stereotype.Component;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
+import com.thoughtworks.xstream.converters.reflection.ReflectionConverter;
+import com.thoughtworks.xstream.converters.reflection.ReflectionProvider;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.mapper.Mapper;
 
 /**
  * 
@@ -56,15 +66,25 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 	static {
 		// Konfiguracja XStream'a:
 		xStream = new XStream();
+		xStream.registerConverter(new MapEntryConverter());
+		xStream.registerConverter(new TemplateConverter(
+				xStream.getMapper(), xStream.getReflectionProvider()
+		));
+		xStream.registerConverter(new TemplateParamConverter(
+				xStream.getMapper(), xStream.getReflectionProvider()
+		));
 		xStream.alias("properties", Map.class);
+		xStream.aliasSystemAttribute("type", "class");
 		xStream.autodetectAnnotations(true);
 		xStream.processAnnotations(new Class[] {
 				TemplateBean.class,
+				TemplateEngineBean.class,
 				TemplateParamBean.class,
+				TemplateParamConverterBean.class,
+				TemplateParamValidatorBean.class,
 				TemplateReferenceBean.class,
 				TemplateResourceBean.class
 		});
-		xStream.registerConverter(new MapEntryConverter());
 	}
 
 //	--------------------------------------------------------------------------
@@ -99,40 +119,6 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 	}
 
 //	--------------------------------------------------------------------------
-	/**
-	 * 
-	 * 
-	 * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
-	 */
-	private static class MapEntryConverter implements Converter {
-		@Override
-		public boolean canConvert(@SuppressWarnings("rawtypes") Class clazz) {
-			return AbstractMap.class.isAssignableFrom(clazz);
-		}
-
-		@Override
-		public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
-			@SuppressWarnings("unchecked")
-			AbstractMap<String, String> map = (AbstractMap<String, String>)value;
-			for(Entry<String, String> entry : map.entrySet()) {
-				writer.startNode(entry.getKey().toString());
-				writer.setValue(entry.getValue().toString());
-				writer.endNode();
-			}
-		}
-
-		@Override
-		public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-			Map<String, String> map = new HashMap<String, String>();
-			while(reader.hasMoreChildren()) {
-				reader.moveDown();
-				map.put(reader.getNodeName(), reader.getValue());
-				reader.moveUp();
-			}
-			return map;
-		}
-	}
-
 //	/**
 //	 * 
 //	 * 
@@ -151,4 +137,136 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 //			return repository;
 //		}
 //	}
+}
+
+/**
+ * 
+ * 
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ */
+class MapEntryConverter implements Converter {
+	@Override
+	public boolean canConvert(@SuppressWarnings("rawtypes") Class clazz) {
+		return AbstractMap.class.isAssignableFrom(clazz);
+	}
+
+	@Override
+	public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
+		@SuppressWarnings("unchecked")
+		AbstractMap<String, String> map = (AbstractMap<String, String>)value;
+		for(Entry<String, String> entry : map.entrySet()) {
+			writer.startNode(entry.getKey().toString());
+			writer.setValue(entry.getValue().toString());
+			writer.endNode();
+		}
+	}
+
+	@Override
+	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		Map<String, String> map = new HashMap<String, String>();
+		while(reader.hasMoreChildren()) {
+			reader.moveDown();
+			map.put(reader.getNodeName(), reader.getValue());
+			reader.moveUp();
+		}
+		return map;
+	}
+}
+
+/**
+ * 
+ * 
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ */
+class TemplateConverter extends ReflectionConverter {
+	public TemplateConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+		super(mapper, reflectionProvider);
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public boolean canConvert(Class type) {
+		return type.equals(TemplateBean.class);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		Class<?> engineClass = null;
+		String engineClassName = reader.getAttribute("engine");
+		if(engineClassName != null) {
+			if(engineClassName.isEmpty()) {
+				throw new ConversionException("Empty string is invalid 'engine' value");
+			}
+			try {
+				engineClass = Class.forName(engineClassName);
+				if(!ITempelEngine.class.isAssignableFrom(engineClass)) {
+					throw new ConversionException("Invalid 'engine' class value");
+				}
+			} catch(ClassNotFoundException e) {
+				throw new ConversionException("Unknown 'engine' class", e);
+			}
+		}
+
+		TemplateBean template = (TemplateBean)super.unmarshal(reader, context);
+		template.setEngineClass((Class<? extends ITempelEngine>)engineClass);
+		return template;
+	}
+}
+/**
+ * 
+ * 
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ */
+class TemplateParamConverter extends ReflectionConverter {
+	public TemplateParamConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+		super(mapper, reflectionProvider);
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public boolean canConvert(Class type) {
+		return type.equals(TemplateParamBean.class);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		Class<?> converterClass = null;
+		String converterClassName = reader.getAttribute("converter");
+		if(converterClassName != null) {
+			if(converterClassName.isEmpty()) {
+				throw new ConversionException("Empty string is invalid 'converter' value");
+			}
+			try {
+				converterClass = Class.forName(converterClassName);
+				if(!ITemplateParamConverter.class.isAssignableFrom(converterClass)) {
+					throw new ConversionException("Invalid 'converter' class value");
+				}
+			} catch(ClassNotFoundException e) {
+				throw new ConversionException("Unknown 'converter' class", e);
+			}
+		}
+
+		Class<?> validatorClass = null;
+		String validatorClassName = reader.getAttribute("validator");
+		if(validatorClassName != null) {
+			if(validatorClassName.isEmpty()) {
+				throw new ConversionException("Empty string is invalid 'validator' value");
+			}
+			try {
+				validatorClass = Class.forName(validatorClassName);
+				if(!ITemplateParamValidator.class.isAssignableFrom(validatorClass)) {
+					throw new ConversionException("Invalid 'validator' class value");
+				}
+			} catch(ClassNotFoundException e) {
+				throw new ConversionException("Unknown 'validator' class", e);
+			}
+		}
+
+		TemplateParamBean templateParam = (TemplateParamBean)super.unmarshal(reader, context);
+		templateParam.setConverterClass((Class<? extends ITemplateParamConverter<?>>)converterClass);
+		templateParam.setValidatorClass((Class<? extends ITemplateParamValidator<?>>)converterClass);
+		return templateParam;
+	}
 }

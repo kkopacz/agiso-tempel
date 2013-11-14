@@ -14,7 +14,9 @@
 	  - Szablony wykorzystywane do testowania poprawności obsługi parametrów.
 	  - Wykorzystywane przez klasę org.agiso.tempel.TempelParamsITest.
 	  -->
-	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+	<template>
+		<engine class="org.agiso.tempel.engine.VelocityDirectoryEngine" />
+
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>paramsTestTemplate</templateId>
 		<version>1.0.0</version>

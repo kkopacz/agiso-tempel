@@ -1,8 +1,8 @@
-/* org.agiso.tempel.api.model.Template (14-09-2012)
+/* org.agiso.tempel.api.model.TemplateEngine (10-11-2013)
  * 
- * Template.java
+ * TemplateEngine.java
  * 
- * Copyright 2012 agiso.org
+ * Copyright 2013 agiso.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,40 +18,19 @@
  */
 package org.agiso.tempel.api.model;
 
-import java.util.List;
-
 import org.agiso.tempel.api.ITempelEngine;
-import org.agiso.tempel.api.ITemplateSource;
-import org.agiso.tempel.api.ITemplateSourceFactory;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface Template extends TemplateReference {
-	public TemplateEngine getEngine();
-
+public interface TemplateEngine extends Cloneable {
 	/**
 	 * @return Klasa silnika generatora.
 	 */
 	public Class<? extends ITempelEngine> getEngineClass();
 
-	/**
-	 * @return Lista szablonów wykorzystywanych przez szablon bieżący (np. w
-	 *     celu utworzenia katalogu dla pliku tworzonego na podstawie szablonu).
-	 */
-	public List<TemplateReference> getReferences();
-
 //	--------------------------------------------------------------------------
-	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory);
-
-	/**
-	 * @param source
-	 * @return
-	 */
-	public ITemplateSource getTemplateSource(String source);
-
-//	--------------------------------------------------------------------------
-	public Template clone();
+	public TemplateEngine clone();
 }

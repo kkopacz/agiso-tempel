@@ -26,6 +26,7 @@ import org.agiso.core.lang.SimpleMapStack;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamValidator;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
@@ -88,9 +89,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		// Instancjonowanie klasy silnika generatora:
 		ITempelEngine engine = null;
-		if(template.getEngine() != null) {
+		if(template.getEngineClass() != null) {
 			try {
-				engine = template.getEngine().newInstance();
+				engine = template.getEngineClass().newInstance();
 			} catch(Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -103,8 +104,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			for(TemplateParam param : template.getParams()) {
 				// Wypełnianie parametrów wewnętrznych i konwersja parametru:
 				String value = getParamValue(param, stack.peek());
-				Object object = convertParamValue(value, param.getConverter());
-
+				Object object = convertParamValue(value, param.getConverterClass());
+				validateParamValue(value, param.getValidatorClass());
 				params.put(param.getKey(), object);
 			}
 		}
@@ -165,7 +166,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 								subTemplate.getParams().add(refParam);
 							} else {
 								String value = getParamValue(refParam, stack.peek());
-								Object object = convertParamValue(value, refParam.getConverter());
+								Object object = convertParamValue(value, refParam.getConverterClass());
+								validateParamValue(value, refParam.getValidatorClass());
 								subParams.put(refParam.getKey(), object);
 							}
 						} else {
@@ -180,8 +182,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 							if(refParam.getFixed() != null) {
 								param.setFixed(refParam.getFixed());
 							}
-							if(refParam.getConverter() != null) {
-								param.setConverter(refParam.getConverter());
+							if(refParam.getConverterClass() != null) {
+								param.setConverterClass(refParam.getConverterClass());
+							}
+							if(refParam.getValidatorClass() != null) {
+								param.setValidatorClass(refParam.getValidatorClass());
 							}
 						}
 					}
@@ -297,5 +302,12 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		} catch(Exception e) {
 			return new RuntimeException(e);
 		}
+	}
+	/**
+	 * @param value
+	 * @param clazz
+	 */
+	private void validateParamValue(Object value, Class<? extends ITemplateParamValidator<?>> clazz) {
+		// TODO: Implementacja wywołania walidatora
 	}
 }
