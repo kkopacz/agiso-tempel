@@ -1,6 +1,6 @@
 /* org.agiso.tempel.TempelParamsITest (03-04-2013)
  * 
- * TempelParamsITest.java
+ * InputParamsITest.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,10 +16,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel;
+package org.agiso.tempel.tests;
 
 import java.io.File;
 
+import org.agiso.tempel.Temp;
 import org.agiso.tempel.starter.Bootstrap;
 import org.testng.annotations.Test;
 
@@ -30,9 +31,12 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class TempelParamsITest extends AbstractOutputTest {
+public class InputParamsITest extends AbstractOutputTest {
+//	--------------------------------------------------------------------------
+//	src/test/configuration/runtime/tempel.xml
+//	--------------------------------------------------------------------------
 	@Test
-	public void testTempelParams_01() throws Exception {
+	public void inputParamsTest01() throws Exception {
 		String outPath = getOutputPath(true);
 		File outDir = new File(outPath);
 		if(!outDir.exists()) {
@@ -43,7 +47,7 @@ public class TempelParamsITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(new String[] {
-				"org.agiso.tempel.tests:paramsTestTemplate:1.0.0",
+				"org.agiso.tempel.tests:InputParamsITest:inputParamsTest01",
 				"-d " + outPath,
 				"-Ddate_format=yyyy-MM-dd HH:mm:ss",
 				"-Ddate_format_short=dd/MM/yyyy",
@@ -56,6 +60,6 @@ public class TempelParamsITest extends AbstractOutputTest {
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "8d62aef1a8129630429fab32cb8efdf3".equals(md5);
+		assert "1ef4579e5f7ca5da8da5010ecb37cf2a".equals(md5);
 	}
 }

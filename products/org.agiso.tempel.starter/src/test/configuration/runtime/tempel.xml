@@ -10,16 +10,18 @@
 		<property_01>value 01 (local)</property_01>
 	</properties>
 
-	<!-- 
+
+
+	<!--
 	  - Szablony wykorzystywane do testowania poprawności obsługi parametrów.
-	  - Wykorzystywane przez klasę org.agiso.tempel.TempelParamsITest.
+	  - Wykorzystywane przez klasę org.agiso.tempel.tests.InputParamsITest.
 	  -->
 	<template>
 		<engine class="org.agiso.tempel.engine.VelocityDirectoryEngine" />
 
 		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>paramsTestTemplate</templateId>
-		<version>1.0.0</version>
+		<templateId>InputParamsITest</templateId>
+		<version>inputParamsTest01</version>
 
 		<params>
 			<param key="param_01" name="Parameter 1" />
@@ -35,14 +37,170 @@
 	</template>
 
 
+
+	<!-- 
+	  - Szablony wykorzystywane do sprawdzania różnych wariantów definiowania
+	  - szablonu w oparciu o podszablony (użycie resource, wokdir, reference).
+	  - Wykorzystywane przez klasę org.agiso.tempel.tests.TemplateDefinitionITest.
+	  -->
+	<template engine="org.agiso.tempel.engine.VelocityFileEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest01</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<resource>
+			<source>templateFile1.txt</source>
+			<target>templateFile1.txt</target>
+		</resource>
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest02</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest03</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<resource />
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest04</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<resource>
+			<target>subdir</target>
+		</resource>
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest05</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<workdir>subdir</workdir>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest06</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest07</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<workdir>subdir</workdir>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest08</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>subdir</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateDefinitionITest</templateId>
+		<version>templateDefinitionTest09</version>
+
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+				<workdir>subdir</workdir>
+			</reference>
+		</references>
+	</template>
+
+
+
 	<!-- 
 	  - Szablony wykorzystywane do sprawdzania zależności pomiędzy szablonami.
-	  - Wykorzystywane przez klasę org.agiso.tempel.TempelCoreITest.
+	  - Wykorzystywane przez klasę org.agiso.tempel.tests.TemplateReferenceITest.
 	  -->
 	<template>
 		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>javaProject</templateId>
-		<version>1.0.0</version>
+		<templateId>TemplateReferenceITest</templateId>
+		<version>templateReferenceTest01</version>
 
 		<params>
 			<param key="name" name="Project name" />
@@ -79,10 +237,11 @@
 			</reference>
 		</references>
 	</template>
+
 	<template>
 		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>javaBundleProject</templateId>
-		<version>1.0.0</version>
+		<templateId>TemplateReferenceITest</templateId>
+		<version>templateReferenceTest02</version>
 
 		<params>
 			<param key="name" name="Project name" />
@@ -101,8 +260,8 @@
 
 			<reference>
 				<groupId>org.agiso.tempel.tests</groupId>
-				<templateId>javaProject</templateId>
-				<version>1.0.0</version>
+				<templateId>TemplateReferenceITest</templateId>
+				<version>templateReferenceTest01</version>
 
 				<params>
 					<param key="name">
@@ -112,165 +271,6 @@
 				</params>
 
 				<workdir>bundles/${top.name}</workdir>
-			</reference>
-		</references>
-	</template>
-
-
-	<!-- 
-	  - Szablony wykorzystywane do sprawdzania różnych wariantów definiowania
-	  - szablonu w oparciu o podszablony (użycie resource, wokdir, reference).
-	  - Wykorzystywane przez klasę org.agiso.tempel.TempelCoreITest.
-	  -->
-	<template key="velocityFileTemplate1"
-			engine="org.agiso.tempel.engine.VelocityFileEngine">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityFileTemplate</templateId>
-		<version>1.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<resource>
-			<source>templateFile1.txt</source>
-			<target>templateFile1.txt</target>
-		</resource>
-	</template>
-
-	<template key="velocityDirTemplate1"
-			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>1.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-	</template>
-
-	<template key="velocityDirTemplate2"
-			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>2.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<resource />
-	</template>
-
-	<template key="velocityDirTemplate3"
-			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>3.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<resource>
-			<target>subdir</target>
-		</resource>
-	</template>
-
-	<template key="velocityDirTemplate4"
-			engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>4.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<workdir>subdir</workdir>
-	</template>
-
-	<template key="velocityDirTemplate5">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>5.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<references>
-			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
-
-				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
-			</reference>
-		</references>
-	</template>
-
-	<template key="velocityDirTemplate6">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>6.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<workdir>subdir</workdir>
-
-		<references>
-			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
-
-				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
-			</reference>
-		</references>
-	</template>
-
-	<template key="velocityDirTemplate7">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>7.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<references>
-			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
-
-				<resource>
-					<target>subdir</target>
-				</resource>
-			</reference>
-		</references>
-	</template>
-
-	<template key="velocityDirTemplate8">
-		<groupId>org.agiso.tempel.tests</groupId>
-		<templateId>velocityDirTemplate</templateId>
-		<version>8.0.0</version>
-
-		<params>
-			<param key="name" name="Project name" />
-		</params>
-
-		<references>
-			<reference onParentTemplates="true">
-				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
-
-				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
-				<workdir>subdir</workdir>
 			</reference>
 		</references>
 	</template>

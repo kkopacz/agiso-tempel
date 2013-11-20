@@ -1,153 +1,49 @@
-/* org.agiso.tempel.TempelCoreITest (14-09-2012)
+/* org.agiso.tempel.tests.TemplateDefinitionITest (20-11-2013)
  * 
- * TempelCoreITest.java
+ * TemplateDefinitionITest.java
  * 
- * Copyright 2012 agiso.org
+ * Copyright 2013 agiso.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-package org.agiso.tempel;
+package org.agiso.tempel.tests;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
 
+import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
 import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
 /**
- * Testy działania szablonów testowych. Wykorzystują szablony z repozytoriów
- * testowych src/test/repository/ (dla standardowych szablonów umieszczanych
- * w repozytoriach katalogowych) oraz szablony z repozytorium maven'owego
- * (dla szablonów będących zasobami w repozytoriach maven).
+ * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class TempelCoreITest extends AbstractOutputTest {
-//	@Test
-//	public void test_base_mkdir_1_0_0() throws Exception {
-//		String outPath = getOutputPath(true);
-//		Bootstrap.main(new String[] {
-//				"org.agiso.tempel.templates:base.mkdir:1.0.0",
-//				"-d " + outPath
-//		});
-//
-//		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-//		System.out.println(md5);
-//		assert "31c287aec4ff50269de4523bdfc4707b".equals(md5);
-//	}
-
-//	--------------------------------------------------------------------------
-//	src/test/configuration/application/tempel.xml
-//	--------------------------------------------------------------------------
-
-//	--------------------------------------------------------------------------
-//	src/test/configuration/home/tempel.xml
-//	--------------------------------------------------------------------------
-	/**
-	 * src/test/repository/home/
-	 * org/agiso/tempel/tests/javaClass/1.0.0
-	 */
-	@Test
-	public void testJavaClass_1_0_0() throws Exception {
-		String outPath = getOutputPath(true);
-
-		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
-		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("srcDir"), anyString(), anyString()))
-			.thenReturn("/src/main/java");
-		when(paramReader.getParamValue(eq("package"), anyString(), anyString()))
-			.thenReturn("org.agiso.package");
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
-			.thenReturn("SampleClass");
-
-		// Wywołanie Bootstrap i uruchamianie szablonu:
-		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:javaClass:1.0.0",
-				"-d " + outPath
-		});
-
-		// Weryfikacja wywołań poleceń odczytu paramtrów:
-		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("srcDir", "Source directory", "/src/main/java");
-		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Class name", null);
-		verifyNoMoreInteractions(paramReader);
-
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "afc6decadb5da14f7aa120b0adf1cb96".equals(md5);
-	}
-
+public class TemplateDefinitionITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
 //	src/test/configuration/runtime/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
-	 * Szablon grupujący org.agiso.tempel.tests:javaProject:1.0.0
-	 */
-	@Test
-	public void testJavaProject_1_0_0() throws Exception {
-		String outPath = getOutputPath(true);
-
-		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
-		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
-			.thenReturn("SampleProject");
-		when(paramReader.getParamValue(eq("package"), anyString(), anyString()))
-			.thenReturn("org.agiso.package");
-
-		// Wywołanie Bootstrap i uruchamianie szablonu:
-		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:javaProject:1.0.0",
-				"-d " + outPath
-		});
-
-		// Weryfikacja wywołań poleceń odczytu paramtrów:
-		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
-		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
-		verifyNoMoreInteractions(paramReader);
-
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "5eab6c02e2877f31805c65e7e2aeba87".equals(md5);
-	}
-
-	/**
-	 * Szablon grupujący org.agiso.tempel.tests:javaBundleProject:1.0.0
-	 */
-	@Test
-	public void testJavaBundleProject_1_0_0() throws Exception {
-		String outPath = getOutputPath(true);
-
-		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
-		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
-			.thenReturn("SampleBundleProject");
-		when(paramReader.getParamValue(eq("package"), anyString(), anyString()))
-			.thenReturn("org.agiso.package");
-
-		// Wywołanie Bootstrap i uruchamianie szablonu:
-		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:javaBundleProject:1.0.0",
-				"-d " + outPath
-		});
-
-		// Weryfikacja wywołań poleceń odczytu paramtrów:
-		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
-		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
-		verifyNoMoreInteractions(paramReader);
-
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "7adef6b68dbba75ceff3dbafc1435465".equals(md5);
-	}
-
-	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityFileTemplate/1.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest01
 	 */
 	@Test
-	public void testVelocityFileTemplate_1_0_0_old() throws Exception {
+	public void templateDefinitionTest01() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -157,7 +53,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityFileTemplate:1.0.0",	// "velocityFileTemplate1",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest01",
 				"-d " + outPath
 		});
 
@@ -172,10 +68,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/1.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest02
 	 */
 	@Test
-	public void testVelocityDirTemplate_1_0_0() throws Exception {
+	public void templateDefinitionTest02() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -185,7 +81,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:1.0.0",		// "velocityDirTemplate1",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest02",
 				"-d " + outPath
 		});
 
@@ -200,10 +96,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/2.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest03
 	 */
 	@Test
-	public void testVelocityDirTemplate_2_0_0() throws Exception {
+	public void templateDefinitionTest03() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -213,7 +109,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:2.0.0",		// "velocityDirTemplate2",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest03",
 				"-d " + outPath
 		});
 
@@ -228,10 +124,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/3.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest04
 	 */
 	@Test
-	public void testVelocityDirTemplate_3_0_0() throws Exception {
+	public void templateDefinitionTest04() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -241,7 +137,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:3.0.0",		// "velocityDirTemplate3",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest04",
 				"-d " + outPath
 		});
 
@@ -256,10 +152,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/4.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest05
 	 */
 	@Test
-	public void testVelocityDirTemplate_4_0_0() throws Exception {
+	public void templateDefinitionTest05() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -269,7 +165,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:4.0.0",		// "velocityDirTemplate4",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest05",
 				"-d " + outPath
 		});
 
@@ -284,10 +180,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/5.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest06
 	 */
 	@Test
-	public void testVelocityDirTemplate_5_0_0() throws Exception {
+	public void templateDefinitionTest06() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -297,7 +193,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:5.0.0",		// "velocityDirTemplate5",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest06",
 				"-d " + outPath
 		});
 
@@ -312,10 +208,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/6.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest07
 	 */
 	@Test
-	public void testVelocityDirTemplate_6_0_0() throws Exception {
+	public void templateDefinitionTest07() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -325,7 +221,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:6.0.0",		// "velocityDirTemplate6",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest07",
 				"-d " + outPath
 		});
 
@@ -340,10 +236,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/7.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest08
 	 */
 	@Test
-	public void testVelocityDirTemplate_7_0_0() throws Exception {
+	public void templateDefinitionTest08() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -353,7 +249,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:7.0.0",		// "velocityDirTemplate7",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest08",
 				"-d " + outPath
 		});
 
@@ -368,10 +264,10 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 	/**
 	 * src/test/repository/runtime/
-	 * org/agiso/tempel/tests/velocityDirTemplate/8.0.0
+	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest09
 	 */
 	@Test
-	public void testVelocityDirTemplate_8_0_0() throws Exception {
+	public void templateDefinitionTest09() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -381,7 +277,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:velocityDirTemplate:8.0.0",		// "velocityDirTemplate8",
+				"org.agiso.tempel.tests:TemplateDefinitionITest:templateDefinitionTest09",
 				"-d " + outPath
 		});
 
