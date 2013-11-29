@@ -274,4 +274,39 @@
 			</reference>
 		</references>
 	</template>
+
+
+
+	<!-- 
+	  - org.agiso.tempel.tests.TemplateParamConverterITest
+	  -->
+	<template engine="org.agiso.tempel.engine.VelocityFileEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateParamConverterITest</templateId>
+		<version>templateParamConverterTest01</version>
+
+		<params>
+			<param key="param_integer" type="java.lang.Integer"/>
+			<param key="param_long" type="java.lang.Long"/>
+			<param key="param_date" type="java.lang.Date">
+				<converter class="org.agiso.tempel.core.DateParamConverter">
+					<format>yyyy-MM-dd</format>
+				</converter>
+			</param>
+		</params>
+
+		<resource>
+			<source>templateFile1.txt</source>
+			<target>templateFile1.txt</target>
+		</resource>
+	</template>
+
+	<!-- 
+	  - org.agiso.tempel.tests.TemplateParamValidatorITest
+	  -->
+	<template>
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateParamValidatorITest</templateId>
+		<version>templateParamValidatorTest01</version>
+	</template>
 </tempel>

@@ -18,13 +18,10 @@
  */
 package org.agiso.tempel.core.model.beans;
 
-import org.agiso.tempel.api.ITemplateParamConverter;
-import org.agiso.tempel.api.ITemplateParamValidator;
 import org.agiso.tempel.api.model.TemplateParam;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
  * 
@@ -32,7 +29,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @XStreamAlias("param")
-public class TemplateParamBean implements TemplateParam {
+public class TemplateParamBean implements TemplateParam<TemplateParamConverterBean, TemplateParamValidatorBean> {
 	@XStreamAsAttribute
 	private String key;
 	@XStreamAsAttribute
@@ -42,17 +39,7 @@ public class TemplateParamBean implements TemplateParam {
 
 	private TemplateParamConverterBean converter;
 
-//	@XStreamAsAttribute
-//	@XStreamAlias("converter")
-	@XStreamOmitField	// XStreamTempelFileProcessor.TemplateParamConverter
-	private Class<? extends ITemplateParamConverter<?>> converterClass;
-
 	private TemplateParamValidatorBean validator;
-
-//	@XStreamAsAttribute
-//	@XStreamAlias("validator")
-	@XStreamOmitField	// XStreamTempelFileProcessor.TemplateParamConverter
-	private Class<? extends ITemplateParamValidator<?>> validatorClass;
 
 	private Boolean fixed;
 	private String value;
@@ -101,6 +88,7 @@ public class TemplateParamBean implements TemplateParam {
 	public TemplateParamConverterBean getConverter() {
 		return converter;
 	}
+	@Override
 	public void setConverter(TemplateParamConverterBean converter) {
 		this.converter = converter;
 	}
@@ -111,49 +99,16 @@ public class TemplateParamBean implements TemplateParam {
 	}
 
 	@Override
-	public Class<? extends ITemplateParamConverter<?>> getConverterClass() {
-		if(converter != null) {
-			return converter.getConverterClass();
-		}
-		return converterClass;
-	}
-	@Override
-	public void setConverterClass(Class<? extends ITemplateParamConverter<?>> converterClass) {
-		this.converterClass = converterClass;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamBean> T withConverterClass(Class<? extends ITemplateParamConverter<?>> converterClass) {
-		this.converterClass = converterClass;
-		return (T)this;
-	}
-
-	@Override
 	public TemplateParamValidatorBean getValidator() {
 		return validator;
 	}
+	@Override
 	public void setValidator(TemplateParamValidatorBean validator) {
 		this.validator = validator;
 	}
 	@SuppressWarnings("unchecked")
 	public <T extends TemplateParamBean> T withValidator(TemplateParamValidatorBean validator) {
 		this.validator = validator;
-		return (T)this;
-	}
-
-	@Override
-	public Class<? extends ITemplateParamValidator<?>> getValidatorClass() {
-		if(validator != null) {
-			return validator.getValidatorClass();
-		}
-		return validatorClass;
-	}
-	@Override
-	public void setValidatorClass(Class<? extends ITemplateParamValidator<?>> validatorClass) {
-		this.validatorClass = validatorClass;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamBean> T withValidatorClass(Class<? extends ITemplateParamValidator<?>> validatorClass) {
-		this.validatorClass = validatorClass;
 		return (T)this;
 	}
 
@@ -198,12 +153,10 @@ public class TemplateParamBean implements TemplateParam {
 		if(converter != null) {
 			clone.converter = converter.clone();
 		}
-		clone.converterClass = converterClass;
 
 		if(validator != null) {
 			clone.validator = validator.clone();
 		}
-		clone.validatorClass = validatorClass;
 
 		clone.fixed = fixed;
 		clone.value = value;

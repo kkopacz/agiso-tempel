@@ -1,6 +1,6 @@
-/* org.agiso.tempel.api.model.TemplateParamConverter (20-11-2013)
+/* org.agiso.tempel.core.DateParamConverter (28-11-2013)
  * 
- * TemplateParamConverter.java
+ * DateParamConverter.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,9 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.api.model;
+package org.agiso.tempel.core;
 
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
 
@@ -27,22 +30,26 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParamConverter extends Cloneable {
-	/**
-	 * @return Klasa konwertera
-	 */
-	public Class<? extends ITemplateParamConverter<?>> getConverterClass();
-
-	/**
-	 * @return Parametry konwertera
-	 */
-	public Map<String, String> getProperties();
-
-	/**
-	 * @return
-	 */
-	public ITemplateParamConverter<?> getInstance();
+public class DateParamConverter implements ITemplateParamConverter<Date> {
+	private DateFormat format;
 
 //	--------------------------------------------------------------------------
-	public TemplateParamConverter clone();
+	public void setFormat(String format) {
+		this.format = new SimpleDateFormat(format);
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
+	public boolean canConvert(Class<?> type) {
+		return Date.class.equals(type);
+	}
+
+	@Override
+	public Date convert(String value) {
+		try {
+			return format.parse(value);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

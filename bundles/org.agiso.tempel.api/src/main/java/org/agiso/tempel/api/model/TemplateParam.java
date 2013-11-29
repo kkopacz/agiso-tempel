@@ -18,15 +18,12 @@
  */
 package org.agiso.tempel.api.model;
 
-import org.agiso.tempel.api.ITemplateParamConverter;
-import org.agiso.tempel.api.ITemplateParamValidator;
-
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParam extends Cloneable {
+public interface TemplateParam<C extends TemplateParamConverter, V extends TemplateParamValidator> extends Cloneable {
 	/**
 	 * @return Identyfikator (klucz) parametru.
 	 */
@@ -42,21 +39,17 @@ public interface TemplateParam extends Cloneable {
 	 */
 	public String getType();
 
-	public TemplateParamConverter getConverter();
+	/**
+	 * @return Konwerter parametru.
+	 */
+	public C getConverter();
+	public void setConverter(C converter);
 
 	/**
-	 * @return Pełna nazwa klasy konwertera parametru.
+	 * @return Walidator parametru.
 	 */
-	public Class<? extends ITemplateParamConverter<?>> getConverterClass();
-	public void setConverterClass(Class<? extends ITemplateParamConverter<?>> converterClass);
-
-	public TemplateParamValidator getValidator();
-
-	/**
-	 * @return Pełna nazwa klasy walidatora parametru.
-	 */
-	public Class<? extends ITemplateParamValidator<?>> getValidatorClass();
-	public void setValidatorClass(Class<? extends ITemplateParamValidator<?>> validatorClass);
+	public V getValidator();
+	public void setValidator(V validator);
 
 	/**
 	 * Zwraca informację, czy parametr jest oznaczony, tzn. czy jego wartość
@@ -77,5 +70,5 @@ public interface TemplateParam extends Cloneable {
 	public void setValue(String value);
 
 //	--------------------------------------------------------------------------
-	public TemplateParam clone();
+	public TemplateParam<C, V> clone();
 }

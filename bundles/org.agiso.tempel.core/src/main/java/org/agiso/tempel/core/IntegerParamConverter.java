@@ -1,6 +1,6 @@
-/* org.agiso.tempel.api.model.TemplateParamConverter (20-11-2013)
+/* org.agiso.tempel.core.IntegerParamConverter (28-11-2013)
  * 
- * TemplateParamConverter.java
+ * IntegerParamConverter.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,9 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.api.model;
-
-import java.util.Map;
+package org.agiso.tempel.core;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
 
@@ -27,22 +25,14 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParamConverter extends Cloneable {
-	/**
-	 * @return Klasa konwertera
-	 */
-	public Class<? extends ITemplateParamConverter<?>> getConverterClass();
+public class IntegerParamConverter implements ITemplateParamConverter<Integer> {
+	@Override
+	public boolean canConvert(Class<?> type) {
+		return Integer.class.equals(type);
+	}
 
-	/**
-	 * @return Parametry konwertera
-	 */
-	public Map<String, String> getProperties();
-
-	/**
-	 * @return
-	 */
-	public ITemplateParamConverter<?> getInstance();
-
-//	--------------------------------------------------------------------------
-	public TemplateParamConverter clone();
+	@Override
+	public Integer convert(String value) {
+		return Integer.valueOf(value);
+	}
 }

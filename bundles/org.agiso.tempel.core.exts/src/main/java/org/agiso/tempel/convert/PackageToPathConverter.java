@@ -27,6 +27,11 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  */
 public class PackageToPathConverter implements ITemplateParamConverter<String> {
 	@Override
+	public boolean canConvert(Class<?> type) {
+		return String.class.equals(type);
+	}
+
+	@Override
 	public String convert(String value) {
 		return value == null? null : value.replace('.', '/');
 	}

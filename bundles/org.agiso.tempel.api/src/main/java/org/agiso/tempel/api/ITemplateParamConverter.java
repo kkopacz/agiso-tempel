@@ -25,6 +25,12 @@ package org.agiso.tempel.api;
  */
 public interface ITemplateParamConverter<T> {
 	/**
+	 * @param type
+	 * @return
+	 */
+	public boolean canConvert(Class<?> type);
+
+	/**
 	 * Konwertuje wartość łańcuchową parametru na typ właściwy dla implementacji
 	 * konwertera.
 	 * 

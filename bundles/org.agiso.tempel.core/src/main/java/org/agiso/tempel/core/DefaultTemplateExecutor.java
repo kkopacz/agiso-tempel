@@ -18,7 +18,9 @@
  */
 package org.agiso.tempel.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.agiso.core.lang.MapStack;
@@ -33,8 +35,10 @@ import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateParam;
+import org.agiso.tempel.api.model.TemplateParamConverter;
 import org.agiso.tempel.api.model.TemplateReference;
 import org.agiso.tempel.api.model.TemplateResource;
+import org.agiso.tempel.core.model.beans.TemplateParamConverterBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -101,11 +105,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		Map<String, Object> params = stack.peek();
 
 		if(template.getParams() != null) {
-			for(TemplateParam param : template.getParams()) {
+			for(TemplateParam<?, ?> param : template.getParams()) {
 				// Wypełnianie parametrów wewnętrznych i konwersja parametru:
 				String value = getParamValue(param, stack.peek());
-				Object object = convertParamValue(value, param.getConverterClass());
-				validateParamValue(value, param.getValidatorClass());
+				Object object = convertParamValue(value, param.getType(), param.getConverter());
+				validateParamValue(value, param.getValidator().getValidatorClass());
 				params.put(param.getKey(), object);
 			}
 		}
@@ -151,7 +155,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						String id = refParam.getKey();
 						TemplateParam param = null;
 						if(subTemplate.getParams() != null) {
-							for(TemplateParam subParam : subTemplate.getParams()) {
+							for(TemplateParam<?, ?> subParam : subTemplate.getParams()) {
 								if(subParam.getKey().equals(id)) {
 									param = subParam;
 									break;
@@ -166,8 +170,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 								subTemplate.getParams().add(refParam);
 							} else {
 								String value = getParamValue(refParam, stack.peek());
-								Object object = convertParamValue(value, refParam.getConverterClass());
-								validateParamValue(value, refParam.getValidatorClass());
+								Object object = convertParamValue(value, refParam.getType(), refParam.getConverter());
+								validateParamValue(value, refParam.getValidator().getValidatorClass());
 								subParams.put(refParam.getKey(), object);
 							}
 						} else {
@@ -182,11 +186,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 							if(refParam.getFixed() != null) {
 								param.setFixed(refParam.getFixed());
 							}
-							if(refParam.getConverterClass() != null) {
-								param.setConverterClass(refParam.getConverterClass());
+							if(refParam.getConverter() != null) {
+								param.setConverter(refParam.getConverter());
 							}
-							if(refParam.getValidatorClass() != null) {
-								param.setValidatorClass(refParam.getValidatorClass());
+							if(refParam.getValidator() != null) {
+								param.setValidator(refParam.getValidator());
 							}
 						}
 					}
@@ -287,21 +291,53 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	}
 
 //	--------------------------------------------------------------------------
+	private static final Map<String, Class<?>> paramTypes =
+			new HashMap<String, Class<?>>();
+	private static final List<ITemplateParamConverter<?>> paramConverters =
+			new ArrayList<ITemplateParamConverter<?>>();
+	static {
+		paramConverters.add(new IntegerParamConverter());
+		paramConverters.add(new LongParamConverter());
+		paramConverters.add(new DateParamConverter());
+	}
+	
 	/**
 	 * @param value
-	 * @param clazz
+	 * @param type
+	 * @param converter
 	 * @return
 	 */
-	private Object convertParamValue(String value, Class<? extends ITemplateParamConverter<?>> clazz) {
-		if(clazz == null) {
-			return value;
+	private Object convertParamValue(String value, String type, TemplateParamConverter converter) {
+		ITemplateParamConverter<?> typeConverter = null;
+		if(converter.getConverterClass() == null) {
+			if(type == null) {
+				return value;
+			} else {
+				Class<?> typeClass;
+				if(paramTypes.containsKey(type)) {
+					typeClass = paramTypes.get(type);
+				} else {
+					try {
+						typeClass = Class.forName(type);
+					} catch(ClassNotFoundException e) {
+						throw new RuntimeException(e);
+					}
+				}
+				for(ITemplateParamConverter<?> paramConverter : paramConverters) {
+					if(paramConverter.canConvert(typeClass)) {
+						typeConverter = paramConverter;
+						break;
+					}
+				}
+				if(typeConverter == null) {
+					throw new RuntimeException("Brak konwertera dla parametru typu: " + type);
+				}
+			}
+		} else {
+			typeConverter = converter.getInstance();
 		}
 
-		try {
-			return clazz.newInstance().convert(value);
-		} catch(Exception e) {
-			return new RuntimeException(e);
-		}
+		return typeConverter.convert(value);
 	}
 	/**
 	 * @param value

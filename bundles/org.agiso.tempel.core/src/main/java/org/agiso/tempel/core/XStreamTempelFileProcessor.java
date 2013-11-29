@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -67,14 +68,20 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 		// Konfiguracja XStream'a:
 		xStream = new XStream();
 		xStream.registerConverter(new MapEntryConverter());
-		xStream.registerConverter(new TemplateConverter(
+		xStream.registerConverter(new TemplateBeanAttributesConverter(
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));
-		xStream.registerConverter(new TemplateParamConverter(
+//		xStream.registerConverter(new TemplateParamBeanConverter(
+//				xStream.getMapper(), xStream.getReflectionProvider()
+//		));
+		xStream.registerConverter(new TemplateParamBeanAttributesConverter(
+				xStream.getMapper(), xStream.getReflectionProvider()
+		));
+		xStream.registerConverter(new TemplateParamConverterBeanConverter(
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));
 		xStream.alias("properties", Map.class);
-		xStream.aliasSystemAttribute("type", "class");
+		xStream.aliasSystemAttribute("paramClass", "class");
 		xStream.autodetectAnnotations(true);
 		xStream.processAnnotations(new Class[] {
 				TemplateBean.class,
@@ -174,12 +181,13 @@ class MapEntryConverter implements Converter {
 }
 
 /**
- * 
+ * Kowerter XStream obsługujący atrybut "engine" znacznika &lt;template&gt;
+ * definicji szablonu.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-class TemplateConverter extends ReflectionConverter {
-	public TemplateConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+class TemplateBeanAttributesConverter extends ReflectionConverter {
+	public TemplateBeanAttributesConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
 		super(mapper, reflectionProvider);
 	}
 
@@ -214,12 +222,13 @@ class TemplateConverter extends ReflectionConverter {
 	}
 }
 /**
- * 
+ * Kowerter XStream obsługujący atrybuty "converter" i "validator" znacznika
+ * &lt;param&gt; definicji parametru szablonu.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-class TemplateParamConverter extends ReflectionConverter {
-	public TemplateParamConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+class TemplateParamBeanAttributesConverter extends ReflectionConverter {
+	public TemplateParamBeanAttributesConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
 		super(mapper, reflectionProvider);
 	}
 
@@ -265,8 +274,77 @@ class TemplateParamConverter extends ReflectionConverter {
 		}
 
 		TemplateParamBean templateParam = (TemplateParamBean)super.unmarshal(reader, context);
-		templateParam.setConverterClass((Class<? extends ITemplateParamConverter<?>>)converterClass);
-		templateParam.setValidatorClass((Class<? extends ITemplateParamValidator<?>>)converterClass);
+		if(templateParam.getConverter() != null && converterClass != null) {
+			throw new ConversionException("Param 'converterClass' attribute and 'converter' tag defined simultaneously");
+		} else if(templateParam.getConverter() == null) {
+			templateParam.setConverter(new TemplateParamConverterBean()
+					.withConverterClass((Class<? extends ITemplateParamConverter<?>>)converterClass)
+			);
+		}
+		if(templateParam.getValidator() != null && validatorClass != null) {
+			throw new ConversionException("Param 'validatorClass' attribute and 'validator' tag defined simultaneously");
+		} else if(templateParam.getValidator() == null) {
+			templateParam.setValidator(new TemplateParamValidatorBean()
+					.withValidatorClass((Class<? extends ITemplateParamValidator<?>>)converterClass)
+			);
+		}
 		return templateParam;
+	}
+}
+
+/**
+ * Konwerter XStream obsługujący konwersję znacznika &lt;converter&gt; definicji
+ * konwertera parametru szablonu.
+ * 
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ */
+class TemplateParamConverterBeanConverter extends ReflectionConverter {
+	public TemplateParamConverterBeanConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+		super(mapper, reflectionProvider);
+	}
+
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public boolean canConvert(Class type) {
+		return type.equals(TemplateParamConverterBean.class);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		Class<?> converterClass = null;
+		String converterClassName = reader.getAttribute("class");
+		if(converterClassName == null) {
+			throw new ConversionException("Converter 'class' not defined");
+		}
+		if(converterClassName.isEmpty()) {
+			throw new ConversionException("Empty string is invalid 'class' value");
+		}
+		try {
+			converterClass = Class.forName(converterClassName);
+			if(!ITemplateParamConverter.class.isAssignableFrom(converterClass)) {
+				throw new ConversionException("Invalid converter 'class' value");
+			}
+		} catch(ClassNotFoundException e) {
+			throw new ConversionException("Unknown converter 'class'", e);
+		}
+
+		TemplateParamConverterBean templateParamConverter = new TemplateParamConverterBean();
+		templateParamConverter.setConverterClass((Class<? extends ITemplateParamConverter<?>>)converterClass);
+
+		LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
+		while(reader.hasMoreChildren()) {
+			reader.moveDown();
+			String propertyName = reader.getNodeName();
+			if(properties.containsKey(propertyName)) {
+				throw new ConversionException("Duplicated converter property '" + propertyName + "'");
+			}
+			properties.put(propertyName, reader.getValue());
+			reader.moveUp();
+		}
+		templateParamConverter.setProperties(properties);
+
+		return templateParamConverter;
 	}
 }
