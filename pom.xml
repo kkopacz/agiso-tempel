@@ -26,6 +26,8 @@
 		<module>templates</module>
 		<module>products</module>
 		<module>tests</module>
+
+		<module>pom/org.agiso.tempel.docs.pom</module>
 		<module>docs</module>
 	</modules>
 </project>

@@ -8,9 +8,9 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>org.agiso.tempel.docs.pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../../pom/org.agiso.tempel.docs.pom/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>org.agiso.tempel.docs.userguide</artifactId>
@@ -22,177 +22,12 @@
 		<plugins>
 			<plugin>
 				<groupId>com.agilejava.docbkx</groupId>
-				<artifactId>docbkx-maven-plugin</artifactId>
-				<version>2.0.14</version>
-				<executions>
-					<execution>
-						<id>tempel-userguide</id>
-						<!-- phase>pre-site</phase -->
-						<phase>compile</phase>
-						<goals>
-							<goal>generate-pdf</goal>
-							<goal>generate-html</goal>
-							<goal>generate-epub</goal>
-							<goal>generate-webhelp</goal>
-						</goals>
-						<configuration>
-							<!-- per execution configuration -->
-							<!--<draftMode>yes</draftMode>-->
-							<chunkedOutput>true</chunkedOutput>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>net.sf.docbook</groupId>
-						<artifactId>docbook-xml</artifactId>
-						<version>5.0-all</version>
-						<classifier>resources</classifier>
-						<type>zip</type>
-						<scope>runtime</scope>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<includes>userguide.xml</includes>
-					<xincludeSupported>true</xincludeSupported>
-					<chunkSectionDepth>100</chunkSectionDepth>
-
-					<paperType>A4</paperType>
-					<fop1Extensions>1</fop1Extensions>
-					<!-- foCustomization>src/docbkx-stylesheet/fo/docbook.xsl</foCustomization -->
-
-					<customizationParameters>
-						<!-- additional XSLT parameters
-						<parameter>
-							<name>key</name>
-							<value>value</value>
-						</parameter> -->
-					</customizationParameters>
-
-					<sansFontFamly>DejaVuSans</sansFontFamly>
-					<bodyFontFamily>DejaVuSerif</bodyFontFamily>
-					<titleFontFamily>DejaVuSans</titleFontFamily>
-					<monospaceFontFamily>DejaVuSansMono</monospaceFontFamily>
-
-					<fonts>
-						<font>
-							<name>DejaVuSans</name>
-							<style>normal</style>
-							<weight>normal</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSans.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSans-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSans</name>
-							<style>italic</style>
-							<weight>normal</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSans-Oblique.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSans-Oblique-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSans</name>
-							<style>normal</style>
-							<weight>bold</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSans-Bold.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSans-Bold-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSans</name>
-							<style>italic</style>
-							<weight>bold</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSans-BoldOblique.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSans-BoldOblique-metrics.xml</metricsFile>
-						</font>
-
-						<font>
-							<name>DejaVuSerif</name>
-							<style>normal</style>
-							<weight>normal</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSerif.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSerif-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSerif</name>
-							<style>italic</style>
-							<weight>normal</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSerif-Italic.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSerif-Italic-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSerif</name>
-							<style>normal</style>
-							<weight>bold</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSerif-Bold.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSerif-Bold-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSerif</name>
-							<style>italic</style>
-							<weight>bold</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSerif-BoldItalic.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSerif-BoldItalic-metrics.xml</metricsFile>
-						</font>
-
-						<font>
-							<name>DejaVuSansMono</name>
-							<style>normal</style>
-							<weight>normal</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSansMono.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSansMono-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSansMono</name>
-							<style>italic</style>
-							<weight>normal</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSansMono-Oblique.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSansMono-Oblique-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSansMono</name>
-							<style>normal</style>
-							<weight>bold</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSansMono-Bold.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSansMono-Bold-metrics.xml</metricsFile>
-						</font>
-						<font>
-							<name>DejaVuSansMono</name>
-							<style>italic</style>
-							<weight>bold</weight>
-							<embedFile>${basedir}/src/fonts/DejaVuSansMono-BoldOblique.ttf</embedFile>
-							<metricsFile>${basedir}/target/fonts/DejaVuSansMono-BoldOblique-metrics.xml</metricsFile>
-						</font>
-					</fonts>
-
-					<postProcess>
-						<copy todir="target/docbkx/html/images">
-							<fileset dir="src/docbkx/images">
-								<include name="**/*.png" />
-							</fileset>
-						</copy>
-						<copy todir="target/docbkx/webhelp/userguide/content/images">
-							<fileset dir="src/docbkx/images">
-								<include name="**/*.png" />
-							</fileset>
-						</copy>
-					</postProcess>
-				</configuration>
+				<artifactId>docbkx-fop-support</artifactId>
 			</plugin>
+
 			<plugin>
 				<groupId>com.agilejava.docbkx</groupId>
-				<artifactId>docbkx-fop-support</artifactId>
-				<version>2.0.14</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<ansi>false</ansi>
-							<sourceDirectory>${basedir}/src/fonts/</sourceDirectory>
-						</configuration>
-					</execution>
-				</executions>
+				<artifactId>docbkx-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
