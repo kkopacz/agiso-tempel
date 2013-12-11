@@ -10,6 +10,34 @@
 		<property_01>value 01 (local)</property_01>
 	</properties>
 
+	<!--
+	  - Szablony wykorzystywane do testowania poprawności obsługi i konfiguracji silników
+	  - szablonów. Wykorzystywane przez klasę org.agiso.tempel.tests.TemplateEngineITest.
+	  -->
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateEngineITest</templateId>
+		<version>templateEngineTest01</version>
+	</template>
+
+	<template>
+		<engine class="org.agiso.tempel.engine.VelocityDirectoryEngine" />
+
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateEngineITest</templateId>
+		<version>templateEngineTest02</version>
+	</template>
+
+	<template>
+		<engine class="org.agiso.tempel.engine.VelocityDirectoryEngine">
+			<!-- param1>value1</param1 -->
+			<!-- param2>value2</param2 -->
+		</engine>
+
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateEngineITest</templateId>
+		<version>templateEngineTest03</version>
+	</template>
 
 
 	<!--
@@ -308,5 +336,63 @@
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>TemplateParamValidatorITest</templateId>
 		<version>templateParamValidatorTest01</version>
+
+		<params>
+			<!-- http://symfony.com/doc/current/reference/constraints.html -->
+			<param key="param_string">
+<!--
+				<validator>
+					<notNull message="" />
+					<notBlank message="" />
+	
+					<email message="" checkMX="" checkHost="" />
+					<length min max charset minMessage maxMessage exactMessage />
+					<url message protocols />
+					<regex pattern htmlPattern match message />
+					<ip version message />
+	
+					<range min max minMessage maxMessage invalidMessage />
+	
+					<equalTo value message />
+					<notEqualTo value message />
+					<identicalTo value message />
+					<notIdenticalTo value message />
+					<lessThan value message />
+					<lessThanOrEqual value message />
+					<greaterThan value message />
+					<greaterThanOrEqual value message />
+	
+					<date message />
+					<dateTime message />
+					<time message />
+	
+					<choice choices callback multiple min max message multipleMessage minMessage maxMessage strict />
+					<collection fields allowExtraFields extraFieldsMessage allowMissingFields missingFieldsMessage />
+					<count fields allowExtraFields extraFieldsMessage allowMissingFields missingFieldsMessage />
+					<uniqueEntity fields message em repositoryMethod errorPath ignoreNull />
+					<language message />
+					<locale message />
+					<country message />
+	
+					<file maxSize mimeTypes maxSizeMessage mimeTypesMessage notFoundMessage notReadableMessage uploadIniSizeErrorMessage uploadFormSizeErrorMessage uploadErrorMessage />
+					<image mimeTypes minWidth maxWidth maxHeight minHeight maxRatio minRatio allowSquare allowLandscape allowPortrait mimeTypesMessage sizeNotDetectedMessage maxWidthMessage minWidthMessage maxHeightMessage minHeightMessage maxRatioMessage minRatioMessage allowSquareMessage allowLandscapeMessage allowPortraitMessage />
+					<!- See File for inherited options ->
+	
+					<cardScheme schemes message />
+					<currency message />
+					<luhn message />
+					<iban message />
+					<isbn isbn10 isbn13 isbn10Message isbn13Message bothIsbnMessage />
+					<issn message caseSensitive requireHyphen />
+	
+					<callback callback />
+					<expression expression message />
+					<all constraints />
+					<userPassword message />
+					<valid traverse />
+				</validator>
+-->
+			</param>
+		</params>
 	</template>
 </tempel>

@@ -43,8 +43,8 @@ public class TemplateParamValidatorITest extends AbstractOutputTest {
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-//		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
-//			.thenReturn("value 1");
+		when(paramReader.getParamValue(eq("param_string"), anyString(), anyString()))
+			.thenReturn("value 1");
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
@@ -53,9 +53,9 @@ public class TemplateParamValidatorITest extends AbstractOutputTest {
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
-//		InOrder inOrder = inOrder(paramReader);
-//		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
-//		verifyNoMoreInteractions(paramReader);
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("param_string", null, null);
+		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		System.out.println(md5);

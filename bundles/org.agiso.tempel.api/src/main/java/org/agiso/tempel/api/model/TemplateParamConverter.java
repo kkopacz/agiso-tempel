@@ -18,8 +18,6 @@
  */
 package org.agiso.tempel.api.model;
 
-import java.util.Map;
-
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
@@ -30,13 +28,10 @@ import org.agiso.tempel.api.ITemplateParamConverter;
 public interface TemplateParamConverter extends Cloneable {
 	/**
 	 * @return Klasa konwertera
+	 * 
+	 * FIXME: Metoda do usunięcia
 	 */
 	public Class<? extends ITemplateParamConverter<?>> getConverterClass();
-
-	/**
-	 * @return Parametry konwertera
-	 */
-	public Map<String, String> getProperties();
 
 	/**
 	 * @return

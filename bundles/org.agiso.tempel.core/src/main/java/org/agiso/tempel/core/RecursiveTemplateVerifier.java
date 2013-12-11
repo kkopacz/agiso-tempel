@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RecursiveTemplateVerifier implements ITemplateVerifier {
 	@Override
-	public void verifyTemplate(Template template, ITemplateProvider templateProvider) throws Exception {
+	public void verifyTemplate(Template<?> template, ITemplateProvider templateProvider) throws Exception {
 		verifyTemplate(template, new LinkedHashSet<String>());
 	}
 
@@ -49,7 +49,7 @@ public class RecursiveTemplateVerifier implements ITemplateVerifier {
 	 * @param templates Zbiór identyfikatorów szablonów gałęzi. Wykorzystywany
 	 *     do wykrywania zapętleń wywołań.
 	 */
-	private void verifyTemplate(Template template, LinkedHashSet<String> templates) {
+	private void verifyTemplate(Template<?> template, LinkedHashSet<String> templates) {
 		String id = template.getKey();
 
 		// Sprawdzanie, czy w gałęzi wywołań szablonów nie ma zapętlenia:
@@ -63,12 +63,6 @@ public class RecursiveTemplateVerifier implements ITemplateVerifier {
 			System.out.println("->" + id);
 
 			throw new IllegalStateException("Zapętlenie wywołań szablonu '" + id + "'");
-		}
-
-		// Sprawdzanie dostępności i poprawności klasy silnika generatora szablonu:
-		Class<? extends ITempelEngine> engine = template.getEngineClass();
-		if(engine != null && !ITempelEngine.class.isAssignableFrom(engine)) {
-			throw new IllegalStateException("Niepoprawny typ silnika generatora szablonu '" + id + "': '" + engine + "'");
 		}
 
 		// Szablon OK. Dodawanie do zbioru szablonów gałęzi:

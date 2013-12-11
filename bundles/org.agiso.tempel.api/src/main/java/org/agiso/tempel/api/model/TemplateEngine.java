@@ -27,9 +27,9 @@ import org.agiso.tempel.api.ITempelEngine;
  */
 public interface TemplateEngine extends Cloneable {
 	/**
-	 * @return Klasa silnika generatora.
+	 * @return
 	 */
-	public Class<? extends ITempelEngine> getEngineClass();
+	public ITempelEngine getInstance();
 
 //	--------------------------------------------------------------------------
 	public TemplateEngine clone();

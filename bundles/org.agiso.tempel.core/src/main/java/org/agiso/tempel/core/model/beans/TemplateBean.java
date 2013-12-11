@@ -21,15 +21,12 @@ package org.agiso.tempel.core.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.api.model.TemplateEngine;
 import org.agiso.tempel.api.model.TemplateReference;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
@@ -38,13 +35,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @XStreamAlias("template")
-public class TemplateBean extends TemplateReferenceBean implements Template {
+public class TemplateBean extends TemplateReferenceBean implements Template<TemplateEngineBean> {
 	private TemplateEngineBean engine;
-
-//	@XStreamAsAttribute
-//	@XStreamAlias("engine")
-	@XStreamOmitField	// XStreamTempelFileProcessor.TemplateConverter
-	private Class<? extends ITempelEngine> engineClass;
 
 	private List<TemplateReference> references;
 
@@ -67,22 +59,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 	@SuppressWarnings("unchecked")
 	public <T extends TemplateBean> T withEngine(TemplateEngineBean engine) {
 		this.engine = engine;
-		return (T)this;
-	}
-
-	@Override
-	public Class<? extends ITempelEngine> getEngineClass() {
-		if(engine != null) {
-			return engine.getEngineClass();
-		}
-		return engineClass;
-	}
-	public void setEngineClass(Class<? extends ITempelEngine> engineClass) {
-		this.engineClass = engineClass;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateBean> T withEngineClass(Class<? extends ITempelEngine> engineClass) {
-		this.engineClass = engineClass;
 		return (T)this;
 	}
 
@@ -129,7 +105,6 @@ public class TemplateBean extends TemplateReferenceBean implements Template {
 		if(engine != null) {
 			clone.engine = engine.clone();
 		}
-		clone.engineClass = engineClass;
 
 		// TODO: Zweryfikować:
 		// Z punktu widzenia aktualizacji parametrów podszablonu klonowanie

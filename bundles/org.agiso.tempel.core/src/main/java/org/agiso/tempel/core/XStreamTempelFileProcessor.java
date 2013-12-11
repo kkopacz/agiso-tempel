@@ -71,9 +71,9 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 		xStream.registerConverter(new TemplateBeanAttributesConverter(
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));
-//		xStream.registerConverter(new TemplateParamBeanConverter(
-//				xStream.getMapper(), xStream.getReflectionProvider()
-//		));
+		xStream.registerConverter(new TemplateEngineBeanConverter(
+				xStream.getMapper(), xStream.getReflectionProvider()
+		));
 		xStream.registerConverter(new TemplateParamBeanAttributesConverter(
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));
@@ -217,7 +217,14 @@ class TemplateBeanAttributesConverter extends ReflectionConverter {
 		}
 
 		TemplateBean template = (TemplateBean)super.unmarshal(reader, context);
-		template.setEngineClass((Class<? extends ITempelEngine>)engineClass);
+		if(template.getEngine() != null && engineClass != null) {
+			throw new ConversionException("Param 'engineClass' and attribute 'engine' tag defined simultaneously");
+		} else if(template.getEngine() == null) {
+			template.setEngine(new TemplateEngineBean()
+					.withEngineClass((Class<? extends ITempelEngine>)engineClass)
+			);
+		}
+
 		return template;
 	}
 }
@@ -275,14 +282,14 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 
 		TemplateParamBean templateParam = (TemplateParamBean)super.unmarshal(reader, context);
 		if(templateParam.getConverter() != null && converterClass != null) {
-			throw new ConversionException("Param 'converterClass' attribute and 'converter' tag defined simultaneously");
+			throw new ConversionException("Param 'converterClass' and attribute 'converter' tag defined simultaneously");
 		} else if(templateParam.getConverter() == null) {
 			templateParam.setConverter(new TemplateParamConverterBean()
 					.withConverterClass((Class<? extends ITemplateParamConverter<?>>)converterClass)
 			);
 		}
 		if(templateParam.getValidator() != null && validatorClass != null) {
-			throw new ConversionException("Param 'validatorClass' attribute and 'validator' tag defined simultaneously");
+			throw new ConversionException("Param 'validatorClass' and attribute 'validator' tag defined simultaneously");
 		} else if(templateParam.getValidator() == null) {
 			templateParam.setValidator(new TemplateParamValidatorBean()
 					.withValidatorClass((Class<? extends ITemplateParamValidator<?>>)converterClass)
@@ -291,6 +298,63 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 		return templateParam;
 	}
 }
+
+/**
+ * Konwerter XStream obsługujący konwersję znacznika &lt;engine&gt; definicji
+ * silnika szablonu.
+ * 
+ * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ */
+class TemplateEngineBeanConverter extends ReflectionConverter {
+	public TemplateEngineBeanConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+		super(mapper, reflectionProvider);
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public boolean canConvert(Class type) {
+		return type.equals(TemplateEngineBean.class);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		Class<?> engineClass = null;
+		String engineClassName = reader.getAttribute("class");
+		if(engineClassName == null) {
+			throw new ConversionException("Engine 'class' not defined");
+		}
+		if(engineClassName.isEmpty()) {
+			throw new ConversionException("Empty string is invalid 'class' value");
+		}
+		try {
+			engineClass = Class.forName(engineClassName);
+			if(!ITempelEngine.class.isAssignableFrom(engineClass)) {
+				throw new ConversionException("Invalid engine 'class' value");
+			}
+		} catch(ClassNotFoundException e) {
+			throw new ConversionException("Unknown engine 'class'", e);
+		}
+
+		TemplateEngineBean templateEngine = new TemplateEngineBean();
+		templateEngine.setEngineClass((Class<? extends ITempelEngine>)engineClass);
+
+		LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
+		while(reader.hasMoreChildren()) {
+			reader.moveDown();
+			String propertyName = reader.getNodeName();
+			if(properties.containsKey(propertyName)) {
+				throw new ConversionException("Duplicated engine property '" + propertyName + "'");
+			}
+			properties.put(propertyName, reader.getValue());
+			reader.moveUp();
+		}
+		templateEngine.setProperties(properties);
+
+		return templateEngine;
+	}
+}
+
 
 /**
  * Konwerter XStream obsługujący konwersję znacznika &lt;converter&gt; definicji
@@ -302,7 +366,6 @@ class TemplateParamConverterBeanConverter extends ReflectionConverter {
 	public TemplateParamConverterBeanConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
 		super(mapper, reflectionProvider);
 	}
-
 
 	@Override
 	@SuppressWarnings("rawtypes")

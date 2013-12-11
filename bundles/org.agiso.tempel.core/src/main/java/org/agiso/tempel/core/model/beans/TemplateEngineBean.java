@@ -18,11 +18,18 @@
  */
 package org.agiso.tempel.core.model.beans;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.model.TemplateEngine;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
  * 
@@ -31,12 +38,13 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  */
 @XStreamAlias("engine")
 public class TemplateEngineBean implements TemplateEngine {
-	@XStreamAsAttribute
-	@XStreamAlias("class")
+//	@XStreamAsAttribute
+//	@XStreamAlias("class")
 	private Class<? extends ITempelEngine> engineClass;
 
+	private Map<String, String> properties;
+
 //	--------------------------------------------------------------------------
-	@Override
 	public Class<? extends ITempelEngine> getEngineClass() {
 		return engineClass;
 	}
@@ -49,6 +57,61 @@ public class TemplateEngineBean implements TemplateEngine {
 		return (T)this;
 	}
 
+	public Map<String, String> getProperties() {
+		return properties;
+	}
+	public void setProperties(Map<String, String> properties) {
+		this.properties = properties;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateEngineBean> T withProperties(Map<String, String> properties) {
+		this.properties = properties;
+		return (T)this;
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
+	public ITempelEngine getInstance() {
+		if(engineClass == null) {
+			return null;
+		} else try {
+			ITempelEngine instance;
+			try {
+				// Instancjonowanie i inicjalizcja w oparciu o konstruktor inicjujący:
+				@SuppressWarnings("unchecked")
+				Constructor<ITempelEngine> constructor =
+						(Constructor<ITempelEngine>)engineClass.getConstructor(Map.class);
+				instance = constructor.newInstance(properties);
+			} catch(NoSuchMethodException nsme) {
+				// Instancjonowanie i inicjalizacja w oparciu o konstruktor bezargumentowy
+				// i publiczne setter'y Java Beans:
+				instance = engineClass.newInstance();
+
+				if(properties != null && !properties.isEmpty()) {
+					BeanInfo converterInfo = Introspector.getBeanInfo(engineClass);
+					PropertyDescriptor[] propertyDescriptors = converterInfo.getPropertyDescriptors();
+					for(String propertyName : properties.keySet()) {
+						Method writeMethod = null;
+						for(PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+							if(propertyDescriptor.getName().equals(propertyName)) {
+								writeMethod = propertyDescriptor.getWriteMethod();
+								break;
+							}
+						}
+						if(writeMethod == null) {
+							throw new RuntimeException("No public setter found for property '" + propertyName + "' "
+									+ "in converter class " + engineClass.getCanonicalName());
+						}
+						writeMethod.invoke(instance, properties.get(propertyName));
+					}
+				}
+			}
+			return instance;
+		} catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
 	public TemplateEngineBean clone() {
@@ -56,6 +119,9 @@ public class TemplateEngineBean implements TemplateEngine {
 	}
 	protected TemplateEngineBean fillClone(TemplateEngineBean clone) {
 		clone.engineClass = engineClass;
+		if(properties != null) {
+			clone.properties = new LinkedHashMap<String, String>(properties);
+		}
 
 		return clone;
 	}

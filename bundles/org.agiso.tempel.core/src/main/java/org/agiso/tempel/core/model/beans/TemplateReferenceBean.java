@@ -46,14 +46,14 @@ public class TemplateReferenceBean implements TemplateReference {
 	@XStreamAlias("workdir")
 	private String workDir;
 
-	private List<TemplateParam> params;
+	private List<TemplateParam<?, ?>> params;
 
 	@XStreamImplicit
 	private List<TemplateResource> resources;
 
 //	--------------------------------------------------------------------------
 	public TemplateReferenceBean() {
-		params = new ArrayList<TemplateParam>();
+		params = new ArrayList<TemplateParam<?, ?>>();
 		resources = new ArrayList<TemplateResource>();
 	}
 
@@ -122,21 +122,21 @@ public class TemplateReferenceBean implements TemplateReference {
 	}
 
 	@Override
-	public List<TemplateParam> getParams() {
+	public List<TemplateParam<?, ?>> getParams() {
 		return params;
 	}
-	public void setParams(List<TemplateParam> params) {
+	public void setParams(List<TemplateParam<?, ?>> params) {
 		this.params = params;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends TemplateReferenceBean> T withParams(List<TemplateParam> params) {
+	public <T extends TemplateReferenceBean> T withParams(List<TemplateParam<?, ?>> params) {
 		this.params = params;
 		return (T)this;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends TemplateReferenceBean> T withParams(TemplateParam[] params) {
-		this.params = new ArrayList<TemplateParam>(params.length);
-		for(TemplateParam param : params) {
+	public <T extends TemplateReferenceBean> T withParams(TemplateParam<?, ?>[] params) {
+		this.params = new ArrayList<TemplateParam<?, ?>>(params.length);
+		for(TemplateParam<?, ?> param : params) {
 			this.params.add(param);
 		}
 		return (T)this;
@@ -178,8 +178,8 @@ public class TemplateReferenceBean implements TemplateReference {
 		clone.workDir = workDir;
 
 		if(params != null) {
-			clone.params = new ArrayList<TemplateParam>(params.size());
-			for(TemplateParam param : params) {
+			clone.params = new ArrayList<TemplateParam<?, ?>>(params.size());
+			for(TemplateParam<?, ?> param : params) {
 				clone.params.add(param.clone());
 			}
 		}

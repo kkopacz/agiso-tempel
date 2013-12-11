@@ -69,16 +69,15 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		assert "6d29fc434271b7b3e19c189138a07743".equals(md5);
 	}
 
-
-	public static class TestParamConverter implements ITemplateParamConverter<String> {
-		@Override
-		public boolean canConvert(Class<?> type) {
-			return false;
-		}
-	
-		@Override
-		public String convert(String value) {
-			return value;
-		}
-	}
+//	public static class TestParamConverter implements ITemplateParamConverter<String> {
+//		@Override
+//		public boolean canConvert(Class<?> type) {
+//			return false;
+//		}
+//	
+//		@Override
+//		public String convert(String value) {
+//			return value;
+//		}
+//	}
 }

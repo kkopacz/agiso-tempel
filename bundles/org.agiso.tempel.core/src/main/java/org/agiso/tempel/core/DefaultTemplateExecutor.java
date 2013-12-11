@@ -38,7 +38,6 @@ import org.agiso.tempel.api.model.TemplateParam;
 import org.agiso.tempel.api.model.TemplateParamConverter;
 import org.agiso.tempel.api.model.TemplateReference;
 import org.agiso.tempel.api.model.TemplateResource;
-import org.agiso.tempel.core.model.beans.TemplateParamConverterBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -73,14 +72,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param templates Mapa wszystkich dostępnych szablonów.
 	 */
 	@Override
-	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> properties) {
+	public void executeTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, Map<String, Object> properties) {
 		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
 
 		stack.push(new HashMap<String, Object>(properties));
 		executeTemplate(workDir, template, templateProvider, stack, properties, "");
 		stack.pop();
 	}
-	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
+	public void executeTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -93,13 +92,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		// Instancjonowanie klasy silnika generatora:
 		ITempelEngine engine = null;
-		if(template.getEngineClass() != null) {
+//		if(template.getEngine() != null) {
 			try {
-				engine = template.getEngineClass().newInstance();
+				engine = template.getEngine().getInstance();
 			} catch(Exception e) {
 				throw new RuntimeException(e);
 			}
-		}
+//		}
 
 		// Wczytywanie parametrów wejściowych ze standardowego wejścia:
 		Map<String, Object> params = stack.peek();
@@ -130,7 +129,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					key = gId + ":" + tId + ":" + ver;
 				}
 
-				Template subTemplate = templateProvider.get(key, gId, tId, ver);
+				Template<?> subTemplate = templateProvider.get(key, gId, tId, ver);
 				if(subTemplate == null) {
 					throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + "' szablonu '" + template.getKey() + "'" );
 				}
@@ -280,7 +279,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param resource
 	 * @param params
 	 */
-	private void doEngineRun(ITempelEngine engine, Template template, String source, String workDir, String target, MapStack<String, Object> stack) {
+	private void doEngineRun(ITempelEngine engine, Template<?> template, String source, String workDir, String target, MapStack<String, Object> stack) {
 		if(Temp.StringUtils_isEmpty(target)) {
 			target = workDir + "/";
 		} else {

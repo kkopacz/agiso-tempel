@@ -20,7 +20,6 @@ package org.agiso.tempel.api.model;
 
 import java.util.List;
 
-import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 
@@ -29,13 +28,8 @@ import org.agiso.tempel.api.ITemplateSourceFactory;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface Template extends TemplateReference {
-	public TemplateEngine getEngine();
-
-	/**
-	 * @return Klasa silnika generatora.
-	 */
-	public Class<? extends ITempelEngine> getEngineClass();
+public interface Template<E extends TemplateEngine> extends TemplateReference {
+	public E getEngine();
 
 	/**
 	 * @return Lista szablonów wykorzystywanych przez szablon bieżący (np. w
@@ -53,5 +47,5 @@ public interface Template extends TemplateReference {
 	public ITemplateSource getTemplateSource(String source);
 
 //	--------------------------------------------------------------------------
-	public Template clone();
+	public Template<E> clone();
 }

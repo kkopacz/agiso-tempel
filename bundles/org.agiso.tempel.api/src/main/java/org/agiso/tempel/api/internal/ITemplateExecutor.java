@@ -42,5 +42,5 @@ public interface ITemplateExecutor {
 	 */
 	public void setParamReader(IParamReader paramReader);
 
-	public void executeTemplate(String workDir, Template template, ITemplateProvider templateProvider, Map<String, Object> properties) throws Exception;
+	public void executeTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, Map<String, Object> properties) throws Exception;
 }

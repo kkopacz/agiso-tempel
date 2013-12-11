@@ -23,11 +23,11 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.api.model.TemplateParamConverter;
-import org.apache.velocity.util.introspection.IntrospectionUtils;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -58,7 +58,6 @@ public class TemplateParamConverterBean implements TemplateParamConverter {
 		return (T)this;
 	}
 
-	@Override
 	public Map<String, String> getProperties() {
 		return properties;
 	}
@@ -119,6 +118,9 @@ public class TemplateParamConverterBean implements TemplateParamConverter {
 	}
 	protected TemplateParamConverterBean fillClone(TemplateParamConverterBean clone) {
 		clone.converterClass = converterClass;
+		if(properties != null) {
+			clone.properties = new LinkedHashMap<String, String>(properties);
+		}
 
 		return clone;
 	}
