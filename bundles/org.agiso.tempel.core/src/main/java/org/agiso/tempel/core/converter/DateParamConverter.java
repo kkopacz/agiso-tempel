@@ -1,6 +1,6 @@
-/* org.agiso.tempel.core.IntegerParamConverter (28-11-2013)
+/* org.agiso.tempel.core.DateParamConverter (28-11-2013)
  * 
- * IntegerParamConverter.java
+ * DateParamConverter.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,7 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.converter;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
 
@@ -25,14 +30,26 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class IntegerParamConverter implements ITemplateParamConverter<Integer> {
+public class DateParamConverter implements ITemplateParamConverter<Date> {
+	private DateFormat format;
+
+//	--------------------------------------------------------------------------
+	public void setFormat(String format) {
+		this.format = new SimpleDateFormat(format);
+	}
+
+//	--------------------------------------------------------------------------
 	@Override
 	public boolean canConvert(Class<?> type) {
-		return Integer.class.equals(type);
+		return Date.class.equals(type);
 	}
 
 	@Override
-	public Integer convert(String value) {
-		return Integer.valueOf(value);
+	public Date convert(String value) {
+		try {
+			return format.parse(value);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

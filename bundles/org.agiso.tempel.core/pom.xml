@@ -33,7 +33,7 @@
 		</dependency>
 
 		<!-- XStream.
-		  - Dla org.agiso.tempel.core.XStreamTempelFileProcessor'a
+		  - Dla org.agiso.tempel.core.processor.xstream.XStreamTempelFileProcessor'a
 		  -->
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>

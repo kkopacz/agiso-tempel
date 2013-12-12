@@ -44,7 +44,7 @@ public class TemplateParamValidatorITest extends AbstractOutputTest {
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
 		when(paramReader.getParamValue(eq("param_string"), anyString(), anyString()))
-			.thenReturn("value 1");
+			.thenReturn("value_string");
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {

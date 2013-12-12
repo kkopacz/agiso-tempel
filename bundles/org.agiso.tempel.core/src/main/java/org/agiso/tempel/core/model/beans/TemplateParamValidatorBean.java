@@ -22,7 +22,6 @@ import org.agiso.tempel.api.ITemplateParamValidator;
 import org.agiso.tempel.api.model.TemplateParamValidator;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
  * 
@@ -30,33 +29,21 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @XStreamAlias("validator")
-public class TemplateParamValidatorBean implements TemplateParamValidator {
-	@XStreamAsAttribute
-	@XStreamAlias("class")
-	private Class<? extends ITemplateParamValidator<?>> validatorClass;
-
-//	--------------------------------------------------------------------------
-	@Override
-	public Class<? extends ITemplateParamValidator<?>> getValidatorClass() {
-		return validatorClass;
+public class TemplateParamValidatorBean extends AbstractBeanInitializer<ITemplateParamValidator<?>>
+		implements TemplateParamValidator {
+	public Class<ITemplateParamValidator<?>> getValidatorClass() {
+		return getBeanClass();
 	}
-	public void setValidatorClass(Class<? extends ITemplateParamValidator<?>> validatorClass) {
-		this.validatorClass = validatorClass;
+	public void setValidatorClass(Class<ITemplateParamValidator<?>> validatorClass) {
+		setBeanClass(validatorClass);
 	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamValidatorBean> T withValidatorClass(Class<? extends ITemplateParamValidator<?>> validatorClass) {
-		this.validatorClass = validatorClass;
-		return (T)this;
+	public <T extends TemplateParamValidatorBean> T withValidatorClass(Class<ITemplateParamValidator<?>> validatorClass) {
+		return withBeanClass(validatorClass);
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
 	public TemplateParamValidatorBean clone() {
 		return fillClone(new TemplateParamValidatorBean());
-	}
-	protected TemplateParamValidatorBean fillClone(TemplateParamValidatorBean clone) {
-		clone.validatorClass = validatorClass;
-
-		return clone;
 	}
 }

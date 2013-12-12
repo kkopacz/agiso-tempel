@@ -317,7 +317,7 @@
 			<param key="param_integer" type="java.lang.Integer"/>
 			<param key="param_long" type="java.lang.Long"/>
 			<param key="param_date" type="java.lang.Date">
-				<converter class="org.agiso.tempel.core.DateParamConverter">
+				<converter class="org.agiso.tempel.core.converter.DateParamConverter">
 					<format>yyyy-MM-dd</format>
 				</converter>
 			</param>
@@ -338,12 +338,14 @@
 		<version>templateParamValidatorTest01</version>
 
 		<params>
-			<!-- http://symfony.com/doc/current/reference/constraints.html -->
 			<param key="param_string">
-<!--
 				<validator>
-					<notNull message="" />
-					<notBlank message="" />
+					<!-- http://symfony.com/doc/current/reference/constraints.html -->
+
+					<notNull message="param_string can not be null" />
+					<notBlank message="param_string can not be blank" />
+<!--
+
 	
 					<email message="" checkMX="" checkHost="" />
 					<length min max charset minMessage maxMessage exactMessage />
@@ -390,8 +392,8 @@
 					<all constraints />
 					<userPassword message />
 					<valid traverse />
-				</validator>
 -->
+				</validator>
 			</param>
 		</params>
 	</template>

@@ -36,8 +36,12 @@ import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateParam;
 import org.agiso.tempel.api.model.TemplateParamConverter;
+import org.agiso.tempel.api.model.TemplateParamValidator;
 import org.agiso.tempel.api.model.TemplateReference;
 import org.agiso.tempel.api.model.TemplateResource;
+import org.agiso.tempel.core.converter.DateParamConverter;
+import org.agiso.tempel.core.converter.IntegerParamConverter;
+import org.agiso.tempel.core.converter.LongParamConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -108,7 +112,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				// Wypełnianie parametrów wewnętrznych i konwersja parametru:
 				String value = getParamValue(param, stack.peek());
 				Object object = convertParamValue(value, param.getType(), param.getConverter());
-				validateParamValue(value, param.getValidator().getValidatorClass());
+				validateParamValue(value, param.getValidator());
 				params.put(param.getKey(), object);
 			}
 		}
@@ -170,7 +174,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 							} else {
 								String value = getParamValue(refParam, stack.peek());
 								Object object = convertParamValue(value, refParam.getType(), refParam.getConverter());
-								validateParamValue(value, refParam.getValidator().getValidatorClass());
+								validateParamValue(value, refParam.getValidator());
 								subParams.put(refParam.getKey(), object);
 							}
 						} else {
@@ -307,8 +311,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @return
 	 */
 	private Object convertParamValue(String value, String type, TemplateParamConverter converter) {
-		ITemplateParamConverter<?> typeConverter = null;
-		if(converter.getConverterClass() == null) {
+		ITemplateParamConverter<?> typeConverter = converter.getInstance();
+		if(typeConverter == null) {
 			if(type == null) {
 				return value;
 			} else {
@@ -332,17 +336,19 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					throw new RuntimeException("Brak konwertera dla parametru typu: " + type);
 				}
 			}
-		} else {
-			typeConverter = converter.getInstance();
 		}
 
 		return typeConverter.convert(value);
 	}
 	/**
 	 * @param value
-	 * @param clazz
+	 * @param validator
 	 */
-	private void validateParamValue(Object value, Class<? extends ITemplateParamValidator<?>> clazz) {
-		// TODO: Implementacja wywołania walidatora
+	@SuppressWarnings("unchecked")
+	private void validateParamValue(Object value, TemplateParamValidator validator) {
+		ITemplateParamValidator<?> valueValidator = validator.getInstance();
+		if(valueValidator != null) {
+			((ITemplateParamValidator<Object>)valueValidator).validate(value);
+		}
 	}
 }

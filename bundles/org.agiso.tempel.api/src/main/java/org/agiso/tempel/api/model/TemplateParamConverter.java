@@ -27,13 +27,6 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  */
 public interface TemplateParamConverter extends Cloneable {
 	/**
-	 * @return Klasa konwertera
-	 * 
-	 * FIXME: Metoda do usunięcia
-	 */
-	public Class<? extends ITemplateParamConverter<?>> getConverterClass();
-
-	/**
 	 * @return
 	 */
 	public ITemplateParamConverter<?> getInstance();

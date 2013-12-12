@@ -1,6 +1,6 @@
-/* org.agiso.tempel.core.LongParamConverter (28-11-2013)
+/* org.agiso.tempel.core.IntegerParamConverter (28-11-2013)
  * 
- * LongParamConverter.java
+ * IntegerParamConverter.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.core;
+package org.agiso.tempel.core.converter;
 
 import org.agiso.tempel.api.ITemplateParamConverter;
 
@@ -25,14 +25,14 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class LongParamConverter implements ITemplateParamConverter<Long> {
+public class IntegerParamConverter implements ITemplateParamConverter<Integer> {
 	@Override
 	public boolean canConvert(Class<?> type) {
-		return Long.class.equals(type);
+		return Integer.class.equals(type);
 	}
 
 	@Override
-	public Long convert(String value) {
-		return Long.valueOf(value);
+	public Integer convert(String value) {
+		return Integer.valueOf(value);
 	}
 }

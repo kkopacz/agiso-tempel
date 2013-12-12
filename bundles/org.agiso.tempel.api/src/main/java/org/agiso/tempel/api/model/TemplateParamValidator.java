@@ -26,7 +26,10 @@ import org.agiso.tempel.api.ITemplateParamValidator;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface TemplateParamValidator extends Cloneable {
-	public Class<? extends ITemplateParamValidator<?>> getValidatorClass();
+	/**
+	 * @return
+	 */
+	public ITemplateParamValidator<?> getInstance();
 
 //	--------------------------------------------------------------------------
 	public TemplateParamValidator clone();
