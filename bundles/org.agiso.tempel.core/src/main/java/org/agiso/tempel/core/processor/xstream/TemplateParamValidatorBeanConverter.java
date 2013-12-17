@@ -18,7 +18,6 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
-import org.agiso.tempel.api.ITemplateParamValidator;
 import org.agiso.tempel.core.model.beans.TemplateParamValidatorBean;
 import org.agiso.tempel.core.validator.DefaultParamValidator;
 
@@ -46,28 +45,18 @@ class TemplateParamValidatorBeanConverter extends AbstractConfigurableConverter 
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		Class<?> validatorClass = null;
 		String validatorClassName = reader.getAttribute("class");
 		if(validatorClassName == null) {
-			validatorClass = DefaultParamValidator.class;
+			validatorClassName = DefaultParamValidator.class.getName();
 		} else {
 			if(validatorClassName.isEmpty()) {
 				throw new ConversionException("Empty string is invalid 'class' value");
 			}
-			try {
-				validatorClass = Class.forName(validatorClassName);
-				if(!ITemplateParamValidator.class.isAssignableFrom(validatorClass)) {
-					throw new ConversionException("Invalid validator 'class' value");
-				}
-			} catch(ClassNotFoundException e) {
-				throw new ConversionException("Unknown validator 'class'", e);
-			}
 		}
 
 		TemplateParamValidatorBean templateParamValidator = new TemplateParamValidatorBean();
-		templateParamValidator.setValidatorClass((Class<ITemplateParamValidator<?>>)validatorClass);
+		templateParamValidator.setValidatorClassName(validatorClassName);
 		templateParamValidator.setProperties(readProperties(reader));
 		return templateParamValidator;
 	}

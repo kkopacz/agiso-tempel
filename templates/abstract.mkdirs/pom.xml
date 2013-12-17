@@ -23,8 +23,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
-			<scope>test</scope>
+			<artifactId>org.agiso.tempel.api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

@@ -18,6 +18,8 @@
  */
 package org.agiso.tempel.api.model;
 
+import java.util.Set;
+
 import org.agiso.tempel.api.ITempelEngine;
 
 /**
@@ -29,7 +31,7 @@ public interface TemplateEngine extends Cloneable {
 	/**
 	 * @return
 	 */
-	public ITempelEngine getInstance();
+	public ITempelEngine getInstance(Set<String> classPath);
 
 //	--------------------------------------------------------------------------
 	public TemplateEngine clone();

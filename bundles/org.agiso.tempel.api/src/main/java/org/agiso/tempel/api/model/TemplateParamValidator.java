@@ -18,6 +18,8 @@
  */
 package org.agiso.tempel.api.model;
 
+import java.util.Set;
+
 import org.agiso.tempel.api.ITemplateParamValidator;
 
 /**
@@ -29,7 +31,7 @@ public interface TemplateParamValidator extends Cloneable {
 	/**
 	 * @return
 	 */
-	public ITemplateParamValidator<?> getInstance();
+	public ITemplateParamValidator<?> getInstance(Set<String> classPath);
 
 //	--------------------------------------------------------------------------
 	public TemplateParamValidator clone();

@@ -22,10 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
@@ -94,7 +92,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 	}
 
 	@Override
-	public Template get(String key, String groupId, String templateId, String version) {
+	public Template<?> get(String key, String groupId, String templateId, String version) {
 		for(ITemplateProviderElement provider : elements) {
 			if(provider.isActive() && provider.contains(key, groupId, templateId, version)) {
 				return provider.get(key, groupId, templateId, version);

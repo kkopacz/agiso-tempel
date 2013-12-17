@@ -21,16 +21,5 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 </project>

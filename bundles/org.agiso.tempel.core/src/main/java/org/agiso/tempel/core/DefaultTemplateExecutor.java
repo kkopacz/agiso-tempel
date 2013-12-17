@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.agiso.core.lang.MapStack;
 import org.agiso.core.lang.SimpleMapStack;
@@ -98,7 +99,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		ITempelEngine engine = null;
 //		if(template.getEngine() != null) {
 			try {
-				engine = template.getEngine().getInstance();
+				engine = template.getEngine().getInstance(template.getTemplateClassPath());
 			} catch(Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -111,8 +112,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			for(TemplateParam<?, ?> param : template.getParams()) {
 				// Wypełnianie parametrów wewnętrznych i konwersja parametru:
 				String value = getParamValue(param, stack.peek());
-				Object object = convertParamValue(value, param.getType(), param.getConverter());
-				validateParamValue(value, param.getValidator());
+				Object object = convertParamValue(value, param.getType(), param.getConverter(), template.getTemplateClassPath());
+				validateParamValue(value, param.getValidator(), template.getTemplateClassPath());
 				params.put(param.getKey(), object);
 			}
 		}
@@ -173,8 +174,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 								subTemplate.getParams().add(refParam);
 							} else {
 								String value = getParamValue(refParam, stack.peek());
-								Object object = convertParamValue(value, refParam.getType(), refParam.getConverter());
-								validateParamValue(value, refParam.getValidator());
+								Object object = convertParamValue(value, refParam.getType(), refParam.getConverter(), template.getTemplateClassPath());
+								validateParamValue(value, refParam.getValidator(), template.getTemplateClassPath());
 								subParams.put(refParam.getKey(), object);
 							}
 						} else {
@@ -310,8 +311,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param converter
 	 * @return
 	 */
-	private Object convertParamValue(String value, String type, TemplateParamConverter converter) {
-		ITemplateParamConverter<?> typeConverter = converter.getInstance();
+	private Object convertParamValue(String value, String type, TemplateParamConverter converter, Set<String> classPath) {
+		ITemplateParamConverter<?> typeConverter = converter.getInstance(classPath);
 		if(typeConverter == null) {
 			if(type == null) {
 				return value;
@@ -345,8 +346,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param validator
 	 */
 	@SuppressWarnings("unchecked")
-	private void validateParamValue(Object value, TemplateParamValidator validator) {
-		ITemplateParamValidator<?> valueValidator = validator.getInstance();
+	private void validateParamValue(Object value, TemplateParamValidator validator, Set<String> classPath) {
+		ITemplateParamValidator<?> valueValidator = validator.getInstance(classPath);
 		if(valueValidator != null) {
 			((ITemplateParamValidator<Object>)valueValidator).validate(value);
 		}

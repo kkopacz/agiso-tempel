@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
@@ -93,7 +94,10 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 						MvnCacheEntry cacheEntry = new MvnCacheEntry();
 						cacheEntry.definition = Temp.ConvertUtils_convertStreamToString(is);
 						cacheEntry.path = file.getCanonicalPath();
-						cacheEntry.classpath = files;
+						cacheEntry.classpath = new HashSet<String>();
+						for(File classpathFile : files) {
+							cacheEntry.classpath.add(classpathFile.getCanonicalPath());
+						}
 
 						return cacheEntry;
 					} finally {
@@ -121,7 +125,7 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 
 //	--------------------------------------------------------------------------
 	@Override
-	public ITemplateSource createTemplateSource(Template template, String source) {
+	public ITemplateSource createTemplateSource(Template<?> template, String source) {
 		try {
 			return new JarTemplateSource(getTemplatePath(template), source);
 		} catch(IOException e) {
@@ -129,11 +133,10 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 		}
 	}
 
-	protected abstract String getTemplatePath(Template template);
+	protected abstract String getTemplatePath(Template<?> template);
 
 //	--------------------------------------------------------------------------
 	public static class MvnCacheEntry extends CacheEntry {
 		public String path;
-		public List<File> classpath;
 	}
 }

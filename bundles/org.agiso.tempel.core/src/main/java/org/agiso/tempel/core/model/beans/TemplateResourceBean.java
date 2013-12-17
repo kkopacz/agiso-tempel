@@ -35,7 +35,7 @@ public class TemplateResourceBean implements TemplateResource {
 	private String target;
 
 	@XStreamOmitField
-	private Template parentTemplateReference;
+	private Template<?> parentTemplateReference;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -65,11 +65,11 @@ public class TemplateResourceBean implements TemplateResource {
 	}
 
 	@Override
-	public Template getParentTemplateReference() {
+	public Template<?> getParentTemplateReference() {
 		return parentTemplateReference;
 	}
 	@Override
-	public void setParentTemplateReference(Template parentTemplateReference) {
+	public void setParentTemplateReference(Template<?> parentTemplateReference) {
 		this.parentTemplateReference = parentTemplateReference;
 	}
 

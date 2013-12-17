@@ -19,6 +19,7 @@
 package org.agiso.tempel.api.model;
 
 import java.util.List;
+import java.util.Set;
 
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -36,6 +37,17 @@ public interface Template<E extends TemplateEngine> extends TemplateReference {
 	 *     celu utworzenia katalogu dla pliku tworzonego na podstawie szablonu).
 	 */
 	public List<TemplateReference> getReferences();
+
+	/**
+	 * @return Zbiór dodatkowych elementów ścieżki klas wymaganych do uruchomienia
+	 *     szablonu.
+	 */
+	public Set<String> getTemplateClassPath();
+
+	/**
+	 * @param entries
+	 */
+	public void extendTemplateClassPath(Set<String> entries);
 
 //	--------------------------------------------------------------------------
 	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory);

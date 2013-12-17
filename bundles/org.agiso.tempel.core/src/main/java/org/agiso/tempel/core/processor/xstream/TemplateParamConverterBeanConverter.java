@@ -18,7 +18,6 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
-import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.core.model.beans.TemplateParamConverterBean;
 
 import com.thoughtworks.xstream.converters.ConversionException;
@@ -45,9 +44,7 @@ class TemplateParamConverterBeanConverter extends AbstractConfigurableConverter 
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		Class<?> converterClass = null;
 		String converterClassName = reader.getAttribute("class");
 		if(converterClassName == null) {
 			throw new ConversionException("Converter 'class' not defined");
@@ -55,17 +52,9 @@ class TemplateParamConverterBeanConverter extends AbstractConfigurableConverter 
 		if(converterClassName.isEmpty()) {
 			throw new ConversionException("Empty string is invalid 'class' value");
 		}
-		try {
-			converterClass = Class.forName(converterClassName);
-			if(!ITemplateParamConverter.class.isAssignableFrom(converterClass)) {
-				throw new ConversionException("Invalid converter 'class' value");
-			}
-		} catch(ClassNotFoundException e) {
-			throw new ConversionException("Unknown converter 'class'", e);
-		}
 
 		TemplateParamConverterBean templateParamConverter = new TemplateParamConverterBean();
-		templateParamConverter.setConverterClass((Class<ITemplateParamConverter<?>>)converterClass);
+		templateParamConverter.setConverterClassName(converterClassName);
 		templateParamConverter.setProperties(readProperties(reader));
 		return templateParamConverter;
 	}

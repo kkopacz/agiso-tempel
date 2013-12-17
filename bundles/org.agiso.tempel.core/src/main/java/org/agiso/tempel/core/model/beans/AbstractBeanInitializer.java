@@ -23,8 +23,12 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.omg.Dynamic.Parameter;
 
@@ -34,20 +38,20 @@ import org.omg.Dynamic.Parameter;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class AbstractBeanInitializer<T> implements Cloneable {
-	protected Class<T> beanClass;
+	protected String beanClassName;
 
 	protected Collection<BeanProperty> properties;
 
 //	--------------------------------------------------------------------------
-	public Class<T> getBeanClass() {
-		return beanClass;
+	public String getBeanClassName() {
+		return beanClassName;
 	}
-	public void setBeanClass(Class<T> beanClass) {
-		this.beanClass = beanClass;
+	public void setBeanClassName(String beanClassName) {
+		this.beanClassName = beanClassName;
 	}
 	@SuppressWarnings("unchecked")
-	public <C extends AbstractBeanInitializer<T>> C withBeanClass(Class<T> beanClass) {
-		this.beanClass = beanClass;
+	public <C extends AbstractBeanInitializer<T>> C withBeanClassName(String beanClassName) {
+		this.beanClassName = beanClassName;
 		return (C)this;
 	}
 
@@ -64,12 +68,27 @@ public abstract class AbstractBeanInitializer<T> implements Cloneable {
 	}
 
 //	--------------------------------------------------------------------------
-	public T getInstance() {
-		if(beanClass == null) {
+	@SuppressWarnings("unchecked")
+	public T getInstance(Set<String> classPath) {
+		if(beanClassName == null) {
 			return null;
 		} else try {
 			T instance;
+			Class<T> beanClass = null;
 			try {
+				try {
+					ClassLoader classLoader = this.getClass().getClassLoader();
+					if(classPath != null && !classPath.isEmpty()) {
+						List<URL> urls = new ArrayList<URL>(classPath.size());
+						for(String classPathEntry : classPath) {
+							urls.add(new URL("file://" + classPathEntry));
+						}
+						classLoader = new URLClassLoader(urls.toArray(new URL[urls.size()]), classLoader);
+					}
+					beanClass = (Class<T>)Class.forName(beanClassName, false, classLoader);
+				} catch(ClassNotFoundException cnfe) {
+					throw new RuntimeException("Unknown class " + beanClassName, cnfe);
+				}
 				// Instancjonowanie i inicjalizcja w oparciu o konstruktor inicjujący:
 				Constructor<T> constructor = (Constructor<T>)beanClass.getConstructor(Collection.class);
 				instance = constructor.newInstance(properties);
@@ -118,7 +137,7 @@ public abstract class AbstractBeanInitializer<T> implements Cloneable {
 	public abstract AbstractBeanInitializer<T> clone();
 
 	protected <C extends AbstractBeanInitializer<T>> C fillClone(C clone) {
-		clone.beanClass = beanClass;
+		clone.beanClassName = beanClassName;
 
 		if(properties != null) {
 			clone.properties = new ArrayList<BeanProperty>(properties);

@@ -35,12 +35,6 @@
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.support.test</artifactId>
 			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-api</artifactId>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>

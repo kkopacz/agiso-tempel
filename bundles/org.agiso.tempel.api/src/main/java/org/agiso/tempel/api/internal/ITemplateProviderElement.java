@@ -69,5 +69,5 @@ public interface ITemplateProviderElement {
 	/**
 	 * @see org.agiso.tempel.api.internal.ITemplateProvider#get(String, String, String, String)
 	 */
-	public Template get(String key, String groupId, String templateId, String version);
+	public Template<?> get(String key, String groupId, String templateId, String version);
 }

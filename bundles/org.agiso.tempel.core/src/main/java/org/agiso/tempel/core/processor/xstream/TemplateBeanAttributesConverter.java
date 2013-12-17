@@ -18,7 +18,6 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
-import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.core.model.beans.TemplateBean;
 import org.agiso.tempel.core.model.beans.TemplateEngineBean;
 
@@ -47,33 +46,23 @@ class TemplateBeanAttributesConverter extends ReflectionConverter {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		Class<?> engineClass = null;
 		String engineClassName = reader.getAttribute("engine");
 		if(engineClassName != null) {
 			if(engineClassName.isEmpty()) {
 				throw new ConversionException("Empty string is invalid 'engine' value");
 			}
-			try {
-				engineClass = Class.forName(engineClassName);
-				if(!ITempelEngine.class.isAssignableFrom(engineClass)) {
-					throw new ConversionException("Invalid 'engine' class value");
-				}
-			} catch(ClassNotFoundException e) {
-				throw new ConversionException("Unknown 'engine' class", e);
-			}
 		}
 
 		TemplateBean template = (TemplateBean)super.unmarshal(reader, context);
-		if(template.getEngine() != null && engineClass != null) {
+		if(template.getEngine() != null && engineClassName != null) {
 			throw new ConversionException("Param 'engineClass' and attribute 'engine' tag defined simultaneously");
 		} else if(template.getEngine() == null) {
-			if(engineClass == null) {
-				engineClass = getDefaultEngineClass();
+			if(engineClassName == null) {
+				engineClassName = getDefaultEngineClassName();
 			}
 			template.setEngine(new TemplateEngineBean()
-					.withEngineClass((Class<ITempelEngine>)engineClass)
+					.withEngineClassName(engineClassName)
 			);
 		}
 
@@ -83,7 +72,7 @@ class TemplateBeanAttributesConverter extends ReflectionConverter {
 	/**
 	 * @return
 	 */
-	private Class<?> getDefaultEngineClass() {
+	private String getDefaultEngineClassName() {
 		return null;
 	}
 }

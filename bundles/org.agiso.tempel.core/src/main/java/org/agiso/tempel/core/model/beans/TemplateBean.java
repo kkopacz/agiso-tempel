@@ -19,7 +19,9 @@
 package org.agiso.tempel.core.model.beans;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -39,6 +41,9 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 	private TemplateEngineBean engine;
 
 	private List<TemplateReference> references;
+
+	@XStreamOmitField
+	private Set<String> templateClassPath;
 
 	@XStreamOmitField
 	private ITemplateSourceFactory templateSourceFactory;
@@ -83,6 +88,28 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 		return (T)this;
 	}
 
+	@Override
+	public Set<String> getTemplateClassPath() {
+		return templateClassPath;
+	}
+	public void setTemplateClassPath(Set<String> templateClassPath) {
+		this.templateClassPath = templateClassPath;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateBean> T withTemplateClassPath(Set<String> templateClassPath) {
+		this.templateClassPath = templateClassPath;
+		return (T)this;
+	}
+
+	@Override
+	public void extendTemplateClassPath(Set<String> entries) {
+		if(templateClassPath == null) {
+			templateClassPath = new HashSet<String>(entries);
+		} else {
+			templateClassPath.addAll(entries);
+		}
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
 	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory) {
@@ -117,6 +144,10 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 			for(TemplateReference reference : references) {
 				clone.references.add(reference.clone());
 			}
+		}
+
+		if(templateClassPath != null) {
+			clone.templateClassPath = new HashSet<String>(templateClassPath);
 		}
 
 		clone.templateSourceFactory = templateSourceFactory;

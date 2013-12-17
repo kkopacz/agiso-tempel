@@ -42,12 +42,17 @@
 
 		<!-- agiso.org Tempel dependencies -->
 		<tempel.version>0.0.1-SNAPSHOT</tempel.version>
+		<tempel.templates.version>1.0.0</tempel.templates.version>
 
 		<!-- Apache Commons dependencies -->
 		<commons-cli.version>1.2</commons-cli.version>
 
 		<!-- Spring Framework dependencies -->
 		<spring.version>3.2.4.RELEASE</spring.version>
+
+		<!-- ShrinkWrap dependencies -->
+		<shrinkwrap.version>1.0.1</shrinkwrap.version>
+		<shrinkwrap-resolver.version>2.0.1</shrinkwrap-resolver.version>
 
 		<!-- Maven, Aether & Wagon dependencies -->
 		<aether.version>1.13.1</aether.version>
@@ -59,8 +64,6 @@
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
 		<guava.version>13.0.1</guava.version>
-		<shrinkwrap.version>1.0.1</shrinkwrap.version>
-		<shrinkwrap-resolver.version>2.0.0</shrinkwrap-resolver.version>
 
 		<!-- Test dependencies -->
 		<testng.version>6.7</testng.version>
@@ -189,6 +192,27 @@
 				<groupId>org.agiso.tempel</groupId>
 				<artifactId>org.agiso.tempel.test</artifactId>
 				<version>${tempel.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract.mkdir</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract.mkdirs</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract.velocityFileEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract.velocityDirectoryEngine</artifactId>
+				<version>${tempel.templates.version}</version>
 			</dependency>
 
 			<!-- Apache Commons dependencies -->

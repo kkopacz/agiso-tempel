@@ -18,8 +18,6 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
-import org.agiso.tempel.api.ITemplateParamConverter;
-import org.agiso.tempel.api.ITemplateParamValidator;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
 import org.agiso.tempel.core.model.beans.TemplateParamConverterBean;
 import org.agiso.tempel.core.model.beans.TemplateParamValidatorBean;
@@ -50,59 +48,40 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		Class<?> converterClass = null;
 		String converterClassName = reader.getAttribute("converter");
 		if(converterClassName != null) {
 			if(converterClassName.isEmpty()) {
 				throw new ConversionException("Empty string is invalid 'converter' value");
 			}
-			try {
-				converterClass = Class.forName(converterClassName);
-				if(!ITemplateParamConverter.class.isAssignableFrom(converterClass)) {
-					throw new ConversionException("Invalid 'converter' class value");
-				}
-			} catch(ClassNotFoundException e) {
-				throw new ConversionException("Unknown 'converter' class", e);
-			}
 		}
 
-		Class<?> validatorClass = null;
 		String validatorClassName = reader.getAttribute("validator");
 		if(validatorClassName != null) {
 			if(validatorClassName.isEmpty()) {
 				throw new ConversionException("Empty string is invalid 'validator' value");
 			}
-			try {
-				validatorClass = Class.forName(validatorClassName);
-				if(!ITemplateParamValidator.class.isAssignableFrom(validatorClass)) {
-					throw new ConversionException("Invalid 'validator' class value");
-				}
-			} catch(ClassNotFoundException e) {
-				throw new ConversionException("Unknown 'validator' class", e);
-			}
 		}
 
 		TemplateParamBean templateParam = (TemplateParamBean)super.unmarshal(reader, context);
-		if(templateParam.getConverter() != null && converterClass != null) {
+		if(templateParam.getConverter() != null && converterClassName != null) {
 			throw new ConversionException("Param 'converterClass' and attribute 'converter' tag defined simultaneously");
 		} else if(templateParam.getConverter() == null) {
-			if(converterClass == null) {
-				converterClass = getDefaultConverterClass();
+			if(converterClassName == null) {
+				converterClassName = getDefaultConverterClassName();
 			}
 			templateParam.setConverter(new TemplateParamConverterBean()
-					.withConverterClass((Class<ITemplateParamConverter<?>>)converterClass)
+					.withConverterClassName(converterClassName)
 			);
 		}
-		if(templateParam.getValidator() != null && validatorClass != null) {
+		if(templateParam.getValidator() != null && validatorClassName != null) {
 			throw new ConversionException("Param 'validatorClass' and attribute 'validator' tag defined simultaneously");
 		} else if(templateParam.getValidator() == null) {
-			if(validatorClass == null) {
-				validatorClass = getDefaultValidatorClass();
+			if(validatorClassName == null) {
+				validatorClassName = getDefaultValidatorClassName();
 			}
 			templateParam.setValidator(new TemplateParamValidatorBean()
-					.withValidatorClass((Class<ITemplateParamValidator<?>>)validatorClass)
+					.withValidatorClassName(validatorClassName)
 			);
 		}
 		return templateParam;
@@ -111,14 +90,14 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 	/**
 	 * @return
 	 */
-	private Class<?> getDefaultValidatorClass() {
-		return DefaultParamValidator.class;
+	private String getDefaultValidatorClassName() {
+		return DefaultParamValidator.class.getName();
 	}
 
 	/**
 	 * @return
 	 */
-	private Class<?> getDefaultConverterClass() {
+	private String getDefaultConverterClassName() {
 		return null;
 	}
 }

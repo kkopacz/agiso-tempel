@@ -20,7 +20,9 @@ package org.agiso.tempel.support.file.provider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateRepository;
@@ -92,7 +94,7 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 	}
 
 	@Override
-	public Template get(String key, String groupId, String templateId, String version) {
+	public Template<?> get(String key, String groupId, String templateId, String version) {
 		return templateRepository.get(key, groupId, templateId, version);
 	}
 
@@ -113,10 +115,10 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 				tempelFileProcessor.process(usrSettingsFile, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						UsrTemplateProviderElement.this.processObject(object, templateRepository,
-								new ITemplateSourceFactory() {
+						UsrTemplateProviderElement.this.processObject(object, null,
+								templateRepository, new ITemplateSourceFactory() {
 									@Override
-									public ITemplateSource createTemplateSource(Template template, String source) {
+									public ITemplateSource createTemplateSource(Template<?> template, String source) {
 										try {
 											return new FileTemplateSource(getTemplatePath(template), source);
 										} catch(IOException e) {
@@ -141,7 +143,7 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 		}
 	}
 
-	private String getTemplatePath(Template template) {
+	private String getTemplatePath(Template<?> template) {
 		if(Temp.StringUtils_isEmpty(template.getGroupId())) {	// dopuszczone w repozytorium USER
 			// Szablony bez określonej grupy, identyfikatora i wersji mogą generować zasoby
 			// o ile nie wymagają do tego celu żadnych plików źródłowych (np. szablonów velocity).
@@ -156,5 +158,10 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
 		return path;
+	}
+
+	@Override
+	protected Set<String> getRepositoryClassPath() {
+		return Collections.emptySet();
 	}
 }

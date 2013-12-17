@@ -31,14 +31,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("validator")
 public class TemplateParamValidatorBean extends AbstractBeanInitializer<ITemplateParamValidator<?>>
 		implements TemplateParamValidator {
-	public Class<ITemplateParamValidator<?>> getValidatorClass() {
-		return getBeanClass();
+	public String getValidatorClassName() {
+		return getBeanClassName();
 	}
-	public void setValidatorClass(Class<ITemplateParamValidator<?>> validatorClass) {
-		setBeanClass(validatorClass);
+	public void setValidatorClassName(String validatorClassName) {
+		setBeanClassName(validatorClassName);
 	}
-	public <T extends TemplateParamValidatorBean> T withValidatorClass(Class<ITemplateParamValidator<?>> validatorClass) {
-		return withBeanClass(validatorClass);
+	public <T extends TemplateParamValidatorBean> T withValidatorClassName(String validatorClassName) {
+		return withBeanClassName(validatorClassName);
 	}
 
 //	--------------------------------------------------------------------------

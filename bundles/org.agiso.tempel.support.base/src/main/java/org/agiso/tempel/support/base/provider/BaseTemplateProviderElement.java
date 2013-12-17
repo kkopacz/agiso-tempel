@@ -20,6 +20,7 @@ package org.agiso.tempel.support.base.provider;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.agiso.tempel.Temp;
@@ -73,16 +74,24 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 	}
 
 	/**
-	 * Przetwarza obiekt odczytany z pliku tempel.xml
+	 * Przetwarza obiekt odczytany z pliku tempel.xml.
 	 * 
 	 * @param scope
-	 * @param object
+	 * @param tempelObject Obiekt odczytany z pliku xml. Może być mapą parametrów
+	 *     bądź definicją szablonu.
+	 * @param objectClassPath Śceżka klas szablonu odczytanego z pliku xml. Ma
+	 *     zastosowanie tylko dla szablonów odczytywanych z repozytoriów Maven
+	 *     i zawiera zależności zdefiniowane w pliku pom.xml biblioteki szablonu.
+	 * @param templateRepository Repozytorium, do którego ma być dodany szablon.
+	 * @param templateSourceFactory
+	 * 
 	 */
-	protected void processObject(/* String scope, */ Object object, ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
+	protected void processObject(/* String scope, */ Object tempelObject, Set<String> objectClassPath,
+			ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
 		// Mapa parametrów pliku tempel.xml:
-		if(object instanceof Map) {
+		if(tempelObject instanceof Map) {
 			@SuppressWarnings("unchecked")
-			Map<String, String> scopeProperties = (Map<String, String>)object;
+			Map<String, String> scopeProperties = (Map<String, String>)tempelObject;
 			for(String key : scopeProperties.keySet()) {
 				String value = scopeProperties.get(key);
 //				value = expressionEvaluator.evaluate(value, properties);
@@ -94,8 +103,15 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 		}
 
 		// Definicja szabloun z pliku tempel.xml:
-		if(object instanceof Template) {
-			Template template = (Template)object;
+		if(tempelObject instanceof Template) {
+			Template<?> template = (Template<?>)tempelObject;
+
+			// Rozbudowa ścieżki klas szablonu o elementy specyficzne dla repozytorium:
+			template.extendTemplateClassPath(getRepositoryClassPath());
+			// Rozbudowa ścieżki klas szablonu o zależności szablonu (dla repozytoriów typu Maven):
+			if(objectClassPath != null) {
+				template.extendTemplateClassPath(objectClassPath);
+			}
 
 			// Ustawianie referencji we wszystkich podszablonach:
 			if(template.getResources() != null) {
@@ -121,4 +137,9 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			return;
 		}
 	}
+
+	/**
+	 * @return
+	 */
+	protected abstract Set<String> getRepositoryClassPath();
 }

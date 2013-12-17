@@ -24,14 +24,10 @@
 			<artifactId>org.agiso.tempel.api</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
-		<!-- Apache Velocity.
-		  - Dla org.agiso.tempel.engine.VelocityFileEngine'a i VelocityDirectoryEngine'a
-		  -->
 		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<scope>compile</scope>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.core</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Inflector.
@@ -42,6 +38,25 @@
 			<artifactId>inflector</artifactId>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- Szablony abstrakcyjne. -->
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract.mkdir</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract.mkdirs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract.velocityFileEngine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract.velocityDirectoryEngine</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>

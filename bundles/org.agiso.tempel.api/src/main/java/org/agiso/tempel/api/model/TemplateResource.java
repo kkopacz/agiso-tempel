@@ -39,8 +39,8 @@ public interface TemplateResource extends Cloneable {
 	/**
 	 * @param template
 	 */
-	public void setParentTemplateReference(Template parentTemplateReference);
-	public Template getParentTemplateReference();
+	public void setParentTemplateReference(Template<?> parentTemplateReference);
+	public Template<?> getParentTemplateReference();
 
 //	--------------------------------------------------------------------------
 	public TemplateResource clone();

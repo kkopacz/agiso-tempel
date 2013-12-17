@@ -30,5 +30,5 @@ public interface ITemplateSourceFactory {
 	 * @param source
 	 * @return
 	 */
-	public ITemplateSource createTemplateSource(Template template, String source);
+	public ITemplateSource createTemplateSource(Template<?> template, String source);
 }

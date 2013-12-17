@@ -18,6 +18,8 @@
  */
 package org.agiso.tempel.api.model;
 
+import java.util.Set;
+
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
@@ -29,7 +31,7 @@ public interface TemplateParamConverter extends Cloneable {
 	/**
 	 * @return
 	 */
-	public ITemplateParamConverter<?> getInstance();
+	public ITemplateParamConverter<?> getInstance(Set<String> classPath);
 
 //	--------------------------------------------------------------------------
 	public TemplateParamConverter clone();

@@ -31,14 +31,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("converter")
 public class TemplateParamConverterBean extends AbstractBeanInitializer<ITemplateParamConverter<?>>
 		implements TemplateParamConverter {
-	public Class<? extends ITemplateParamConverter<?>> getConverterClass() {
-		return getBeanClass();
+	public String getConverterClassName() {
+		return getBeanClassName();
 	}
-	public void setConverterClass(Class<ITemplateParamConverter<?>> converterClass) {
-		setBeanClass(converterClass);
+	public void setConverterClassName(String converterClassName) {
+		setBeanClassName(converterClassName);
 	}
-	public <T extends TemplateParamConverterBean> T withConverterClass(Class<ITemplateParamConverter<?>> converterClass) {
-		return withBeanClass(converterClass);
+	public <T extends TemplateParamConverterBean> T withConverterClassName(String converterClassName) {
+		return withBeanClassName(converterClassName);
 	}
 
 //	--------------------------------------------------------------------------

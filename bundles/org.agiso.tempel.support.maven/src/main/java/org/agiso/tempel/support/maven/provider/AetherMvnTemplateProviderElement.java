@@ -20,13 +20,15 @@ package org.agiso.tempel.support.maven.provider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.model.Template;
-import org.apache.maven.repository.internal.DefaultServiceLocator;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
+import org.apache.maven.repository.internal.MavenServiceLocator;
 import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.providers.file.FileWagon;
 import org.apache.maven.wagon.providers.http.LightweightHttpWagon;
@@ -119,7 +121,12 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 	}
 
 	@Override
-	protected String getTemplatePath(Template template) {
+	protected Set<String> getRepositoryClassPath() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	protected String getTemplatePath(Template<?> template) {
 		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon MAVEN bez groupId");
 		}
@@ -134,7 +141,7 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 
 //	---------------------------------------------------------------------------
 	private static RepositorySystem newRepositorySystem() {
-		DefaultServiceLocator locator = new DefaultServiceLocator();
+		MavenServiceLocator locator = new MavenServiceLocator();
 		locator.setServices(WagonProvider.class, new ManualWagonProvider());
 		locator.addService(RepositoryConnectorFactory.class, WagonRepositoryConnectorFactory.class);
 

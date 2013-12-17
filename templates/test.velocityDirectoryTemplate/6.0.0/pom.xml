@@ -23,6 +23,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.core.exts</artifactId>
 			<scope>runtime</scope>
 		</dependency>
@@ -30,16 +35,6 @@
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.support.test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

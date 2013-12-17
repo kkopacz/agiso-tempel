@@ -31,14 +31,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("engine")
 public class TemplateEngineBean extends AbstractBeanInitializer<ITempelEngine>
 		implements TemplateEngine {
-	public Class<ITempelEngine> getEngineClass() {
-		return getBeanClass();
+	public String getEngineClassName() {
+		return getBeanClassName();
 	}
-	public void setEngineClass(Class<ITempelEngine> engineClass) {
-		setBeanClass(engineClass);
+	public void setEngineClassName(String engineClassName) {
+		setBeanClassName(engineClassName);
 	}
-	public <T extends TemplateEngineBean> T withEngineClass(Class<ITempelEngine> engineClass) {
-		return withBeanClass(engineClass);
+	public <T extends TemplateEngineBean> T withEngineClassName(String engineClassName) {
+		return withBeanClassName(engineClassName);
 	}
 
 //	--------------------------------------------------------------------------

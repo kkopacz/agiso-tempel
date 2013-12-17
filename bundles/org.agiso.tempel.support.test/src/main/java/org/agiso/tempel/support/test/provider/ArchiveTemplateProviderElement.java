@@ -20,8 +20,10 @@ package org.agiso.tempel.support.test.provider;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.agiso.tempel.Temp;
@@ -120,9 +122,14 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 		return repository.get(groupId + ":" + templateId + ":" + version);
 	}
 
+	@Override
+	protected Set<String> getRepositoryClassPath() {
+		return Collections.emptySet();
+	}
+
 //	--------------------------------------------------------------------------
 	@Override
-	public ITemplateSource createTemplateSource(Template template, String source) {
+	public ITemplateSource createTemplateSource(Template<?> template, String source) {
 		ArchiveCacheEntry cacheEntry = getCacheEntry(
 				template.getGroupId() + ":" + template.getTemplateId() + ":" + template.getVersion()
 		);

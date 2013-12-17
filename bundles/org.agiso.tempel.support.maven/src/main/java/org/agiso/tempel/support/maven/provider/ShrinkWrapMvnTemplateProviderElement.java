@@ -20,9 +20,12 @@ package org.agiso.tempel.support.maven.provider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.model.Template;
@@ -30,6 +33,8 @@ import org.apache.maven.settings.Settings;
 import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
 import org.apache.maven.settings.building.SettingsBuildingRequest;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenArtifactInfo;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenResolvedArtifact;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenSettingsBuilder;
 import org.springframework.stereotype.Component;
@@ -90,15 +95,34 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 //	--------------------------------------------------------------------------
 	@Override
 	protected List<File> resolve(String groupId, String templateId, String version) throws Exception {
-		File[] files = resolver.resolve(
-				groupId + ":" + templateId + ":" + version
-		).withoutTransitivity().asFile();
+		List<File> files = new ArrayList<File>();
 
-		return Arrays.asList(files);
+		MavenResolvedArtifact artifact = resolver.resolve(
+				groupId + ":" + templateId + ":" + version
+		).withoutTransitivity().asSingle(MavenResolvedArtifact.class);
+		files.add(artifact.asFile());
+
+		MavenArtifactInfo[] dependencies = artifact.getDependencies();
+		for(MavenArtifactInfo dependency : dependencies) {
+// TODO:			dependency.getScope();
+			File[] jars = resolver.resolve(
+					dependency.getCoordinate().toCanonicalForm()
+			).withTransitivity().asFile();
+			for(File jar : jars) {
+				files.add(jar);
+			}
+		}
+
+		return files;
 	}
 
 	@Override
-	protected String getTemplatePath(Template template) {
+	protected Set<String> getRepositoryClassPath() {
+		return Collections.emptySet();
+	}
+
+	@Override
+	protected String getTemplatePath(Template<?> template) {
 		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon SWRAP bez groupId");
 		}

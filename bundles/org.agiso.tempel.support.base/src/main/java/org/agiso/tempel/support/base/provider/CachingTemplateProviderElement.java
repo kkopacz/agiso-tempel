@@ -20,6 +20,7 @@ package org.agiso.tempel.support.base.provider;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -45,7 +46,7 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 	}
 
 	@Override
-	public Template get(String key, String groupId, String templateId, String version) {
+	public Template<?> get(String key, String groupId, String templateId, String version) {
 		if(!cache.containsKey(key)) {
 			cache.put(key, doGet(key, groupId, templateId, version));
 		}
@@ -62,8 +63,8 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 				tempelFileProcessor.process(cacheEntry.definition, new ITempelEntryProcessor() {
 					@Override
 					public void processObject(Object object) {
-						CachingTemplateProviderElement.this.processObject(
-								object, templateRepository, CachingTemplateProviderElement.this
+						CachingTemplateProviderElement.this.processObject(object, cacheEntry.classpath,
+								templateRepository, CachingTemplateProviderElement.this
 						);
 					}
 				});
@@ -89,7 +90,17 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 
 //	--------------------------------------------------------------------------
 	public static class CacheEntry {
+		/**
+		 * Definicja XML szablonu
+		 */
 		public String definition;
+		/**
+		 * Repozytorium, w którym znajduje się szablon
+		 */
 		public ITemplateRepository repository;
+		/**
+		 * Dodatkowe elementy ścieżki klas szablonu
+		 */
+		public Set<String> classpath;
 	}
 }

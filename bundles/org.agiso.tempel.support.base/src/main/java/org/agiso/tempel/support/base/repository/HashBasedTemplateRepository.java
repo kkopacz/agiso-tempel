@@ -39,25 +39,25 @@ import com.google.common.collect.Table;
 @Scope("prototype")
 public class HashBasedTemplateRepository implements ITemplateRepository {
 	// key -> template
-	private final Map<String, Template> kMap;
+	private final Map<String, Template<?>> kMap;
 
 	// groupId, templateId, version -> Template
-	private final Table<String, String, Map<String, Template>> gtvTable;
+	private final Table<String, String, Map<String, Template<?>>> gtvTable;
 
 //	--------------------------------------------------------------------------
 	public HashBasedTemplateRepository() {
-		kMap = new HashMap<String, Template>();
+		kMap = new HashMap<String, Template<?>>();
 		gtvTable = HashBasedTable.create();
 	}
 
 //	--------------------------------------------------------------------------
 	// FIXME: Kod metod 'put' 'contains' i 'get' do optymalizacji!!!
 	@Override
-	public void put(String key, String groupId, String templateId, String version, Template template) {
+	public void put(String key, String groupId, String templateId, String version, Template<?> template) {
 		if(key == null) {
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			Map<String, Template<?>> vMap = gtvTable.get(groupId, templateId);
 			if(vMap == null) {
-				vMap = new HashMap<String, Template>();
+				vMap = new HashMap<String, Template<?>>();
 				gtvTable.put(groupId, templateId, vMap);
 			} else if(vMap.containsKey(version)) {
 				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
@@ -69,9 +69,9 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 			templateId = tokenizer.nextToken();
 			version = tokenizer.nextToken();
 
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			Map<String, Template<?>> vMap = gtvTable.get(groupId, templateId);
 			if(vMap == null) {
-				vMap = new HashMap<String, Template>();
+				vMap = new HashMap<String, Template<?>>();
 				gtvTable.put(groupId, templateId, vMap);
 			} else if(vMap.containsKey(version)) {
 				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
@@ -88,7 +88,7 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
 		if(key == null) {
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			Map<String, Template<?>> vMap = gtvTable.get(groupId, templateId);
 			return vMap == null? false : vMap.containsKey(version);
 		} else if(key.indexOf(':') > 0) {
 			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
@@ -96,7 +96,7 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 			templateId = tokenizer.nextToken();
 			version = tokenizer.nextToken();
 
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			Map<String, Template<?>> vMap = gtvTable.get(groupId, templateId);
 			return vMap == null? false : vMap.containsKey(version);
 		} else {
 			return kMap.containsKey(key);
@@ -104,9 +104,9 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 	}
 
 	@Override
-	public Template get(String key, String groupId, String templateId, String version) {
+	public Template<?> get(String key, String groupId, String templateId, String version) {
 		if(key == null) {
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			Map<String, Template<?>> vMap = gtvTable.get(groupId, templateId);
 			return vMap == null? null : vMap.get(version);
 		} else if(key.indexOf(':') > 0) {
 			StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
@@ -114,7 +114,7 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 			templateId = tokenizer.nextToken();
 			version = tokenizer.nextToken();
 
-			Map<String, Template> vMap = gtvTable.get(groupId, templateId);
+			Map<String, Template<?>> vMap = gtvTable.get(groupId, templateId);
 			return vMap == null? null : vMap.get(version);
 		} else {
 			return kMap.get(key);

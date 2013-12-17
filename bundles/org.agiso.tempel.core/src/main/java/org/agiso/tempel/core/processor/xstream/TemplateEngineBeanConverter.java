@@ -18,7 +18,6 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
-import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.core.model.beans.TemplateEngineBean;
 
 import com.thoughtworks.xstream.converters.ConversionException;
@@ -45,9 +44,7 @@ class TemplateEngineBeanConverter extends AbstractConfigurableConverter {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		Class<?> engineClass = null;
 		String engineClassName = reader.getAttribute("class");
 		if(engineClassName == null) {
 			throw new ConversionException("Engine 'class' not defined");
@@ -55,17 +52,9 @@ class TemplateEngineBeanConverter extends AbstractConfigurableConverter {
 		if(engineClassName.isEmpty()) {
 			throw new ConversionException("Empty string is invalid 'class' value");
 		}
-		try {
-			engineClass = Class.forName(engineClassName);
-			if(!ITempelEngine.class.isAssignableFrom(engineClass)) {
-				throw new ConversionException("Invalid engine 'class' value");
-			}
-		} catch(ClassNotFoundException e) {
-			throw new ConversionException("Unknown engine 'class'", e);
-		}
 
 		TemplateEngineBean templateEngine = new TemplateEngineBean();
-		templateEngine.setEngineClass((Class<ITempelEngine>)engineClass);
+		templateEngine.setEngineClassName(engineClassName);
 		templateEngine.setProperties(readProperties(reader));
 		return templateEngine;
 	}
