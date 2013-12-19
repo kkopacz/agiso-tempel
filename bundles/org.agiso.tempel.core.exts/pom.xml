@@ -54,7 +54,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract.velocityFileExtendEngine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract.velocityDirectoryEngine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract.velocityDirectoryExtendEngine</artifactId>
 		</dependency>
 
 
