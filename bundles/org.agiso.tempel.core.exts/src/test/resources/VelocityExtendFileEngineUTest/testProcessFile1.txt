@@ -1,0 +1,7 @@
+testProcessFile1.vm
+$ads = 1;
+key1 = value1
+# EXTEND_LINE
+
+kolejne linie
+<decimalbox id="aa" format="###.##" />
