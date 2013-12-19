@@ -211,7 +211,17 @@
 			</dependency>
 			<dependency>
 				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract.velocityFileExtendEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
 				<artifactId>abstract.velocityDirectoryEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract.velocityDirectoryExtendEngine</artifactId>
 				<version>${tempel.templates.version}</version>
 			</dependency>
 

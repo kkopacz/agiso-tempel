@@ -72,7 +72,6 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 					try {
 						is.close();
 					} catch(Exception e) {
-						throw new RuntimeException(e);
 					}
 				}
 			}

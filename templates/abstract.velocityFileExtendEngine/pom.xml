@@ -14,10 +14,10 @@
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
-	<artifactId>abstract.velocityDirectoryEngine</artifactId>
+	<artifactId>abstract.velocityFileExtendEngine</artifactId>
 	<version>1.0.0</version>
 
-	<name>org.agiso.tempel.templates:abstract.velocityDirectoryEngine:1.0.0</name>
+	<name>org.agiso.tempel.templates:abstract.velocityFileExtendEngine:1.0.0</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<dependencies>

@@ -1,6 +1,6 @@
-/* org.agiso.tempel.engine.VelocityExtendDirectoryEngine (12-12-2013)
+/* org.agiso.tempel.engine.VelocityDirectoryExtendEngine (12-12-2013)
  * 
- * VelocityExtendDirectoryEngine.java
+ * VelocityDirectoryExtendEngine.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -31,7 +31,7 @@ import org.apache.velocity.VelocityContext;
  * 
  * @author <a href="mailto:mklin@agiso.org">Michał Klin</a>
  */
-public class VelocityExtendDirectoryEngine extends VelocityExtendFileEngine {
+public class VelocityDirectoryExtendEngine extends VelocityFileExtendEngine {
 	private static final String TEMPLATE_FILE_SUFFIX = ".vm";
 
 //	--------------------------------------------------------------------------

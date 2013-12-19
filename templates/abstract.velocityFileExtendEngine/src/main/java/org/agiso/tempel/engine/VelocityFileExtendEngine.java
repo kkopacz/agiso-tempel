@@ -1,6 +1,6 @@
-/* org.agiso.tempel.engine.VelocityExtendFileEngine (14-12-2013)
+/* org.agiso.tempel.engine.VelocityFileExtendEngine (14-12-2013)
  * 
- * VelocityExtendFileEngine.java
+ * VelocityFileExtendEngine.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -22,11 +22,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Map;
@@ -35,14 +32,13 @@ import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.texen.util.FileUtil;
 
 /**
  * Implementacja interfejsu silnika generatora wykorzystująca bibliotekę Velocity.
  * 
  * @author <a href="mailto:mklin@agiso.org">Michał Klin</a>
  */
-public class VelocityExtendFileEngine extends AbstractVelocityEngine {
+public class VelocityFileExtendEngine extends AbstractVelocityEngine {
 	@Override
 	public void run(ITemplateSource templateSource, Map<String, Object> params, String target) {
 		// Wyznaczanie ścieżki zasobu docelowego i sprawdzanie jego istnienia:
@@ -94,7 +90,7 @@ public class VelocityExtendFileEngine extends AbstractVelocityEngine {
 		// plik tymczasowy
 		String tempDir = System.getProperty("java.io.tmpdir");
 		String fileTmp = "tmp-tempel.txt";
-		String fileTmpPath = tempDir + "" + fileTmp;
+		String fileTmpPath = tempDir + "/" + fileTmp;
 
 		// plik do modyfikacjiczytany linia po lini
 		FileInputStream fstream = new FileInputStream(target);

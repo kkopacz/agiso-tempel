@@ -1,6 +1,6 @@
-/* org.agiso.tempel.engine.VelocityExtendFileEngineUTest (15-11-2012)
+/* org.agiso.tempel.engine.VelocityDirectoryExtendEngineUTest (12-12-2013)
  * 
- * VelocityExtendFileEngineUTest.java
+ * VelocityDirectoryExtendEngineUTest.java
  * 
  * Copyright 2012 agiso.org
  *
@@ -34,28 +34,31 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:mklin@agiso.org">Michał Klin</a>
  */
-@TempelEngineTest(VelocityExtendFileEngine.class)
-public class VelocityExtendFileEngineUTest extends AbstractTempelEngineTest {
+@TempelEngineTest(VelocityDirectoryExtendEngine.class)
+public class VelocityDirectoryExtendEngineUTest extends AbstractTempelEngineTest {
 	@Test
-	public void testProcessFile1() throws Exception {
+	public void testProcessDirectory1() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
 		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("key1", "value1");
 		modelMap.put("key2", "value2");
+		modelMap.put("fileKey2", "file2");
+		modelMap.put("dirKey1", "dir1");
+		modelMap.put("dirKey2", "ir2");
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outFileName = "testProcessFile1.txt";
-		String outPath = getOutputPath(true) + "/" + outFileName;
+		String outPath = getOutputPath(true);
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "VelocityExtendFileEngineUTest",
-				"testProcessFile1.txt.EXTEND_LINE.vm"
+				repositoryPath + "/VelocityDirectoryExtendEngineUTest/testProcessDirectory1/process",
+				""
 		);
 
-		// kopia do targeta przetwarzanego pliku
-		Temp.FileUtils_copyFile(repositoryPath + "VelocityExtendFileEngineUTest/" + outFileName, outPath);
+		// kopia do targeta katalogu do zmiany: zawartośc source
+		Temp.FileUtils_copyDir(repositoryPath + "/VelocityDirectoryExtendEngineUTest/testProcessDirectory1/source", outPath);
 
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5);
+		assert "8d76301a49fbf4cd38a32bf4059875ad".equals(md5);
 	}
 }

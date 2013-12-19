@@ -91,7 +91,6 @@ public class VelocityFileEngine extends AbstractVelocityEngine {
 				try {
 					reader.close();
 				} catch(Exception e) {
-					throw new RuntimeException(e);
 				}
 			}
 			if(writer != null) {
@@ -99,7 +98,6 @@ public class VelocityFileEngine extends AbstractVelocityEngine {
 					writer.flush();
 					writer.close();
 				} catch(Exception e) {
-					throw new RuntimeException(e);
 				}
 			}
 		}

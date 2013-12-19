@@ -23,7 +23,9 @@
 		<module>abstract.mkdir</module>
 		<module>abstract.mkdirs</module>
 		<module>abstract.velocityFileEngine</module>
+		<module>abstract.velocityFileExtendEngine</module>
 		<module>abstract.velocityDirectoryEngine</module>
+		<module>abstract.velocityDirectoryExtendEngine</module>
 
 		<module>base.mkdir</module>
 		<module>base.mkdirs</module>
