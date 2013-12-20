@@ -97,28 +97,38 @@ public class VelocityFileExtendEngine extends AbstractVelocityEngine {
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		StringBuilder fileContent = new StringBuilder();
 
-		String line;
-		while((line = br.readLine()) != null){
-			// update rozszerzenia
-			if(line.contains(extendPatern)){
-				//wczytanie zawartości rozszerzenia szablonu
-				FileInputStream fstream2 = new FileInputStream(entry.getTemplate() + "/"+ entry.getName());
-				BufferedReader br2 = new BufferedReader(new InputStreamReader(fstream2));
-				String line2;
-				while((line2 = br2.readLine()) != null){
-					fileContent.append(line2).append("\n");
+		try{
+			String line;
+			while((line = br.readLine()) != null){
+				// update rozszerzenia
+				if(line.contains(extendPatern)){
+					//wczytanie zawartości rozszerzenia szablonu
+					FileInputStream fstream2 = new FileInputStream(entry.getTemplate() + "/"+ entry.getName());
+					BufferedReader br2 = new BufferedReader(new InputStreamReader(fstream2));
+					try{
+						String line2;
+						while((line2 = br2.readLine()) != null){
+							fileContent.append(line2).append("\n");
+						}
+					} finally{
+						br2.close();
+					}
 				}
+				// wiersze nie zmieniane (dodatkowo escapowane znaczniki '$' i '##'
+				fileContent.append(line.replace("##", "#[[##]]#").replace("$", "#[[$]]#")).append("\n");
 			}
-			// wiersze nie zmieniane (dodatkowo escapowane znaczniki '$' i '##'
-			fileContent.append(line.replace("##", "#[[##]]#").replace("$", "#[[$]]#")).append("\n");
+		} finally{
+			br.close();
 		}
-		br.close();
 
 		// zapis do pliku tymczasowego
 		FileWriter fstreamWrite = new FileWriter(fileTmpPath);
 		BufferedWriter out = new BufferedWriter(fstreamWrite);
-		out.write(fileContent.toString());
-		out.close();
+		try {
+			out.write(fileContent.toString());
+		} finally {
+			out.close();
+		}
 
 		// przetwarzanie całości przez velocity i zapis do właściwego pliku (targeta)
 		Writer writer = null;
