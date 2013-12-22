@@ -43,6 +43,8 @@ import org.agiso.tempel.api.model.TemplateResource;
 import org.agiso.tempel.core.converter.DateParamConverter;
 import org.agiso.tempel.core.converter.IntegerParamConverter;
 import org.agiso.tempel.core.converter.LongParamConverter;
+import org.agiso.tempel.core.model.beans.TemplateParamBean;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -111,9 +113,39 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		if(template.getParams() != null) {
 			for(TemplateParam<?, ?> param : template.getParams()) {
 				// Wypełnianie parametrów wewnętrznych i konwersja parametru:
-				String value = getParamValue(param, stack.peek());
-				Object object = convertParamValue(value, param.getType(), param.getConverter(), template.getTemplateClassPath());
-				validateParamValue(value, param.getValidator(), template.getTemplateClassPath());
+
+				String count = param.getCount();
+				int countParam = 1;
+				Object object = null;
+				// jeśli jest określony atrybut count - to wartości parametrów będą zbierane do listy
+				if(count != null){
+					List<Object> list  = new ArrayList<Object>();
+					// jeśli wartość count jest liczbowa to zapytanie o wartość parametru wykonywane jest 
+					// dokładnie tyle razy ile określa atrybut count
+					if(StringUtils.isNumeric(count)){
+						countParam = Integer.parseInt(count);
+						for(int i = 0; i < countParam; i++){
+							list.add(processParam(param, stack.peek(), template));
+						}
+					} else {
+						// jeśli count określone jest symbolem '*' to po każdym pobraniu wartości 
+						// pytanie jest czy zakończyć podawanie parametru
+						if(count.equals("*")){
+							boolean finish = false;
+							TemplateParam<?, ?> questionParam = new TemplateParamBean()
+									.withName("Do you want to add another? (0 - NO, 1 - YES)")
+									.withValue("0");
+							while(!finish){
+								list.add(processParam(param, stack.peek(), template));
+
+								finish = getParamValue(questionParam, stack.peek()).equals("0");
+							}
+						}
+					}
+					object = list;
+				} else {
+					object = processParam(param, stack.peek(), template);
+				}
 				params.put(param.getKey(), object);
 			}
 		}
@@ -248,6 +280,20 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				doEngineRun(engine, template, null, workDir, null, stack);
 			}
 		}
+	}
+
+	/**
+	 * Przetwarzanie warości parametru (pobieranie, konwersja i walidacja)
+	 * @param param
+	 * @param peek
+	 * @param template
+	 * @return
+	 */
+	private Object processParam(TemplateParam<?, ?> param, Map<String, Object> peek, Template<?> template) {
+		String value = getParamValue(param, peek);
+		Object object = convertParamValue(value, param.getType(), param.getConverter(), template.getTemplateClassPath());
+		validateParamValue(value, param.getValidator(), template.getTemplateClassPath());
+		return object;
 	}
 
 	/**

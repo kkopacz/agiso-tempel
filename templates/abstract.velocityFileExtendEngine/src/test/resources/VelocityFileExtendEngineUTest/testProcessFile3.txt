@@ -1,0 +1,4 @@
+testProcessFile3.vm
+
+key1 = value1
+# EXTEND_LINE

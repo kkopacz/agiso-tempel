@@ -36,6 +36,8 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 	private String name;
 	@XStreamAsAttribute
 	private String type;
+	@XStreamAsAttribute
+	private String count;
 
 	private TemplateParamConverterBean converter;
 
@@ -81,6 +83,19 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 	@SuppressWarnings("unchecked")
 	public <T extends TemplateParamBean> T withType(String type) {
 		this.type = type;
+		return (T)this;
+	}
+
+	@Override
+	public String getCount() {
+		return count;
+	}
+	public void setCount(String count) {
+		this.count = count;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateParamBean> T withCount(String count) {
+		this.count = count;
 		return (T)this;
 	}
 
@@ -149,6 +164,7 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 		clone.key = key;
 		clone.name = name;
 		clone.type = type;
+		clone.count = count;
 
 		if(converter != null) {
 			clone.converter = converter.clone();

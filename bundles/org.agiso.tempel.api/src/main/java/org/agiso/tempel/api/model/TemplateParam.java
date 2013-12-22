@@ -40,6 +40,11 @@ public interface TemplateParam<C extends TemplateParamConverter, V extends Templ
 	public String getType();
 
 	/**
+	 * @return Ilość powtórzeń zapytania o parametr. Domyślnie 1.
+	 */
+	public String getCount();
+
+	/**
 	 * @return Konwerter parametru.
 	 */
 	public C getConverter();

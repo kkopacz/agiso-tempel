@@ -1,0 +1,5 @@
+#set($idx = 2)
+#foreach($key in $key2)
+key$idx = $key
+#set($idx = $idx+1)
+#end

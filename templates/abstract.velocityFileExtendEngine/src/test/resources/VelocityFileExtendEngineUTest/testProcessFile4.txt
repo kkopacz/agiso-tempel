@@ -1,0 +1,4 @@
+testProcessFile4.vm
+
+arg1 = value1
+# EXTEND_LINE
