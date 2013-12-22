@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class ClassToFieldNameConverterUTest {
-	private ITemplateParamConverter<String> converter = new ClassToFieldNameConverter();
+	private ITemplateParamConverter<String, String> converter = new ClassToFieldNameConverter();
 
 //	--------------------------------------------------------------------------
 	@Test

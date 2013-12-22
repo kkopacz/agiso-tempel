@@ -47,7 +47,7 @@ public interface TemplateReference extends Cloneable {
 	 * @return Lista parametrów wymaganych do wypełnienia szablonu przez
 	 *     silnik generatora.
 	 */
-	public List<TemplateParam<?, ?>> getParams();
+	public List<TemplateParam<?, ?, ?>> getParams();
 
 	/**
 	 * @return Lista zasobów (powiązanie szablonu i miejsca docelowego), które

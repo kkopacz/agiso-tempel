@@ -56,7 +56,7 @@ class TemplateBeanAttributesConverter extends ReflectionConverter {
 
 		TemplateBean template = (TemplateBean)super.unmarshal(reader, context);
 		if(template.getEngine() != null && engineClassName != null) {
-			throw new ConversionException("Param 'engineClass' and attribute 'engine' tag defined simultaneously");
+			throw new ConversionException("Param and attribute 'engine' tag defined simultaneously");
 		} else if(template.getEngine() == null) {
 			if(engineClassName == null) {
 				engineClassName = getDefaultEngineClassName();

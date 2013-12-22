@@ -29,22 +29,25 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @XStreamAlias("param")
-public class TemplateParamBean implements TemplateParam<TemplateParamConverterBean, TemplateParamValidatorBean> {
+public class TemplateParamBean implements TemplateParam<TemplateParamFetcherBean, TemplateParamConverterBean, TemplateParamValidatorBean> {
 	@XStreamAsAttribute
 	private String key;
 	@XStreamAsAttribute
 	private String name;
-	@XStreamAsAttribute
-	private String type;
+	private String value;
+
+	private Boolean fixed;
 	@XStreamAsAttribute
 	private String count;
+
+	@XStreamAsAttribute
+	private String type;
+
+	private TemplateParamFetcherBean fetcher;
 
 	private TemplateParamConverterBean converter;
 
 	private TemplateParamValidatorBean validator;
-
-	private Boolean fixed;
-	private String value;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -74,15 +77,30 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 	}
 
 	@Override
-	public String getType() {
-		return type;
+	public String getValue() {
+		return value;
 	}
-	public void setType(String type) {
-		this.type = type;
+	@Override
+	public void setValue(String value) {
+		this.value = value;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamBean> T withType(String type) {
-		this.type = type;
+	public <T extends TemplateParamBean> T withValue(String value) {
+		this.value = value;
+		return (T)this;
+	}
+
+	@Override
+	public Boolean getFixed() {
+		return fixed;
+	}
+	@Override
+	public void setFixed(Boolean fixed) {
+		this.fixed = fixed;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateParamBean> T withFixed(Boolean fixed) {
+		this.fixed = fixed;
 		return (T)this;
 	}
 
@@ -96,6 +114,33 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 	@SuppressWarnings("unchecked")
 	public <T extends TemplateParamBean> T withCount(String count) {
 		this.count = count;
+		return (T)this;
+	}
+
+	@Override
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateParamBean> T withType(String type) {
+		this.type = type;
+		return (T)this;
+	}
+
+	@Override
+	public TemplateParamFetcherBean getFetcher() {
+		return fetcher;
+	}
+	@Override
+	public void setFetcher(TemplateParamFetcherBean fetcher) {
+		this.fetcher = fetcher;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateParamBean> T withFetcher(TemplateParamFetcherBean fetcher) {
+		this.fetcher = fetcher;
 		return (T)this;
 	}
 
@@ -127,34 +172,6 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 		return (T)this;
 	}
 
-	@Override
-	public Boolean getFixed() {
-		return fixed;
-	}
-	@Override
-	public void setFixed(Boolean fixed) {
-		this.fixed = fixed;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamBean> T withFixed(Boolean fixed) {
-		this.fixed = fixed;
-		return (T)this;
-	}
-
-	@Override
-	public String getValue() {
-		return value;
-	}
-	@Override
-	public void setValue(String value) {
-		this.value = value;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamBean> T withValue(String value) {
-		this.value = value;
-		return (T)this;
-	}
-
 //	--------------------------------------------------------------------------
 	@Override
 	public TemplateParamBean clone() {
@@ -163,8 +180,16 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 	protected TemplateParamBean fillClone(TemplateParamBean clone) {
 		clone.key = key;
 		clone.name = name;
-		clone.type = type;
+		clone.value = value;
+
+		clone.fixed = fixed;
 		clone.count = count;
+
+		clone.type = type;
+
+		if(fetcher != null) {
+			clone.fetcher = fetcher.clone();
+		}
 
 		if(converter != null) {
 			clone.converter = converter.clone();
@@ -173,9 +198,6 @@ public class TemplateParamBean implements TemplateParam<TemplateParamConverterBe
 		if(validator != null) {
 			clone.validator = validator.clone();
 		}
-
-		clone.fixed = fixed;
-		clone.value = value;
 
 		return clone;
 	}

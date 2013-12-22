@@ -61,6 +61,9 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 		xStream.registerConverter(new TemplateParamBeanAttributesConverter(
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));
+		xStream.registerConverter(new TemplateParamFetcherBeanConverter(
+				xStream.getMapper(), xStream.getReflectionProvider()
+		));
 		xStream.registerConverter(new TemplateParamConverterBeanConverter(
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));

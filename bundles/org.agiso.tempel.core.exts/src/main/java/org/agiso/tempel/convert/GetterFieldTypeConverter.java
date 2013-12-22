@@ -15,12 +15,13 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:mklin@agiso.org">Michał Klin</a>
  */
-public class GetterFieldTypeConverter implements ITemplateParamConverter<String> {
+public class GetterFieldTypeConverter implements ITemplateParamConverter<String, String> {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public boolean canConvert(Class<?> type) {
-		return String.class.equals(type);
+	public boolean canConvert(Class<?> fromType, Class<?> toType) {
+		return (fromType == null || String.class.equals(fromType))
+				&& String.class.equals(toType);
 	}
 
 	@Override

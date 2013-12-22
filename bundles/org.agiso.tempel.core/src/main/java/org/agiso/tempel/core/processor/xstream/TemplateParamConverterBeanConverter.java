@@ -50,7 +50,7 @@ class TemplateParamConverterBeanConverter extends AbstractConfigurableConverter 
 			throw new ConversionException("Converter 'class' not defined");
 		}
 		if(converterClassName.isEmpty()) {
-			throw new ConversionException("Empty string is invalid 'class' value");
+			throw new ConversionException("Empty string is invalid converter 'class' value");
 		}
 
 		TemplateParamConverterBean templateParamConverter = new TemplateParamConverterBean();

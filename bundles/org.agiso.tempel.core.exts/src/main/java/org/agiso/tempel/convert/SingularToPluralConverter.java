@@ -30,10 +30,11 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class SingularToPluralConverter implements ITemplateParamConverter<String> {
+public class SingularToPluralConverter implements ITemplateParamConverter<String, String> {
 	@Override
-	public boolean canConvert(Class<?> type) {
-		return String.class.equals(type);
+	public boolean canConvert(Class<?> fromType, Class<?> toType) {
+		return (fromType == null || String.class.equals(fromType))
+				&& String.class.equals(toType);
 	}
 
 	@Override

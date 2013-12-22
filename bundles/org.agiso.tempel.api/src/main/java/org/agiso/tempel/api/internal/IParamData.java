@@ -1,6 +1,6 @@
-/* org.agiso.tempel.api.model.TemplateParamConverter (20-11-2013)
+/* org.agiso.tempel.api.internal.IParamData (22-12-2013)
  * 
- * TemplateParamConverter.java
+ * IParamData.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,23 +16,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.api.model;
-
-import java.util.Set;
-
-import org.agiso.tempel.api.ITemplateParamConverter;
+package org.agiso.tempel.api.internal;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParamConverter extends Cloneable {
+public interface IParamData {
 	/**
-	 * @return
+	 * @return Identyfikator (klucz) parametru.
 	 */
-	public ITemplateParamConverter<?, ?> getInstance(Set<String> classPath);
+	public String getKey();
 
-//	--------------------------------------------------------------------------
-	public TemplateParamConverter clone();
+	/**
+	 * @return Nazwa parametru.
+	 */
+	public String getName();
+
+	/**
+	 * @return Wartość domyślna parametru.
+	 */
+	public String getValue();
+	public void setValue(String value);
 }

@@ -30,7 +30,7 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class DateParamConverter implements ITemplateParamConverter<Date> {
+public class DateParamConverter implements ITemplateParamConverter<String, Date> {
 	private DateFormat format;
 
 //	--------------------------------------------------------------------------
@@ -40,8 +40,8 @@ public class DateParamConverter implements ITemplateParamConverter<Date> {
 
 //	--------------------------------------------------------------------------
 	@Override
-	public boolean canConvert(Class<?> type) {
-		return Date.class.equals(type);
+	public boolean canConvert(Class<?> fromType, Class<?> toType) {
+		return String.class.equals(fromType) && Date.class.equals(toType);
 	}
 
 	@Override

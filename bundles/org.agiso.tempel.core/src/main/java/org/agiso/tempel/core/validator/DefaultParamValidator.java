@@ -38,7 +38,7 @@ public class DefaultParamValidator implements ITemplateParamValidator<Object> {
 		checkers.put("notNull", new NotNullChecker());
 		checkers.put("notBlank", new NotBlankChecker());
 	}
-	
+
 	public Collection<BeanProperty> constraints;
 
 //	--------------------------------------------------------------------------

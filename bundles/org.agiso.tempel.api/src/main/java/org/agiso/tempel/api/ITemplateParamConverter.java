@@ -23,12 +23,13 @@ package org.agiso.tempel.api;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface ITemplateParamConverter<T> {
+public interface ITemplateParamConverter<F, T> {
 	/**
-	 * @param type
+	 * @param fromType
+	 * @param toType
 	 * @return
 	 */
-	public boolean canConvert(Class<?> type);
+	public boolean canConvert(Class<?> fromType, Class<?> toType);
 
 	/**
 	 * Konwertuje wartość łańcuchową parametru na typ właściwy dla implementacji
@@ -37,5 +38,5 @@ public interface ITemplateParamConverter<T> {
 	 * @param value Wartość łańcuchowa parametru do konwersji.
 	 * @return Wartość parametru o typie właściwym dla konwertera.
 	 */
-	public T convert(String value);
+	public T convert(F value);
 }

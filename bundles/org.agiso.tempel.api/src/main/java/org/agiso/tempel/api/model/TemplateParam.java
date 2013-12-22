@@ -18,44 +18,15 @@
  */
 package org.agiso.tempel.api.model;
 
+import org.agiso.tempel.api.internal.IParamData;
+
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParam<C extends TemplateParamConverter, V extends TemplateParamValidator> extends Cloneable {
-	/**
-	 * @return Identyfikator (klucz) parametru.
-	 */
-	public String getKey();
-
-	/**
-	 * @return Nazwa parametru.
-	 */
-	public String getName();
-
-	/**
-	 * @return Pełna nazwa klasy typu parametru. Domyślnie {@link String}.
-	 */
-	public String getType();
-
-	/**
-	 * @return Ilość powtórzeń zapytania o parametr. Domyślnie 1.
-	 */
-	public String getCount();
-
-	/**
-	 * @return Konwerter parametru.
-	 */
-	public C getConverter();
-	public void setConverter(C converter);
-
-	/**
-	 * @return Walidator parametru.
-	 */
-	public V getValidator();
-	public void setValidator(V validator);
-
+public interface TemplateParam<F extends TemplateParamFetcher, C extends TemplateParamConverter, V extends TemplateParamValidator>
+		extends IParamData, Cloneable {
 	/**
 	 * Zwraca informację, czy parametr jest oznaczony, tzn. czy jego wartość
 	 * domyślna jest ostateczna. Parametry nieoznaczone nie muszą mieć wartości
@@ -69,11 +40,33 @@ public interface TemplateParam<C extends TemplateParamConverter, V extends Templ
 	public void setFixed(Boolean fixed);
 
 	/**
-	 * @return Wartość domyślna parametru.
+	 * @return Ilość powtórzeń zapytania o parametr. Domyślnie 1.
 	 */
-	public String getValue();
-	public void setValue(String value);
+	public String getCount();
+
+	/**
+	 * @return Pełna nazwa klasy typu parametru. Domyślnie {@link String}.
+	 */
+	public String getType();
+
+	/**
+	 * @return Dostarczyciel parametru.
+	 */
+	public F getFetcher();
+	public void setFetcher(F fetcher);
+
+	/**
+	 * @return Konwerter parametru.
+	 */
+	public C getConverter();
+	public void setConverter(C converter);
+
+	/**
+	 * @return Walidator parametru.
+	 */
+	public V getValidator();
+	public void setValidator(V validator);
 
 //	--------------------------------------------------------------------------
-	public TemplateParam<C, V> clone();
+	public TemplateParam<F, C, V> clone();
 }

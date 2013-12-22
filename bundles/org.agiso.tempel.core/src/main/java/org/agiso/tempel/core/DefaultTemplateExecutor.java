@@ -37,13 +37,13 @@ import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateParam;
 import org.agiso.tempel.api.model.TemplateParamConverter;
+import org.agiso.tempel.api.model.TemplateParamFetcher;
 import org.agiso.tempel.api.model.TemplateParamValidator;
 import org.agiso.tempel.api.model.TemplateReference;
 import org.agiso.tempel.api.model.TemplateResource;
 import org.agiso.tempel.core.converter.DateParamConverter;
 import org.agiso.tempel.core.converter.IntegerParamConverter;
 import org.agiso.tempel.core.converter.LongParamConverter;
-import org.agiso.tempel.core.model.beans.TemplateParamBean;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -111,7 +111,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		Map<String, Object> params = stack.peek();
 
 		if(template.getParams() != null) {
-			for(TemplateParam<?, ?> param : template.getParams()) {
+			for(TemplateParam<?, ?, ?> param : template.getParams()) {
 				// Wypełnianie parametrów wewnętrznych i konwersja parametru:
 
 				String count = param.getCount();
@@ -132,14 +132,12 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						// pytanie jest czy zakończyć podawanie parametru
 						if(count.equals("*")){
 							boolean finish = false;
-							TemplateParam<?, ?> questionParam = new TemplateParamBean()
-									.withName("Do you want to add another? (0 - NO, 1 - YES)")
-									.withValue("0");
-							while(!finish){
+							do {
 								list.add(processParam(param, stack.peek(), template));
 
-								finish = getParamValue(questionParam, stack.peek()).equals("0");
-							}
+								finish = paramReader.getParamValue("finish",
+										"Do you want to add another? (0 - NO, 1 - YES)", "0").equals("0");
+							} while(!finish);
 						}
 					}
 					object = list;
@@ -185,13 +183,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 				// Aktualizacja parametrów przeciążonych i dodawanie nowych:
 				if(refTemplate.getParams() != null) {
-					for(TemplateParam refParam : refTemplate.getParams()) {
+					for(TemplateParam<?, ?, ?> refParam : refTemplate.getParams()) {
 						// Wyszukujemy parametr pośród parametrów kopii standardowej definicji
 						// szablonu i aktualizujemy jego definicję na podstawie podszablonu:
 						String id = refParam.getKey();
 						TemplateParam param = null;
 						if(subTemplate.getParams() != null) {
-							for(TemplateParam<?, ?> subParam : subTemplate.getParams()) {
+							for(TemplateParam<?, ?, ?> subParam : subTemplate.getParams()) {
 								if(subParam.getKey().equals(id)) {
 									param = subParam;
 									break;
@@ -205,10 +203,10 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 							if(byReference) {
 								subTemplate.getParams().add(refParam);
 							} else {
-								String value = getParamValue(refParam, stack.peek());
-								Object object = convertParamValue(value, refParam.getType(), refParam.getConverter(), template.getTemplateClassPath());
+								Object value = fetchParamValue(refParam, stack.peek(), refParam.getFetcher(), template.getTemplateClassPath());
+								value = convertParamValue(value, refParam.getType(), refParam.getConverter(), template.getTemplateClassPath());
 								validateParamValue(value, refParam.getValidator(), template.getTemplateClassPath());
-								subParams.put(refParam.getKey(), object);
+								subParams.put(refParam.getKey(), value);
 							}
 						} else {
 							if(refParam.getValue() != null) {
@@ -285,44 +283,17 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	/**
 	 * Przetwarzanie warości parametru (pobieranie, konwersja i walidacja)
 	 * @param param
-	 * @param peek
+	 * @param params
 	 * @param template
 	 * @return
 	 */
-	private Object processParam(TemplateParam<?, ?> param, Map<String, Object> peek, Template<?> template) {
-		String value = getParamValue(param, peek);
-		Object object = convertParamValue(value, param.getType(), param.getConverter(), template.getTemplateClassPath());
+	private Object processParam(TemplateParam<?, ?, ?> param, Map<String, Object> params, Template<?> template) {
+		Object value = fetchParamValue(param, params, param.getFetcher(), template.getTemplateClassPath());
+		value = convertParamValue(value, param.getType(), param.getConverter(), template.getTemplateClassPath());
 		validateParamValue(value, param.getValidator(), template.getTemplateClassPath());
-		return object;
-	}
-
-	/**
-	 * @param param
-	 * @param params 
-	 * @return
-	 */
-	private String getParamValue(TemplateParam param, Map<String, Object> params) {
-		boolean fixed = param.getFixed() != null && param.getFixed() == true;
-		String value = expressionEvaluator.evaluate(param.getValue(), params);
-
-		// Parametr oznaczony musi mieć zdefiniowaną wartość:
-		if(fixed && Temp.StringUtils_isEmpty(value)) {
-			throw new IllegalStateException("Brak wartości dla parametru oznaczonego '" + param.getKey() + "'");
-		}
-
-		if(params.containsKey(param.getKey())) {
-			// Parametr może być zdefiniowany jako parametr wywołania (przez -Dkey=value):
-			value = expressionEvaluator.evaluate(params.get(param.getKey()).toString(), params);
-		} else if(!fixed) {
-			// Wartości pozostałych parametrów są określane w trakcie wykonania:
-			System.out.println(paramReader.getClass().getSimpleName() + 
-					"#getParamValue(" + param.getKey() +", " + param.getName() + ", " + value +")"
-			);
-			value = paramReader.getParamValue(param.getKey(), param.getName(), value);
-		}
-
 		return value;
 	}
+
 	/**
 	 * @param engine 
 	 * @param srcDir
@@ -343,22 +314,49 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //	--------------------------------------------------------------------------
 	private static final Map<String, Class<?>> paramTypes =
 			new HashMap<String, Class<?>>();
-	private static final List<ITemplateParamConverter<?>> paramConverters =
-			new ArrayList<ITemplateParamConverter<?>>();
+	private static final List<ITemplateParamConverter<?, ?>> paramConverters =
+			new ArrayList<ITemplateParamConverter<?, ?>>();
 	static {
 		paramConverters.add(new IntegerParamConverter());
 		paramConverters.add(new LongParamConverter());
 		paramConverters.add(new DateParamConverter());
 	}
-	
+
+	/**
+	 * @param param
+	 * @param params 
+	 * @return
+	 */
+	private Object fetchParamValue(TemplateParam<?, ?, ?> param, Map<String, Object> params, TemplateParamFetcher fetcher, Set<String> classPath) {
+		boolean fixed = param.getFixed() != null && param.getFixed() == true;
+		String value = expressionEvaluator.evaluate(param.getValue(), params);
+
+		// Parametr oznaczony musi mieć zdefiniowaną wartość:
+		if(fixed && Temp.StringUtils_isEmpty(value)) {
+			throw new IllegalStateException("Brak wartości dla parametru oznaczonego '" + param.getKey() + "'");
+		}
+
+		if(params.containsKey(param.getKey())) {
+			// Parametr może być zdefiniowany jako parametr wywołania (przez -Dkey=value):
+			value = expressionEvaluator.evaluate(params.get(param.getKey()).toString(), params);
+		} else if(!fixed) {
+			param.setValue(value);
+			return fetcher.getInstance(classPath).fetch(paramReader, param);
+		}
+
+		param.setValue(value);
+		return value;
+	}
+
 	/**
 	 * @param value
 	 * @param type
 	 * @param converter
 	 * @return
 	 */
-	private Object convertParamValue(String value, String type, TemplateParamConverter converter, Set<String> classPath) {
-		ITemplateParamConverter<?> typeConverter = converter.getInstance(classPath);
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private Object convertParamValue(Object value, String type, TemplateParamConverter converter, Set<String> classPath) {
+		ITemplateParamConverter typeConverter = converter.getInstance(classPath);
 		if(typeConverter == null) {
 			if(type == null) {
 				return value;
@@ -373,8 +371,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						throw new RuntimeException(e);
 					}
 				}
-				for(ITemplateParamConverter<?> paramConverter : paramConverters) {
-					if(paramConverter.canConvert(typeClass)) {
+				for(ITemplateParamConverter<?, ?> paramConverter : paramConverters) {
+					Class<?> valueClass = (value == null? null : value.getClass());
+					if(paramConverter.canConvert(valueClass, typeClass)) {
 						typeConverter = paramConverter;
 						break;
 					}
@@ -384,9 +383,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				}
 			}
 		}
-
 		return typeConverter.convert(value);
 	}
+
 	/**
 	 * @param value
 	 * @param validator

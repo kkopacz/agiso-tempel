@@ -29,7 +29,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 @XStreamAlias("converter")
-public class TemplateParamConverterBean extends AbstractBeanInitializer<ITemplateParamConverter<?>>
+public class TemplateParamConverterBean extends AbstractBeanInitializer<ITemplateParamConverter<?, ?>>
 		implements TemplateParamConverter {
 	public String getConverterClassName() {
 		return getBeanClassName();

@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class SingularToPluralConverterUTest {
-	private ITemplateParamConverter<String> converter = new SingularToPluralConverter();
+	private ITemplateParamConverter<String, String> converter = new SingularToPluralConverter();
 
 //	--------------------------------------------------------------------------
 	@Test

@@ -18,8 +18,10 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
+import org.agiso.tempel.core.fetcher.StringParamFetcher;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
 import org.agiso.tempel.core.model.beans.TemplateParamConverterBean;
+import org.agiso.tempel.core.model.beans.TemplateParamFetcherBean;
 import org.agiso.tempel.core.model.beans.TemplateParamValidatorBean;
 import org.agiso.tempel.core.validator.DefaultParamValidator;
 
@@ -49,6 +51,13 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		String fetcherClassName = reader.getAttribute("fetcher");
+		if(fetcherClassName != null) {
+			if(fetcherClassName.isEmpty()) {
+				throw new ConversionException("Empty string is invalid 'fetcher' value");
+			}
+		}
+
 		String converterClassName = reader.getAttribute("converter");
 		if(converterClassName != null) {
 			if(converterClassName.isEmpty()) {
@@ -64,8 +73,18 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 		}
 
 		TemplateParamBean templateParam = (TemplateParamBean)super.unmarshal(reader, context);
+		if(templateParam.getFetcher() != null && fetcherClassName != null) {
+			throw new ConversionException("Param and attribute 'fetcher' tag defined simultaneously");
+		} else if(templateParam.getFetcher() == null) {
+			if(fetcherClassName == null) {
+				fetcherClassName = getDefaultFetcherClassName();
+			}
+			templateParam.setFetcher(new TemplateParamFetcherBean()
+					.withFetcherClassName(fetcherClassName)
+			);
+		}
 		if(templateParam.getConverter() != null && converterClassName != null) {
-			throw new ConversionException("Param 'converterClass' and attribute 'converter' tag defined simultaneously");
+			throw new ConversionException("Param and attribute 'converter' tag defined simultaneously");
 		} else if(templateParam.getConverter() == null) {
 			if(converterClassName == null) {
 				converterClassName = getDefaultConverterClassName();
@@ -75,7 +94,7 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 			);
 		}
 		if(templateParam.getValidator() != null && validatorClassName != null) {
-			throw new ConversionException("Param 'validatorClass' and attribute 'validator' tag defined simultaneously");
+			throw new ConversionException("Param and attribute 'validator' tag defined simultaneously");
 		} else if(templateParam.getValidator() == null) {
 			if(validatorClassName == null) {
 				validatorClassName = getDefaultValidatorClassName();
@@ -90,8 +109,8 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 	/**
 	 * @return
 	 */
-	private String getDefaultValidatorClassName() {
-		return DefaultParamValidator.class.getName();
+	private String getDefaultFetcherClassName() {
+		return StringParamFetcher.class.getName();
 	}
 
 	/**
@@ -99,5 +118,12 @@ class TemplateParamBeanAttributesConverter extends ReflectionConverter {
 	 */
 	private String getDefaultConverterClassName() {
 		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	private String getDefaultValidatorClassName() {
+		return DefaultParamValidator.class.getName();
 	}
 }

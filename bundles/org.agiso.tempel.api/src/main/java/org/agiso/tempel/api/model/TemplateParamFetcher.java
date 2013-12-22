@@ -1,6 +1,6 @@
-/* org.agiso.tempel.api.model.TemplateParamConverter (20-11-2013)
+/* org.agiso.tempel.api.model.TemplateParamFetcher (21-12-2013)
  * 
- * TemplateParamConverter.java
+ * TemplateParamFetcher.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -20,19 +20,20 @@ package org.agiso.tempel.api.model;
 
 import java.util.Set;
 
-import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamFetcher;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParamConverter extends Cloneable {
+public interface TemplateParamFetcher extends Cloneable {
 	/**
 	 * @return
 	 */
-	public ITemplateParamConverter<?, ?> getInstance(Set<String> classPath);
+	public ITemplateParamFetcher<?> getInstance(Set<String> classPath);
 
 //	--------------------------------------------------------------------------
-	public TemplateParamConverter clone();
+	public TemplateParamFetcher clone();
 }
+

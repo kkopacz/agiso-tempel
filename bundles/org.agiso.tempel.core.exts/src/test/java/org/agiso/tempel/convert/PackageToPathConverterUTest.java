@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class PackageToPathConverterUTest {
-	private ITemplateParamConverter<String> converter = new PackageToPathConverter();
+	private ITemplateParamConverter<String, String> converter = new PackageToPathConverter();
 
 //	--------------------------------------------------------------------------
 	@Test

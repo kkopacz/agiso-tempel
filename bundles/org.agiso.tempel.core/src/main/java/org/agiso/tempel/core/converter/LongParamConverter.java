@@ -25,10 +25,10 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class LongParamConverter implements ITemplateParamConverter<Long> {
+public class LongParamConverter implements ITemplateParamConverter<String, Long> {
 	@Override
-	public boolean canConvert(Class<?> type) {
-		return Long.class.equals(type);
+	public boolean canConvert(Class<?> fromType, Class<?> toType) {
+		return String.class.equals(fromType) && Long.class.equals(toType);
 	}
 
 	@Override

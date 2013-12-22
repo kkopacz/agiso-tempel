@@ -1,6 +1,6 @@
-/* org.agiso.tempel.core.processor.xstream.converter.TemplateParamValidatorBeanConverter (12-12-2013)
+/* org.agiso.tempel.core.processor.xstream.TemplateParamFetcherBeanFetcher (22-12-2013)
  * 
- * TemplateParamValidatorBeanConverter.java
+ * TemplateParamFetcherBeanFetcher.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -18,8 +18,7 @@
  */
 package org.agiso.tempel.core.processor.xstream;
 
-import org.agiso.tempel.core.model.beans.TemplateParamValidatorBean;
-import org.agiso.tempel.core.validator.DefaultParamValidator;
+import org.agiso.tempel.core.model.beans.TemplateParamFetcherBean;
 
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -28,36 +27,35 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.mapper.Mapper;
 
 /**
- * Konwerter XStream obsługujący konwersję znacznika &lt;validator&gt; definicji
- * walidatora parametru szablonu.
+ * Konwerter XStream obsługujący konwersję znacznika &lt;fetcher&gt; definicji
+ * dostarczyciela parametru szablonu.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-class TemplateParamValidatorBeanConverter extends AbstractConfigurableConverter {
-	public TemplateParamValidatorBeanConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
+public class TemplateParamFetcherBeanConverter extends AbstractConfigurableConverter {
+	public TemplateParamFetcherBeanConverter(Mapper mapper, ReflectionProvider reflectionProvider) {
 		super(mapper, reflectionProvider);
 	}
 
 	@Override
 	@SuppressWarnings("rawtypes")
 	public boolean canConvert(Class type) {
-		return type.equals(TemplateParamValidatorBean.class);
+		return type.equals(TemplateParamFetcherBean.class);
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		String validatorClassName = reader.getAttribute("class");
-		if(validatorClassName == null) {
-			validatorClassName = DefaultParamValidator.class.getName();
-		} else {
-			if(validatorClassName.isEmpty()) {
-				throw new ConversionException("Empty string is invalid validator 'class' value");
-			}
+		String fetcherClassName = reader.getAttribute("class");
+		if(fetcherClassName == null) {
+			throw new ConversionException("Fetcher 'class' not defined");
+		}
+		if(fetcherClassName.isEmpty()) {
+			throw new ConversionException("Empty string is invalid fetcher 'class' value");
 		}
 
-		TemplateParamValidatorBean templateParamValidator = new TemplateParamValidatorBean();
-		templateParamValidator.setValidatorClassName(validatorClassName);
-		templateParamValidator.setProperties(readProperties(reader));
-		return templateParamValidator;
+		TemplateParamFetcherBean templateParamFetcher = new TemplateParamFetcherBean();
+		templateParamFetcher.setFetcherClassName(fetcherClassName);
+		templateParamFetcher.setProperties(readProperties(reader));
+		return templateParamFetcher;
 	}
 }

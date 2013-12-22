@@ -1,6 +1,6 @@
-/* org.agiso.tempel.api.model.TemplateParamConverter (20-11-2013)
+/* org.agiso.tempel.core.fetcher.StringParamFetcher (22-12-2013)
  * 
- * TemplateParamConverter.java
+ * StringParamFetcher.java
  * 
  * Copyright 2013 agiso.org
  *
@@ -16,23 +16,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.api.model;
+package org.agiso.tempel.core.fetcher;
 
-import java.util.Set;
-
-import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.tempel.api.ITemplateParamFetcher;
+import org.agiso.tempel.api.internal.IParamData;
+import org.agiso.tempel.api.internal.IParamReader;
 
 /**
  * 
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public interface TemplateParamConverter extends Cloneable {
-	/**
-	 * @return
-	 */
-	public ITemplateParamConverter<?, ?> getInstance(Set<String> classPath);
-
-//	--------------------------------------------------------------------------
-	public TemplateParamConverter clone();
+public class StringParamFetcher implements ITemplateParamFetcher<String> {
+	@Override
+	public String fetch(IParamReader reader, IParamData param) {
+		return reader.getParamValue(param.getKey(), param.getName(), param.getValue());
+	}
 }

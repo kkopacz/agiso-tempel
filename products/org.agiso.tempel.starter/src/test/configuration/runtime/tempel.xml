@@ -306,6 +306,42 @@
 
 
 	<!-- 
+	  - org.agiso.tempel.tests.TemplateParamFetcherITest
+	  -->
+	<template engine="org.agiso.tempel.engine.VelocityFileEngine">
+		<groupId>org.agiso.tempel.tests</groupId>
+		<templateId>TemplateParamFetcherITest</templateId>
+		<version>templateParamFetcherTest01</version>
+
+		<params>
+			<param key="param_string1" name="String param 1" />
+			<param key="param_string2" name="String param 2">
+				<fetcher class="org.agiso.tempel.core.fetcher.StringParamFetcher" />
+				<value>String value 2</value>
+			</param>
+			<param key="param_map">
+				<fetcher class="org.agiso.tempel.core.fetcher.MapParamFetcher">
+					<key1 name="Map param key 1" />
+					<key2 name="Map param key 2" />
+					<key3 name="Map param key 3" value="Map param value 3" />
+				</fetcher>
+			</param>
+			<!-- param key="param_map" type="aa.bb.cc.JavaBean">
+				<fetcher class="org.agiso.tempel.core.fetcher.BeanParamFetcher">
+					<field1 name="Param 1" />
+					<field2 name="Param 2" />
+					<field3 name="Param 3" />
+				</fetcher>
+			</param -->
+		</params>
+
+		<resource>
+			<source>templateFile1.txt</source>
+			<target>templateFile1.txt</target>
+		</resource>
+	</template>
+
+	<!-- 
 	  - org.agiso.tempel.tests.TemplateParamConverterITest
 	  -->
 	<template engine="org.agiso.tempel.engine.VelocityFileEngine">
