@@ -18,8 +18,6 @@
  */
 package org.agiso.tempel.api.model;
 
-import java.util.Set;
-
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
@@ -29,9 +27,13 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  */
 public interface TemplateParamConverter extends Cloneable {
 	/**
+	 * Tworzy i zwraca instancję konwertera. Jeśli do jej tworzenia wymanane
+	 * jest użycie {@link ClassLoader}'a, to należy go pozyskać z kontekstu
+	 * wątku poprzez metodę {@link Thread#getContextClassLoader()}.
+	 * 
 	 * @return
 	 */
-	public ITemplateParamConverter<?, ?> getInstance(Set<String> classPath);
+	public ITemplateParamConverter<?, ?> getInstance();
 
 //	--------------------------------------------------------------------------
 	public TemplateParamConverter clone();

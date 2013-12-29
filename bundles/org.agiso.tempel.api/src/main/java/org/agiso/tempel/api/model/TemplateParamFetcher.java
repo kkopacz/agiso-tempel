@@ -18,8 +18,6 @@
  */
 package org.agiso.tempel.api.model;
 
-import java.util.Set;
-
 import org.agiso.tempel.api.ITemplateParamFetcher;
 
 /**
@@ -29,9 +27,13 @@ import org.agiso.tempel.api.ITemplateParamFetcher;
  */
 public interface TemplateParamFetcher extends Cloneable {
 	/**
+	 * Tworzy i zwraca instancję dostarczyciela parametru. Jeśli do jej tworzenia
+	 * wymanane jest użycie {@link ClassLoader}'a, to należy go pozyskać z kontekstu
+	 * wątku poprzez metodę {@link Thread#getContextClassLoader()}.
+	 * 
 	 * @return
 	 */
-	public ITemplateParamFetcher<?> getInstance(Set<String> classPath);
+	public ITemplateParamFetcher<?> getInstance();
 
 //	--------------------------------------------------------------------------
 	public TemplateParamFetcher clone();

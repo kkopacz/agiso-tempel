@@ -24,12 +24,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/test/configuration" output="target/test-classes" excluding="**">
-		<attributes>
-			<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="src/test/repository" output="target/test-classes" excluding="**">
+	<classpathentry kind="src" path="src/test/templates" output="target/test-classes" excluding="**">
 		<attributes>
 			<attribute name="optional" value="true"/>
 		</attributes>

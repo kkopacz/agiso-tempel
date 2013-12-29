@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  */
 public class TemplateParamConverterITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
-//	src/test/configuration/runtime/tempel.xml
+//	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	@Test
 	public void templateParamConverterTest01() throws Exception {

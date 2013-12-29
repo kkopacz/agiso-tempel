@@ -21,6 +21,7 @@ package org.agiso.tempel.support.file.provider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ import org.springframework.stereotype.Component;
 public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 	private boolean initialized;
 	private String settingsPath;
+	private String librariesPath;
 	private String repositoryPath;
 
 	@Autowired
@@ -69,13 +71,15 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
 			settingsPath = System.getProperty("user.dir") + "/tempel.xml";
-			repositoryPath = System.getProperty("user.dir") + "/.tempel";
+			librariesPath = System.getProperty("user.dir") + "/.tempel/lib";
+			repositoryPath = System.getProperty("user.dir") + "/.tempel/repo";
 		} else {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			path = System.getProperty("user.dir");
 
-			settingsPath = path + "/src/test/configuration/runtime/tempel.xml";
-			repositoryPath = path + "/src/test/repository/runtime";
+			settingsPath = path + "/src/test/templates/run/tempel.xml";
+			librariesPath = path + "/src/test/templates/run/lib";
+			repositoryPath = path + "/src/test/templates/run/repo";
 		}
 
 
@@ -157,6 +161,15 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 
 	@Override
 	protected Set<String> getRepositoryClassPath() {
+		File[] libraries = new File(librariesPath).listFiles();
+		if(libraries != null && libraries.length > 0) {
+			Set<String> classPath = new LinkedHashSet<String>(libraries.length);
+			for(File library : libraries) {
+				classPath.add(library.getAbsolutePath());
+			}
+			return classPath;
+		}
+
 		return Collections.emptySet();
 	}
 }

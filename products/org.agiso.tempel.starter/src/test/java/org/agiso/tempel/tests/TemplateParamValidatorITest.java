@@ -35,7 +35,7 @@ import org.testng.annotations.Test;
  */
 public class TemplateParamValidatorITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
-//	src/test/configuration/runtime/tempel.xml
+//	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	@Test
 	public void templateParamValidatorTest01() throws Exception {

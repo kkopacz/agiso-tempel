@@ -23,12 +23,8 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 import org.omg.Dynamic.Parameter;
 
@@ -69,33 +65,26 @@ public abstract class AbstractBeanInitializer<T> implements Cloneable {
 
 //	--------------------------------------------------------------------------
 	@SuppressWarnings("unchecked")
-	public T getInstance(Set<String> classPath) {
+	public T getInstance() {
 		if(beanClassName == null) {
 			return null;
 		} else try {
-			T instance;
+			T beanInstance;
 			Class<T> beanClass = null;
 			try {
 				try {
-					ClassLoader classLoader = this.getClass().getClassLoader();
-					if(classPath != null && !classPath.isEmpty()) {
-						List<URL> urls = new ArrayList<URL>(classPath.size());
-						for(String classPathEntry : classPath) {
-							urls.add(new URL("file://" + classPathEntry));
-						}
-						classLoader = new URLClassLoader(urls.toArray(new URL[urls.size()]), classLoader);
-					}
-					beanClass = (Class<T>)Class.forName(beanClassName, false, classLoader);
+					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+					beanClass = (Class<T>)Class.forName(beanClassName, true, classLoader);
 				} catch(ClassNotFoundException cnfe) {
 					throw new RuntimeException("Unknown class " + beanClassName, cnfe);
 				}
 				// Instancjonowanie i inicjalizcja w oparciu o konstruktor inicjujący:
 				Constructor<T> constructor = (Constructor<T>)beanClass.getConstructor(Collection.class);
-				instance = constructor.newInstance(properties);
+				beanInstance = constructor.newInstance(properties);
 			} catch(NoSuchMethodException nsme) {
 				// Instancjonowanie i inicjalizacja w oparciu o konstruktor bezargumentowy
 				// i publiczne setter'y Java Beans:
-				instance = beanClass.newInstance();
+				beanInstance = beanClass.newInstance();
 
 				if(properties != null && !properties.isEmpty()) {
 					BeanInfo validatorInfo = Introspector.getBeanInfo(beanClass);
@@ -115,18 +104,18 @@ public abstract class AbstractBeanInitializer<T> implements Cloneable {
 						}
 						Class<?> parameterType = writeMethod.getParameterTypes()[0];
 						if(BeanProperty.class.equals(parameterType)) {
-							writeMethod.invoke(instance, beanProperty);
+							writeMethod.invoke(beanInstance, beanProperty);
 						} else if(String.class.equals(parameterType)) {
 							if(beanProperty.hasAttributes()) {
 								throw new RuntimeException("BeanProperty '" + propertyName + "' setter should has "
 										+ Parameter.class.getSimpleName() + " type parameter");
 							}
-							writeMethod.invoke(instance, beanProperty.getPropertyValue());
+							writeMethod.invoke(beanInstance, beanProperty.getPropertyValue());
 						}
 					}
 				}
 			}
-			return instance;
+			return beanInstance;
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		}

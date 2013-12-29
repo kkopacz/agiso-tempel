@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  */
 public class TemplateReferenceITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
-//	src/test/configuration/runtime/tempel.xml
+//	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
 	 * Szablon grupujący org.agiso.tempel.tests:javaProject:1.0.0
@@ -55,7 +55,8 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:TemplateReferenceITest:templateReferenceTest01",
-				"-d " + outPath
+				"-d " + outPath,
+				"-Dyear=2013"
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -85,7 +86,8 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:TemplateReferenceITest:templateReferenceTest02",
-				"-d " + outPath
+				"-d " + outPath,
+				"-Dyear=2013"
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:

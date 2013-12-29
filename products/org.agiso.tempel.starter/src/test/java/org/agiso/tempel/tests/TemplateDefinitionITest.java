@@ -36,10 +36,10 @@ import org.testng.annotations.Test;
  */
 public class TemplateDefinitionITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
-//	src/test/configuration/runtime/tempel.xml
+//	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest01
 	 */
 	@Test
@@ -67,7 +67,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest02
 	 */
 	@Test
@@ -95,7 +95,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest03
 	 */
 	@Test
@@ -123,7 +123,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest04
 	 */
 	@Test
@@ -151,7 +151,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest05
 	 */
 	@Test
@@ -179,7 +179,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest06
 	 */
 	@Test
@@ -207,7 +207,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest07
 	 */
 	@Test
@@ -235,7 +235,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest08
 	 */
 	@Test
@@ -263,7 +263,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * src/test/repository/runtime/
+	 * src/test/templates/run/repo/
 	 * org/agiso/tempel/tests/TemplateDefinitionITest/templateDefinitionTest09
 	 */
 	@Test

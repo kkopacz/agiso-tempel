@@ -52,11 +52,11 @@ public class TempelCoreITest extends AbstractOutputTest {
 //	}
 
 //	--------------------------------------------------------------------------
-//	src/test/configuration/application/tempel.xml
+//	src/test/templates/app/tempel.xml
 //	--------------------------------------------------------------------------
 
 //	--------------------------------------------------------------------------
-//	src/test/configuration/home/tempel.xml
+//	src/test/templates/usr/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
 	 * src/test/repository/home/
@@ -78,7 +78,8 @@ public class TempelCoreITest extends AbstractOutputTest {
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:javaClass:1.0.0",
-				"-d " + outPath
+				"-d " + outPath,
+				"-Dyear=2013"
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:

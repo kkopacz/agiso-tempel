@@ -18,6 +18,8 @@
  */
 package org.agiso.tempel.core;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,10 +85,33 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
 
 		stack.push(new HashMap<String, Object>(properties));
-		executeTemplate(workDir, template, templateProvider, stack, properties, "");
+		doExecuteTemplate(workDir, template, templateProvider, stack, properties, "");
 		stack.pop();
 	}
-	public void executeTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
+
+	private void doExecuteTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
+		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+
+		try {
+			Set<String> classPath = template.getTemplateClassPath();
+			if(classPath != null && !classPath.isEmpty()) {
+				List<URL> urls = new ArrayList<URL>(classPath.size());
+				for(String classPathEntry : classPath) {
+					urls.add(new URL("file://" + classPathEntry));
+				}
+				ClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[urls.size()]), contextClassLoader);
+				Thread.currentThread().setContextClassLoader(classLoader);
+			}
+
+			doExecuteTemplateInternal(workDir, template, templateProvider, stack, properties, depth);
+		} catch(Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			Thread.currentThread().setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	private void doExecuteTemplateInternal(String workDir, Template<?> template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -101,7 +126,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		ITempelEngine engine = null;
 //		if(template.getEngine() != null) {
 			try {
-				engine = template.getEngine().getInstance(template.getTemplateClassPath());
+				engine = template.getEngine().getInstance();
 			} catch(Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -203,9 +228,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 							if(byReference) {
 								subTemplate.getParams().add(refParam);
 							} else {
-								Object value = fetchParamValue(refParam, stack.peek(), refParam.getFetcher(), template.getTemplateClassPath());
-								value = convertParamValue(value, refParam.getType(), refParam.getConverter(), template.getTemplateClassPath());
-								validateParamValue(value, refParam.getValidator(), template.getTemplateClassPath());
+								Object value = fetchParamValue(refParam, stack.peek(), refParam.getFetcher());
+								value = convertParamValue(value, refParam.getType(), refParam.getConverter());
+								validateParamValue(value, refParam.getValidator());
 								subParams.put(refParam.getKey(), value);
 							}
 						} else {
@@ -248,7 +273,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
-				executeTemplate(subWorkDir, subTemplate, templateProvider, stack, properties, "  " + depth);
+				doExecuteTemplate(subWorkDir, subTemplate, templateProvider, stack, properties, "  " + depth);
 
 				stack.pop();
 			}
@@ -288,9 +313,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @return
 	 */
 	private Object processParam(TemplateParam<?, ?, ?> param, Map<String, Object> params, Template<?> template) {
-		Object value = fetchParamValue(param, params, param.getFetcher(), template.getTemplateClassPath());
-		value = convertParamValue(value, param.getType(), param.getConverter(), template.getTemplateClassPath());
-		validateParamValue(value, param.getValidator(), template.getTemplateClassPath());
+		Object value = fetchParamValue(param, params, param.getFetcher());
+		value = convertParamValue(value, param.getType(), param.getConverter());
+		validateParamValue(value, param.getValidator());
 		return value;
 	}
 
@@ -327,7 +352,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param params 
 	 * @return
 	 */
-	private Object fetchParamValue(TemplateParam<?, ?, ?> param, Map<String, Object> params, TemplateParamFetcher fetcher, Set<String> classPath) {
+	private Object fetchParamValue(TemplateParam<?, ?, ?> param, Map<String, Object> params, TemplateParamFetcher fetcher) {
 		boolean fixed = param.getFixed() != null && param.getFixed() == true;
 		String value = expressionEvaluator.evaluate(param.getValue(), params);
 
@@ -341,7 +366,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			value = expressionEvaluator.evaluate(params.get(param.getKey()).toString(), params);
 		} else if(!fixed) {
 			param.setValue(value);
-			return fetcher.getInstance(classPath).fetch(paramReader, param);
+			return fetcher.getInstance().fetch(paramReader, param);
 		}
 
 		param.setValue(value);
@@ -355,10 +380,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private Object convertParamValue(Object value, String type, TemplateParamConverter converter, Set<String> classPath) {
-		ITemplateParamConverter typeConverter = converter.getInstance(classPath);
+	private Object convertParamValue(Object value, String type, TemplateParamConverter converter) {
+		Class<?> valueClass = (value == null? null : value.getClass());
+		ITemplateParamConverter typeConverter = converter.getInstance();
 		if(typeConverter == null) {
-			if(type == null) {
+			if(type == null || valueClass == null || type.equals(valueClass.getCanonicalName())) {
 				return value;
 			} else {
 				Class<?> typeClass;
@@ -372,7 +398,6 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					}
 				}
 				for(ITemplateParamConverter<?, ?> paramConverter : paramConverters) {
-					Class<?> valueClass = (value == null? null : value.getClass());
 					if(paramConverter.canConvert(valueClass, typeClass)) {
 						typeConverter = paramConverter;
 						break;
@@ -391,8 +416,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param validator
 	 */
 	@SuppressWarnings("unchecked")
-	private void validateParamValue(Object value, TemplateParamValidator validator, Set<String> classPath) {
-		ITemplateParamValidator<?> valueValidator = validator.getInstance(classPath);
+	private void validateParamValue(Object value, TemplateParamValidator validator) {
+		ITemplateParamValidator<?> valueValidator = validator.getInstance();
 		if(valueValidator != null) {
 			((ITemplateParamValidator<Object>)valueValidator).validate(value);
 		}

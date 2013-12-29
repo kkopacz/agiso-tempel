@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
  */
 public class InputParamsITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
-//	src/test/configuration/runtime/tempel.xml
+//	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	@Test
 	public void inputParamsTest01() throws Exception {

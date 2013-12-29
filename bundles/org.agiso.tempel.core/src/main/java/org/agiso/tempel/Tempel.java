@@ -128,7 +128,7 @@ public class Tempel implements ITempel {
 		templateProvider.configure(properties);
 
 		// Pobieranie definicji szablonu do użycia:
-		Template template = templateProvider.get(name, null, null, null);
+		Template<?> template = templateProvider.get(name, null, null, null);
 		if(template == null) {
 			throw new RuntimeException("Nie znaleziono szablonu " + name);
 		}

@@ -21,6 +21,7 @@ package org.agiso.tempel.support.file.provider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ import org.springframework.stereotype.Component;
 public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 	private boolean initialized;
 	private String settingsPath;
+	private String librariesPath;
 	private String repositoryPath;
 
 	@Autowired
@@ -68,14 +70,16 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
-			settingsPath = path.substring(0, index) + "/conf/tempel.xml";
-			repositoryPath = path.substring(0, index) + "/repository";
+			settingsPath = path.substring(0, index) + "/templates/tempel.xml";
+			librariesPath = path.substring(0, index) + "/templates/lib";
+			repositoryPath = path.substring(0, index) + "/templates/repo";
 		} else {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			path = System.getProperty("user.dir");
 
-			settingsPath = path + "/src/test/configuration/application/tempel.xml";
-			repositoryPath = path + "/src/test/repository/application";
+			settingsPath = path + "/src/test/templates/app/tempel.xml";
+			librariesPath = path + "/src/test/templates/app/lib";
+			repositoryPath = path + "/src/test/templates/app/repo";
 		}
 
 
@@ -149,6 +153,15 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 
 	@Override
 	protected Set<String> getRepositoryClassPath() {
+		File[] libraries = new File(librariesPath).listFiles();
+		if(libraries != null && libraries.length > 0) {
+			Set<String> classPath = new LinkedHashSet<String>(libraries.length);
+			for(File library : libraries) {
+				classPath.add(library.getAbsolutePath());
+			}
+			return classPath;
+		}
+
 		return Collections.emptySet();
 	}
 }
