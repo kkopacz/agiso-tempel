@@ -34,14 +34,13 @@ public class TemplateParamBean implements TemplateParam<TemplateParamFetcherBean
 	private String key;
 	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
+	private String type;
 	private String value;
 
 	private Boolean fixed;
 	@XStreamAsAttribute
 	private String count;
-
-	@XStreamAsAttribute
-	private String type;
 
 	private TemplateParamFetcherBean fetcher;
 
@@ -73,6 +72,19 @@ public class TemplateParamBean implements TemplateParam<TemplateParamFetcherBean
 	@SuppressWarnings("unchecked")
 	public <T extends TemplateParamBean> T withName(String name) {
 		this.name = name;
+		return (T)this;
+	}
+
+	@Override
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	@SuppressWarnings("unchecked")
+	public <T extends TemplateParamBean> T withType(String type) {
+		this.type = type;
 		return (T)this;
 	}
 
@@ -114,19 +126,6 @@ public class TemplateParamBean implements TemplateParam<TemplateParamFetcherBean
 	@SuppressWarnings("unchecked")
 	public <T extends TemplateParamBean> T withCount(String count) {
 		this.count = count;
-		return (T)this;
-	}
-
-	@Override
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	@SuppressWarnings("unchecked")
-	public <T extends TemplateParamBean> T withType(String type) {
-		this.type = type;
 		return (T)this;
 	}
 
@@ -180,12 +179,11 @@ public class TemplateParamBean implements TemplateParam<TemplateParamFetcherBean
 	protected TemplateParamBean fillClone(TemplateParamBean clone) {
 		clone.key = key;
 		clone.name = name;
+		clone.type = type;
 		clone.value = value;
 
 		clone.fixed = fixed;
 		clone.count = count;
-
-		clone.type = type;
 
 		if(fetcher != null) {
 			clone.fetcher = fetcher.clone();

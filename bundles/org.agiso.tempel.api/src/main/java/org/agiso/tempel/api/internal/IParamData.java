@@ -35,6 +35,11 @@ public interface IParamData {
 	public String getName();
 
 	/**
+	 * @return Pełna nazwa klasy typu parametru. Domyślnie {@link String}.
+	 */
+	public String getType();
+
+	/**
 	 * @return Wartość domyślna parametru.
 	 */
 	public String getValue();

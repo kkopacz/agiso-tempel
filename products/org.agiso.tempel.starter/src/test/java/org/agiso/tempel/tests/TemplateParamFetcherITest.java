@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  */
 public class TemplateParamFetcherITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
-//	src/test/configuration/runtime/tempel.xml
+//	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	@Test
 	public void templateParamFetcherTest01() throws Exception {
@@ -54,6 +54,12 @@ public class TemplateParamFetcherITest extends AbstractOutputTest {
 			.thenReturn("value_map.key2");
 		when(paramReader.getParamValue(eq("param_map.key3"), anyString(), anyString()))
 			.thenReturn("value_map.key3");
+		when(paramReader.getParamValue(eq("param_bean.field1"), anyString(), anyString()))
+			.thenReturn("param_bean.field1");
+		when(paramReader.getParamValue(eq("param_bean.field2"), anyString(), anyString()))
+			.thenReturn("param_bean.field2");
+		when(paramReader.getParamValue(eq("param_bean.field3"), anyString(), anyString()))
+			.thenReturn("param_bean.field3");
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
@@ -68,10 +74,12 @@ public class TemplateParamFetcherITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("param_map.key1", "Map param key 1", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("param_map.key2", "Map param key 2", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("param_map.key3", "Map param key 3", "Map param value 3");
+		inOrder.verify(paramReader, times(1)).getParamValue("param_bean.field1", "Param 1", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("param_bean.field2", "Param 2", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("param_bean.field3", "Param 3", null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		System.out.println();
-		assert "7fbf10d573a1ec65865d8a15659bb95d".equals(md5);
+		assert "8bb3dac758e311375d05ef0fe131e03b".equals(md5);
 	}
 }

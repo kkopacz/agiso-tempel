@@ -5,3 +5,8 @@ param_map (${param_map.class}): {
 	key2: ${param_map["key2"]},
 	key3: ${param_map["key3"]}
 }
+param_bean (${param_bean.class}): {
+	field1: ${param_bean.field1},
+	field2: ${param_bean.field2},
+	field3: ${param_bean.field3}
+}

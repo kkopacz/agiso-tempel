@@ -45,11 +45,6 @@ public interface TemplateParam<F extends TemplateParamFetcher, C extends Templat
 	public String getCount();
 
 	/**
-	 * @return Pełna nazwa klasy typu parametru. Domyślnie {@link String}.
-	 */
-	public String getType();
-
-	/**
 	 * @return Dostarczyciel parametru.
 	 */
 	public F getFetcher();

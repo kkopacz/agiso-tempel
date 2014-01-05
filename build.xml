@@ -1,0 +1,68 @@
+<project name="MyProject" default="dist" basedir=".">
+	<property environment="env" />
+	<property name="COBERTURA_HOME" value="/work/tools/cobertura/cobertura-2.0.3" />
+	<property name="cobertura.dir" value="${COBERTURA_HOME}" />
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura-2.0.3.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+	<target name="instrument">
+		<!-- Add all modules that should be included below -->
+		<antcall target="instrumentAModule">
+			<param name="module" value="bundles/org.agiso.tempel.api" />
+		</antcall>
+		<antcall target="instrumentAModule">
+			<param name="module" value="bundles/org.agiso.tempel.core" />
+		</antcall>
+		<antcall target="instrumentAModule">
+			<param name="module" value="bundles/org.agiso.tempel.support.base" />
+		</antcall>
+		<antcall target="instrumentAModule">
+			<param name="module" value="bundles/org.agiso.tempel.support.file" />
+		</antcall>
+		<antcall target="instrumentAModule">
+			<param name="module" value="bundles/org.agiso.tempel.support.maven" />
+		</antcall>
+		<antcall target="instrumentAModule">
+			<param name="module" value="bundles/org.agiso.tempel.core.exts" />
+		</antcall>
+		<antcall target="instrumentAModule">
+			<param name="module" value="products/org.agiso.tempel.starter" />
+		</antcall>
+	</target>
+
+	<target name="instrumentAModule">
+		<property name="classes.dir" value="target/classes" />
+		<cobertura-instrument todir="./${module}/${classes.dir}">
+			<fileset dir="./${module}/target/classes">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
+	<target name="report" depends="merge">
+		<property name="src.dir" value="src/main/java/" />
+		<cobertura-report datafile="sum.ser" format="html" destdir="./target/report">
+			<!-- Add all modules that should be included below -->
+			<fileset dir="./bundles/org.agiso.tempel.api/${src.dir}" />
+			<fileset dir="./bundles/org.agiso.tempel.core/${src.dir}" />
+			<fileset dir="./bundles/org.agiso.tempel.support.base/${src.dir}" />
+			<fileset dir="./bundles/org.agiso.tempel.support.file/${src.dir}" />
+			<fileset dir="./bundles/org.agiso.tempel.support.maven/${src.dir}" />
+			<fileset dir="./bundles/org.agiso.tempel.core.exts/${src.dir}" />
+			<fileset dir="./products/org.agiso.tempel.starter" />
+		</cobertura-report>
+	</target>
+
+	<target name="merge">
+		<cobertura-merge datafile="sum.ser">
+			<fileset dir=".">
+				<include name="**/cobertura.ser" />
+			</fileset>
+		</cobertura-merge>
+	</target>
+</project>

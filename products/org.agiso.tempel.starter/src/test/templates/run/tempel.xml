@@ -326,13 +326,13 @@
 					<key3 name="Map param key 3" value="Map param value 3" />
 				</fetcher>
 			</param>
-			<!-- param key="param_map" type="aa.bb.cc.JavaBean">
+			<param key="param_bean" type="aa.bb.cc.JavaBean">
 				<fetcher class="org.agiso.tempel.core.fetcher.BeanParamFetcher">
 					<field1 name="Param 1" />
 					<field2 name="Param 2" />
 					<field3 name="Param 3" />
 				</fetcher>
-			</param -->
+			</param>
 		</params>
 
 		<resource>

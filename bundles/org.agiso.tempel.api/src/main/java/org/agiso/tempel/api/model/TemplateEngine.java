@@ -18,8 +18,6 @@
  */
 package org.agiso.tempel.api.model;
 
-import java.util.Set;
-
 import org.agiso.tempel.api.ITempelEngine;
 
 /**
@@ -29,9 +27,13 @@ import org.agiso.tempel.api.ITempelEngine;
  */
 public interface TemplateEngine extends Cloneable {
 	/**
+	 * Tworzy i zwraca instancję silnika. Jeśli do jej tworzenia wymanane
+	 * jest użycie {@link ClassLoader}'a, to należy go pozyskać z kontekstu
+	 * wątku poprzez metodę {@link Thread#getContextClassLoader()}.
+	 * 
 	 * @return
 	 */
-	public ITempelEngine getInstance(Set<String> classPath);
+	public ITempelEngine getInstance();
 
 //	--------------------------------------------------------------------------
 	public TemplateEngine clone();
