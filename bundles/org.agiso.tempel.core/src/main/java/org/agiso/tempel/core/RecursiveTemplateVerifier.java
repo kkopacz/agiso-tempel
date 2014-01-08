@@ -21,11 +21,9 @@ package org.agiso.tempel.core;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.api.model.Template;
-import org.agiso.tempel.api.model.TemplateReference;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +34,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RecursiveTemplateVerifier implements ITemplateVerifier {
 	@Override
-	public void verifyTemplate(Template<?> template, ITemplateProvider templateProvider) throws Exception {
+	public void verifyTemplate(Template<?> template, ITemplateProvider templateProvider) {
 		verifyTemplate(template, new LinkedHashSet<String>());
 	}
 
@@ -68,11 +66,11 @@ public class RecursiveTemplateVerifier implements ITemplateVerifier {
 		// Szablon OK. Dodawanie do zbioru szablonów gałęzi:
 		templates.add(id);
 
-		// Sprawdzanie każdego z podszablonów szablonu:
-		if(template.getReferences() != null) {
-			for(TemplateReference reference : template.getReferences()) {
-				// verifyTemplate(reference, templates);
-			}
-		}
+//		// Sprawdzanie każdego z podszablonów szablonu:
+//		if(template.getReferences() != null) {
+//			for(TemplateReference reference : template.getReferences()) {
+//				verifyTemplate(reference, templates);
+//			}
+//		}
 	}
 }

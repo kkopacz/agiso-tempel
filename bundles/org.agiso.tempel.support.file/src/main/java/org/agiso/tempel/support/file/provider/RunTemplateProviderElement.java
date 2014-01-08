@@ -164,8 +164,10 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 		File[] libraries = new File(librariesPath).listFiles();
 		if(libraries != null && libraries.length > 0) {
 			Set<String> classPath = new LinkedHashSet<String>(libraries.length);
-			for(File library : libraries) {
-				classPath.add(library.getAbsolutePath());
+			for(File library : libraries) try {
+				classPath.add(library.getCanonicalPath());
+			} catch(Exception e) {
+				throw new RuntimeException(e);
 			}
 			return classPath;
 		}

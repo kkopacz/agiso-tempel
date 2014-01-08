@@ -33,8 +33,6 @@ import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
-import org.agiso.tempel.api.internal.ITemplateVerifier;
-import org.agiso.tempel.api.model.Template;
 import org.apache.commons.lang.LocaleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,7 +46,6 @@ public class Tempel implements ITempel {
 
 //	--------------------------------------------------------------------------
 	private ITemplateProvider templateProvider;
-	private ITemplateVerifier templateVerifier;
 	private ITemplateExecutor templateExecutor;
 
 	@Autowired
@@ -69,11 +66,6 @@ public class Tempel implements ITempel {
 	@Autowired
 	public void setTemplateProvider(ITemplateProvider templateProvider) {
 		this.templateProvider = templateProvider;
-	}
-
-	@Autowired
-	public void setTemplateVerifier(ITemplateVerifier templateVerifier) {
-		this.templateVerifier = templateVerifier;
 	}
 
 	@Autowired
@@ -124,23 +116,13 @@ public class Tempel implements ITempel {
 			}
 		}
 
+		properties = Collections.unmodifiableMap(properties);
+
 		// Po rozwinięciu parametrów inicjalizujemy provider'a szablonów:
 		templateProvider.configure(properties);
 
-		// Pobieranie definicji szablonu do użycia:
-		Template<?> template = templateProvider.get(name, null, null, null);
-		if(template == null) {
-			throw new RuntimeException("Nie znaleziono szablonu " + name);
-		}
-
-		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
-		// szablonów używanych. Sprawdzanie dostępność klas silników generatorów.
-		templateVerifier.verifyTemplate(template, templateProvider);
-
 		// Uruchamianie procesu generacji w oparciu o wskazany szablon:
-		templateExecutor.executeTemplate(workDir, template,
-				templateProvider, Collections.unmodifiableMap(properties)
-		);
+		templateExecutor.executeTemplate(name, properties, workDir);
 	}
 
 //	--------------------------------------------------------------------------

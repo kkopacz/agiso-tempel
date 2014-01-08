@@ -20,8 +20,6 @@ package org.agiso.tempel.api.internal;
 
 import java.util.Map;
 
-import org.agiso.tempel.api.model.Template;
-
 /**
  * 
  * 
@@ -42,5 +40,5 @@ public interface ITemplateExecutor {
 	 */
 	public void setParamReader(IParamReader paramReader);
 
-	public void executeTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, Map<String, Object> properties) throws Exception;
+	public void executeTemplate(String templateName, Map<String, Object> properties, String workDir) throws Exception;
 }

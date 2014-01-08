@@ -18,6 +18,7 @@
  */
 package org.agiso.tempel.core;
 
+import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
 import org.agiso.tempel.api.internal.ITemplateProvider;
+import org.agiso.tempel.api.internal.ITemplateVerifier;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateParam;
 import org.agiso.tempel.api.model.TemplateParamConverter;
@@ -57,10 +59,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DefaultTemplateExecutor implements ITemplateExecutor {
+	private ITemplateProvider templateProvider;
+	private ITemplateVerifier templateVerifier;
+
 	private IParamReader paramReader;
 	private IExpressionEvaluator expressionEvaluator;
 
 //	--------------------------------------------------------------------------
+	@Autowired
+	public void setTemplateProvider(ITemplateProvider templateProvider) {
+		this.templateProvider = templateProvider;
+	}
+
+	@Autowired
+	public void setTemplateVerifier(ITemplateVerifier templateVerifier) {
+		this.templateVerifier = templateVerifier;
+	}
+
 	@Override
 	@Autowired
 	public void setParamReader(IParamReader paramReader) {
@@ -76,34 +91,44 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	/**
 	 * Uruchamia proces generacji treści w oparciu o szablon.
 	 * 
+	 * @param templateName Szablon do uruchomienia.
+	 * @param properties Mapa parametrów uruchomienia szablonu.
 	 * @param workDir Ścieżka do katalogu roboczego.
-	 * @param template Szablon do uruchomienia.
-	 * @param templates Mapa wszystkich dostępnych szablonów.
 	 */
 	@Override
-	public void executeTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, Map<String, Object> properties) {
-		MapStack<String, Object> stack = new SimpleMapStack<String,Object>();
+	public void executeTemplate(String templateName, Map<String, Object> properties, String workDir) {
+		// Pobieranie definicji szablonu do użycia:
+		Template<?> template = templateProvider.get(templateName, null, null, null);
+		if(template == null) {
+			throw new RuntimeException("Nie znaleziono szablonu " + templateName);
+		}
 
-		stack.push(new HashMap<String, Object>(properties));
-		doExecuteTemplate(workDir, template, templateProvider, stack, properties, "");
-		stack.pop();
+		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
+		// szablonów używanych. Sprawdzanie dostępność klas silników generatorów.
+		templateVerifier.verifyTemplate(template, templateProvider);
+
+		MapStack<String, Object> propertiesStack = new SimpleMapStack<String,Object>();
+		propertiesStack.push(new HashMap<String, Object>(properties));
+		doExecuteTemplate(template, propertiesStack, workDir, "");
+		propertiesStack.pop();
 	}
 
-	private void doExecuteTemplate(String workDir, Template<?> template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
+	private void doExecuteTemplate(Template<?> template, MapStack<String, Object> properties, String workDir, String depth) {
 		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
 		try {
+			// FIXME: Zastosować zbiór Set<URL>
 			Set<String> classPath = template.getTemplateClassPath();
 			if(classPath != null && !classPath.isEmpty()) {
 				List<URL> urls = new ArrayList<URL>(classPath.size());
 				for(String classPathEntry : classPath) {
-					urls.add(new URL("file://" + classPathEntry));
+					urls.add(new File(classPathEntry).toURI().toURL());
 				}
 				ClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[urls.size()]), contextClassLoader);
 				Thread.currentThread().setContextClassLoader(classLoader);
 			}
 
-			doExecuteTemplateInternal(workDir, template, templateProvider, stack, properties, depth);
+			doExecuteTemplateInternal(template, properties, workDir, depth);
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -111,7 +136,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		}
 	}
 
-	private void doExecuteTemplateInternal(String workDir, Template<?> template, ITemplateProvider templateProvider, MapStack<String, Object> stack, Map<String, Object> properties, String depth) {
+	private void doExecuteTemplateInternal(Template<?> template, MapStack<String, Object> properties, String workDir, String depth) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
@@ -120,20 +145,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion()
 		);
 
-		//depth = depth + "  ";
-
 		// Instancjonowanie klasy silnika generatora:
-		ITempelEngine engine = null;
-//		if(template.getEngine() != null) {
-			try {
-				engine = template.getEngine().getInstance();
-			} catch(Exception e) {
-				throw new RuntimeException(e);
-			}
-//		}
+		ITempelEngine engine = template.getEngine().getInstance();
 
 		// Wczytywanie parametrów wejściowych ze standardowego wejścia:
-		Map<String, Object> params = stack.peek();
+		Map<String, Object> params = properties.peek();
 
 		if(template.getParams() != null) {
 			for(TemplateParam<?, ?, ?> param : template.getParams()) {
@@ -150,7 +166,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					if(StringUtils.isNumeric(count)){
 						countParam = Integer.parseInt(count);
 						for(int i = 0; i < countParam; i++){
-							list.add(processParam(param, stack.peek(), template));
+							list.add(processParam(param, properties.peek(), template));
 						}
 					} else {
 						// jeśli count określone jest symbolem '*' to po każdym pobraniu wartości 
@@ -158,7 +174,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						if(count.equals("*")){
 							boolean finish = false;
 							do {
-								list.add(processParam(param, stack.peek(), template));
+								list.add(processParam(param, properties.peek(), template));
 
 								finish = paramReader.getParamValue("finish",
 										"Do you want to add another? (0 - NO, 1 - YES)", "0").equals("0");
@@ -167,7 +183,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 					}
 					object = list;
 				} else {
-					object = processParam(param, stack.peek(), template);
+					object = processParam(param, properties.peek(), template);
 				}
 				params.put(param.getKey(), object);
 			}
@@ -200,11 +216,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						subTemplate.getGroupId() +":" + subTemplate.getTemplateId() + ":" + subTemplate.getVersion()
 				);
 				subTemplate = subTemplate.clone();								// kopia podszablonu z repozytorium (do modyfikacji)
-				// subTemplate.setScope(template.getScope());						// podszablon ma to samo repozytorium co szablon
+				// subTemplate.setScope(template.getScope());					// podszablon ma to samo repozytorium co szablon
 
-				Map<String, Object> subParams = new HashMap<String, Object>(properties);	// parametry dodane podzablonu
+				Map<String, Object> subParams = new HashMap<String, Object>();	// parametry dodane podszablonu
 				subParams.put("top", params);
-				stack.push(subParams);
+				properties.push(subParams);
 
 				// Aktualizacja parametrów przeciążonych i dodawanie nowych:
 				if(refTemplate.getParams() != null) {
@@ -228,14 +244,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 							if(byReference) {
 								subTemplate.getParams().add(refParam);
 							} else {
-								Object value = fetchParamValue(refParam, stack.peek(), refParam.getFetcher());
+								Object value = fetchParamValue(refParam, properties.peek(), refParam.getFetcher());
 								value = convertParamValue(value, refParam.getType(), refParam.getConverter());
 								validateParamValue(value, refParam.getValidator());
 								subParams.put(refParam.getKey(), value);
 							}
 						} else {
 							if(refParam.getValue() != null) {
-								String refParamValue = expressionEvaluator.evaluate(refParam.getValue(), stack.peek());
+								String refParamValue = expressionEvaluator.evaluate(refParam.getValue(), properties.peek());
 								System.err.println(depth + "  Setting parameter '" + refParam.getKey() + "': "+
 										param.getValue() + " <- " + refParamValue
 								);
@@ -265,7 +281,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 				// Ustalanie katalogu roboczego dla podszablonu:
 				if(!Temp.StringUtils_isEmpty(refTemplate.getWorkDir())) {
-					subTemplate.setWorkDir(expressionEvaluator.evaluate(refTemplate.getWorkDir(), stack.peek()));
+					subTemplate.setWorkDir(expressionEvaluator.evaluate(refTemplate.getWorkDir(), properties.peek()));
 				}
 
 				// Wykonywanie szablonu w zaktualizowanej wersji:
@@ -273,9 +289,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
-				doExecuteTemplate(subWorkDir, subTemplate, templateProvider, stack, properties, "  " + depth);
+				doExecuteTemplate(subTemplate, properties, subWorkDir, "  " + depth);
 
-				stack.pop();
+				properties.pop();
 			}
 		}
 
@@ -296,11 +312,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 					doEngineRun(
 							engine, template, resource.getSource(),
-							workDir, resource.getTarget(), stack
+							workDir, resource.getTarget(), properties
 					);
 				}
 			} else {
-				doEngineRun(engine, template, null, workDir, null, stack);
+				doEngineRun(engine, template, null, workDir, null, properties);
 			}
 		}
 	}
