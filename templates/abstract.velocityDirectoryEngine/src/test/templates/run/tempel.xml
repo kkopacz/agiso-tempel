@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>2.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<resource />
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>3.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<resource>
+			<target>subdir</target>
+		</resource>
+	</template>
+
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>4.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<workdir>subdir</workdir>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>5.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>6.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<workdir>subdir</workdir>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>7.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>subdir</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityDirectoryTemplate</templateId>
+		<version>8.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+				<workdir>subdir</workdir>
+			</reference>
+		</references>
+	</template>
+</tempel>

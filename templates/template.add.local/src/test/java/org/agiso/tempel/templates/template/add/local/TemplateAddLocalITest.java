@@ -24,6 +24,7 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.test.AbstractTemplateTest;
@@ -60,6 +61,7 @@ public class TemplateAddLocalITest extends AbstractTemplateTest {
 			.thenReturn("1.0.0");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
+		ITempel tempel = getTempelInstance();
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,

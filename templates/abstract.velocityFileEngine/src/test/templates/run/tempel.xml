@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template engine="org.agiso.tempel.engine.VelocityFileEngine">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityFileTemplate</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<resource>
+			<source>sourceFile.txt</source>
+			<target>targetFile.txt</target>
+		</resource>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityFileTemplate</templateId>
+		<version>2.0.0</version>
+
+		<engine class="org.agiso.tempel.engine.VelocityFileEngine" />
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<resource>
+			<source>sourceFile.txt</source>
+			<target>targetFile.txt</target>
+		</resource>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>test.velocityFileTemplate</templateId>
+		<version>3.0.0</version>
+
+		<params>
+			<param key="name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityFileEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<source>sourceFile.txt</source>
+					<target>targetFile.txt</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+</tempel>

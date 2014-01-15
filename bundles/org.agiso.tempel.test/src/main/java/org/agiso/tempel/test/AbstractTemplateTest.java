@@ -52,7 +52,7 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 	private String templateId;
 	private String version;
 
-	protected ITempel tempel;
+	private ITempel tempel;
 
 //	--------------------------------------------------------------------------
 	/**
@@ -87,6 +87,10 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 	}
 
 //	--------------------------------------------------------------------------
+	public ITempel getTempelInstance() {
+		return tempel;
+	}
+
 	protected ITempel createTempelInstance() {
 		ClassPathXmlApplicationContext ctx = null;
 		try {

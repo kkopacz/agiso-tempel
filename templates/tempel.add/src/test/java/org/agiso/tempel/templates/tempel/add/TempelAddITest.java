@@ -21,6 +21,7 @@ package org.agiso.tempel.templates.tempel.add;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.test.AbstractTemplateTest;
 import org.testng.annotations.Test;
@@ -45,6 +46,7 @@ public class TempelAddITest extends AbstractTemplateTest {
 	public void testTempelAdd() throws Exception {
 		String outPath = getOutputPath(true);
 
+		ITempel tempel = getTempelInstance();
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()

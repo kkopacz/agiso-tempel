@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.test.AbstractTemplateTest;
@@ -65,6 +66,7 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		cmdParams.put("date_format", "yyyy-MM-dd HH:mm:ss");
 		cmdParams.put("date", "2010-12-21 11:12:13");
 
+		ITempel tempel = getTempelInstance();
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
