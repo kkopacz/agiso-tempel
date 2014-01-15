@@ -1,0 +1,26 @@
+#@_field_@#
+protected ${key_type} ${key_field};
+#@_field_@#
+
+#@_constuctor_instance_@#
+this.${key_field} = bean.${key_field};
+#@_constuctor_instance_@#
+
+#@_constctor_else_@#
+this.${key_field} = ${key_entity}.get${key_upper_field}();
+#@_constctor_else_@#
+
+#@_accessors_@#
+
+public ${key_type} get${key_upper_field}() {
+	return ${key_field};
+}
+public void set${key_upper_field}(${key_type} ${key_field}) {
+	this.${key_field} = ${key_field};
+}
+@SuppressWarnings("unchecked")
+public <T extends ${key_upper_entity}Bean> T with${key_upper_field}(${key_type} ${key_field}) {
+	this.${key_field} = ${key_field};
+	return (T)this;
+}
+#@_accessors_@#

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>pl.exso.core</groupId>
+	<artifactId>pl.exso.core.mat</artifactId>
+	<packaging>pom</packaging>
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>pl.exso.core.mat</groupId>
+			<artifactId>pl.exso.core.mat.service</artifactId>
+			<version><!--pl.exso.core.mat.version-->0.0.1.BUILD-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<!--!!!_dependencies_!!!-->
+  </dependencies>
+		
+  <name>ExsoCORE MAT Bundle</name>
+	<url>http://exso.pl/core</url>
+	<inceptionYear>2013</inceptionYear>
+
+</project>
