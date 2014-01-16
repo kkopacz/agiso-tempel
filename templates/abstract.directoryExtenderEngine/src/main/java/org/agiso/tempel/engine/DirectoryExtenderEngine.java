@@ -19,6 +19,7 @@
 package org.agiso.tempel.engine;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,22 +33,33 @@ import org.apache.velocity.VelocityContext;
 public class DirectoryExtenderEngine extends AbstractVelocityEngine {
 	private ITempelEngine fileExtEngine = new FileExtenderEngine();
 	private List<String[]> listFilesToProces = new ArrayList<String[]>();
-	private static final String TEMPLATE_FILE_SUFFIX = ".vmp";
+	private static final String TEMPLATE_FILE_SUFFIX = ".vm";
 	@Override
 	public void run(ITemplateSource templateSource, Map<String, Object> params, String target) {
+
+		// Upewnienie się że resource nie jest nullem
+		if(templateSource.getResource() == null) {
+			try {
+				templateSource = new FileTemplateSource(templateSource.getTemplate(), "");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		// Wyznaczanie ścieżki zasobu docelowego i sprawdzanie czy istnieje
 		if(!templateSource.exists() || !templateSource.isDirectory()) {
 			throw new RuntimeException("Folder "
-					+ templateSource.getTemplate() + "/"+ templateSource.getResource()
+					+ templateSource.getTemplate() + "/" + templateSource.getResource()
 					+ " nie istnieje");
 		}
 		
 //		System.out.println("Folder " + templateSource.getTemplate() + "/"+ 
-//				templateSource.getResource() + " istnieje");
+//				templateSource.getResource() + " istnieje. Target: " + target);
 		
 		try {
 			processVelocityResource(templateSource, params, target);
-			System.out.println("Struktura modyfikowanych plików odpowiada stukturze szablonu");
+			System.out.println("\nStruktura modyfikowanych plików odpowiada stukturze szablonu");
 			
 			for(String tabDirs[] : listFilesToProces) {
 				System.out.println("Modyfikowanie pliku ..." + tabDirs[2].substring(tabDirs[2].length() - 35) + 
@@ -87,7 +99,7 @@ public class DirectoryExtenderEngine extends AbstractVelocityEngine {
 		String fullTargetPath = entry.getName();
 		
 		if(fullTargetPath.endsWith(TEMPLATE_FILE_SUFFIX)) {
-			// Ustalanie pełnej ściezki dla pliku vmp
+			// Ustalanie pełnej ściezki dla pliku vm
 			String resourcePath = entry.getTemplate() + "/" + resFolder + "/"+ fullTargetPath.substring(0, fullTargetPath.lastIndexOf('/') + 1);
 			String resourceFile = fullTargetPath.substring(fullTargetPath.lastIndexOf('/') + 1, fullTargetPath.length());
 			// Ustalanie pełnej ściezki dla pliku, który ma zostać zmodyfikowany
@@ -97,8 +109,14 @@ public class DirectoryExtenderEngine extends AbstractVelocityEngine {
 			File fileRes = new File(resourcePath + resourceFile);
 			File fileTarg = new File(fullTargetPath);
 			
-			if(!fileRes.exists() || !fileTarg.exists()) {
-				throw new RuntimeException("Jedna ze ścieżek, będąca parametrem FileExtenderEngine'a jest nieprawidłowa");
+			if(!fileRes.exists()) {
+				throw new RuntimeException("Ścieżka do pliku .vm: " + fileRes.toPath()
+						+ ", będąca parametrem FileExtenderEngine'a jest nieprawidłowa");
+			}
+			
+			if(!fileTarg.exists()) {
+				throw new RuntimeException("Ścieżka modyfikowanego pliku: " + fileTarg.toPath()
+						+ ", będąca parametrem FileExtenderEngine'a jest nieprawidłowa");
 			}
 			
 			//System.out.println("Obie ścieżki są prawidłowe");
