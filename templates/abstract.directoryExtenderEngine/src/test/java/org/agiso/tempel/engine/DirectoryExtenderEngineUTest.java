@@ -55,12 +55,13 @@ public class DirectoryExtenderEngineUTest extends AbstractTempelEngineTest {
 		
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true);
-		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "/DirectoryExtenderEngineUTest",
-				"resources"
-		);
+//		ITemplateSource templateSource = new FileTemplateSource(
+//				repositoryPath + "/DirectoryExtenderEngineUTest", "resources");
 		
-		File srcFolder = new File(templateSource.getTemplate() + "/bundles");
+		ITemplateSource templateSource = new FileTemplateSource(
+				repositoryPath + "/DirectoryExtenderEngineUTest/resources", "");
+		
+		File srcFolder = new File(repositoryPath + "/DirectoryExtenderEngineUTest/bundles");
 		File destFolder = new File(outPath);
 		
 		// Sprawdzenie czy folder źródłowy istnieje
