@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template engine="org.agiso.tempel.engine.VelocityFileExtendEngine">
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityFileExtendTemplateITest</templateId>
+		<version>testEngineInvocation_01</version>
+
+		<params>
+			<param key="key2" />
+		</params>
+
+		<resource>
+			<source>testProcessFile1.txt.EXTEND_LINE.vm</source>
+			<target>testProcessFile1.txt</target>
+		</resource>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityFileExtendTemplateITest</templateId>
+		<version>testReferenceTemplateInvocation_01</version>
+
+		<params>
+			<param key="key2" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityFileExtendEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<source>testProcessFile1.txt.EXTEND_LINE.vm</source>
+					<target>testProcessFile1.txt</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+</tempel>

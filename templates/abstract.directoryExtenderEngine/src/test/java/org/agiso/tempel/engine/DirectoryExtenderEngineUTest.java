@@ -74,7 +74,7 @@ public class DirectoryExtenderEngineUTest extends AbstractTempelEngineTest {
 				engine.run(templateSource, modelMap, outPath);
 				
 				//String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-				//assert "1b88794f97f0b86ceba125ef9326af9e".equals(md5);
+				//assert "1b88794f97f0b86ceba125ef9326af9e".equals(md5) : md5;
 				} catch(IOException e) {
 					e.printStackTrace();
 					assert false : "Pliki niezbędne do testu nie zostały skoiowane.";

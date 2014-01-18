@@ -52,5 +52,21 @@
 			<artifactId>org.agiso.tempel.test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>org.agiso.tempel.support.file</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

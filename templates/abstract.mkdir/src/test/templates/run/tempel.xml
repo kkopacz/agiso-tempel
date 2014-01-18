@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template key="testEngineInvocation_01">
+		<!-- TODO (TPL#9): Definicja szablonu bez FQTN -->
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>MakeDirTemplateITest</templateId>
+		<version>testEngineInvocation_01</version>
+
+		<engine class="org.agiso.tempel.engine.MakeDirEngine" />
+
+		<params>
+			<param key="name" name="Directory name" />
+		</params>
+
+		<resource>
+			<target>${name}</target>
+		</resource>
+	</template>
+
+	<template engine="org.agiso.tempel.engine.MakeDirEngine">
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>MakeDirTemplateITest</templateId>
+		<version>testEngineInvocation_02</version>
+
+		<params>
+			<param key="name" name="Directory name" />
+		</params>
+
+		<resource>
+			<target>${name}</target>
+		</resource>
+	</template>
+
+	<template key="testReferenceTemplateInvocation_01">
+		<!-- TODO (TPL#9): Definicja szablonu bez FQTN -->
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>MakeDirTemplateITest</templateId>
+		<version>testReferenceTemplateInvocation_01</version>
+
+		<params>
+			<param key="name" name="Directory name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdir</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.name}</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>MakeDirTemplateITest</templateId>
+		<version>testReferenceTemplateInvocation_02</version>
+
+		<params>
+			<param key="name" name="Directory name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdir</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.name}</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+</tempel>

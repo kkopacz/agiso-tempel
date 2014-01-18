@@ -1,4 +1,4 @@
-/* org.agiso.tempel.templates.test.VelocityFileTemplateITest (20-01-2013)
+/* org.agiso.tempel.engine.VelocityFileTemplateITest (20-01-2013)
  * 
  * VelocityFileTemplateITest.java
  * 
@@ -32,7 +32,12 @@ import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
 /**
- * 
+ * Testy integracyjne szablonu <code>abstract.velocityFileEngine</code>.
+ * </br>
+ * Wykorzystują definicję szablonu z pliku <code>TEMPEL-INF/tempel.xml</code>
+ * znajdującą się w katalogu <code>src/main/resources</code> i umieszczaną w
+ * pliku <code>.jar</code> szablonu oraz dodatkowo definicje testowe z pliku
+ * <code>src/test/templates/run/tempel.xml</code>.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
@@ -47,34 +52,40 @@ public class VelocityFileTemplateITest extends AbstractTemplateTest {
 	}
 
 //	--------------------------------------------------------------------------
-	@Test
-	public void testVelocityFileTemplate_1_0_0() throws Exception {
+	/**
+	 * Test bezpośredniego wywołania <code>abstract.velocityFileEngine</code>.
+	 * </br>
+	 * Jego wywołanie kończy się błędem, ponieważ szablon jest oznaczony jako
+	 * abstrakcyjny.
+	 * 
+	 * FIXME: Poprawić po implementacji obsługi atrybutu 'abstract'
+	 * 
+	 * @throws Exception
+	 */
+	@Test(expectedExceptions = RuntimeException.class /* FIXME: expectedExceptions = ... */)
+	public void testAbstractTemplateInvocation() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
-			.thenReturn("value");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
 		ITempel tempel = createTempelInstance();
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
-				"org.agiso.tempel.templates:test.velocityFileTemplate:1.0.0",
+				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
-		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1de00333e6819030285a9283f87e165c".equals(md5);
+		assert "1de00333e6819030285a9283f87e165c".equals(md5) : md5;
 	}
 
 	@Test
-	public void testVelocityFileTemplate_2_0_0() throws Exception {
+	public void testEngineInvocation_01() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -86,7 +97,7 @@ public class VelocityFileTemplateITest extends AbstractTemplateTest {
 		ITempel tempel = createTempelInstance();
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
-				"org.agiso.tempel.templates:test.velocityFileTemplate:2.0.0",
+				"org.agiso.tempel.engine:VelocityFileTemplateITest:testEngineInvocation_01",
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
 
@@ -96,11 +107,11 @@ public class VelocityFileTemplateITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1de00333e6819030285a9283f87e165c".equals(md5);
+		assert "1de00333e6819030285a9283f87e165c".equals(md5) : md5;
 	}
 
 	@Test
-	public void testVelocityFileTemplate_3_0_0() throws Exception {
+	public void testEngineInvocation_02() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -112,7 +123,7 @@ public class VelocityFileTemplateITest extends AbstractTemplateTest {
 		ITempel tempel = createTempelInstance();
 		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
-				"org.agiso.tempel.templates:test.velocityFileTemplate:3.0.0",
+				"org.agiso.tempel.engine:VelocityFileTemplateITest:testEngineInvocation_02",
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
 
@@ -122,6 +133,32 @@ public class VelocityFileTemplateITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1de00333e6819030285a9283f87e165c".equals(md5);
+		assert "1de00333e6819030285a9283f87e165c".equals(md5) : md5;
+	}
+
+	@Test
+	public void testReferenceTemplateInvocation_01() throws Exception {
+		String outPath = getOutputPath(true);
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+			.thenReturn("value");
+
+		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
+		ITempel tempel = createTempelInstance();
+		tempel.setParamReader(paramReader);
+		tempel.startTemplate(
+				"org.agiso.tempel.engine:VelocityFileTemplateITest:testReferenceTemplateInvocation_01",
+				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
+		);
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		InOrder inOrder = inOrder(paramReader);
+		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
+		verifyNoMoreInteractions(paramReader);
+
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "1de00333e6819030285a9283f87e165c".equals(md5) : md5;
 	}
 }

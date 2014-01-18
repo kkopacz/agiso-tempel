@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<template engine="org.agiso.tempel.engine.VelocityFileEngine">
-		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>test.velocityFileTemplate</templateId>
-		<version>1.0.0</version>
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityFileTemplateITest</templateId>
+		<version>testEngineInvocation_01</version>
 
 		<params>
 			<param key="name" />
@@ -16,9 +16,9 @@
 	</template>
 
 	<template>
-		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>test.velocityFileTemplate</templateId>
-		<version>2.0.0</version>
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityFileTemplateITest</templateId>
+		<version>testEngineInvocation_02</version>
 
 		<engine class="org.agiso.tempel.engine.VelocityFileEngine" />
 
@@ -33,9 +33,9 @@
 	</template>
 
 	<template>
-		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>test.velocityFileTemplate</templateId>
-		<version>3.0.0</version>
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityFileTemplateITest</templateId>
+		<version>testReferenceTemplateInvocation_01</version>
 
 		<params>
 			<param key="name" />

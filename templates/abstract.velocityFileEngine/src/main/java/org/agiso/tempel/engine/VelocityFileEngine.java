@@ -87,18 +87,14 @@ public class VelocityFileEngine extends AbstractVelocityEngine {
 
 			doVelocityTemplateMerge(entry.getName(), reader, context, writer);
 		} finally {
-			if(reader != null) {
-				try {
-					reader.close();
-				} catch(Exception e) {
-				}
+			if(reader != null) try {
+				reader.close();
+			} catch(Exception e) {
 			}
-			if(writer != null) {
-				try {
-					writer.flush();
-					writer.close();
-				} catch(Exception e) {
-				}
+			if(writer != null) try {
+				writer.flush();
+				writer.close();
+			} catch(Exception e) {
 			}
 		}
 	}

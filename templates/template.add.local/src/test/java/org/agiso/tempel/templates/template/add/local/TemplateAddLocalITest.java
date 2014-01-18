@@ -77,6 +77,6 @@ public class TemplateAddLocalITest extends AbstractTemplateTest {
 
 		// Wyliczenie i sprawdzenie skrótu MD5 utworzonego zasobu:
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "f69e866f6c3c2939b8109085b7f0b77f".equals(md5);
+		assert "f69e866f6c3c2939b8109085b7f0b77f".equals(md5) : md5;
 	}
 }

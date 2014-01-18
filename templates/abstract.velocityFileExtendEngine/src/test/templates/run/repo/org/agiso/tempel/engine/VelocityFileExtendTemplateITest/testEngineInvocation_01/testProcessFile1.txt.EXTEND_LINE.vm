@@ -1,0 +1,6 @@
+#if(${key2} == "value2")
+	#set($value = ${key2})
+#else
+	#set($value = "ble")
+#end
+key2 = ${value}

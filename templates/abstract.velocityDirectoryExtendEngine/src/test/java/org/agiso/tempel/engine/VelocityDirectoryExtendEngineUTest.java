@@ -30,7 +30,7 @@ import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
 
 /**
- * 
+ * Testy jednostkowe klasy silnika {@link VelocityDirectoryExtendEngine}.
  * 
  * @author <a href="mailto:mklin@agiso.org">Michał Klin</a>
  */
@@ -47,18 +47,16 @@ public class VelocityDirectoryExtendEngineUTest extends AbstractTempelEngineTest
 		modelMap.put("dirKey2", "ir2");
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outPath = getOutputPath(true);
+		String outPath = getOutputPath(true,
+				repositoryPath + "/VelocityDirectoryExtendEngineUTest/testProcessDirectory1/base"
+		);
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "/VelocityDirectoryExtendEngineUTest/testProcessDirectory1/process",
+				repositoryPath + "/VelocityDirectoryExtendEngineUTest/testProcessDirectory1/repo",
 				""
 		);
-
-		// kopia do targeta katalogu do zmiany: zawartośc source
-		Temp.FileUtils_copyDir(repositoryPath + "/VelocityDirectoryExtendEngineUTest/testProcessDirectory1/source", outPath);
-
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "8d76301a49fbf4cd38a32bf4059875ad".equals(md5);
+		assert "8d76301a49fbf4cd38a32bf4059875ad".equals(md5) : md5;
 	}
 }

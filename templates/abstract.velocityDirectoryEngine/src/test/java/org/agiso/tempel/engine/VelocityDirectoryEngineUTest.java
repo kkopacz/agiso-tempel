@@ -30,7 +30,7 @@ import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
 
 /**
- * 
+ * Testy jednostkowe klasy silnika {@link VelocityDirectoryEngine}.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
@@ -57,7 +57,7 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1b88794f97f0b86ceba125ef9326af9e".equals(md5);
+		assert "1b88794f97f0b86ceba125ef9326af9e".equals(md5) : md5;
 	}
 
 	@Test
@@ -75,6 +75,6 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "c1f94f832c26b7deecf9aecb292f6b91".equals(md5);
+		assert "c1f94f832c26b7deecf9aecb292f6b91".equals(md5) : md5;
 	}
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryExtendEngine">
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityDirectoryExtendTemplateITest</templateId>
+		<version>testEngineInvocation_01</version>
+
+		<params>
+			<param key="key1" />
+			<param key="key2" />
+			<param key="fileKey2" />
+			<param key="dirKey1" />
+			<param key="dirKey2" />
+		</params>
+	</template>
+
+	<template>
+		<groupId>org.agiso.tempel.engine</groupId>
+		<templateId>VelocityDirectoryExtendTemplateITest</templateId>
+		<version>testReferenceTemplateInvocation_01</version>
+
+		<params>
+			<param key="key1" />
+			<param key="key2" />
+			<param key="fileKey2" />
+			<param key="dirKey1" />
+			<param key="dirKey2" />
+		</params>
+
+		<references>
+			<reference onParentTemplates="true">
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.velocityDirectoryExtendEngine</templateId>
+				<version>1.0.0</version>
+
+				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
+			</reference>
+		</references>
+	</template>
+</tempel>

@@ -67,16 +67,14 @@ public class VelocityDirectoryExtendEngine extends VelocityFileExtendEngine {
 		} else {
 			// Kopiownaie pliku (nie jest szablonem Velocity):
 			File targetFile = new File(target + '/' + processVelocityString(resourceName, resourceName, context));
-			InputStream is = entry.getInputStream();
+			InputStream is = null;
 			try {
+				is = entry.getInputStream();
 				Temp.FileUtils_copyFile(is, targetFile);
 			} finally {
-				if(is != null) {
-					try {
-						is.close();
-					} catch(Exception e) {
-						throw new RuntimeException(e);
-					}
+				if(is != null) try {
+					is.close();
+				} catch(Exception e) {
 				}
 			}
 		}

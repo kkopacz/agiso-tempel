@@ -53,6 +53,6 @@ public class TempelAddITest extends AbstractTemplateTest {
 		);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "4028a1a1e284375c00a4847558a94132".equals(md5);
+		assert "4028a1a1e284375c00a4847558a94132".equals(md5) : md5;
 	}
 }

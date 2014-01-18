@@ -27,6 +27,9 @@
 		<module>abstract.velocityDirectoryEngine</module>
 		<module>abstract.velocityDirectoryExtendEngine</module>
 
+		<!-- module>abstract.fileExtenderEngine</module>
+		<module>abstract.directoryExtenderEngine</module -->
+
 		<module>base.mkdir</module>
 		<module>base.mkdirs</module>
 

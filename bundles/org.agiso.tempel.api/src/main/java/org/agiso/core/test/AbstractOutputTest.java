@@ -21,6 +21,8 @@ package org.agiso.core.test;
 import java.io.File;
 import java.util.Calendar;
 
+import org.agiso.tempel.Temp;
+
 /**
  * Klasa bazowa dla testów generujących zasoby podlegające weryfikacji.
  * Dostarcza mechanizmu tworzenia unikatowego katalogu dla tworzonych zasobów.
@@ -31,7 +33,11 @@ public abstract class AbstractOutputTest {
 	private long timeInMillis = Calendar.getInstance().getTimeInMillis();
 
 //	--------------------------------------------------------------------------
-	protected String getOutputPath(boolean create) {
+	protected final String getOutputPath(boolean create) {
+		return getOutputPath(create, null);
+	}
+
+	protected String getOutputPath(boolean create, String contentDir) {
 		int depth = 0;
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
 		for(StackTraceElement traceElement : trace) {
@@ -47,6 +53,11 @@ public abstract class AbstractOutputTest {
 		if(create) {
 			new File(outputPath).mkdirs();
 		}
+
+		if(contentDir != null) {
+			Temp.FileUtils_copyDir(contentDir, outputPath);
+		}
+
 		return outputPath;
 	}
 }

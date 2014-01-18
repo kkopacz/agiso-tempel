@@ -93,41 +93,69 @@ public class VelocityFileExtendEngine extends AbstractVelocityEngine {
 		String fileTmpPath = tempDir + "/" + fileTmp;
 
 		// plik do modyfikacjiczytany linia po lini
-		FileInputStream fstream = new FileInputStream(target);
-		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+		String line1;
+		BufferedReader reader1 = null;
+		FileInputStream fileStream1 = null;
 		StringBuilder fileContent = new StringBuilder();
-
-		try{
-			String line;
-			while((line = br.readLine()) != null){
+		try {
+			fileStream1 = new FileInputStream(target);
+			reader1 = new BufferedReader(new InputStreamReader(fileStream1));
+			while((line1 = reader1.readLine()) != null){
 				// update rozszerzenia
-				if(line.contains(extendPatern)){
+				if(line1.contains(extendPatern)){
 					//wczytanie zawartości rozszerzenia szablonu
-					FileInputStream fstream2 = new FileInputStream(entry.getTemplate() + "/"+ entry.getName());
-					BufferedReader br2 = new BufferedReader(new InputStreamReader(fstream2));
+					String line2;
+					BufferedReader reader2 = null;
+					FileInputStream fileStream2 = null;
 					try{
-						String line2;
-						while((line2 = br2.readLine()) != null){
+						fileStream2 = new FileInputStream(entry.getTemplate() + "/"+ entry.getName());
+						reader2 = new BufferedReader(new InputStreamReader(fileStream2));
+						while((line2 = reader2.readLine()) != null){
 							fileContent.append(line2).append("\n");
 						}
 					} finally{
-						br2.close();
+						if(reader2 != null) try {
+							reader2.close();
+						} catch(Exception e) {
+						}
+						if(fileStream2 != null) try {
+							fileStream2.close();
+						} catch(Exception e) {
+						}
 					}
 				}
 				// wiersze nie zmieniane (dodatkowo escapowane znaczniki '$' i '##'
-				fileContent.append(line.replace("##", "#[[##]]#").replace("$", "#[[$]]#")).append("\n");
+				fileContent.append(line1.replace("##", "#[[##]]#").replace("$", "#[[$]]#")).append("\n");
 			}
-		} finally{
-			br.close();
+		} finally {
+			if(reader1 != null) try {
+				reader1.close();
+			} catch(Exception e) {
+			}
+			if(fileStream1 != null) try {
+				fileStream1.close();
+			} catch(Exception e) {
+			}
 		}
 
 		// zapis do pliku tymczasowego
-		FileWriter fstreamWrite = new FileWriter(fileTmpPath);
-		BufferedWriter out = new BufferedWriter(fstreamWrite);
+		FileWriter fstreamWrite = null;
+		BufferedWriter out = null;
 		try {
+			fstreamWrite = new FileWriter(fileTmpPath);
+			out = new BufferedWriter(fstreamWrite);
+
 			out.write(fileContent.toString());
 		} finally {
-			out.close();
+			if(out != null) try {
+				out.flush();
+				out.close();
+			} catch (Exception e) {
+			}
+			if(fstreamWrite != null) try {
+				fstreamWrite.close();
+			} catch (Exception e) {
+			}
 		}
 
 		// przetwarzanie całości przez velocity i zapis do właściwego pliku (targeta)
@@ -140,20 +168,14 @@ public class VelocityFileExtendEngine extends AbstractVelocityEngine {
 
 			doVelocityTemplateMerge(entry.getName(), reader, context, writer);
 		} finally {
-			if(reader != null) {
-				try {
-					reader.close();
-				} catch(Exception e) {
-					throw new RuntimeException(e);
-				}
+			if(reader != null) try {
+				reader.close();
+			} catch(Exception e) {
 			}
-			if(writer != null) {
-				try {
-					writer.flush();
-					writer.close();
-				} catch(Exception e) {
-					throw new RuntimeException(e);
-				}
+			if(writer != null) try {
+				writer.flush();
+				writer.close();
+			} catch(Exception e) {
 			}
 		}
 

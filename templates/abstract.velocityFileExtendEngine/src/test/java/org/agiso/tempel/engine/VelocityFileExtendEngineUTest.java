@@ -32,13 +32,12 @@ import org.agiso.tempel.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
 
 /**
- * 
+ * Testy jednostkowe klasy silnika {@link VelocityFileExtendEngine}.
  * 
  * @author <a href="mailto:mklin@agiso.org">Michał Klin</a>
  */
 @TempelEngineTest(VelocityFileExtendEngine.class)
 public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testProcessFile1() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
@@ -46,23 +45,19 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key2", "value2");
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outFileName = "testProcessFile1.txt";
-		String outPath = getOutputPath(true) + "/" + outFileName;
+		String outPath = getOutputPath(true,
+				repositoryPath + "VelocityFileExtendEngineUTest") +
+				"/testProcessFile1.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "VelocityFileExtendEngineUTest",
 				"testProcessFile1.txt.EXTEND_LINE.vm"
 		);
-
-		// kopia do targeta przetwarzanego pliku
-		Temp.FileUtils_copyFile(repositoryPath + "VelocityFileExtendEngineUTest/" + outFileName, outPath);
-
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5);
+		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5) : md5;
 	}
 
-	@SuppressWarnings({ "rawtypes", "deprecation" })
 	@Test
 	public void testProcessFile2() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
@@ -72,28 +67,25 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key2", list);
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outFileName = "testProcessFile1.txt";
-		String outPath = getOutputPath(true) + "/" + outFileName;
+		String outPath = getOutputPath(true,
+				repositoryPath + "VelocityFileExtendEngineUTest") +
+				"/testProcessFile1.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "VelocityFileExtendEngineUTest",
 				"testProcessFile1.txt.EXTEND_LINE.vm"
 		);
 
-		// kopia do targeta przetwarzanego pliku
-		Temp.FileUtils_copyFile(repositoryPath + "VelocityFileExtendEngineUTest/" + outFileName, outPath);
-
 		Object val = modelMap.get("key2");
-		if(val instanceof ArrayList){
+		if(val instanceof ArrayList) {
 			Map<String, Object> modelMap2 = new HashMap<String, Object>();
-			modelMap2.put("key2", ((ArrayList) val).get(0));
+			modelMap2.put("key2", ((ArrayList<Object>)val).get(0));
 			engine.run(templateSource, modelMap2, outPath);
 		}
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5);
+		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5) : md5;
 	}
 
-	@SuppressWarnings({"deprecation", "unchecked" })
 	@Test
 	public void testProcessFile3() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
@@ -104,20 +96,18 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key2", list);
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outFileName = "testProcessFile2.txt";
-		String outPath = getOutputPath(true) + "/" + outFileName;
+		String outPath = getOutputPath(true,
+				repositoryPath + "VelocityFileExtendEngineUTest") +
+				"/testProcessFile2.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "VelocityFileExtendEngineUTest",
 				"testProcessFile2.txt.EXTEND_LINE.vm"
 		);
 
-		// kopia do targeta przetwarzanego pliku
-		Temp.FileUtils_copyFile(repositoryPath + "VelocityFileExtendEngineUTest/" + outFileName, outPath);
-
 		Object val = modelMap.get("key2");
-		if(val instanceof ArrayList){
+		if(val instanceof ArrayList) {
 			List<Object> listVal = (ArrayList<Object>)val;
-			for(int idx = 0; idx < listVal.size(); idx++){
+			for(int idx = 0; idx < listVal.size(); idx++) {
 				Map<String, Object> modelMap2 = new HashMap<String, Object>();
 				modelMap2.put("key2", listVal.get(idx));
 				engine.run(templateSource, modelMap2, outPath);
@@ -125,10 +115,9 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		}
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "16da266e446a2f65d9acdf40a7934225".equals(md5);
+		assert "16da266e446a2f65d9acdf40a7934225".equals(md5) : md5;
 	}
 
-	@SuppressWarnings({"deprecation" })
 	@Test
 	public void testProcessFile4() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
@@ -139,24 +128,19 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key2", list);
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outFileName = "testProcessFile3.txt";
-		String outPath = getOutputPath(true) + "/" + outFileName;
+		String outPath = getOutputPath(true,
+				repositoryPath + "VelocityFileExtendEngineUTest") +
+				"/testProcessFile3.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "VelocityFileExtendEngineUTest",
 				"testProcessFile3.txt.EXTEND_LINE.vm"
 		);
-
-		// kopia do targeta przetwarzanego pliku
-		Temp.FileUtils_copyFile(repositoryPath + "VelocityFileExtendEngineUTest/" + outFileName, outPath);
-
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		//System.out.println(md5);
-		assert "577334b8abc8ca3e517ac65150170932".equals(md5);
+		assert "577334b8abc8ca3e517ac65150170932".equals(md5) : md5;
 	}
 
-	@SuppressWarnings({"deprecation" })
 	@Test
 	public void testProcessFile5() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
@@ -171,20 +155,16 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key3", list2);
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outFileName = "testProcessFile4.txt";
-		String outPath = getOutputPath(true) + "/" + outFileName;
+		String outPath = getOutputPath(true,
+				repositoryPath + "VelocityFileExtendEngineUTest") +
+				"/testProcessFile4.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "VelocityFileExtendEngineUTest",
 				"testProcessFile4.txt.EXTEND_LINE.vm"
 		);
-
-		// kopia do targeta przetwarzanego pliku
-		Temp.FileUtils_copyFile(repositoryPath + "VelocityFileExtendEngineUTest/" + outFileName, outPath);
-
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		//System.out.println(md5);
-		assert "4ee2590760b85ff39246cf1f0c846391".equals(md5);
+		assert "4ee2590760b85ff39246cf1f0c846391".equals(md5) : md5;
 	}
 }
