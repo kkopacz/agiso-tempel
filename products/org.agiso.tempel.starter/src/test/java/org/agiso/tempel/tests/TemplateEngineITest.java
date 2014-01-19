@@ -44,7 +44,7 @@ public class TemplateEngineITest extends AbstractOutputTest {
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "aafffc5e362b45e7c28ca3593067e17d".equals(md5);
+		assert "aafffc5e362b45e7c28ca3593067e17d".equals(md5) : md5;
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class TemplateEngineITest extends AbstractOutputTest {
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "00040f9b635713c4eb30c910d55f8c11".equals(md5);
+		assert "00040f9b635713c4eb30c910d55f8c11".equals(md5) : md5;
 	}
 
 	@Test
@@ -72,6 +72,6 @@ public class TemplateEngineITest extends AbstractOutputTest {
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "3925e499a09d461df7036bb111fdce61".equals(md5);
+		assert "3925e499a09d461df7036bb111fdce61".equals(md5) : md5;
 	}
 }

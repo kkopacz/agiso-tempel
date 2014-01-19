@@ -66,7 +66,7 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "6d29fc434271b7b3e19c189138a07743".equals(md5);
+		assert "6d29fc434271b7b3e19c189138a07743".equals(md5) : md5;
 	}
 
 //	public static class TestParamConverter implements ITemplateParamConverter<String> {

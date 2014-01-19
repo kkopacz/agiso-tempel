@@ -59,6 +59,6 @@ public class TemplateParamValidatorITest extends AbstractOutputTest {
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 		System.out.println(md5);
-//		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5);
+//		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5) : md5;
 	}
 }

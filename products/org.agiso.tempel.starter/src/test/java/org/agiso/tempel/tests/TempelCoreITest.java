@@ -48,7 +48,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 //
 //		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
 //		System.out.println(md5);
-//		assert "31c287aec4ff50269de4523bdfc4707b".equals(md5);
+//		assert "31c287aec4ff50269de4523bdfc4707b".equals(md5) : md5;
 //	}
 
 //	--------------------------------------------------------------------------
@@ -90,6 +90,6 @@ public class TempelCoreITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "afc6decadb5da14f7aa120b0adf1cb96".equals(md5);
+		assert "afc6decadb5da14f7aa120b0adf1cb96".equals(md5) : md5;
 	}
 }

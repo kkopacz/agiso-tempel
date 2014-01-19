@@ -66,7 +66,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "5eab6c02e2877f31805c65e7e2aeba87".equals(md5);
+		assert "5eab6c02e2877f31805c65e7e2aeba87".equals(md5) : md5;
 	}
 
 	/**
@@ -97,6 +97,6 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "7adef6b68dbba75ceff3dbafc1435465".equals(md5);
+		assert "7adef6b68dbba75ceff3dbafc1435465".equals(md5) : md5;
 	}
 }

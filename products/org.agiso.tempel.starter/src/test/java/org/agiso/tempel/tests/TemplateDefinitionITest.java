@@ -63,7 +63,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5);
+		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5) : md5;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "b8cbf54abdf135b7000bcff1c2e0a83d".equals(md5);
+		assert "b8cbf54abdf135b7000bcff1c2e0a83d".equals(md5) : md5;
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "06a1c46145a9170665c73a59d9d934b5".equals(md5);
+		assert "06a1c46145a9170665c73a59d9d934b5".equals(md5) : md5;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "ec9b716697122eef04a8521d19802bc8".equals(md5);
+		assert "ec9b716697122eef04a8521d19802bc8".equals(md5) : md5;
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "baf37424f517639cac4cac38defcf028".equals(md5);
+		assert "baf37424f517639cac4cac38defcf028".equals(md5) : md5;
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "e37f056869b7e3351fefa1c5cf43c523".equals(md5);
+		assert "e37f056869b7e3351fefa1c5cf43c523".equals(md5) : md5;
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "4cda7a3e71085716e3f53bff93cfcc29".equals(md5);
+		assert "4cda7a3e71085716e3f53bff93cfcc29".equals(md5) : md5;
 	}
 
 	/**
@@ -259,7 +259,7 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "18454eb8cf137bfe2f05fe4b20db3e49".equals(md5);
+		assert "18454eb8cf137bfe2f05fe4b20db3e49".equals(md5) : md5;
 	}
 
 	/**
@@ -287,6 +287,6 @@ public class TemplateDefinitionITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "eabcbb3f24682664c844ed3a8031a3f5".equals(md5);
+		assert "eabcbb3f24682664c844ed3a8031a3f5".equals(md5) : md5;
 	}
 }

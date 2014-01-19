@@ -60,6 +60,6 @@ public class InputParamsITest extends AbstractOutputTest {
 		});
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1ef4579e5f7ca5da8da5010ecb37cf2a".equals(md5);
+		assert "1ef4579e5f7ca5da8da5010ecb37cf2a".equals(md5) : md5;
 	}
 }
