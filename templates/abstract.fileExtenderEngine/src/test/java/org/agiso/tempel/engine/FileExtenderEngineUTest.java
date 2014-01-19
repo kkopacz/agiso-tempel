@@ -53,8 +53,7 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		// Przygotowywanie katalogu wyjściowego i uruchamianie silnika:
 		String outPath = getOutputPath(true) + "/" + fileName;
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "/FileExtenderEngineUTest/resources",
-				"testBean.java.vmp");
+				repositoryPath + "/FileExtenderEngineUTest/resources", "testBean.java.vm");
 		String path = repositoryPath + "FileExtenderEngineUTest/" + fileName;
 		File testBeanFile = new File(path);
 		
@@ -83,7 +82,7 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		String outPath = getOutputPath(true) + "/" + fileName;
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "/FileExtenderEngineUTest/resources",
-				"testBean2.java.vmp");
+				"testBean2.java.vm");
 		String path = repositoryPath + "FileExtenderEngineUTest/" + fileName;
 		File testBeanFile = new File(path);
 		
