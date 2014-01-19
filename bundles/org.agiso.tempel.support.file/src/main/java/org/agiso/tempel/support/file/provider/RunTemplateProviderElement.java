@@ -66,7 +66,7 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 	@Override
 	protected void doInitialize() throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		int index = path.lastIndexOf("/repo/");
+		int index = path.lastIndexOf("/lib/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
@@ -123,6 +123,11 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 								@Override
 								public ITemplateSource createTemplateSource(Template<?> template, String source) {
 									try {
+										// TODO: Dla szablonów lokalnych nie posiadających własnych zasobów
+										// można rozważyć dopuszczenie braku elementów groupId, templateId i version
+										// w ich definicji i wywoływanie tylko z wykorzystaniem STN. W takiej sytuacji
+										// getTemplatePath(template) zwraca wartość null i trzeba przygotować osobną
+										// implementację interfejsu ITemplateSource (np. NullTemplateSource).
 										return new FileTemplateSource(getTemplatePath(template), source);
 									} catch(IOException e) {
 										throw new RuntimeException(e);

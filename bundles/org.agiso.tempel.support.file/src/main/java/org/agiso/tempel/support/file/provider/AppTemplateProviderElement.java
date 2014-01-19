@@ -66,7 +66,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 	@Override
 	protected void doInitialize() throws IOException {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		int index = path.lastIndexOf("/repo/");
+		int index = path.lastIndexOf("/lib/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):

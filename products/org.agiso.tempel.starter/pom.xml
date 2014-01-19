@@ -29,6 +29,7 @@
 					<showConsoleWindow>true</showConsoleWindow>
 					<extraJvmArguments>-Dfile.encoding=UTF-8</extraJvmArguments>
 					<assembleDirectory>${project.build.directory}/appassembler</assembleDirectory>
+					<repositoryName>lib</repositoryName>
 					<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
 					<platforms>
 						<platform>windows</platform>
@@ -51,7 +52,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<configuration>
@@ -59,7 +60,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>copy-settings</id>
+						<id>copy-conf</id>
 						<phase>package</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -67,15 +68,35 @@
 						<configuration>
 							<resources>
 								<resource>
-									<directory>src/main/settings</directory>
+									<directory>src/main/conf</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
-							<outputDirectory>${project.build.directory}/appassembler/etc</outputDirectory>
+							<outputDirectory>${project.build.directory}/appassembler/conf</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>create-template</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="${project.build.directory}/appassembler/templates/lib"/>
+								<mkdir dir="${project.build.directory}/appassembler/templates/repo"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
