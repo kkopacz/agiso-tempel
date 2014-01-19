@@ -44,12 +44,16 @@
 		<para>W trakcie przetwarzania szablonu wejściowego powiązany z nim
 		silnik generatora może wykorzystywać wartości pewnych
 		<emphasis>parametrów wejściowych</emphasis>. Informacje o tym jakie
-		to są parametry, jakie mają mieć typy, wartości domyślne, wartości
-		dopuszczalne, etc., odczytywane są z tzw. <emphasis>definicji
+		są to parametry, jakie mają mieć typy, wartości domyślne, jak są
+		konwertowane i walidowane, odczytywane są z tzw. <emphasis>definicji
 		szablonu</emphasis>. Na jej podstawie, w fazie przygotowania do
 		uruchomienia silnika, odbywa się wypełnianie wartości tych parametrów.
-		Proces ten nazywany jest <emphasis role="strong-italic">uruchamianiem
-		szablonu</emphasis>.</para>
+		</para>
+
+		<para>Proces przetwarzania definicji szablonu obejmujący pobranie,
+		konwersję i walidację wartości jego parametrów, oraz wykonanie kodu
+		silnika generatora nazywany jest <emphasis role="strong-italic">
+		uruchamianiem szablonu</emphasis>.</para>
 	</section>
 
 	<section>
@@ -58,7 +62,7 @@
 		<para>Tempel uruchamia kod silników generatorów, który z założenia
 		ma za zadanie generację pewnych zasobów w oparciu o inne zasoby
 		(szablony). Może więc znaleźć zastosowanie wszędzie tam, gdzie
-		wymagane jest wielokrotne, często powtarzane tworzenie pewnych
+		wymagane jest wielokrotne, często powtarzane przygotowywanie pewnych
 		treści, drzew katalogów czy zestawów plików cechujących się:
 		<orderedlist numeration="arabic" spacing="compact">
 			<listitem>
@@ -75,7 +79,7 @@
 
 		<para>Tempel został stworzony z zamiarem jego wykorzystania do
 		generacji zasobów takich jak projekty programistyczne i ich
-		elementy (moduły, zestawy klas, etc.), szablony dokumentacji czy
+		elementy (moduły, zestawy klas, etc.), szablony dokumentacji, czy
 		strony WWW. Przy takich zastosowaniach generowane pliki są
 		przeważnie plikami tekstowymi w różnych formatach
 		(<filename>txt</filename>, <filename>java</filename>,
@@ -133,10 +137,12 @@
 │   ├── org.agiso.tempel.starter.jar
 │   └── ...
 ├── conf
-│   ├── tempel.xml
-│   └── maven.xml
-└── repository
-    └── ...</screen></para>
+│   └── tempel.xml
+└── templates
+    ├── lib
+    │   └── ...
+    └── repo
+        └── ...</screen></para>
 
 		<para>Katalog <filename>bin</filename> zawiera skrypty powłoki
 		umożliwiające uruchomienie narzędzia w środowiku Windows (plik
@@ -148,15 +154,16 @@
 		biblioteki wymagane do jego działania.</para>
 
 		<para>Katalogi <filename>conf</filename> i
-		<filename>repository</filename> stanowią aplikacyjne
+		<filename>templates</filename> stanowią aplikacyjne
 		(instalacyjne) repozytorium szablonów. W pierwszym z nich znajduje
 		się plik <filename>tempel.xml</filename> z konfiguracją globalną i
-		definicjami szablonów. W drugim przechowywane są zasoby tych
-		szablonów.</para>
+		definicjami szablonów. W drugim przechowywane są dodatkowe biblioteki
+		wykorzystywane przez te szablony (<filename>lib</filename>) i ich
+		zasoby (<filename>repo</filename>).</para>
 
-		<para>Plik <filename>maven.xml</filename> wykorzystywany jest do
+		<!-- para>Plik <filename>maven.xml</filename> wykorzystywany jest do
 		konfiguracji mechanizmu wyszukiwania szablonów w repozytoriach
-		<link xl:href="http://maven.org/">Apache Maven</link>.</para>
+		<link xl:href="http://maven.org/">Apache Maven</link>.</para -->
 	</section>
 
 	<section>
@@ -169,10 +176,9 @@
 			<emphasis>plików konfiguracyjnych</emphasis> na <emphasis>poziomie
 			globalnym</emphasis> (w katalogu gdzie Tempel został
 			zainstalowany) oraz na <emphasis>poziomie użytkownika</emphasis>
-			(w katalogu domowym użytkownika). Dodatkowo szablony lokalne
-			definiuje się na <emphasis>poziomie uruchomieniowym</emphasis> w
-			katalogu bieżącym, w którym następuje uruchomienie narzędzia.
-			</para>
+			(w jego lokalizacji domowej). Dodatkowo szablony lokalne definiuje
+			się na <emphasis>poziomie uruchomieniowym</emphasis> w katalogu
+			bieżącym, w którym następuje uruchomienie narzędzia.</para>
 
 			<para>Mechanizm konfiguracji obejmujący wiele <emphasis>poziomów
 			konfiguracyjnych</emphasis> powoduje, że konfiguracja brana pod
@@ -199,9 +205,6 @@
 						<listitem>
 							<para><filename>/katalog/instalacyjny/tempel/conf/tempel.xml</filename></para>
 						</listitem>
-						<listitem>
-							<para><filename>/katalog/instalacyjny/tempel/conf/maven.xml</filename></para>
-						</listitem>
 					</itemizedlist></para>
 				</listitem>
 				<listitem>
@@ -209,6 +212,9 @@
 					<itemizedlist spacing="compact">
 						<listitem>
 							<para><filename>/katalog/domowy/użytkownika/.tempel/tempel.xm</filename></para>
+						</listitem>
+						<listitem>
+							<para><filename>/katalog/domowy/użytkownika/.tempel/maven.xml</filename></para>
 						</listitem>
 					</itemizedlist></para>
 				</listitem>
@@ -231,7 +237,7 @@
 			została szczegółowo przedstawiona w TODO.</para>
 
 			<para>Plik <filename>maven.xml</filename> występuje jedynie na poziomie
-			globalnym i wykorzystywany jest do konfiguracji sposobu współpracy
+			użytkownika i wykorzystywany jest do konfiguracji sposobu współpracy
 			narzędzia Tempel z repozytoriami Apache Maven.</para>
 		</section>
 	</section>
@@ -239,9 +245,9 @@
 	<section>
 		<title>Uruchamianie</title>
 
-		<para>Uruchamianie i używanie narzędzia Tempel odbywa się z
-		poziomu linii komend systemu operacyjnego i polega na wywoływaniu
-		polecenia <command>tpl</command> z odpowiednimi przełącznikami. W
+		<para>Uruchamianie narzędzia Tempel odbywa się z poziomu linii
+		komend systemu operacyjnego i polega na wywoływaniu polecenia
+		<command>tpl</command> z odpowiednimi przełącznikami. W
 		większości przypadków i przy normalnym użytkowaniu, gdy wywołanie
 		ma na celu wykonanie szablonu w trybie interaktywnym, określenie
 		parametrów linii komend sprowadza się jedynie do wskazania szablonu
