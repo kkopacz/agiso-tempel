@@ -94,7 +94,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+		when(paramReader.getParamValue(eq("path"), anyString(), anyString()))
 			.thenReturn("parent/newDirectory");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
@@ -107,7 +107,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
 		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Directory name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
@@ -124,7 +124,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+		when(paramReader.getParamValue(eq("path"), anyString(), anyString()))
 			.thenReturn("parent/newDirectory");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
@@ -137,7 +137,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
 		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Directory name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
@@ -154,7 +154,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+		when(paramReader.getParamValue(eq("path"), anyString(), anyString()))
 			.thenReturn("parent/newDirectory");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
@@ -167,7 +167,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
 		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Directory name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
@@ -185,7 +185,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
+		when(paramReader.getParamValue(eq("path"), anyString(), anyString()))
 			.thenReturn("parent/newDirectory");
 
 		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
@@ -198,7 +198,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
 		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("name", "Directory name", null);
+		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));

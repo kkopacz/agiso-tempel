@@ -1,7 +1,7 @@
 # abstract.mkdir #
 
 Abstrakcyjny szablon przeznaczony dla *Tempel* umożliwiający tworzenie
-pojedynczych katalogów w lokalnym systemie plików. Dostarcza klasę silnika
+**pojedynczych** katalogów w lokalnym systemie plików. Dostarcza klasę silnika
 [`org.agiso.tempel.engine.MakeDirEngine`][MakeDirEngine], który tworzy katalog
 o nazwie przekazanej poprzez parametr `target`.
 

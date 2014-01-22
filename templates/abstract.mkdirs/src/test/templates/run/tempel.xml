@@ -9,11 +9,11 @@
 		<engine class="org.agiso.tempel.engine.MakeDirsEngine" />
 
 		<params>
-			<param key="name" name="Directory name" />
+			<param key="path" name="Directory path" />
 		</params>
 
 		<resource>
-			<target>${name}</target>
+			<target>${path}</target>
 		</resource>
 	</template>
 
@@ -23,11 +23,11 @@
 		<version>testEngineInvocation_02</version>
 
 		<params>
-			<param key="name" name="Directory name" />
+			<param key="path" name="Directory path" />
 		</params>
 
 		<resource>
-			<target>${name}</target>
+			<target>${path}</target>
 		</resource>
 	</template>
 
@@ -38,7 +38,7 @@
 		<version>testReferenceTemplateInvocation_01</version>
 
 		<params>
-			<param key="name" name="Directory name" />
+			<param key="path" name="Directory path" />
 		</params>
 
 		<references>
@@ -48,7 +48,7 @@
 				<version>1.0.0</version>
 
 				<resource>
-					<target>${top.name}</target>
+					<target>${top.path}</target>
 				</resource>
 			</reference>
 		</references>
@@ -60,7 +60,7 @@
 		<version>testReferenceTemplateInvocation_02</version>
 
 		<params>
-			<param key="name" name="Directory name" />
+			<param key="path" name="Directory path" />
 		</params>
 
 		<references>
@@ -70,7 +70,7 @@
 				<version>1.0.0</version>
 
 				<resource>
-					<target>${top.name}</target>
+					<target>${top.path}</target>
 				</resource>
 			</reference>
 		</references>
