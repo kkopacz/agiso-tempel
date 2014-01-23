@@ -30,9 +30,6 @@
 		<!-- module>abstract.fileExtenderEngine</module>
 		<module>abstract.directoryExtenderEngine</module -->
 
-		<module>base.mkdir</module>
-		<module>base.mkdirs</module>
-
 		<module>eclipse.project.general</module>
 		<module>eclipse.project.java</module>
 

@@ -70,7 +70,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
-			settingsPath = path.substring(0, index) + "/templates/tempel.xml";
+			settingsPath = path.substring(0, index) + "/conf/tempel.xml";
 			librariesPath = path.substring(0, index) + "/templates/lib";
 			repositoryPath = path.substring(0, index) + "/templates/repo";
 		} else {

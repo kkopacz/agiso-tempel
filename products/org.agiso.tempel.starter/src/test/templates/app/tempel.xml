@@ -7,4 +7,56 @@
 		<property_01>value 01 (system)</property_01>
 		<property_02>value 02: ${property_01}</property_02>
 	</properties>
+
+	<!--
+	  - Tworzy w katalogu roboczym folder o nazwie przekazanej przez
+	  - parametr 'name'
+	  -->
+	<template key="mkdir">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>mkdir</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="name" name="Directory name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdir</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.name}</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
+
+	<!--
+	  - Tworzy w katalogu roboczym ścieżkę folderów o nazwach przekazanych
+	  - przez parametr 'path'
+	  -->
+	<template key="mkdirs">
+		<groupId>org.agiso.tempel.templates</groupId>
+		<templateId>mkdirs</templateId>
+		<version>1.0.0</version>
+
+		<params>
+			<param key="path" name="Directory path name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>abstract.mkdirs</templateId>
+				<version>1.0.0</version>
+
+				<resource>
+					<target>${top.path}</target>
+				</resource>
+			</reference>
+		</references>
+	</template>
 </tempel>

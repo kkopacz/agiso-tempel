@@ -1,4 +1,4 @@
-/* org.agiso.tempel.engine.MakeDirTemplateITest (18-01-2014)
+/* org.agiso.tempel.tests.MakeDirTemplateITest (18-01-2014)
  * 
  * MakeDirTemplateITest.java
  * 
@@ -16,20 +16,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.engine;
+package org.agiso.tempel.tests;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
-import java.util.HashMap;
 
-import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
-import org.agiso.tempel.support.test.provider.ArchiveTemplateProviderElement;
-import org.agiso.tempel.support.test.provider.IArchiveTemplateProviderElement;
-import org.agiso.tempel.test.AbstractTemplateTest;
+import org.agiso.tempel.starter.Bootstrap;
 import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
@@ -43,28 +39,11 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class MakeDirTemplateITest extends AbstractTemplateTest {
-	private static final String GROUP_ID    = "org.agiso.tempel.templates";
-	private static final String TEMPLATE_ID = "base.mkdir";
-	private static final String VERSION     = "1.0.0";
-
-//	--------------------------------------------------------------------------
-	public MakeDirTemplateITest() {
-		super(GROUP_ID, TEMPLATE_ID, VERSION);
-	}
-
-//	--------------------------------------------------------------------------
+public class MakeDirTemplateITest extends AbstractOutputTest {
 	/**
-	 * Test bezpośredniego wywołania szablonu <code>base.mkdir</code>.
-	 * 
-	 * FIXME: Test nie działa, ponieważ nic nie dostarcza szablonu 'abstract.mkdir'.
-	 * Należy rozbudować klasę {@link ArchiveTemplateProviderElement}, utworzyć
-	 * nową klasę ClasspathTemplateProviderElement, bądź ręcznie dodać bibliotekę
-	 * z szablonem poprzez metodę {@link IArchiveTemplateProviderElement#addArchive(
-	 * String, String, String, org.jboss.shrinkwrap.api.Archive)} (tak jak jest
-	 * to robione w {@link AbstractTemplateTest#createTempelInstance()}).
+	 * Test bezpośredniego wywołania szablonu (polecenia) <code>mkdir</code>.
 	 */
-//	@Test
+	@Test
 	public void testTemplateInvocation() throws Exception {
 		String outPath = getOutputPath(true);
 
@@ -73,13 +52,10 @@ public class MakeDirTemplateITest extends AbstractTemplateTest {
 		when(paramReader.getParamValue(eq("name"), anyString(), anyString()))
 			.thenReturn("newDirectory");
 
-		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
-		ITempel tempel = createTempelInstance();
-		tempel.setParamReader(paramReader);
-		tempel.startTemplate(
-				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
-				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
-		);
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {"mkdir",
+				"-d " + outPath
+		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
 		InOrder inOrder = inOrder(paramReader);
@@ -87,6 +63,6 @@ public class MakeDirTemplateITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "d41d8cd98f00b204e9800998ecf8427e".equals(md5) : md5;
+		assert "ff25e77df10a16b09de1c524300051ed".equals(md5) : md5;
 	}
 }

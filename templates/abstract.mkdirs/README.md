@@ -1,10 +1,13 @@
 # abstract.mkdirs #
 
-Abstrakcyjny szablon przeznaczony dla *Tempel*. Działa analogicznie do szablonu
-[`abstract.mkdir`][mkdir] z tą różnicą, że umożliwia tworzenie ścieżek katalogów
-(tj. katalogu wraz z jego katalogami nadrzędnymi jeśli te nie istnieją).
-Dostarcza klasę silnika [`org.agiso.tempel.engine.MakeDirsEngine`]
-[MakeDirsEngine], który tworzy ścieżkę definiowaną poprzez parametr `target`.
+Szablon abstrakcyjny przeznaczony do użycia w definicjach szablonów w sekcji
+`<references>`. Działa analogicznie do szablonu [`abstract.mkdir`][mkdir]
+z tą różnicą, że umożliwia tworzenie całej ścieżki folderów (tj. folderu wraz
+z jego folderami nadrzędnymi jeśli te nie istnieją). Dostarcza klasę silnika
+[`org.agiso.tempel.engine.MakeDirsEngine`][MakeDirsEngine], który tworzy
+ścieżkę zdefiniowaną poprzez znacznik `<target>` sekcji `<resource>`.
+
+
 
 ## Sposób użycia ##
 
@@ -33,8 +36,8 @@ jedynie jako szablon referencyjny:
 </template>
 ```
 
-Jeżeli klasa silnika [`MakeDirsEngine`][MakeDirsEngine] znajduje sięna ścieżce
-uruchomieniowej, to może on zostać użyty jawnie w definicji własnego szablonu:
+Jeżeli klasa silnika [`MakeDirsEngine`][MakeDirsEngine] znajduje się na ścieżce
+uruchomieniowej, to może zostać jawnie użyta w definicji szablonu:
 
 ```xml
 <template engine="org.agiso.tempel.engine.MakeDirsEngine">
@@ -50,5 +53,15 @@ uruchomieniowej, to może on zostać użyty jawnie w definicji własnego szablon
 </template>
 ```
 
-[mkdir]: ../abstract.mkdir/
+### Zasób wejściowy ###
+
+Szablon `abstract.mkdirs` nie przetwarza żadnego zasobu wejściowego.
+
+### Zasób wyjściowy ###
+
+`abstract.mkdirs` tworzy w katalogu roboczym ścieżkę folderów. W razie potrzeby
+trworzy foldery nadrzędne dla folderu ostatniego poziomu.
+
+
+[mkdir]: ../abstract.mkdir/README.md#abstractmkdirs
 [MakeDirsEngine]: src/main/java/org/agiso/tempel/engine/MakeDirsEngine.java
