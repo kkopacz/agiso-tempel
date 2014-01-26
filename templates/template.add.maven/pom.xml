@@ -39,11 +39,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.support.test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
 			<artifactId>org.agiso.tempel.support.maven</artifactId>
 			<scope>test</scope>
 		</dependency>

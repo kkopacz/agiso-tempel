@@ -48,7 +48,7 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 //	--------------------------------------------------------------------------
 	@Override
 	public int getOrder() {
-		return -1;
+		return -20;
 	}
 
 	@Override
