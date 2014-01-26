@@ -1,3 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!--
+	  - Utworzenie w oparciu o szablon 'eclipse.project.java' polecenia (tj.
+	  - szablonu bez FQTN) 'testReferenceTemplateInvocation_01':
+	  -->
+	<template key="testReferenceTemplateInvocation_01">
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>eclipse.project.java</templateId>
+				<version>1.0.0</version>
+			</reference>
+		</references>
+	</template>
+
+	<!--
+	  - Utworzenie szablonu grupującego 'testReferenceTemplateInvocation_02'
+	  - w oparciu o szablon 'eclipse.project.general':
+	  -->
+	<template key="testReferenceTemplateInvocation_02">
+		<params>
+			<param key="name" name="Project name" />
+		</params>
+
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>eclipse.project.java</templateId>
+				<version>1.0.0</version>
+
+				<params>
+					<param key="name">
+						<fixed>true</fixed>
+						<value>${top.name.toUpperCase()}</value>
+					</param>
+				</params>
+			</reference>
+		</references>
+	</template>
 </tempel>
