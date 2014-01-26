@@ -48,25 +48,25 @@
 		<commons-cli.version>1.2</commons-cli.version>
 
 		<!-- Spring Framework dependencies -->
-		<spring.version>3.2.4.RELEASE</spring.version>
+		<spring.version>4.0.0.RELEASE</spring.version>
 
 		<!-- ShrinkWrap dependencies -->
-		<shrinkwrap.version>1.0.1</shrinkwrap.version>
-		<shrinkwrap-resolver.version>2.0.1</shrinkwrap-resolver.version>
+		<shrinkwrap.version>1.2.1</shrinkwrap.version>
+		<shrinkwrap-resolver.version>2.0.2</shrinkwrap-resolver.version>
 
 		<!-- Maven, Aether & Wagon dependencies -->
 		<aether.version>1.13.1</aether.version>
 		<maven.version>3.0.5</maven.version>
-		<wagon.version>2.4</wagon.version>
+		<wagon.version>2.6</wagon.version>
 
 		<!-- Other dependencies -->
-		<xstream.version>1.4.3</xstream.version>
+		<xstream.version>1.4.6</xstream.version>
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
-		<guava.version>13.0.1</guava.version>
+		<guava.version>16.0</guava.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.7</testng.version>
+		<testng.version>6.8.7</testng.version>
 		<mockito.version>1.9.5</mockito.version>
 	</properties>
 
@@ -287,16 +287,16 @@
 				<artifactId>wagon-http-lightweight</artifactId>
 				<version>${wagon.version}</version>
 			</dependency>
-			<!-- dependency>
+			<dependency>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-http</artifactId>
 				<version>${wagon.version}</version>
-			</dependency -->
-			<!-- dependency>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ssh</artifactId>
 				<version>${wagon.version}</version>
-			</dependency -->
+			</dependency>
 
 			<!-- Other dependencies -->
 			<dependency>
