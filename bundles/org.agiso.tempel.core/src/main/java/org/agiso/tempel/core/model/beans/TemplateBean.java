@@ -29,6 +29,7 @@ import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateReference;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
@@ -38,6 +39,10 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 @XStreamAlias("template")
 public class TemplateBean extends TemplateReferenceBean implements Template<TemplateEngineBean> {
+	@XStreamAsAttribute
+	@XStreamAlias("abstract")
+	private boolean abstrct;
+
 	private TemplateEngineBean engine;
 
 	private List<TemplateReference> references;
@@ -54,6 +59,14 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 	}
 
 //	--------------------------------------------------------------------------
+	@Override
+	public boolean isAbstract() {
+		return abstrct;
+	}
+	public void setAbstract(boolean abstrct) {
+		this.abstrct = abstrct;
+	}
+
 	@Override
 	public TemplateEngineBean getEngine() {
 		return engine;

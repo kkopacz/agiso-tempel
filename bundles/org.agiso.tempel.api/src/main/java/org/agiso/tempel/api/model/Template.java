@@ -30,6 +30,8 @@ import org.agiso.tempel.api.ITemplateSourceFactory;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public interface Template<E extends TemplateEngine> extends TemplateReference {
+	public boolean isAbstract();
+
 	public E getEngine();
 
 	/**

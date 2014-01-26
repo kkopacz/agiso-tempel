@@ -27,6 +27,7 @@ import java.util.HashMap;
 import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
+import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
 import org.agiso.tempel.test.AbstractTemplateTest;
 import org.mockito.InOrder;
 import org.testng.annotations.Test;
@@ -57,31 +58,17 @@ public class VelocityFileTemplateITest extends AbstractTemplateTest {
 	 * </br>
 	 * Jego wywołanie kończy się błędem, ponieważ szablon jest oznaczony jako
 	 * abstrakcyjny.
-	 * 
-	 * FIXME: Poprawić po implementacji obsługi atrybutu 'abstract'
-	 * 
-	 * @throws Exception
 	 */
-	@Test(expectedExceptions = RuntimeException.class /* FIXME: expectedExceptions = ... */)
+	@Test(expectedExceptions = AbstractTemplateException.class)
 	public void testAbstractTemplateInvocation() throws Exception {
-		String outPath = getOutputPath(true);
+		String outPath = getOutputPath(false);
 
-		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
-		IParamReader paramReader = mock(IParamReader.class);
-
-		// Ustawienie implementacji IParamReader'a i wykonanie szablonu:
+		// Próba wykonania szablonu abstrakcyjnego 'abstract.velocityFileEngine':
 		ITempel tempel = createTempelInstance();
-		tempel.setParamReader(paramReader);
 		tempel.startTemplate(
 				GROUP_ID + ":" + TEMPLATE_ID + ":" + VERSION,
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
-
-		// Weryfikacja wywołań poleceń odczytu paramtrów:
-		verifyNoMoreInteractions(paramReader);
-
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "1de00333e6819030285a9283f87e165c".equals(md5) : md5;
 	}
 
 	@Test

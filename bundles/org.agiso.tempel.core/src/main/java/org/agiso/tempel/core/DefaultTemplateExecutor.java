@@ -48,6 +48,7 @@ import org.agiso.tempel.api.model.TemplateResource;
 import org.agiso.tempel.core.converter.DateParamConverter;
 import org.agiso.tempel.core.converter.IntegerParamConverter;
 import org.agiso.tempel.core.converter.LongParamConverter;
+import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -101,6 +102,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		Template<?> template = templateProvider.get(templateName, null, null, null);
 		if(template == null) {
 			throw new RuntimeException("Nie znaleziono szablonu " + templateName);
+		}
+		if(template.isAbstract()) {
+			throw new AbstractTemplateException(templateName);
 		}
 
 		// Weryfikowanie definicji szablonu, szablonu nadrzędnego i wszystkich
