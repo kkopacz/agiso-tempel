@@ -124,7 +124,9 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			String gId = Temp.StringUtils_emptyIfBlank(template.getGroupId());
 			String tId = Temp.StringUtils_emptyIfBlank(template.getTemplateId());
 			String ver = Temp.StringUtils_emptyIfBlank(template.getVersion());
-			templateRepository.put(null, gId, tId, ver, template);
+			if(!Temp.StringUtils_isBlank(gId)) {
+				templateRepository.put(null, gId, tId, ver, template);
+			}
 
 			String key = template.getKey();
 			if(!Temp.StringUtils_isBlank(key)) {

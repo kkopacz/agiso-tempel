@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<template key="testEngineInvocation_01">
-		<!-- TODO (TPL#9): Definicja szablonu bez FQTN -->
-		<groupId>org.agiso.tempel.engine</groupId>
-		<templateId>MakeDirTemplateITest</templateId>
-		<version>testEngineInvocation_01</version>
-
 		<engine class="org.agiso.tempel.engine.MakeDirEngine" />
 
 		<params>
@@ -32,11 +27,6 @@
 	</template>
 
 	<template key="testReferenceTemplateInvocation_01">
-		<!-- TODO (TPL#9): Definicja szablonu bez FQTN -->
-		<groupId>org.agiso.tempel.engine</groupId>
-		<templateId>MakeDirTemplateITest</templateId>
-		<version>testReferenceTemplateInvocation_01</version>
-
 		<params>
 			<param key="name" name="Directory name" />
 		</params>

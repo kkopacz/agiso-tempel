@@ -60,7 +60,7 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 				vMap = new HashMap<String, Template<?>>();
 				gtvTable.put(groupId, templateId, vMap);
 			} else if(vMap.containsKey(version)) {
-				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
+				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version + " (" + key + ")");
 			}
 			vMap.put(version, template);
 		} else if(key.indexOf(':') > 0) {
@@ -74,7 +74,7 @@ public class HashBasedTemplateRepository implements ITemplateRepository {
 				vMap = new HashMap<String, Template<?>>();
 				gtvTable.put(groupId, templateId, vMap);
 			} else if(vMap.containsKey(version)) {
-				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version);
+				throw new IllegalStateException("Powtórzona definicja szablonu " + groupId + ":" + templateId + ":" + version + " (" + key + ")");
 			}
 			vMap.put(version, template);
 		} else {

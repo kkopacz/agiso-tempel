@@ -30,6 +30,7 @@ import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.impl.FileTemplateSource;
+import org.agiso.tempel.api.impl.NullTemplateSource;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.support.base.provider.BaseTemplateProviderElement;
@@ -123,8 +124,11 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 								templateRepository, new ITemplateSourceFactory() {
 									@Override
 									public ITemplateSource createTemplateSource(Template<?> template, String source) {
-										try {
-											return new FileTemplateSource(getTemplatePath(template), source);
+										String templatePath = getTemplatePath(template);
+										if(templatePath == null) {
+											return new NullTemplateSource();
+										} else try {
+											return new FileTemplateSource(templatePath, source);
 										} catch(IOException e) {
 											throw new RuntimeException(e);
 										}
