@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_FILE" value="tmp/tempel.log"/>
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+	<root level="WARN">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+
+	<!-- logger name="org.agiso.tempel" level="INFO"/ -->
+	<!-- logger name="org.springframework" level="INFO"/ -->
+</configuration>

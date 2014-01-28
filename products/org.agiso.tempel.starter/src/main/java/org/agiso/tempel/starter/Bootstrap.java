@@ -35,15 +35,25 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * Klasa startowa obsługująca uruchamianie aplikacji z linii komend.
  * 
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
-public class Bootstrap {
+@Configuration @EnableAutoConfiguration
+@ImportResource("classpath*:/META-INF/spring/tempel-context.xml")
+public class Bootstrap implements CommandLineRunner {
 	private static IParamReader PARAM_READER = null;
+
+	@Autowired
+	private ITempel tempel;
 
 //	--------------------------------------------------------------------------
 	public static void setParamReader(IParamReader paramReader) {
@@ -61,6 +71,17 @@ public class Bootstrap {
 			System.exit(0);
 		}
 
+		setParamReader(paramReader);
+
+		SpringApplication application = new SpringApplication(Bootstrap.class);
+//		application.addInitializers(new LoggingInitializer());
+		application.setShowBanner(false);
+		application.run(args);
+	}
+
+//	--------------------------------------------------------------------------
+	@Override
+	public void run(String... args) throws Exception {
 		// Konfiguracja opcji i parsowanie argumentów:
 		Options options = configureTempelOptions();
 
@@ -96,31 +117,12 @@ public class Bootstrap {
 		// Uruchamianie generatora dla określonego szablonu:
 		System.out.println("--- Uruchamianie szablonu " + templateName + " ---");
 
-		ITempel tempel = createTempelInstance();
-		if(paramReader != null) {
-			tempel.setParamReader(paramReader);
+		if(PARAM_READER != null) {
+			tempel.setParamReader(PARAM_READER);
 		}
 		tempel.startTemplate(templateName, params, workDir);
 
 		System.out.println("--- Zakonczono pomyslnie ---");
-	}
-
-	private static ITempel createTempelInstance() {
-		ClassPathXmlApplicationContext ctx = null;
-		try {
-			ctx = new ClassPathXmlApplicationContext(
-					"classpath*:/META-INF/spring/tempel-context.xml"
-			);
-
-			return ctx.getBean(ITempel.class);
-		} finally {
-			if(ctx != null) {
-				try {
-					ctx.close();
-				} catch(Exception e) {
-				}
-			}
-		}
 	}
 
 //	--------------------------------------------------------------------------

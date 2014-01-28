@@ -49,6 +49,7 @@
 
 		<!-- Spring Framework dependencies -->
 		<spring.version>4.0.0.RELEASE</spring.version>
+		<spring.boot.version>1.0.0.RC1</spring.boot.version>
 
 		<!-- ShrinkWrap dependencies -->
 		<shrinkwrap.version>1.2.1</shrinkwrap.version>
@@ -237,6 +238,18 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>${spring.version}</version>
+				<exclusions>
+					<!-- Starters use SLF4J -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter</artifactId>
+				<version>${spring.boot.version}</version>
 			</dependency>
 
 			<!-- Maven, Aether & Wagon dependencies -->
@@ -341,6 +354,12 @@
 			</dependency>
 
 			<!-- Test dependencies -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${spring.boot.version}</version>
+				<scope>test</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
