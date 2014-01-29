@@ -43,4 +43,45 @@
 			</reference>
 		</references>
 	</template>
+
+	<!--
+	  - Tworzy w katalogu roboczym lokalne repozytorium szablonów Tempel
+	  -->
+	<template key="addLocalTempel">
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>tempel.add</templateId>
+				<version>1.0.0</version>
+			</reference>
+		</references>
+	</template>
+
+	<!--
+	  - Dodaje w lokalnym repozytorium szablonów Tempel wskazanym przez
+	  - katalog roboczy szkielet nowego szablonu.
+	  -->
+	<template key="addLocalTemplate">
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>template.add.local</templateId>
+				<version>1.0.0</version>
+			</reference>
+		</references>
+	</template>
+
+	<!--
+	  - Tworzy w katalogu roboczym projekt szablonu Tempel, który może być
+	  - umieszczany w repozytorium ApacheMaven.
+	  -->
+	<template key="addMavenTemplate">
+		<references>
+			<reference>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<templateId>template.add.maven</templateId>
+				<version>1.0.0</version>
+			</reference>
+		</references>
+	</template>
 </tempel>
