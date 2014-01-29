@@ -18,10 +18,15 @@
  */
 package org.agiso.tempel.support.base.provider;
 
+import static org.agiso.tempel.Temp.AnsiUtils.*;
+import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
@@ -34,6 +39,8 @@ import org.agiso.tempel.support.base.repository.HashBasedTemplateRepository;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public abstract class CachingTemplateProviderElement extends BaseTemplateProviderElement implements ITemplateSourceFactory {
+	private static final Logger logger = LogUtils.getLogger(CachingTemplateProviderElement.class);
+
 	private final Map<String, CacheEntry> cache = new HashMap<String, CacheEntry>();
 
 //	--------------------------------------------------------------------------
@@ -68,9 +75,14 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 						);
 					}
 				});
-				System.out.println("Wczytano ustawienia z biblioteki szablonu " + key);
+				logger.debug("Template {} definition processed successfully",
+						ansiString(GREEN, key)
+				);
 			} catch(Exception e) {
-				System.err.println("Błąd wczytywania ustawień z biblioteki szablonu '" + key + "': " + e.getMessage());
+				logger.error(e, "Error processing template {} definition: {}",
+						ansiString(GREEN, key),
+						ansiString(RED, e.getMessage())
+				);
 				throw new RuntimeException(e);
 			}
 

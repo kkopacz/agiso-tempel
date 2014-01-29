@@ -44,6 +44,9 @@
 		<tempel.version>0.0.1-SNAPSHOT</tempel.version>
 		<tempel.templates.version>1.0.0</tempel.templates.version>
 
+		<!-- agiso.core dependencies -->
+		<agiso.core.version><!--org.agiso.core-->0.0.1.BUILD-SNAPSHOT</agiso.core.version>
+
 		<!-- Apache Commons dependencies -->
 		<commons-cli.version>1.2</commons-cli.version>
 
@@ -65,6 +68,9 @@
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
 		<guava.version>16.0</guava.version>
+
+		<!-- Logging dependencies -->
+		<slf4j.version>1.7.5</slf4j.version>
 
 		<!-- Test dependencies -->
 		<testng.version>6.8.7</testng.version>
@@ -353,6 +359,18 @@
 				<version>${shrinkwrap-resolver.version}</version>
 			</dependency>
 
+			<!-- Logging dependencies -->
+			<dependency>
+				<groupId>org.agiso.core</groupId>
+				<artifactId>org.agiso.core.logging</artifactId>
+				<version>${agiso.core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
 			<!-- Test dependencies -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -372,4 +390,16 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<dependencies>
+		<!-- Logging dependencies -->
+		<dependency>
+			<groupId>org.agiso.core</groupId>
+			<artifactId>org.agiso.core.logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+	</dependencies>
 </project>

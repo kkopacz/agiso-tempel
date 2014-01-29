@@ -18,15 +18,19 @@
  */
 package org.agiso.tempel.support.maven.provider;
 
+import static org.agiso.tempel.Temp.AnsiUtils.*;
+import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.model.Template;
 import org.apache.maven.settings.Settings;
@@ -46,6 +50,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
+	private static final Logger logger = LogUtils.getLogger(ShrinkWrapMvnTemplateProviderElement.class);
+
 	/** Nazwa zmiennej przechowującej ścieżkę do ustawień Maven'a */
 	private static final String MAVEN_SETTINS_PATH_PROPERTY = "maven_settings";
 
@@ -78,15 +84,21 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 			request.setUserSettingsFile(mavenSettingsFile);
 			resolver = Maven.configureResolver().fromFile(mavenSettingsFile);
 
-			System.out.println("Maven settings file: " + mavenSettingsFile.getCanonicalPath());
+			logger.debug("Using maven settings file {}",
+					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
+			);
 		} else {
 			resolver = Maven.resolver();
 
-			System.out.println("!!!! Maven settings file " + mavenSettingsFile.getCanonicalPath() + " not found !!!!");
+			logger.warn("Maven settings file {} not found",
+					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
+			);
 		}
 
 		settings = new MavenSettingsBuilder().buildSettings(request);
-		System.out.println("Maven local repository: " + settings.getLocalRepository());
+		logger.debug("Using local maven repository {}",
+				ansiString(GREEN, settings.getLocalRepository())
+		);
 
 
 		setActive(true);

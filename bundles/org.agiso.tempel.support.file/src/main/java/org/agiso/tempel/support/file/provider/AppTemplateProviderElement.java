@@ -18,6 +18,9 @@
  */
 package org.agiso.tempel.support.file.provider;
 
+import static org.agiso.tempel.Temp.AnsiUtils.*;
+import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -25,6 +28,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSource;
@@ -44,6 +49,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AppTemplateProviderElement extends BaseTemplateProviderElement {
+	private static final Logger logger = LogUtils.getLogger(RunTemplateProviderElement.class);
+
 	private boolean initialized;
 	private String settingsPath;
 	private String librariesPath;
@@ -133,11 +140,17 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 					);
 				}
 			});
-			System.out.println("Wczytano ustawienia globalne z pliku " + appSettingsFile.getCanonicalPath());
+
+			logger.debug("Application {} file processed successfully",
+					ansiString(GREEN, appSettingsFile.getCanonicalPath())
+			);
 
 			return true;
 		} catch(Exception e) {
-			System.err.println("Błąd wczytywania ustawień globalnych: " + e.getMessage());
+			logger.error(e, "Error processing application {} file: {}",
+					ansiString(GREEN, appSettingsFile.getCanonicalPath()),
+					ansiString(RED, e.getMessage())
+			);
 			throw new RuntimeException(e);
 		}
 		return false;

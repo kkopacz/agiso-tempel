@@ -18,6 +18,9 @@
  */
 package org.agiso.tempel.core;
 
+import static org.agiso.tempel.Temp.AnsiUtils.*;
+import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -29,6 +32,8 @@ import java.util.Set;
 
 import org.agiso.core.lang.MapStack;
 import org.agiso.core.lang.SimpleMapStack;
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
@@ -60,6 +65,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DefaultTemplateExecutor implements ITemplateExecutor {
+	private static final Logger logger = LogUtils.getLogger(DefaultTemplateExecutor.class);
+
 	private ITemplateProvider templateProvider;
 	private ITemplateVerifier templateVerifier;
 
@@ -113,11 +120,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		MapStack<String, Object> propertiesStack = new SimpleMapStack<String,Object>();
 		propertiesStack.push(new HashMap<String, Object>(properties));
-		doExecuteTemplate(template, propertiesStack, workDir, "");
+		doExecuteTemplate(template, propertiesStack, workDir);
 		propertiesStack.pop();
 	}
 
-	private void doExecuteTemplate(Template<?> template, MapStack<String, Object> properties, String workDir, String depth) {
+	private void doExecuteTemplate(Template<?> template, MapStack<String, Object> properties, String workDir) {
 		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
 		try {
@@ -132,7 +139,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				Thread.currentThread().setContextClassLoader(classLoader);
 			}
 
-			doExecuteTemplateInternal(template, properties, workDir, depth);
+			doExecuteTemplateInternal(template, properties, workDir);
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -140,13 +147,14 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		}
 	}
 
-	private void doExecuteTemplateInternal(Template<?> template, MapStack<String, Object> properties, String workDir, String depth) {
+	private void doExecuteTemplateInternal(Template<?> template, MapStack<String, Object> properties, String workDir) {
 		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
 
-		System.err.println(depth + "Executing template '" + template.getKey() + "': "+
-			template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion()
+		logger.info("Executing template {}", ansiString(GREEN,
+				template.getKey() + ": " +
+				template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())
 		);
 
 		// Instancjonowanie klasy silnika generatora:
@@ -216,9 +224,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 				// Szablon istnieje. Kopiowanie jego standardowej definicji i aktualizowanie
 				// w oparciu o informacje zdefiniowane w podszablonie:
-				System.err.println(depth + " Preparing template '" + subTemplate.getKey() + "': "+
-						subTemplate.getGroupId() +":" + subTemplate.getTemplateId() + ":" + subTemplate.getVersion()
+				logger.debug("Preparing template {}", ansiString(GREEN,
+						subTemplate.getKey() + ": " +
+						subTemplate.getGroupId() +":" + subTemplate.getTemplateId() + ":" + subTemplate.getVersion())
 				);
+
 				subTemplate = subTemplate.clone();								// kopia podszablonu z repozytorium (do modyfikacji)
 				// subTemplate.setScope(template.getScope());					// podszablon ma to samo repozytorium co szablon
 
@@ -256,8 +266,8 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						} else {
 							if(refParam.getValue() != null) {
 								String refParamValue = expressionEvaluator.evaluate(refParam.getValue(), properties.peek());
-								System.err.println(depth + "  Setting parameter '" + refParam.getKey() + "': "+
-										param.getValue() + " <- " + refParamValue
+								logger.debug("Reference property {}: {} <-- {}",
+										refParam.getKey(), param.getValue(), refParamValue
 								);
 	
 								param.setValue(refParamValue);
@@ -293,7 +303,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 //				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
-				doExecuteTemplate(subTemplate, properties, subWorkDir, "  " + depth);
+				doExecuteTemplate(subTemplate, properties, subWorkDir);
 
 				properties.pop();
 			}
@@ -301,9 +311,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		// Generacja zasobów:
 		if(engine != null) {
-			System.err.println(depth + "Running template '" + template.getKey() + "': "+
-				template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion()
-				// + " " + "with resources: " + stack.peek()
+			logger.info("Running template {}", ansiString(GREEN,
+					template.getKey() + ": " +
+					template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())
 			);
 
 			// Uruchomienie silnika do generacji zasobów tworzonych przez szablon:

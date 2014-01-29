@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.api.internal.ITemplateExecutor;
@@ -42,6 +44,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
  */
 public class Tempel implements ITempel {
+	private static final Logger logger = LogUtils.getLogger(Tempel.class);
+
 	private final Map<String, Object> systemProperties;
 
 //	--------------------------------------------------------------------------
@@ -110,7 +114,9 @@ public class Tempel implements ITempel {
 				String oldValue = (String)value;
 				String newValue = expressionEvaluator.evaluate(oldValue, properties);
 				if(!oldValue.equals(newValue)) {
-					System.out.println(oldValue + " --> " + newValue);
+					logger.debug("Property {}: {} <-- {}",
+							key, oldValue, newValue
+					);
 					properties.put(key, newValue);
 				}
 			}

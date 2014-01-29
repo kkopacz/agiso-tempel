@@ -8,6 +8,6 @@
 		<appender-ref ref="FILE" />
 	</root>
 
-	<!-- logger name="org.agiso.tempel" level="INFO"/ -->
+	<logger name="org.agiso.tempel" level="INFO" />
 	<!-- logger name="org.springframework" level="INFO"/ -->
 </configuration>
