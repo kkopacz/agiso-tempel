@@ -63,5 +63,5 @@ Szablon `abstract.mkdirs` nie przetwarza żadnego zasobu wejściowego.
 trworzy foldery nadrzędne dla folderu ostatniego poziomu.
 
 
-[mkdir]: ../abstract.mkdir/README.md#abstractmkdirs
+[mkdir]: ../abstract.mkdir/README.md#abstractmkdir
 [MakeDirsEngine]: src/main/java/org/agiso/tempel/engine/MakeDirsEngine.java

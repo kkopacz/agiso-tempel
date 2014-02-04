@@ -152,7 +152,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
 
-		logger.info("Executing template {}", ansiString(GREEN,
+		logger.debug("Executing template {}", ansiString(GREEN,
 				template.getKey() + ": " +
 				template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())
 		);
@@ -311,7 +311,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		// Generacja zasobów:
 		if(engine != null) {
-			logger.info("Running template {}", ansiString(GREEN,
+			logger.debug("Running template {}", ansiString(GREEN,
 					template.getKey() + ": " +
 					template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())
 			);
