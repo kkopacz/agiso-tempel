@@ -40,7 +40,8 @@ import org.testng.annotations.Test;
  * pliku <code>.jar</code> szablonu oraz dodatkowo definicje testowe z pliku
  * <code>src/test/templates/run/tempel.xml</code>.
  * 
- * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ * @author Karol Kopacz
+ * @since 1.0
  */
 public class FileExtenderTemplateITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";

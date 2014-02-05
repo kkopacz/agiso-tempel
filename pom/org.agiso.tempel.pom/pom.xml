@@ -403,7 +403,7 @@
 			<!-- Logging dependencies -->
 			<dependency>
 				<groupId>org.agiso.core</groupId>
-				<artifactId>org.agiso.core.logging</artifactId>
+				<artifactId>agiso-core-logging</artifactId>
 				<version>${agiso.core.version}</version>
 			</dependency>
 			<dependency>
@@ -436,7 +436,7 @@
 		<!-- Logging dependencies -->
 		<dependency>
 			<groupId>org.agiso.core</groupId>
-			<artifactId>org.agiso.core.logging</artifactId>
+			<artifactId>agiso-core-logging</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

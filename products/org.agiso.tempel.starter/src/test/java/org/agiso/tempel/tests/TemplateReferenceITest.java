@@ -3,13 +3,13 @@
  * TemplateReferenceITest.java
  * 
  * Copyright 2013 agiso.org
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +32,8 @@ import org.testng.annotations.Test;
 /**
  * 
  * 
- * @author <a href="mailto:kkopacz@agiso.org">Karol Kopacz</a>
+ * @author Karol Kopacz
+ * @since 1.0
  */
 public class TemplateReferenceITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "5eab6c02e2877f31805c65e7e2aeba87".equals(md5) : md5;
+		assert "e083c9bd6aa1155c081f92b82a004c9b".equals(md5) : md5;
 	}
 
 	/**
@@ -97,6 +98,6 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "7adef6b68dbba75ceff3dbafc1435465".equals(md5) : md5;
+		assert "68bb9d3a2b1c4e871bfcdca79e78d954".equals(md5) : md5;
 	}
 }

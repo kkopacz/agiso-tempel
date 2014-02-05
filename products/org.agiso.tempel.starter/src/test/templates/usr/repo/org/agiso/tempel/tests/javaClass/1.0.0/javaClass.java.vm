@@ -9,7 +9,7 @@ package ${package};
 /**
  * 
  * 
- * @author <a href="mailto:${user_email}">${user_firstName} ${user_lastName}</a>
+ * @author ${user_firstName} ${user_lastName}
  */
 public class ${name} {
 
