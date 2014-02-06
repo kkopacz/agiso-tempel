@@ -41,9 +41,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git@github.com:kkopacz/org.agiso.tempel.git</connection>
-		<developerConnection>scm:git:git@github.com:kkopacz/org.agiso.tempel.git</developerConnection>
-		<url>git@github.com:kkopacz/org.agiso.tempel.git</url>
+		<connection>scm:git:git@github.com:kkopacz/agiso-tempel.git</connection>
+		<developerConnection>scm:git:git@github.com:kkopacz/agiso-tempel.git</developerConnection>
+		<url>git@github.com:kkopacz/agiso-tempel.git</url>
 	</scm>
 
 	<!-- distributionManagement>
