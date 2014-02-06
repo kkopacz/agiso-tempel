@@ -8,34 +8,34 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>tempel-pom</artifactId>
+		<artifactId>tempel-base-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>tempel-templates-builder</artifactId>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel Templates</name>
+	<name>AGISO Tempel Templates Builder</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>abstract.mkdir</module>
-		<module>abstract.mkdirs</module>
-		<module>abstract.velocityFileEngine</module>
-		<module>abstract.velocityFileExtendEngine</module>
-		<module>abstract.velocityDirectoryEngine</module>
-		<module>abstract.velocityDirectoryExtendEngine</module>
+		<module>abstract-mkdir</module>
+		<module>abstract-mkdirs</module>
+		<module>abstract-velocityFileEngine</module>
+		<module>abstract-velocityFileExtendEngine</module>
+		<module>abstract-velocityDirectoryEngine</module>
+		<module>abstract-velocityDirectoryExtendEngine</module>
 
-		<!-- module>abstract.fileExtenderEngine</module>
-		<module>abstract.directoryExtenderEngine</module -->
+		<!-- module>abstract-fileExtenderEngine</module>
+		<module>abstract-directoryExtenderEngine</module -->
 
-		<module>eclipse.project.general</module>
-		<module>eclipse.project.java</module>
+		<module>eclipse-project-general</module>
+		<module>eclipse-project-java</module>
 
-		<module>tempel.add</module>
-		<module>template.add.local</module>
-		<module>template.add.maven</module>
+		<module>tempel-add</module>
+		<module>template-add-local</module>
+		<module>template-add-maven</module>
 	</modules>
 </project>

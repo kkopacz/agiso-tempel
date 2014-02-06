@@ -8,9 +8,9 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>tempel-pom</artifactId>
+		<artifactId>tempel-base-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>tempel-bundles-builder</artifactId>
@@ -20,17 +20,17 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>org.agiso.tempel.api</module>
+		<module>tempel-api</module>
 
-		<module>org.agiso.tempel.core</module>
+		<module>tempel-core</module>
 
-		<module>org.agiso.tempel.support.base</module>
-		<module>org.agiso.tempel.support.file</module>
-		<module>org.agiso.tempel.support.maven</module>
+		<module>tempel-support-base</module>
+		<module>tempel-support-file</module>
+		<module>tempel-support-maven</module>
 
-		<module>org.agiso.tempel.support.test</module>
-		<module>org.agiso.tempel.test</module>
+		<module>tempel-support-test</module>
+		<module>tempel-test</module>
 
-		<module>org.agiso.tempel.core.exts</module>
+		<module>tempel-core-exts</module>
 	</modules>
 </project>

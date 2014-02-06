@@ -8,19 +8,19 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>tempel-pom</artifactId>
+		<artifactId>tempel-base-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.products</groupId>
 	<artifactId>tempel-products-builder</artifactId>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel</name>
+	<name>AGISO Tempel Products Builder</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>org.agiso.tempel.starter</module>
+		<module>tempel-starter</module>
 	</modules>
 </project>

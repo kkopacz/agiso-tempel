@@ -8,9 +8,9 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>tempel-pom</artifactId>
+		<artifactId>tempel-base-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel</groupId>
@@ -21,12 +21,12 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>pom/org.agiso.tempel.pom</module>
+		<module>pom/tempel-base-pom</module>
 		<module>bundles</module>
 		<module>templates</module>
 		<module>products</module>
 
-		<module>pom/org.agiso.tempel.docs.pom</module>
+		<module>pom/tempel-docs-pom</module>
 		<module>docs</module>
 	</modules>
 </project>

@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.agiso.tempel</groupId>
+		<artifactId>tempel-base-pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../pom/tempel-base-pom/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>tempel-support-maven</artifactId>
+
+	<name>AGISO Tempel Maven Support</name>
+	<inceptionYear>2012</inceptionYear>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>tempel-support-base</artifactId>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>shrinkwrap.mvn.resolver</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.shrinkwrap.resolver</groupId>
+					<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>aether.mvn.resolver</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<dependencies>
+				<!-- Wsparcie pobierania zasobów z repozytoriów Maven -->
+				<dependency>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-aether-provider</artifactId>
+				</dependency>
+
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-api</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-util</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-impl</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-file</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-wagon</artifactId>
+				</dependency>
+				<!-- dependency>
+					<groupId>org.sonatype.aether</groupId>
+					<artifactId>aether-connector-asynchttpclient</artifactId>
+				</dependency -->
+
+				<dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-file</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-http-lightweight</artifactId>
+				</dependency>
+				<!-- dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-http</artifactId>
+				</dependency -->
+				<!-- dependency>
+					<groupId>org.apache.maven.wagon</groupId>
+					<artifactId>wagon-ssh</artifactId>
+				</dependency -->
+			</dependencies>
+		</profile>
+	</profiles>
+</project>

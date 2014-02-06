@@ -16,11 +16,11 @@
 	<artifactId>tempel-docs-builder</artifactId>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel Documentation</name>
+	<name>AGISO Tempel Documentation Builder</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>org.agiso.tempel.docs.devguide</module>
-		<module>org.agiso.tempel.docs.userguide</module>
+		<module>tempel-docs-devguide</module>
+		<module>tempel-docs-userguide</module>
 	</modules>
 </project>
