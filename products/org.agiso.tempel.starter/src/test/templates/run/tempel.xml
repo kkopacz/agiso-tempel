@@ -146,7 +146,7 @@
 		<references>
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<templateId>abstract-velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
@@ -168,7 +168,7 @@
 		<references>
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<templateId>abstract-velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
@@ -188,7 +188,7 @@
 		<references>
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<templateId>abstract-velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -210,7 +210,7 @@
 		<references>
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityDirectoryEngine</templateId>
+				<templateId>abstract-velocityDirectoryEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
@@ -237,7 +237,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>eclipse.project.java</templateId>
+				<templateId>eclipse-project-java</templateId>
 				<version>1.0.0</version>
 
 				<params>
@@ -278,7 +278,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.mkdirs</templateId>
+				<templateId>abstract-mkdirs</templateId>
 				<version>1.0.0</version>
 
 				<resource>

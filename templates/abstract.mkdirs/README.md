@@ -25,7 +25,7 @@ jedynie jako szablon referencyjny:
 	<references>
 		<reference>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<templateId>abstract.mkdirs</templateId>
+			<templateId>abstract-mkdirs</templateId>
 			<version>1.0.0</version>
 
 			<resource>

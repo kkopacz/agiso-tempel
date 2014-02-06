@@ -3,7 +3,7 @@
 	<template engine="org.agiso.tempel.engine.MakeDirsEngine" abstract="true">
 		<!-- Tworzenie ścieżki katalogów -->
 		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>abstract.mkdirs</templateId>
+		<templateId>abstract-mkdirs</templateId>
 		<version>1.0.0</version>
 	</template>
 </tempel>

@@ -44,7 +44,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityFileEngine</templateId>
+				<templateId>abstract-velocityFileEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource>

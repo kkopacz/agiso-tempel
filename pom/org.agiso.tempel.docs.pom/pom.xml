@@ -6,8 +6,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.agiso.tempel</groupId>
-	<artifactId>org.agiso.tempel.docs.pom</artifactId>
+	<groupId>org.agiso.tempel.docs</groupId>
+	<artifactId>tempel-docs-pom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 

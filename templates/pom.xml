@@ -8,12 +8,13 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>tempel-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>org.agiso.tempel.templates</artifactId>
+	<groupId>org.agiso.tempel.templates</groupId>
+	<artifactId>tempel-templates-builder</artifactId>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Templates</name>

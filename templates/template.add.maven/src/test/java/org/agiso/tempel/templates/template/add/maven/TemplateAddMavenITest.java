@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
  */
 public class TemplateAddMavenITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";
-	private static final String TEMPLATE_ID = "template.add.maven";
+	private static final String TEMPLATE_ID = "template-add-maven";
 	private static final String VERSION     = "1.0.0";
 
 //	--------------------------------------------------------------------------
@@ -82,6 +82,6 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "3307d2036700b232b5a65ca3f3361ce2".equals(md5) : md5;
+		assert "7953c6cad82e9d40948073209d67e78d".equals(md5) : md5;
 	}
 }

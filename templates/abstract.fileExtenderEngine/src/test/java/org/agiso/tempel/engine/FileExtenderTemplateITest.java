@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  */
 public class FileExtenderTemplateITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";
-	private static final String TEMPLATE_ID = "abstract.fileExtenderEngine";
+	private static final String TEMPLATE_ID = "abstract-fileExtenderEngine";
 	private static final String VERSION     = "1.0.0";
 
 //	--------------------------------------------------------------------------

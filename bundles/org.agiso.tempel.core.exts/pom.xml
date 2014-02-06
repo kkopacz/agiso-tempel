@@ -8,12 +8,12 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>tempel-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>org.agiso.tempel.core.exts</artifactId>
+	<artifactId>tempel-core-exts</artifactId>
 
 	<name>AGISO Tempel Extensions</name>
 	<inceptionYear>2012</inceptionYear>
@@ -21,12 +21,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.api</artifactId>
+			<artifactId>tempel-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
+			<artifactId>tempel-core</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -42,33 +42,33 @@
 		<!-- Szablony abstrakcyjne. -->
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.mkdir</artifactId>
+			<artifactId>abstract-mkdir</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.mkdirs</artifactId>
+			<artifactId>abstract-mkdirs</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.velocityFileEngine</artifactId>
+			<artifactId>abstract-velocityFileEngine</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.velocityFileExtendEngine</artifactId>
+			<artifactId>abstract-velocityFileExtendEngine</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.velocityDirectoryEngine</artifactId>
+			<artifactId>abstract-velocityDirectoryEngine</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.velocityDirectoryExtendEngine</artifactId>
+			<artifactId>abstract-velocityDirectoryExtendEngine</artifactId>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.test</artifactId>
+			<artifactId>tempel-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

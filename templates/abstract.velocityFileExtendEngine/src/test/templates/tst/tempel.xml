@@ -27,7 +27,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityFileExtendEngine</templateId>
+				<templateId>abstract-velocityFileExtendEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource>

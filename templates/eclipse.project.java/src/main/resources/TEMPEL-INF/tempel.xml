@@ -2,7 +2,7 @@
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<template>
 		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>eclipse.project.java</templateId>
+		<templateId>eclipse-project-java</templateId>
 		<version>1.0.0</version>
 
 		<params>
@@ -12,7 +12,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.mkdirs</templateId>
+				<templateId>abstract-mkdirs</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -24,7 +24,7 @@
 			</reference>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.velocityFileEngine</templateId>
+				<templateId>abstract-velocityFileEngine</templateId>
 				<version>1.0.0</version>
 
 				<resource>

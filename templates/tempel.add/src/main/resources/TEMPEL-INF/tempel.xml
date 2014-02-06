@@ -2,7 +2,7 @@
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
 		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>tempel.add</templateId>
+		<templateId>tempel-add</templateId>
 		<version>1.0.0</version>
 
 	</template>

@@ -2,7 +2,7 @@
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<template>
 		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>template.add.local</templateId>
+		<templateId>template-add-local</templateId>
 		<version>1.0.0</version>
 
 		<params>
@@ -19,7 +19,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.mkdirs</templateId>
+				<templateId>abstract-mkdirs</templateId>
 				<version>1.0.0</version>
 
 				<resource>

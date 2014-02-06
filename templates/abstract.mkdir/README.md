@@ -26,7 +26,7 @@ szablonu nadrzędnego:
 	<references>
 		<reference>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<templateId>abstract.mkdir</templateId>
+			<templateId>abstract-mkdir</templateId>
 			<version>1.0.0</version>
 
 			<resource>

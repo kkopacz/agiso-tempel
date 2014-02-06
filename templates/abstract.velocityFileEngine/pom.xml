@@ -8,13 +8,13 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>tempel-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
-	<artifactId>abstract.velocityFileEngine</artifactId>
+	<artifactId>abstract-velocityFileEngine</artifactId>
 	<version>1.0.0</version>
 
 	<name>org.agiso.tempel.templates:abstract.velocityFileEngine:1.0.0</name>
@@ -23,7 +23,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.api</artifactId>
+			<artifactId>tempel-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
@@ -36,12 +36,12 @@
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.test</artifactId>
+			<artifactId>tempel-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
+			<artifactId>tempel-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 

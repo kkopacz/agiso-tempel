@@ -8,7 +8,7 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>tempel-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
@@ -18,8 +18,8 @@
 		<version>1.0.0.RC1</version>
 	</parent -->
 
-	<groupId>org.agiso.tempel</groupId>
-	<artifactId>org.agiso.tempel.starter</artifactId>
+	<groupId>org.agiso.tempel.products</groupId>
+	<artifactId>tempel-starter</artifactId>
 
 	<name>AGISO Tempel Starter</name>
 	<inceptionYear>2012</inceptionYear>
@@ -119,27 +119,27 @@
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.api</artifactId>
+			<artifactId>tempel-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
+			<artifactId>tempel-core</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core.exts</artifactId>
+			<artifactId>tempel-core-exts</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.support.file</artifactId>
+			<artifactId>tempel-support-file</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.support.maven</artifactId>
+			<artifactId>tempel-support-maven</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 

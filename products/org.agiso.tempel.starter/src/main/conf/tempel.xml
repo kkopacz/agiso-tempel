@@ -12,7 +12,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.mkdir</templateId>
+				<templateId>abstract-mkdir</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -34,7 +34,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>abstract.mkdirs</templateId>
+				<templateId>abstract-mkdirs</templateId>
 				<version>1.0.0</version>
 
 				<resource>
@@ -51,7 +51,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>tempel.add</templateId>
+				<templateId>tempel-add</templateId>
 				<version>1.0.0</version>
 			</reference>
 		</references>
@@ -65,7 +65,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>template.add.local</templateId>
+				<templateId>template-add-local</templateId>
 				<version>1.0.0</version>
 			</reference>
 		</references>
@@ -79,7 +79,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>template.add.maven</templateId>
+				<templateId>template-add-maven</templateId>
 				<version>1.0.0</version>
 			</reference>
 		</references>

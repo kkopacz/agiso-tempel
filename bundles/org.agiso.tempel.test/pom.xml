@@ -8,12 +8,12 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>tempel-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>org.agiso.tempel.test</artifactId>
+	<artifactId>tempel-test</artifactId>
 
 	<name>AGISO Tempel Testing</name>
 	<inceptionYear>2012</inceptionYear>
@@ -27,13 +27,13 @@
 	
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.api</artifactId>
+			<artifactId>tempel-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.support.test</artifactId>
+			<artifactId>tempel-support-test</artifactId>
 			<scope>compile</scope>
 		</dependency>
 

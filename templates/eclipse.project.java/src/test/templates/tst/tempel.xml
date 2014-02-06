@@ -8,7 +8,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>eclipse.project.java</templateId>
+				<templateId>eclipse-project-java</templateId>
 				<version>1.0.0</version>
 			</reference>
 		</references>
@@ -26,7 +26,7 @@
 		<references>
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
-				<templateId>eclipse.project.java</templateId>
+				<templateId>eclipse-project-java</templateId>
 				<version>1.0.0</version>
 
 				<params>

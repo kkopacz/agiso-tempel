@@ -8,13 +8,13 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>org.agiso.tempel.pom</artifactId>
+		<artifactId>tempel-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
-	<artifactId>eclipse.project.java</artifactId>
+	<artifactId>eclipse-project-java</artifactId>
 	<version>1.0.0</version>
 
 	<name>org.agiso.tempel.templates:eclipse.project.java:1.0.0</name>
@@ -23,28 +23,28 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.mkdirs</artifactId>
+			<artifactId>abstract-mkdirs</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract.velocityFileEngine</artifactId>
+			<artifactId>abstract-velocityFileEngine</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.test</artifactId>
+			<artifactId>tempel-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.core</artifactId>
+			<artifactId>tempel-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>org.agiso.tempel.support.maven</artifactId>
+			<artifactId>tempel-support-maven</artifactId>
 			<scope>test</scope>
 		</dependency>
 

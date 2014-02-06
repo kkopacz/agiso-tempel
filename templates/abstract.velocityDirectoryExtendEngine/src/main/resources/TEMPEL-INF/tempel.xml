@@ -6,7 +6,7 @@
 		  - szablonu
 		  -->
 		<groupId>org.agiso.tempel.templates</groupId>
-		<templateId>abstract.velocityDirectoryExtendEngine</templateId>
+		<templateId>abstract-velocityDirectoryExtendEngine</templateId>
 		<version>1.0.0</version>
 	</template>
 </tempel>
