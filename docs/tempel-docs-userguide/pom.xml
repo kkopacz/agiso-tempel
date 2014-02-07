@@ -10,7 +10,7 @@
 		<groupId>org.agiso.tempel.docs</groupId>
 		<artifactId>tempel-docs-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../../pom/org.agiso.tempel.docs.pom/pom.xml</relativePath>
+		<relativePath>../../pom/tempel-docs-pom/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>tempel-docs-userguide</artifactId>
