@@ -1,4 +1,4 @@
-/* org.agiso.tempel.test.annotation.TempelEngineTest (17-11-2012)
+/* org.agiso.tempel.support.test.annotation.TempelEngineTest (17-11-2012)
  * 
  * TempelEngineTest.java
  * 
@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.test.annotation;
+package org.agiso.tempel.support.test.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

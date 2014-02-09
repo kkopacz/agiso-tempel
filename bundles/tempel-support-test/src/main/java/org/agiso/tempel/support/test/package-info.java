@@ -1,4 +1,4 @@
-/* org.agiso.tempel.test.annotation.package-info (25-01-2013)
+/* org.agiso.tempel.support.test.package-info (25-01-2013)
  * 
  * package-info.java
  * 
@@ -22,4 +22,4 @@
  * @author Karol Kopacz
  * @since 1.0
  */
-package org.agiso.tempel.test.annotation;
+package org.agiso.tempel.support.test;

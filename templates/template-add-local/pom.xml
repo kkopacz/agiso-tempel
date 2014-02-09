@@ -29,11 +29,6 @@
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>tempel-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-core</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -42,10 +37,9 @@
 			<artifactId>tempel-support-maven</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>tempel-support-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

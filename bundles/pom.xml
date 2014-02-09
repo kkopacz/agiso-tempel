@@ -29,7 +29,6 @@
 		<module>tempel-support-maven</module>
 
 		<module>tempel-support-test</module>
-		<module>tempel-test</module>
 
 		<module>tempel-core-exts</module>
 	</modules>

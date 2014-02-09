@@ -21,8 +21,8 @@ package org.agiso.tempel.engine;
 import java.io.File;
 
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.test.AbstractTempelEngineTest;
-import org.agiso.tempel.test.annotation.TempelEngineTest;
+import org.agiso.tempel.support.test.AbstractTempelEngineTest;
+import org.agiso.tempel.support.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
 
 /**

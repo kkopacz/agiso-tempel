@@ -28,7 +28,7 @@ import java.util.Map;
 import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
-import org.agiso.tempel.test.AbstractTemplateTest;
+import org.agiso.tempel.support.test.AbstractTemplateTest;
 import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
@@ -82,6 +82,6 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		assert "7953c6cad82e9d40948073209d67e78d".equals(md5) : md5;
+		assert "afcc377db1712c9ad2c174ccd9766d23".equals(md5) : md5;
 	}
 }

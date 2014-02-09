@@ -29,8 +29,8 @@ import java.util.Map;
 
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
-import org.agiso.tempel.test.AbstractTempelEngineTest;
-import org.agiso.tempel.test.annotation.TempelEngineTest;
+import org.agiso.tempel.support.test.AbstractTempelEngineTest;
+import org.agiso.tempel.support.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
 
 /**

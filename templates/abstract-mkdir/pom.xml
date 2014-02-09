@@ -29,18 +29,12 @@
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>tempel-test</artifactId>
+			<artifactId>tempel-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>tempel-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
+			<artifactId>tempel-support-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

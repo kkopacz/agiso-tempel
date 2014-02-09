@@ -236,11 +236,6 @@
 				<artifactId>tempel-core-exts</artifactId>
 				<version>${tempel.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel</groupId>
-				<artifactId>tempel-test</artifactId>
-				<version>${tempel.version}</version>
-			</dependency>
 
 			<dependency>
 				<groupId>org.agiso.tempel.templates</groupId>

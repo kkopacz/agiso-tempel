@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 import org.agiso.tempel.ITempel;
 import org.agiso.tempel.Temp;
-import org.agiso.tempel.test.AbstractTemplateTest;
+import org.agiso.tempel.support.test.AbstractTemplateTest;
 import org.testng.annotations.Test;
 
 /**

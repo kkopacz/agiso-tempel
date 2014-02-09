@@ -8,9 +8,9 @@
 
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
-		<artifactId>tempel-pom</artifactId>
+		<artifactId>tempel-base-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../../pom/org.agiso.tempel.pom/pom.xml</relativePath>
+		<relativePath>../../pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>${groupId}</groupId>
@@ -20,74 +20,26 @@
 	<name>${groupId}:${templateId}:${version}</name>
 	<inceptionYear>${year}</inceptionYear>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<filtering>false</filtering>
-			</testResource>
-		</testResources>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-					<includeEmptyDirs>true</includeEmptyDirs>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>utf-8</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-core-exts</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
-			<artifactId>tempel-test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel</groupId>
-			<artifactId>tempel-support-test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-support-maven</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
+			<artifactId>tempel-support-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

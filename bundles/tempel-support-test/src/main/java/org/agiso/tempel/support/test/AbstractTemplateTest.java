@@ -1,4 +1,4 @@
-/* org.agiso.tempel.test.AbstractTemplateTest (22-01-2013)
+/* org.agiso.tempel.support.test.AbstractTemplateTest (22-01-2013)
  * 
  * AbstractTemplateTest.java
  * 
@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.test;
+package org.agiso.tempel.support.test;
 
 import java.io.File;
 

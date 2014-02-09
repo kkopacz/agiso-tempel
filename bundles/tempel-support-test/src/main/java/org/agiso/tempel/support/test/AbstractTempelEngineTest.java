@@ -1,4 +1,4 @@
-/* org.agiso.tempel.test.AbstractEngineTest (16-11-2012)
+/* org.agiso.tempel.support.test.AbstractEngineTest (16-11-2012)
  * 
  * AbstractTempelEngineTest.java
  * 
@@ -16,11 +16,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.test;
+package org.agiso.tempel.support.test;
 
 import org.agiso.core.test.AbstractRepositoryTest;
 import org.agiso.tempel.api.ITempelEngine;
-import org.agiso.tempel.test.annotation.TempelEngineTest;
+import org.agiso.tempel.support.test.annotation.TempelEngineTest;
 import org.testng.annotations.BeforeClass;
 
 /**
