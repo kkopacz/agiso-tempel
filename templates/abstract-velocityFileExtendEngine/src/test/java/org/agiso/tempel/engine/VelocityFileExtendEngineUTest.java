@@ -47,10 +47,10 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true,
-				repositoryPath + "VelocityFileExtendEngineUTest") +
-				"/testProcessFile1.txt";
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile1/base"
+		) + "/testProcessFile1.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "VelocityFileExtendEngineUTest",
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile1/repo",
 				"testProcessFile1.txt.EXTEND_LINE.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);
@@ -69,11 +69,11 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true,
-				repositoryPath + "VelocityFileExtendEngineUTest") +
-				"/testProcessFile1.txt";
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile2/base"
+		) + "/testProcessFile2.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "VelocityFileExtendEngineUTest",
-				"testProcessFile1.txt.EXTEND_LINE.vm"
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile2/repo",
+				"testProcessFile2.txt.EXTEND_LINE.vm"
 		);
 
 		Object val = modelMap.get("key2");
@@ -84,7 +84,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		}
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5) : md5;
+		assert "848f9d91182100184aab4e05f2e05354".equals(md5) : md5;
 	}
 
 	@Test
@@ -98,11 +98,11 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true,
-				repositoryPath + "VelocityFileExtendEngineUTest") +
-				"/testProcessFile2.txt";
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile3/base"
+		) + "/testProcessFile3.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "VelocityFileExtendEngineUTest",
-				"testProcessFile2.txt.EXTEND_LINE.vm"
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile3/repo",
+				"testProcessFile3.txt.EXTEND_LINE.vm"
 		);
 
 		Object val = modelMap.get("key2");
@@ -116,7 +116,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		}
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "16da266e446a2f65d9acdf40a7934225".equals(md5) : md5;
+		assert "06784b080c2787f65a9a4fba4b0097c7".equals(md5) : md5;
 	}
 
 	@Test
@@ -130,16 +130,16 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true,
-				repositoryPath + "VelocityFileExtendEngineUTest") +
-				"/testProcessFile3.txt";
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile4/base"
+		) + "/testProcessFile4.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "VelocityFileExtendEngineUTest",
-				"testProcessFile3.txt.EXTEND_LINE.vm"
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile4/repo",
+				"testProcessFile4.txt.EXTEND_LINE.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "577334b8abc8ca3e517ac65150170932".equals(md5) : md5;
+		assert "adfc8ec3f763b8d44088f0327f571c79".equals(md5) : md5;
 	}
 
 	@Test
@@ -157,15 +157,15 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
 		String outPath = getOutputPath(true,
-				repositoryPath + "VelocityFileExtendEngineUTest") +
-				"/testProcessFile4.txt";
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile5/base"
+		) + "/testProcessFile5.txt";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "VelocityFileExtendEngineUTest",
-				"testProcessFile4.txt.EXTEND_LINE.vm"
+				repositoryPath + "VelocityFileExtendEngineUTest/testProcessFile5/repo",
+				"testProcessFile5.txt.EXTEND_LINE.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "4ee2590760b85ff39246cf1f0c846391".equals(md5) : md5;
+		assert "d7d4f636abf3b73ee622c4cc254e7681".equals(md5) : md5;
 	}
 }

@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.agiso.core.lang.util.DigestUtils;
-import org.agiso.core.lang.util.FileUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
@@ -40,8 +39,6 @@ import org.testng.annotations.Test;
 public class DirectoryExtenderEngineUTest extends AbstractTempelEngineTest {
 	@Test
 	public void testProcessDirectory1() throws Exception {
-
-		System.out.println("Uruchamianie testu: testProcessDirectory1() ");
 		// Wypełnianie mapy modelu dla szablonu:
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		modelMap.put("key_canonical", "pl.exso.core.");
@@ -50,28 +47,23 @@ public class DirectoryExtenderEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key_field", "rate");
 		modelMap.put("key_upper_entity", "Film");
 
-		// Ustalanie dodatkowych parametrów
+		// Ustalanie dodatkowych parametrów:
 		String str = (String)modelMap.get("key_field");
 		modelMap.put("key_upper_field", Character.toUpperCase(str.charAt(0)) + str.substring(1));
 		str = (String)modelMap.get("key_upper_entity");
 		modelMap.put("key_entity", Character.toLowerCase(str.charAt(0)) + str.substring(1));
 
 		// Przygotowywanie katalogu wyjściowego i uruchamianie sinika:
-		String outPath = getOutputPath(true);
-//		ITemplateSource templateSource = new FileTemplateSource(
-//				repositoryPath + "/DirectoryExtenderEngineUTest", "resources");
-
+		String outPath = getOutputPath(true,
+				repositoryPath + "/DirectoryExtenderEngineUTest/testProcessDirectory1/base"
+		);
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "/DirectoryExtenderEngineUTest/resources", "");
-
-		File srcFolder = new File(repositoryPath + "/DirectoryExtenderEngineUTest/bundles");
-		File destFolder = new File(outPath);
-
-		FileUtils.copyFolder(srcFolder, destFolder);
+				repositoryPath + "/DirectoryExtenderEngineUTest/testProcessDirectory1/repo",
+				""
+		);
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "a43d6d8d9c7693a5868b22316ddd731d".equals(md5) : md5;
+		assert "76696408ead67d7af63ee58f111ef04a".equals(md5) : md5;
 	}
-
 }

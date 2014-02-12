@@ -1,9 +1,0 @@
-!!!_dependencies_!!!
-
-<dependency>
-  <groupId>${key_canonical}${key_project}</groupId>
-  <artifactId>${key_canonical}${key_project}.service</artifactId>
-  <version><!--${key_canonical}${key_project}.version-->0.0.1.TO-ZOSTALO-WKLEJONE</version>
-  <scope>compile</scope>
-</dependency>
-!!!_dependencies_!!!

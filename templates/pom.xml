@@ -28,8 +28,8 @@
 		<module>abstract-velocityDirectoryEngine</module>
 		<module>abstract-velocityDirectoryExtendEngine</module>
 
-		<!-- module>abstract-fileExtenderEngine</module>
-		<module>abstract-directoryExtenderEngine</module -->
+		<module>abstract-fileExtenderEngine</module>
+		<module>abstract-directoryExtenderEngine</module>
 
 		<module>eclipse-project-general</module>
 		<module>eclipse-project-java</module>

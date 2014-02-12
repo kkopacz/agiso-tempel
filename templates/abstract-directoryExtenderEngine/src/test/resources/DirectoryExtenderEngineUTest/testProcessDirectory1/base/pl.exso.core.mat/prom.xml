@@ -11,8 +11,6 @@
 	<artifactId>pl.exso.core.mat</artifactId>
 	<packaging>pom</packaging>
 
-
-
 	<dependencies>
 		<dependency>
 			<groupId>pl.exso.core.mat</groupId>
@@ -20,11 +18,12 @@
 			<version><!--pl.exso.core.mat.version-->0.0.1.BUILD-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>pl.exso.core.mat</groupId>
+			<artifactId>pl.exso.core.mat.service.local</artifactId>
+			<version><!--pl.exso.core.mat.version-->0.0.1.BUILD-SNAPSHOT</version>
+			<scope>runtime</scope>
+		</dependency>
 		<!--!!!_dependencies_!!!-->
-  </dependencies>
-		
-  <name>ExsoCORE MAT Bundle</name>
-	<url>http://exso.pl/core</url>
-	<inceptionYear>2013</inceptionYear>
-
+	</dependencies>
 </project>
