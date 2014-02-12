@@ -20,7 +20,7 @@ package org.agiso.tempel.engine;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
 import org.agiso.tempel.support.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
@@ -39,7 +39,7 @@ public class MakeDirsEngineUTest extends AbstractTempelEngineTest {
 		String outPath = getOutputPath(true);
 		engine.run(null, null, outPath + "/parent/newDirectory");
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
 	}
 }

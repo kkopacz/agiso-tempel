@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
@@ -122,15 +122,15 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			}
 
 			// Dodawanie do repozytorium (z wywołaniem template.setRepository(...))
-			String gId = Temp.StringUtils_emptyIfBlank(template.getGroupId());
-			String tId = Temp.StringUtils_emptyIfBlank(template.getTemplateId());
-			String ver = Temp.StringUtils_emptyIfBlank(template.getVersion());
-			if(!Temp.StringUtils_isBlank(gId)) {
+			String gId = StringUtils.emptyIfBlank(template.getGroupId());
+			String tId = StringUtils.emptyIfBlank(template.getTemplateId());
+			String ver = StringUtils.emptyIfBlank(template.getVersion());
+			if(!StringUtils.isBlank(gId)) {
 				templateRepository.put(null, gId, tId, ver, template);
 			}
 
 			String key = template.getKey();
-			if(!Temp.StringUtils_isBlank(key)) {
+			if(!StringUtils.isBlank(key)) {
 				templateRepository.put(key, null, null, null, template);
 			}
 

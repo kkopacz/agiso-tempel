@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
 import org.mockito.InOrder;
@@ -47,7 +47,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 //				"-d " + outPath
 //		});
 //
-//		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+//		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 //		System.out.println(md5);
 //		assert "31c287aec4ff50269de4523bdfc4707b".equals(md5) : md5;
 //	}
@@ -90,7 +90,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Class name", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "677a1eabb14d0bb2a0c3f108d2795ad1".equals(md5) : md5;
 	}
 }

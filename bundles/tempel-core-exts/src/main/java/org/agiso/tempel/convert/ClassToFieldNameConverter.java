@@ -18,7 +18,7 @@
  */
 package org.agiso.tempel.convert;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
@@ -37,7 +37,7 @@ public class ClassToFieldNameConverter implements ITemplateParamConverter<String
 
 	@Override
 	public String convert(String value) {
-		if(!Temp.StringUtils_isEmpty(value)) {
+		if(!StringUtils.isEmpty(value)) {
 			return value.substring(0, 1).toLowerCase() + value.substring(1);
 		}
 		return value;

@@ -18,8 +18,8 @@
  */
 package org.agiso.tempel.support.file.provider;
 
-import static org.agiso.tempel.Temp.AnsiUtils.*;
-import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -161,7 +161,7 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 	}
 
 	private String getTemplatePath(Template<?> template) {
-		if(Temp.StringUtils_isEmpty(template.getGroupId())) {	// dopuszczone w repozytorium RUNTIME
+		if(StringUtils.isEmpty(template.getGroupId())) {	// dopuszczone w repozytorium RUNTIME
 			// Szablony bez określonej grupy, identyfikatora i wersji mogą generować zasoby
 			// o ile nie wymagają do tego celu żadnych plików źródłowych (np. szablonów velocity).
 			// Nie mają one bowiem określonej ścieżki w repozytorium.

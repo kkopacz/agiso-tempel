@@ -23,8 +23,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
-import org.agiso.tempel.api.ITemplateParamConverter;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
 import org.mockito.InOrder;
@@ -66,7 +65,7 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("param_date", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "6d29fc434271b7b3e19c189138a07743".equals(md5) : md5;
 	}
 

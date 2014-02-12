@@ -18,8 +18,8 @@
  */
 package org.agiso.tempel.core;
 
-import static org.agiso.tempel.Temp.AnsiUtils.*;
-import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
 
 import java.io.File;
 import java.net.URL;
@@ -30,11 +30,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.agiso.core.lang.MapStack;
-import org.agiso.core.lang.SimpleMapStack;
+import org.agiso.core.lang.type.MapStack;
+import org.agiso.core.lang.type.SimpleMapStack;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
 import org.agiso.tempel.api.ITemplateParamValidator;
@@ -54,7 +54,6 @@ import org.agiso.tempel.core.converter.DateParamConverter;
 import org.agiso.tempel.core.converter.IntegerParamConverter;
 import org.agiso.tempel.core.converter.LongParamConverter;
 import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -149,7 +148,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	}
 
 	private void doExecuteTemplateInternal(Template<?> template, MapStack<String, Object> properties, String workDir) {
-		if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
+		if(!StringUtils.isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
 
@@ -209,10 +208,10 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				// stack.push(params2);
 
 				// Sprawdzanie, czy istnieje szablon opisywany przez podszablon:
-				String key = Temp.StringUtils_nullIfBlank(refTemplate.getKey());
-				String gId = Temp.StringUtils_emptyIfBlank(refTemplate.getGroupId());
-				String tId = Temp.StringUtils_emptyIfBlank(refTemplate.getTemplateId());
-				String ver = Temp.StringUtils_nullIfBlank(refTemplate.getVersion());		// dla nieokreślonej wersji null
+				String key = StringUtils.nullIfBlank(refTemplate.getKey());
+				String gId = StringUtils.emptyIfBlank(refTemplate.getGroupId());
+				String tId = StringUtils.emptyIfBlank(refTemplate.getTemplateId());
+				String ver = StringUtils.nullIfBlank(refTemplate.getVersion());		// dla nieokreślonej wersji null
 
 				if(key == null) {
 					key = gId + ":" + tId + ":" + ver;
@@ -295,13 +294,13 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				}
 
 				// Ustalanie katalogu roboczego dla podszablonu:
-				if(!Temp.StringUtils_isEmpty(refTemplate.getWorkDir())) {
+				if(!StringUtils.isEmpty(refTemplate.getWorkDir())) {
 					subTemplate.setWorkDir(expressionEvaluator.evaluate(refTemplate.getWorkDir(), properties.peek()));
 				}
 
 				// Wykonywanie szablonu w zaktualizowanej wersji:
 				String subWorkDir = workDir;
-//				if(!Temp.StringUtils_isEmpty(template.getWorkDir())) {
+//				if(!StringUtils.isEmpty(template.getWorkDir())) {
 //					subWorkDir = workDir + "/" + template.getWorkDir();
 //				}
 				doExecuteTemplate(subTemplate, properties, subWorkDir);
@@ -358,7 +357,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 	 * @param params
 	 */
 	private void doEngineRun(ITempelEngine engine, Template<?> template, String source, String workDir, String target, MapStack<String, Object> stack) {
-		if(Temp.StringUtils_isEmpty(target)) {
+		if(StringUtils.isEmpty(target)) {
 			target = workDir + "/";
 		} else {
 			target = workDir + "/" + expressionEvaluator.evaluate(target, stack.peek());
@@ -388,7 +387,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		String value = expressionEvaluator.evaluate(param.getValue(), params);
 
 		// Parametr oznaczony musi mieć zdefiniowaną wartość:
-		if(fixed && Temp.StringUtils_isEmpty(value)) {
+		if(fixed && StringUtils.isEmpty(value)) {
 			throw new IllegalStateException("Brak wartości dla parametru oznaczonego '" + param.getKey() + "'");
 		}
 

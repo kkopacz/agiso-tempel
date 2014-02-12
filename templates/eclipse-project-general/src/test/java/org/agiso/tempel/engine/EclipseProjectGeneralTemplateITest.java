@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
 import org.mockito.InOrder;
@@ -78,7 +78,7 @@ public class EclipseProjectGeneralTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "34cdeda618a11108429499f413a0ec4d".equals(md5) : md5;
 	}
 
@@ -109,7 +109,7 @@ public class EclipseProjectGeneralTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "34cdeda618a11108429499f413a0ec4d".equals(md5) : md5;
 	}
 
@@ -140,7 +140,7 @@ public class EclipseProjectGeneralTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "8ae8ee172f3d533be4ff7aa39e230468".equals(md5) : md5;
 	}
 }

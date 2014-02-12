@@ -26,7 +26,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
 import org.jboss.shrinkwrap.api.Archive;
@@ -60,8 +60,8 @@ public class ArchiveTemplateSource implements ITemplateSource {
 		this.resource = resource;
 
 		String basePath = BASE_PATH;
-		if(!Temp.StringUtils_isBlank(resource)) {
-			basePath = basePath + "/" + Temp.StringUtils_emptyIfBlank(resource);
+		if(!StringUtils.isBlank(resource)) {
+			basePath = basePath + "/" + StringUtils.emptyIfBlank(resource);
 			if(basePath.endsWith("/")) {
 				basePath.substring(0, basePath.length() - 1);
 			}
@@ -72,7 +72,7 @@ public class ArchiveTemplateSource implements ITemplateSource {
 			baseEntry = archive.get(basePath);
 		}
 		if(baseEntry == null) {
-			if(Temp.StringUtils_isBlank(resource)) {
+			if(StringUtils.isBlank(resource)) {
 				// Wpis baseEntry nie istnieje. Dopuszczamy taką sytuację jeśli nie jest
 				// określona wartość resource. Sytuacja ta występuje jeśli silnik nie
 				// przetwarza zasobów wejściowych, tylko np. tworzy katalogi (jak silnik

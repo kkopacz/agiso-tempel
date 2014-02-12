@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
 		<artifactId>tempel-base-pom</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
 		<relativePath>../../pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 
@@ -19,6 +19,12 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.agiso.core</groupId>
+			<artifactId>agiso-core-lang</artifactId>
+			<version>0.0.1.BUILD-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>

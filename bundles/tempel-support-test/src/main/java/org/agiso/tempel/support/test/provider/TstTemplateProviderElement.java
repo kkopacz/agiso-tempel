@@ -25,7 +25,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -148,7 +148,7 @@ public class TstTemplateProviderElement extends BaseTemplateProviderElement {
 	}
 
 	private String getTemplatePath(Template<?> template) {
-		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
+		if(StringUtils.isEmpty(template.getGroupId())) {
 			return null;
 		}
 

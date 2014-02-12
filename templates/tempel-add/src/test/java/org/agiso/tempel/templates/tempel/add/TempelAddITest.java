@@ -21,8 +21,8 @@ package org.agiso.tempel.templates.tempel.add;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
 import org.testng.annotations.Test;
 
@@ -53,7 +53,7 @@ public class TempelAddITest extends AbstractTemplateTest {
 				new HashMap<String, String>(), new File(outPath).getCanonicalPath()
 		);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "4028a1a1e284375c00a4847558a94132".equals(md5) : md5;
 	}
 }

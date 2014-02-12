@@ -18,8 +18,8 @@
  */
 package org.agiso.tempel.core.provider;
 
-import static org.agiso.tempel.Temp.AnsiUtils.*;
-import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

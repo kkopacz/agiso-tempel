@@ -22,7 +22,7 @@ import static org.jvnet.inflector.Noun.*;
 
 import java.util.Locale;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
@@ -40,7 +40,7 @@ public class SingularToPluralConverter implements ITemplateParamConverter<String
 
 	@Override
 	public String convert(String value) {
-		if(Temp.StringUtils_isBlank(value)) {
+		if(StringUtils.isBlank(value)) {
 			return value;
 		}
 		return pluralOf(value, Locale.ENGLISH);

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
 import org.mockito.InOrder;
@@ -63,7 +63,7 @@ public class MakeDirsTemplateITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path name", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
 	}
 }

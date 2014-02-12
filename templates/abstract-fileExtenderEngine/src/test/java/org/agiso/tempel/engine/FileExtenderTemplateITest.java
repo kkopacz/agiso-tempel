@@ -18,18 +18,12 @@
  */
 package org.agiso.tempel.engine;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-
 import java.io.File;
 import java.util.HashMap;
 
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
-import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
-import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
 /**

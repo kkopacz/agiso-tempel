@@ -19,11 +19,11 @@
 package org.agiso.tempel.engine;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
+import org.agiso.core.lang.util.FileUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
@@ -67,24 +67,11 @@ public class DirectoryExtenderEngineUTest extends AbstractTempelEngineTest {
 		File srcFolder = new File(repositoryPath + "/DirectoryExtenderEngineUTest/bundles");
 		File destFolder = new File(outPath);
 
-		// Sprawdzenie czy folder źródłowy istnieje
-		if(!srcFolder.exists()) {
-			assert false : "Zasób " + srcFolder + " nie istnieje. Test zostaje przewany.";
-		} else {
-			try {
-				Temp.FileUtils_copyFolder(srcFolder, destFolder);
-				//System.out.println("Pliki niezbędne do testu zostały poprawnie skopiowane. "
-				//		+ "Zostaje uruchomiony DirectoryExtenderEngineUTest\n");
-				engine.run(templateSource, modelMap, outPath);
+		FileUtils.copyFolder(srcFolder, destFolder);
+		engine.run(templateSource, modelMap, outPath);
 
-				String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-				assert "a43d6d8d9c7693a5868b22316ddd731d".equals(md5) : md5;
-				} catch(IOException e) {
-					e.printStackTrace();
-					assert false : "Pliki niezbędne do testu nie zostały skoiowane.";
-					System.exit(0);
-				}
-		}
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
+		assert "a43d6d8d9c7693a5868b22316ddd731d".equals(md5) : md5;
 	}
 
 }

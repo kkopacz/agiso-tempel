@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
@@ -55,7 +55,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		);
 		engine.run(templateSource, modelMap, outPath);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5) : md5;
 	}
 
@@ -83,7 +83,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 			engine.run(templateSource, modelMap2, outPath);
 		}
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "85a378d06fdc8f07cdd3123945ccd75e".equals(md5) : md5;
 	}
 
@@ -115,7 +115,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 			}
 		}
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "16da266e446a2f65d9acdf40a7934225".equals(md5) : md5;
 	}
 
@@ -138,7 +138,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		);
 		engine.run(templateSource, modelMap, outPath);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "577334b8abc8ca3e517ac65150170932".equals(md5) : md5;
 	}
 
@@ -165,7 +165,7 @@ public class VelocityFileExtendEngineUTest extends AbstractTempelEngineTest {
 		);
 		engine.run(templateSource, modelMap, outPath);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "4ee2590760b85ff39246cf1f0c846391".equals(md5) : md5;
 	}
 }

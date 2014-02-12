@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.agiso.tempel.docs</groupId>
 		<artifactId>tempel-docs-pom</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
 		<relativePath>../../pom/tempel-docs-pom/pom.xml</relativePath>
 	</parent>
 

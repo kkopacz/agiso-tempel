@@ -18,8 +18,8 @@
  */
 package org.agiso.tempel.support.maven.provider;
 
-import static org.agiso.tempel.Temp.AnsiUtils.*;
-import static org.agiso.tempel.Temp.AnsiUtils.AnsiElement.*;
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.model.Template;
 import org.apache.maven.settings.Settings;
 import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
@@ -136,7 +136,7 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 
 	@Override
 	protected String getTemplatePath(Template<?> template) {
-		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
+		if(StringUtils.isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon SWRAP bez groupId");
 		}
 

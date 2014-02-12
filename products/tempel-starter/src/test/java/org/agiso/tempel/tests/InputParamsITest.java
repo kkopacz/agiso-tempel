@@ -20,7 +20,7 @@ package org.agiso.tempel.tests;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.starter.Bootstrap;
 import org.testng.annotations.Test;
 
@@ -60,7 +60,7 @@ public class InputParamsITest extends AbstractOutputTest {
 				"-Dparam_02=param value 02 (command)"
 		});
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "1ef4579e5f7ca5da8da5010ecb37cf2a".equals(md5) : md5;
 	}
 }

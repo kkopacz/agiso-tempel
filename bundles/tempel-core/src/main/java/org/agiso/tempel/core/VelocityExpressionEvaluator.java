@@ -21,7 +21,7 @@ package org.agiso.tempel.core;
 import java.io.StringWriter;
 import java.util.Map;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
 public class VelocityExpressionEvaluator implements IExpressionEvaluator {
 	@Override
 	public String evaluate(String expression, Map<String, Object> model) {
-		if(Temp.StringUtils_isBlank(expression)) {
+		if(StringUtils.isBlank(expression)) {
 			return expression;
 		}
 

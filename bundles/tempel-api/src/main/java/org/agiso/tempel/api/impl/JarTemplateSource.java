@@ -30,7 +30,7 @@ import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
 
@@ -70,7 +70,7 @@ public class JarTemplateSource implements ITemplateSource {
 		jarFile = new JarFile(mainFile);
 
 		// Wyszukujemy wpis pliku .jar odpowiadający wskazanemu zasobowi:
-		String basePath = BASE_PATH + Temp.StringUtils_emptyIfBlank(resource);
+		String basePath = BASE_PATH + StringUtils.emptyIfBlank(resource);
 		Enumeration<JarEntry> jarEntries = jarFile.entries();
 		while(jarEntries.hasMoreElements()) {
 			JarEntry jarEntry = jarEntries.nextElement();
@@ -93,7 +93,7 @@ public class JarTemplateSource implements ITemplateSource {
 			}
 		}
 		if(baseEntry == null) {
-			if(Temp.StringUtils_isBlank(resource)) {
+			if(StringUtils.isBlank(resource)) {
 				// Wpis baseEntry nie istnieje. Dopuszczamy taką sytuację jeśli nie jest
 				// określona wartość resource. Sytuacja ta występuje jeśli silnik nie
 				// przetwarza zasobów wejściowych, tylko np. tworzy katalogi (jak silnik

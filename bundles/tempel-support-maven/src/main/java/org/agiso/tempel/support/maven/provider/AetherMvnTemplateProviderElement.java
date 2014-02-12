@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.model.Template;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
 import org.apache.maven.repository.internal.MavenServiceLocator;
@@ -128,7 +128,7 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 
 	@Override
 	protected String getTemplatePath(Template<?> template) {
-		if(Temp.StringUtils_isEmpty(template.getGroupId())) {
+		if(StringUtils.isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon MAVEN bez groupId");
 		}
 

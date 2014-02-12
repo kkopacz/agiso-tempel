@@ -8,13 +8,32 @@
 
 	<groupId>org.agiso.tempel</groupId>
 	<artifactId>tempel-base-pom</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel POM</name>
 	<url>http://agiso.org/tempel</url>
 	<inceptionYear>2012</inceptionYear>
 	<description>Tool for generation resources based on templates.</description>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<licenses>
 		<license>
@@ -79,7 +98,7 @@
 		<appassembler-plugin.version>1.1.1</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version>0.0.1-SNAPSHOT</tempel.version>
+		<tempel.version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</tempel.version>
 		<tempel.templates.version>1.0.0</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->

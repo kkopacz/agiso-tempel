@@ -20,7 +20,7 @@ package org.agiso.tempel.tests;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.starter.Bootstrap;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ public class TemplateEngineITest extends AbstractOutputTest {
 				"-d " + outPath
 		});
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "aafffc5e362b45e7c28ca3593067e17d".equals(md5) : md5;
 	}
 
@@ -58,7 +58,7 @@ public class TemplateEngineITest extends AbstractOutputTest {
 				"-d " + outPath
 		});
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "00040f9b635713c4eb30c910d55f8c11".equals(md5) : md5;
 	}
 
@@ -72,7 +72,7 @@ public class TemplateEngineITest extends AbstractOutputTest {
 				"-d " + outPath
 		});
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "3925e499a09d461df7036bb111fdce61".equals(md5) : md5;
 	}
 }

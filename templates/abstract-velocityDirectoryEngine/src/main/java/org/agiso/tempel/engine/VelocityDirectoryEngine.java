@@ -21,7 +21,7 @@ package org.agiso.tempel.engine;
 import java.io.File;
 import java.io.InputStream;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.FileUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
 import org.apache.velocity.VelocityContext;
@@ -68,7 +68,7 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 			InputStream is = null;
 			try {
 				is = entry.getInputStream();
-				Temp.FileUtils_copyFile(is, targetFile);
+				FileUtils.copyFile(is, targetFile);
 			} finally {
 				if(is != null) try {
 					is.close();

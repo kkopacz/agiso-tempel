@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
@@ -57,7 +57,7 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		);
 		engine.run(templateSource, modelMap, outPath);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "1b88794f97f0b86ceba125ef9326af9e".equals(md5) : md5;
 	}
 
@@ -75,7 +75,7 @@ public class VelocityDirectoryEngineUTest extends AbstractTempelEngineTest {
 		);
 		engine.run(templateSource, modelMap, outPath);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "c1f94f832c26b7deecf9aecb292f6b91".equals(md5) : md5;
 	}
 }

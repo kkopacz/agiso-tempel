@@ -22,7 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 public class SystemInParamReader implements IParamReader {
 	@Override
 	public String getParamValue(String key, String name, String value) {
-		if(Temp.StringUtils_isBlank(name)) {
+		if(StringUtils.isBlank(name)) {
 			name = "Param '" + key + "'";
 		}
 
@@ -48,7 +48,7 @@ public class SystemInParamReader implements IParamReader {
 				System.out.print(name + " [" + value + "]: ");
 			}
 			String line = br.readLine();
-			if(!Temp.StringUtils_isEmpty(line)) {
+			if(!StringUtils.isEmpty(line)) {
 				value = line;
 			}
 		} catch(IOException e) {

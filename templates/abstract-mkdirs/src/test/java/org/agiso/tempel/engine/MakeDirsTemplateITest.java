@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
@@ -98,7 +98,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
 	}
 
@@ -128,7 +128,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
 	}
 
@@ -158,7 +158,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
 	}
 
@@ -189,7 +189,7 @@ public class MakeDirsTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path", null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
 	}
 }

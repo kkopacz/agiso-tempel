@@ -18,11 +18,12 @@
  */
 package org.agiso.tempel.tests;
 
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
 import org.mockito.InOrder;
@@ -58,8 +59,7 @@ public class TemplateParamValidatorITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("param_string", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
-		System.out.println(md5);
-//		assert "4bc922a21a32a7bdc89c1e8c715454d8".equals(md5) : md5;
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
+		assert "d41d8cd98f00b204e9800998ecf8427e".equals(md5) : md5;
 	}
 }

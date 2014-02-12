@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
@@ -75,7 +75,7 @@ public class VelocityDirectoryExtendTemplateITest extends AbstractTemplateTest {
 	@Test
 	public void testEngineInvocation_01() throws Exception {
 		String outPath = getOutputPath(true,
-				"src/test/templates/run/base/VelocityDirectoryExtendTemplateITest"
+				"src/test/templates/tst/base/VelocityDirectoryExtendTemplateITest"
 		);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -108,14 +108,14 @@ public class VelocityDirectoryExtendTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("dirKey2", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "8d76301a49fbf4cd38a32bf4059875ad".equals(md5) : md5;
 	}
 
 	@Test
 	public void testReferenceTemplateInvocation_01() throws Exception {
 		String outPath = getOutputPath(true,
-				"src/test/templates/run/base/VelocityDirectoryExtendTemplateITest"
+				"src/test/templates/tst/base/VelocityDirectoryExtendTemplateITest"
 		);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -148,7 +148,7 @@ public class VelocityDirectoryExtendTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("dirKey2", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "8d76301a49fbf4cd38a32bf4059875ad".equals(md5) : md5;
 	}
 }

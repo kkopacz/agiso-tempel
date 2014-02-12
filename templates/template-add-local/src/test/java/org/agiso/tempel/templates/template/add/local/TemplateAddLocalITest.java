@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
 import org.mockito.InOrder;
@@ -77,7 +77,7 @@ public class TemplateAddLocalITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		// Wyliczenie i sprawdzenie skrótu MD5 utworzonego zasobu:
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "f69e866f6c3c2939b8109085b7f0b77f".equals(md5) : md5;
 	}
 }

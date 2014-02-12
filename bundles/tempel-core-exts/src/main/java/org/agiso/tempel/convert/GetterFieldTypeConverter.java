@@ -18,7 +18,6 @@
  */
 package org.agiso.tempel.convert;
 
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
@@ -29,8 +28,6 @@ import org.agiso.tempel.api.ITemplateParamConverter;
  * @since 1.0
  */
 public class GetterFieldTypeConverter implements ITemplateParamConverter<String, String> {
-
-//	--------------------------------------------------------------------------
 	@Override
 	public boolean canConvert(Class<?> fromType, Class<?> toType) {
 		return (fromType == null || String.class.equals(fromType))

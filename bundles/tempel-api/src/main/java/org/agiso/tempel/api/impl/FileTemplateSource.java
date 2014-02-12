@@ -28,7 +28,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceEntry;
 
@@ -73,7 +73,7 @@ public class FileTemplateSource implements ITemplateSource {
 
 		// Pobieramy plik odpowiadający wskazanemu zasobowi szablonu i na jego
 		// podstawie budujemy listę wszystkich wpsiów szablonu:
-		if(!Temp.StringUtils_isBlank(resource)) {
+		if(!StringUtils.isBlank(resource)) {
 			mainFile = new File(mainEntryPath + "/" + resource);
 		}
 		if(mainFile.isFile()) {
@@ -82,7 +82,7 @@ public class FileTemplateSource implements ITemplateSource {
 			mainEntryPath = mainFile.getCanonicalPath();
 			mainEntryPathLength = mainEntryPath.length() + 1;
 			mainEntry = addDirectoryEntry(entries, mainFile);
-		} else if(!Temp.StringUtils_isBlank(resource)) {
+		} else if(!StringUtils.isBlank(resource)) {
 			// Plik mainFile nie jest ani plikiem, ani katalogiem więc nie istnieje.
 			// Dopuszczamy taką sytuację jeśli nie jest określona wartość resource.
 			// Sytuacja ta występuje jeśli silnik nie przetwarza zasobów wejściowych,

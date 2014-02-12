@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.ConvertUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
@@ -109,7 +109,7 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 			InputStream is = tempel_xml.getAsset().openStream();
 
 			ArchiveCacheEntry cacheEntry = new ArchiveCacheEntry();
-			cacheEntry.definition = Temp.ConvertUtils_convertStreamToString(is);
+			cacheEntry.definition = ConvertUtils.toString(is);
 			cacheEntry.archive = archive;
 
 			return cacheEntry;

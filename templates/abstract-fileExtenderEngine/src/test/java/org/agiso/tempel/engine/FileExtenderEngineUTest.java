@@ -22,13 +22,13 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.DigestUtils;
+import org.agiso.core.lang.util.FileUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
 import org.agiso.tempel.support.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
-
 
 /**
  * 
@@ -63,10 +63,10 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		File testBeanFile = new File(path);
 
 		File outBeanFile = new File(outPath);
-		Temp.FileUtils_copyFile(testBeanFile.getPath(), outBeanFile.getPath());
+		FileUtils.copyFile(testBeanFile.getPath(), outBeanFile.getPath());
 
 		engine.run(templateSource, modelMap, outPath);
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "a5eac78c6c62b94f18e3b46bb9216d94".equals(md5) : md5;
 	}
 
@@ -94,10 +94,10 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		File testBeanFile = new File(path);
 
 		File outBeanFile = new File(outPath);
-		Temp.FileUtils_copyFile(testBeanFile.getPath(), outBeanFile.getPath());
+		FileUtils.copyFile(testBeanFile.getPath(), outBeanFile.getPath());
 
 		engine.run(templateSource, modelMap, outPath);
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "ce535ce3d7f38c56925a29c9ac58a35b".equals(md5) : md5;
 	}
 }

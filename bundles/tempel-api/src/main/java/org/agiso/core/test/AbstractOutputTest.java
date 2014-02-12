@@ -19,9 +19,10 @@
 package org.agiso.core.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.FileUtils;
 
 /**
  * Klasa bazowa dla testów generujących zasoby podlegające weryfikacji.
@@ -55,8 +56,10 @@ public abstract class AbstractOutputTest {
 			new File(outputPath).mkdirs();
 		}
 
-		if(contentDir != null) {
-			Temp.FileUtils_copyDir(contentDir, outputPath);
+		if(contentDir != null) try {
+			FileUtils.copyDir(contentDir, outputPath);
+		} catch(IOException e) {
+			throw new RuntimeException(e);
 		}
 
 		return outputPath;

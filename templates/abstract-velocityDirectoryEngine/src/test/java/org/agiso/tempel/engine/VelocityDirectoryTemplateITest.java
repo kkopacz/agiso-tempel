@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 
+import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.core.model.exceptions.AbstractTemplateException;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
@@ -97,7 +97,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5) : md5;
 	}
 
@@ -123,7 +123,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5) : md5;
 	}
 
@@ -149,7 +149,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "554cd5d1a8d91902a6315f11f1f98887".equals(md5) : md5;
 	}
 
@@ -175,7 +175,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "554cd5d1a8d91902a6315f11f1f98887".equals(md5) : md5;
 	}
 
@@ -201,7 +201,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "8fe87b4e14b1b6ad844d2003eef134bc".equals(md5) : md5;
 	}
 
@@ -227,7 +227,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "554cd5d1a8d91902a6315f11f1f98887".equals(md5) : md5;
 	}
 
@@ -253,7 +253,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "554cd5d1a8d91902a6315f11f1f98887".equals(md5) : md5;
 	}
 
@@ -279,7 +279,7 @@ public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", null, null);
 		verifyNoMoreInteractions(paramReader);
 
-		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "554cd5d1a8d91902a6315f11f1f98887".equals(md5) : md5;
 	}
 }

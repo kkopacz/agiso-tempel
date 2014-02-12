@@ -28,7 +28,7 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.agiso.tempel.Temp;
+import org.agiso.core.lang.util.ConvertUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.JarTemplateSource;
 import org.agiso.tempel.api.model.Template;
@@ -93,7 +93,7 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 						InputStream is = jarFile.getInputStream(tempel_xml);
 
 						MvnCacheEntry cacheEntry = new MvnCacheEntry();
-						cacheEntry.definition = Temp.ConvertUtils_convertStreamToString(is);
+						cacheEntry.definition = ConvertUtils.toString(is);
 						cacheEntry.path = file.getCanonicalPath();
 						cacheEntry.classpath = new HashSet<String>();
 						for(File classpathFile : files) {
