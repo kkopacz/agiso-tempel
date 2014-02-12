@@ -19,17 +19,16 @@
 package org.agiso.tempel.engine;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.agiso.tempel.Temp;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.FileTemplateSource;
 import org.agiso.tempel.support.test.AbstractTempelEngineTest;
 import org.agiso.tempel.support.test.annotation.TempelEngineTest;
 import org.testng.annotations.Test;
 
-import static java.nio.file.StandardCopyOption.*;
 
 /**
  * 
@@ -47,28 +46,30 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key_type", "int");
 		modelMap.put("key_field", "rate");
 		modelMap.put("key_upper_entity", "Film");
-		
+
 		// Ustalanie dodatkowych parametrów
 		String str = (String)modelMap.get("key_field");
 		modelMap.put("key_upper_field", Character.toUpperCase(str.charAt(0)) + str.substring(1));
 		str = (String)modelMap.get("key_upper_entity");
 		modelMap.put("key_entity", Character.toLowerCase(str.charAt(0)) + str.substring(1));
-		
+
 		String fileName = "testBean.java";
-		
+
 		// Przygotowywanie katalogu wyjściowego i uruchamianie silnika:
 		String outPath = getOutputPath(true) + "/" + fileName;
 		ITemplateSource templateSource = new FileTemplateSource(
 				repositoryPath + "/FileExtenderEngineUTest/resources", "testBean.java.vm");
 		String path = repositoryPath + "FileExtenderEngineUTest/" + fileName;
 		File testBeanFile = new File(path);
-		
+
 		File outBeanFile = new File(outPath);
-		Files.copy(testBeanFile.toPath(), outBeanFile.toPath(), REPLACE_EXISTING);
-		
+		Temp.FileUtils_copyFile(testBeanFile.getPath(), outBeanFile.getPath());
+
 		engine.run(templateSource, modelMap, outPath);
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "a5eac78c6c62b94f18e3b46bb9216d94".equals(md5) : md5;
 	}
-	
+
 	@Test
 	public void testModifyFile2() throws Exception {
 		// Wypełnianie mapy modelu dla szablonu:
@@ -77,7 +78,7 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		modelMap.put("key_field", "rate");
 		modelMap.put("key_upper_entity", "Film");
 		String fileName = "testBean2.java";
-		
+
 		// Ustalanie dodatkowych parametrów
 		String str = (String)modelMap.get("key_field");
 		modelMap.put("key_upper_field", Character.toUpperCase(str.charAt(0)) + str.substring(1));
@@ -91,10 +92,12 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 				"testBean2.java.vm");
 		String path = repositoryPath + "FileExtenderEngineUTest/" + fileName;
 		File testBeanFile = new File(path);
-		
+
 		File outBeanFile = new File(outPath);
-		Files.copy(testBeanFile.toPath(), outBeanFile.toPath(), REPLACE_EXISTING);
-		
+		Temp.FileUtils_copyFile(testBeanFile.getPath(), outBeanFile.getPath());
+
 		engine.run(templateSource, modelMap, outPath);
+		String md5 = Temp.DigestUtils_countDigest("MD5", new File(outPath));
+		assert "ce535ce3d7f38c56925a29c9ac58a35b".equals(md5) : md5;
 	}
 }
