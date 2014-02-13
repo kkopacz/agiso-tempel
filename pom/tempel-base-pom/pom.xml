@@ -57,7 +57,16 @@
 			</roles>
 			<timezone>1</timezone>
 		</developer>
-	</developers>
+		<developer>
+			<id>mklin</id>
+			<name>Michał Klin</name>
+			<email>mklin@agiso.org</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>1</timezone>
+		</developer>
+			</developers>
 
 	<scm>
 		<connection>scm:git:git@github.com:kkopacz/agiso-tempel.git</connection>
@@ -284,6 +293,17 @@
 			<dependency>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<artifactId>abstract-velocityDirectoryExtendEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-fileExtenderEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-directoryExtenderEngine</artifactId>
 				<version>${tempel.templates.version}</version>
 			</dependency>
 
