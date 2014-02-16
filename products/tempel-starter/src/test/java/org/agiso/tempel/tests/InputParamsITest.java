@@ -54,13 +54,13 @@ public class InputParamsITest extends AbstractOutputTest {
 				"-Ddate_format_short=dd/MM/yyyy",
 				"-Ddate=2010-12-21 11:12:13",
 				"-Dproperty_01=property value 01 (runtime)",
-				"-Ddate_locale=fr_FR",
+				"-Ddate_locale=de_DE",
 				"-Duser_name=tpluser",
 				"-Dparam_01=param value 01 (command)",
 				"-Dparam_02=param value 02 (command)"
 		});
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "1ef4579e5f7ca5da8da5010ecb37cf2a".equals(md5) : md5;
+		assert "457182c5406df3c185be5750b20c513f".equals(md5) : md5;
 	}
 }

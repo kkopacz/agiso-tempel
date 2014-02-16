@@ -64,6 +64,6 @@ public class DirectoryExtenderEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "76696408ead67d7af63ee58f111ef04a".equals(md5) : md5;
+		assert "4c74065e604b05dd6873cb80845f2b6c".equals(md5) : md5;
 	}
 }

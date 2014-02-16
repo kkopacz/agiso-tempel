@@ -62,7 +62,7 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "a3bf0b4a378274432e8d230214058375".equals(md5) : md5;
+		assert "d788f8f75699990272b44305661432ad".equals(md5) : md5;
 	}
 
 	@Test
@@ -90,6 +90,6 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "18135fe77be2ddefc8b01b02bf565ccc".equals(md5) : md5;
+		assert "7f5fec037ad51b7747b92ca5f0aabd34".equals(md5) : md5;
 	}
 }
