@@ -23,7 +23,10 @@
 	<modules>
 		<module>pom/tempel-base-pom</module>
 		<module>bundles</module>
+
+		<module>pom/templates-base-pom</module>
 		<module>templates</module>
+
 		<module>products</module>
 
 		<module>pom/tempel-docs-pom</module>

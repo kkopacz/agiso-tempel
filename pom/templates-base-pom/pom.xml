@@ -6,15 +6,15 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.agiso.tempel</groupId>
-	<artifactId>tempel-base-pom</artifactId>
-	<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
+	<groupId>org.agiso.tempel.templates</groupId>
+	<artifactId>templates-base-pom</artifactId>
+	<version><!--tempel.templates.version-->1.0.0</version>
 	<packaging>pom</packaging>
 
-	<name>AGISO Tempel Base POM</name>
+	<name>AGISO Templates Base POM</name>
 	<url>http://agiso.org/tempel</url>
 	<inceptionYear>2012</inceptionYear>
-	<description>Tool for generation resources based on templates.</description>
+	<description>Base POM for Tempel templates.</description>
 
 	<repositories>
 		<repository>
@@ -108,7 +108,7 @@
 
 		<!-- agiso.org Tempel dependencies -->
 		<tempel.version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</tempel.version>
-		<tempel.templates.version>1.0.0</tempel.templates.version>
+		<tempel.templates.version><!--tempel.templates.version-->1.0.0</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
 		<agiso.core.version><!--org.agiso.core-->0.0.1.BUILD-SNAPSHOT</agiso.core.version>
@@ -198,12 +198,6 @@
 					<configuration>
 						<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
 					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>appassembler-maven-plugin</artifactId>
-					<version>${appassembler-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

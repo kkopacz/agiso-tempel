@@ -7,10 +7,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.agiso.tempel</groupId>
-		<artifactId>tempel-base-pom</artifactId>
-		<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
-		<relativePath>../../pom/tempel-base-pom/pom.xml</relativePath>
+		<groupId>org.agiso.tempel.templates</groupId>
+		<artifactId>templates-base-pom</artifactId>
+		<version><!--tempel.templates.version-->1.0.0</version>
+		<relativePath>../../pom/templates-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
@@ -24,11 +24,13 @@
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-mkdirs</artifactId>
+			<optional>true</optional>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-velocityFileEngine</artifactId>
+			<optional>true</optional>
 			<scope>runtime</scope>
 		</dependency>
 

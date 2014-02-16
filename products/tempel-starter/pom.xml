@@ -30,11 +30,12 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>appassembler-maven-plugin</artifactId>
 				<configuration>
+					<repositoryName>lib</repositoryName>
 					<repositoryLayout>flat</repositoryLayout>
 					<showConsoleWindow>true</showConsoleWindow>
 					<extraJvmArguments>-Dfile.encoding=UTF-8</extraJvmArguments>
+					<licenseHeaderFile>${basedir}/license-header.txt</licenseHeaderFile>
 					<assembleDirectory>${project.build.directory}/appassembler</assembleDirectory>
-					<repositoryName>lib</repositoryName>
 					<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
 					<platforms>
 						<platform>windows</platform>

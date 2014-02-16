@@ -73,7 +73,7 @@
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-directoryExtenderEngine</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-support-test</artifactId>
