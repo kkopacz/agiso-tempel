@@ -79,7 +79,7 @@ public class EclipseProjectJavaTemplateITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "05b4c797692b88d8c6b295a91644bc5d".equals(md5) : md5;
+		assert "62905a1ec7b224eaf8a6700cebc9cf3c".equals(md5) : md5;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class EclipseProjectJavaTemplateITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "05b4c797692b88d8c6b295a91644bc5d".equals(md5) : md5;
+		assert "62905a1ec7b224eaf8a6700cebc9cf3c".equals(md5) : md5;
 	}
 
 	/**
@@ -141,6 +141,6 @@ public class EclipseProjectJavaTemplateITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "32a721621fc702a225a345e5a722160a".equals(md5) : md5;
+		assert "e80e2fce4961a30cb51a7bde5c759240".equals(md5) : md5;
 	}
 }

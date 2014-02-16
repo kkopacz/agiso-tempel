@@ -52,6 +52,6 @@ public class VelocityFileEngineUTest extends AbstractTempelEngineTest {
 		engine.run(templateSource, modelMap, outPath);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "c1f94f832c26b7deecf9aecb292f6b91".equals(md5) : md5;
+		assert "a974d0957b52ed6c80be61bbae0e2069".equals(md5) : md5;
 	}
 }

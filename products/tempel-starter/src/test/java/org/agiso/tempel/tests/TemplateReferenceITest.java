@@ -67,7 +67,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "e083c9bd6aa1155c081f92b82a004c9b".equals(md5) : md5;
+		assert "e142610395f405d6a60beae6c10474cc".equals(md5) : md5;
 	}
 
 	/**
@@ -98,6 +98,6 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "68bb9d3a2b1c4e871bfcdca79e78d954".equals(md5) : md5;
+		assert "e40206a73f9732699c33b623b9a2b6f5".equals(md5) : md5;
 	}
 }
