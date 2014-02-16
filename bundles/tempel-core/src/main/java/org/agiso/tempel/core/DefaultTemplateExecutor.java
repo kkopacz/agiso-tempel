@@ -219,7 +219,11 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 				Template<?> subTemplate = templateProvider.get(key, gId, tId, ver);
 				if(subTemplate == null) {
-					throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + "' szablonu '" + template.getKey() + "'" );
+					throw new IllegalStateException("Nieznany podszablon '" + refTemplate.getKey() + ": " +
+							refTemplate.getGroupId() + ":" + refTemplate.getTemplateId() + ":" + refTemplate.getVersion() +
+							"' szablonu '" + template.getKey() + ": " +
+							template.getGroupId() + ":" + template.getTemplateId() + ":" + template.getVersion() +
+							"'" );
 				}
 
 				// Szablon istnieje. Kopiowanie jego standardowej definicji i aktualizowanie
