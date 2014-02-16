@@ -4,11 +4,6 @@
 
 # The above will handle all files NOT found below
 
-# Disable line endings normalization in template resources
-src/main/resources/TEMPEL-INF/* -text
-src/test/resources/* -text
-src/test/templates/* -text
-
 # These files are text and should be normalized (Convert crlf => lf)
 *.properties text
 *.java text
