@@ -6,24 +6,12 @@
 
 # These files are text and should be normalized
 # (Convert crlf => lf)
-*.css text
-*.df text
-*.htm text
-*.html text
-*.java text
-*.js text
-*.json text
-*.jsp text
-*.jspf text
 *.properties text
-*.sh text
-*.sql text
-*.svg text
-*.tld text
-*.txt text
-*.xml text
-*.vm text
-*.vmp text
+*.java text eol=lf
+*.txt text eol=lf
+*.xml text eol=lf
+*.vm text eol=lf
+*.vmp text eol=lf
 
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
