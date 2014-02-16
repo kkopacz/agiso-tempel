@@ -82,6 +82,6 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "f3b1f10094a483586a40aebd8408c795".equals(md5) : md5;
+		assert "5d0012cd973a24e5075d51b20d678793".equals(md5) : md5;
 	}
 }
