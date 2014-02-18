@@ -48,7 +48,7 @@
 
 		<module>products</module>
 
-		<module>pom/tempel-docs-pom</module>
-		<module>docs</module>
+		<!-- module>pom/tempel-docs-pom</module>
+		<module>docs</module -->
 	</modules>
 </project>

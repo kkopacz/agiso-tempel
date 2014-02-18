@@ -111,7 +111,7 @@
 		<tempel.templates.version><!--tempel.templates.version-->1.0.0</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.1.BUILD-SNAPSHOT</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
 
 		<!-- Apache Commons dependencies -->
 		<commons-cli.version>1.2</commons-cli.version>
