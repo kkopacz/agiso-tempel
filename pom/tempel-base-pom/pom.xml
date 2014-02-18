@@ -72,6 +72,7 @@
 		<connection>scm:git:git@github.com:kkopacz/agiso-tempel.git</connection>
 		<developerConnection>scm:git:git@github.com:kkopacz/agiso-tempel.git</developerConnection>
 		<url>git@github.com:kkopacz/agiso-tempel.git</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>

@@ -20,6 +20,25 @@
 	<name>AGISO Tempel Builder</name>
 	<inceptionYear>2012</inceptionYear>
 
+	<scm>
+		<connection>scm:git:git@github.com:kkopacz/agiso-tempel.git</connection>
+		<developerConnection>scm:git:git@github.com:kkopacz/agiso-tempel.git</developerConnection>
+		<url>git@github.com:kkopacz/agiso-tempel.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<modules>
 		<module>pom/tempel-base-pom</module>
 		<module>bundles</module>
