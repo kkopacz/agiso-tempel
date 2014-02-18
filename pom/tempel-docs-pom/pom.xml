@@ -15,10 +15,6 @@
 	<url>http://agiso.org/tempel</url>
 	<inceptionYear>2012</inceptionYear>
 
-	<organization>
-		<name>agiso.org</name>
-		<url>http://agiso.org</url>
-	</organization>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -26,11 +22,51 @@
 		</license>
 	</licenses>
 
+	<organization>
+		<name>agiso.org</name>
+		<url>http://agiso.org</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>kkopacz</id>
+			<name>Karol Kopacz</name>
+			<email>kkopacz@agiso.org</email>
+			<roles>
+				<role>writer</role>
+			</roles>
+			<timezone>1</timezone>
+		</developer>
+	</developers>
+
 	<scm>
 		<connection>scm:git:git@github.com:kkopacz/org.agiso.tempel.git</connection>
 		<url>scm:git:git@github.com:kkopacz/org.agiso.tempel.git</url>
 		<developerConnection>scm:git:git@github.com:kkopacz/org.agiso.tempel.git</developerConnection>
 	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>agiso-releases</id>
+			<url>http://repo.agiso.org/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>agiso-snapshots</id>
+			<url>http://repo.agiso.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<!-- distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Sonatype Nexus release repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement -->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

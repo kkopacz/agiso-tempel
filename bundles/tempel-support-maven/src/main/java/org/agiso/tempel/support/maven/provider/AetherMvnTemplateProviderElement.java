@@ -24,8 +24,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.agiso.core.lang.util.StringUtils;
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.model.Template;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
 import org.apache.maven.repository.internal.MavenServiceLocator;
@@ -53,6 +56,9 @@ import org.sonatype.aether.util.graph.PreorderNodeListGenerator;
  * @since 1.0
  */
 public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
+	private static final Logger logger = LogUtils.getLogger(AetherMvnTemplateProviderElement.class);
+
+//	--------------------------------------------------------------------------
 	private String settingsPath;
 	private String repositoryPath;
 
@@ -94,14 +100,13 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 	}
 
 //	--------------------------------------------------------------------------
-	/**
-	 * @param groupId
-	 * @param templateId
-	 * @param version
-	 * @return
-	 */
 	@Override
-	protected List<File> resolve(String groupId, String templateId, String version) throws Exception {
+	protected List<File> resolve(String fqtn) throws Exception {
+		StringTokenizer tokenizer = new StringTokenizer(fqtn, ":", false);
+		String groupId = tokenizer.nextToken();
+		String templateId = tokenizer.nextToken();
+		String version = tokenizer.nextToken();
+
 		Dependency dependency = new Dependency(new DefaultArtifact(groupId + ':' + templateId + ':' + version), null);
 
 		CollectRequest collectRequest = new CollectRequest();

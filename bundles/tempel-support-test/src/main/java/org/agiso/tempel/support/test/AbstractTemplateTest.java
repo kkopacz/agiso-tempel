@@ -103,7 +103,7 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 
 				// Mamy do czynienia z testem projektu szablonu:
 				IArchiveTemplateProviderElement atp = ctx.getBean(IArchiveTemplateProviderElement.class);
-				atp.addArchive(groupId, templateId, version, archive);
+				atp.addArchive(groupId + ":" + templateId + ":" + version, archive);
 			}
 
 

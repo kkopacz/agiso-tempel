@@ -22,7 +22,6 @@
 		<dependency>
 			<groupId>org.agiso.core</groupId>
 			<artifactId>agiso-core-lang</artifactId>
-			<version>0.0.1.BUILD-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

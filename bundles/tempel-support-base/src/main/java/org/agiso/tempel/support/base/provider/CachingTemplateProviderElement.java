@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.lang.annotation.InToString;
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateRepository;
@@ -47,17 +48,14 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 //	--------------------------------------------------------------------------
 	@Override
 	public boolean contains(String key, String groupId, String templateId, String version) {
-		if(!cache.containsKey(key)) {
-			cache.put(key, doGet(key, groupId, templateId, version));
-		}
-		return cache.get(key) != null;
+		doChacheEntry(key);
+
+		return null != getCacheEntry(key);
 	}
 
 	@Override
 	public Template<?> get(String key, String groupId, String templateId, String version) {
-		if(!cache.containsKey(key)) {
-			cache.put(key, doGet(key, groupId, templateId, version));
-		}
+		doChacheEntry(key);
 
 		final CacheEntry cacheEntry = getCacheEntry(key);
 		if(cacheEntry == null) {
@@ -76,13 +74,12 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 						);
 					}
 				});
-				logger.debug("Template {} definition processed successfully",
-						ansiString(GREEN, key)
+				if(logger.isTraceEnabled()) logger.trace("Definition successfully processed for entry {}",
+						ansiString(GREEN, cacheEntry.toString())
 				);
 			} catch(Exception e) {
-				logger.error(e, "Error processing template {} definition: {}",
-						ansiString(GREEN, key),
-						ansiString(RED, e.getMessage())
+				logger.error(e, "Error processing definition for entry {}",
+						ansiString(GREEN, cacheEntry.toString())
 				);
 				throw new RuntimeException(e);
 			}
@@ -93,19 +90,33 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 		return cacheEntry.repository.get(key, groupId, templateId, version);
 	}
 
+	private void doChacheEntry(String key) {
+		if(!cache.containsKey(key)) {
+			cache.put(key, doGet(key));
+			if(logger.isTraceEnabled()) {
+				CacheEntry entry = cache.get(key);
+				logger.trace("Caching entry {} for template {}",
+						ansiString(GREEN, entry == null? "null" : entry.toString()),
+						ansiString(GREEN, key)
+				);
+			}
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	protected final <T extends CacheEntry> T getCacheEntry(String key) {
 		return (T)cache.get(key);
 	}
 
 //	--------------------------------------------------------------------------
-	protected abstract <T extends CacheEntry> T doGet(String key, String groupId, String templateId, String version);
+	protected abstract <T extends CacheEntry> T doGet(String key);
 
 //	--------------------------------------------------------------------------
 	public static class CacheEntry {
 		/**
 		 * Definicja XML szablonu
 		 */
+		@InToString(ignore = true)
 		public String definition;
 		/**
 		 * Repozytorium, w którym znajduje się szablon

@@ -18,15 +18,20 @@
  */
 package org.agiso.tempel.support.test.provider;
 
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.agiso.core.lang.util.ConvertUtils;
+import org.agiso.core.lang.util.ObjectUtils;
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
@@ -44,6 +49,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArchiveTemplateProviderElement extends CachingTemplateProviderElement
 		implements IArchiveTemplateProviderElement {
+	private static final Logger logger = LogUtils.getLogger(ArchiveTemplateProviderElement.class);
+
 	private final Map<String, Archive<?>> repository = new HashMap<String, Archive<?>>();
 
 //	--------------------------------------------------------------------------
@@ -63,7 +70,6 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 	}
 
 //	--------------------------------------------------------------------------
-
 	@Override
 	protected void doInitialize() throws IOException {
 	}
@@ -74,29 +80,32 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void addArchive(String groupId, String templateId, String version, Archive<?> archive) {
-		repository.put(groupId + ":" + templateId + ":" + version, archive);
+	public void addArchive(String key, Archive<?> archive) {
+		if(logger.isDebugEnabled()) logger.debug("Putting template {} archive {}",
+				ansiString(GREEN, key),
+				ansiString(GREEN, archive.toString())
+		);
+
+		repository.put(key, archive);
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
 	@SuppressWarnings("unchecked")
-	protected ArchiveCacheEntry doGet(String key, String groupId, String templateId, String version) {
+	protected ArchiveCacheEntry doGet(String key) {
+		if(logger.isTraceEnabled()) logger.trace("Preparing cache entry for template {}",
+				ansiString(GREEN, key)
+		);
+
 		if(key.indexOf(':') <= 0) {
 			return null;
 		}
-
-		// Wydzielamy z klucza grupę, szablon i wersję:
-		StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
-		groupId = tokenizer.nextToken();
-		templateId = tokenizer.nextToken();
-		version = tokenizer.nextToken();
 
 		// Pobieranie i przegląd bibliotek z repozytorium maven, wyszukiwanie biblioteki
 		// szablonu i sprawdzanie czy zawiera plik tempel.xml. Jeśli tak, to jego
 		// odczytywanie i parsowanie w celu przygotowania obiektu Template:
 		try {
-			Archive<?> archive = resolve(groupId, templateId, version);
+			Archive<?> archive = resolve(key);
 			if(archive == null) {
 				return null;
 			}
@@ -114,13 +123,20 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 
 			return cacheEntry;
 		} catch(Exception e) {
-			e.printStackTrace();
+			logger.error(e, "Cache entry preparation error for template {}",
+					ansiString(GREEN, key)
+			);
 			return null;
 		}
 	}
 
-	protected Archive<?> resolve(String groupId, String templateId, String version) throws Exception {
-		return repository.get(groupId + ":" + templateId + ":" + version);
+	protected Archive<?> resolve(String key) throws Exception {
+		Archive<?> archive = repository.get(key);
+		if(logger.isTraceEnabled()) logger.trace("Resolved template {} archive {}",
+				ansiString(GREEN, key),
+				ansiString(GREEN, archive == null? null : archive.toString())
+		);
+		return archive;
 	}
 
 	@Override
@@ -145,5 +161,10 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 //	--------------------------------------------------------------------------
 	public static class ArchiveCacheEntry extends CacheEntry {
 		public Archive<?> archive;
+
+		@Override
+		public String toString() {
+			return ObjectUtils.toStringBuilder(this);
+		}
 	}
 }

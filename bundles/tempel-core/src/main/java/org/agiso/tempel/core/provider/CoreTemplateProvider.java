@@ -63,7 +63,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 		});
 
 		for(ITemplateProviderElement provider : elements) {
-			logger.debug("Setting up template provider {} with order {}",
+			if(logger.isDebugEnabled()) logger.debug("Setting up template provider {} with order {}",
 					ansiString(GREEN, provider.getClass().getSimpleName()),
 					ansiString(GREEN, provider.getOrder())
 			);
@@ -75,7 +75,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 	public void initialize(Map<String, Object> properties) throws IOException {
 		for(int index = elements.size() - 1; index >= 0; index--) {
 			ITemplateProviderElement provider = elements.get(index);
-			logger.trace("Initializing template provider {} with order {}",
+			if(logger.isTraceEnabled()) logger.trace("Initializing template provider {} with order {}",
 					ansiString(GREEN, provider.getClass().getSimpleName()),
 					ansiString(GREEN, provider.getOrder())
 			);
@@ -90,7 +90,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 	@Override
 	public void configure(Map<String, Object> properties) throws IOException {
 		for(ITemplateProviderElement provider : elements) {
-			logger.trace("Configuring template provider {} with order {}",
+			if(logger.isTraceEnabled()) logger.trace("Configuring template provider {} with order {}",
 					ansiString(GREEN, provider.getClass().getSimpleName()),
 					ansiString(GREEN, provider.getOrder())
 			);
@@ -110,6 +110,10 @@ public class CoreTemplateProvider implements ITemplateProvider {
 
 	@Override
 	public Template<?> get(String key, String groupId, String templateId, String version) {
+		if(logger.isDebugEnabled()) logger.debug("Looking for template {}",
+				ansiString(GREEN, key + ": " + groupId +":" + templateId + ":" + version)
+		);
+
 		for(ITemplateProviderElement provider : elements) {
 			if(provider.isActive() && provider.contains(key, groupId, templateId, version)) {
 				return provider.get(key, groupId, templateId, version);

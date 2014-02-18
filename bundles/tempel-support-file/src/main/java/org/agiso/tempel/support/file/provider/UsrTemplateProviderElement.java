@@ -52,6 +52,7 @@ import org.springframework.stereotype.Component;
 public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 	private static final Logger logger = LogUtils.getLogger(RunTemplateProviderElement.class);
 
+//	--------------------------------------------------------------------------
 	private boolean initialized;
 	private String settingsPath;
 	private String librariesPath;
@@ -146,15 +147,14 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 					}
 				});
 
-				logger.debug("User {} file processed successfully",
+				if(logger.isDebugEnabled()) logger.debug("User settings file {} processed successfully",
 						ansiString(GREEN, usrSettingsFile.getCanonicalPath())
 				);
 
 				return true;
 			} catch(Exception e) {
-				logger.error(e, "Error processing user {} file: {}",
-						ansiString(GREEN, usrSettingsFile.getCanonicalPath()),
-						ansiString(RED, e.getMessage())
+				logger.error(e, "Error processing user settings file {}",
+						ansiString(GREEN, usrSettingsFile.getCanonicalPath())
 				);
 				throw new RuntimeException(e);
 			}

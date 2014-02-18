@@ -18,6 +18,9 @@
  */
 package org.agiso.tempel.support.maven.provider;
 
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +32,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.agiso.core.lang.util.ConvertUtils;
+import org.agiso.core.lang.util.ObjectUtils;
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.JarTemplateSource;
 import org.agiso.tempel.api.model.Template;
@@ -41,6 +47,7 @@ import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
  * @since 1.0
  */
 public abstract class AbstractMvnTemplateProviderElement extends CachingTemplateProviderElement {
+	private static final Logger logger = LogUtils.getLogger(AbstractMvnTemplateProviderElement.class);
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -56,24 +63,32 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 //	--------------------------------------------------------------------------
 	@Override
 	@SuppressWarnings("unchecked")
-	protected MvnCacheEntry doGet(String key, String groupId, String templateId, String version) {
+	protected MvnCacheEntry doGet(String key) {
+		if(logger.isTraceEnabled()) logger.trace("Preparing cache entry for template {}",
+				ansiString(GREEN, key)
+		);
+
 		if(key.indexOf(':') <= 0) {
 			return null;
 		}
 
 		// Wydzielamy z klucza grupę, szablon i wersję:
-		StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
-		groupId = tokenizer.nextToken();
-		templateId = tokenizer.nextToken();
-		version = tokenizer.nextToken();
+//		StringTokenizer tokenizer = new StringTokenizer(key, ":", false);
+//		String groupId = tokenizer.nextToken();
+//		String templateId = tokenizer.nextToken();
+//		String version = tokenizer.nextToken();
 
 		// Pobieranie i przegląd bibliotek z repozytorium maven, wyszukiwanie biblioteki
 		// szablonu i sprawdzanie czy zawiera plik tempel.xml. Jeśli tak, to jego
 		// odczytywanie i parsowanie w celu przygotowania obiektu Template:
 		try {
-			List<File> files = resolve(groupId, templateId, version);
+			List<File> files = resolve(key);
 			for(File file : files) {
-				if(file.getName().equals(templateId + '-' + version + ".jar")) {
+// W trakcie uruchamiania testów bez instalacji Maven tworzy biblioteki szablonów
+// w lokalizacji tymczasowej. Nie ma wówczas zgodności nazwy pliku biblioteki z
+// konwencją templateId-version.jar (zamiast wersji jest znacznik czasowy).
+// (W taki sposób testy uruchamia wykorzystywany w projekcie system 'travis-ci')
+//				if(file.getName().equals(templateId + '-' + version + ".jar")) {
 					JarEntry tempel_xml = null;
 					JarFile jarFile = new JarFile(file);
 					try {
@@ -106,10 +121,12 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 							jarFile.close();
 						}
 					}
-				}
+//				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			logger.error(e, "Cache entry preparation error for template {}",
+					ansiString(GREEN, key)
+			);
 			return null;
 		}
 
@@ -117,12 +134,10 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 	}
 
 	/**
-	 * @param groupId
-	 * @param templateId
-	 * @param version
+	 * @param fqtn
 	 * @return
 	 */
-	protected abstract List<File> resolve(String groupId, String templateId, String version) throws Exception;
+	protected abstract List<File> resolve(String fqtn) throws Exception;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -139,5 +154,10 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 //	--------------------------------------------------------------------------
 	public static class MvnCacheEntry extends CacheEntry {
 		public String path;
+
+		@Override
+		public String toString() {
+			return ObjectUtils.toStringBuilder(this);
+		}
 	}
 }

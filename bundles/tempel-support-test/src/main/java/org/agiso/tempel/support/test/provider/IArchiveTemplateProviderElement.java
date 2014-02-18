@@ -28,5 +28,5 @@ import org.jboss.shrinkwrap.api.Archive;
  * @since 1.0
  */
 public interface IArchiveTemplateProviderElement extends ITemplateProviderElement {
-	public void addArchive(String groupId, String templateId, String version, Archive<?> archive);
+	public void addArchive(String key, Archive<?> archive);
 }

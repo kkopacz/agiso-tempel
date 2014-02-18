@@ -52,6 +52,7 @@ import org.springframework.stereotype.Component;
 public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 	private static final Logger logger = LogUtils.getLogger(RunTemplateProviderElement.class);
 
+//	--------------------------------------------------------------------------
 	private boolean initialized;
 	private String settingsPath;
 	private String librariesPath;
@@ -145,13 +146,13 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 				}
 			});
 
-			logger.debug("Local {} file processed successfully",
+			if(logger.isDebugEnabled()) logger.debug("Local settings file {} processed successfully",
 					ansiString(GREEN, runSettingsFile.getCanonicalPath())
 			);
 
 			return true;
 		} catch(Exception e) {
-			logger.error(e, "Error processing local {} file: {}",
+			logger.error(e, "Error processing local settings file {}",
 					ansiString(GREEN, runSettingsFile.getCanonicalPath()),
 					ansiString(RED, e.getMessage())
 			);

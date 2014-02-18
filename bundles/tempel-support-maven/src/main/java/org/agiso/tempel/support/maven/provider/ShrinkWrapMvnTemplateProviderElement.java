@@ -28,7 +28,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
+import org.agiso.core.lang.util.ObjectUtils;
 import org.agiso.core.lang.util.StringUtils;
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
@@ -85,35 +87,63 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 			request.setUserSettingsFile(mavenSettingsFile);
 			resolver = Maven.configureResolver().fromFile(mavenSettingsFile);
 
-			logger.debug("Using maven settings file {}",
+			if(logger.isDebugEnabled()) logger.debug("Using maven settings file {}",
 					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
 			);
 		} else {
 			resolver = Maven.resolver();
 
-			logger.warn("Maven settings file {} not found",
+			if(logger.isWarnEnabled()) logger.warn("Maven settings file {} not found",
 					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
 			);
 		}
 
-		settings = new MavenSettingsBuilder().buildSettings(request);
-		logger.debug("Using local maven repository {}",
-				ansiString(GREEN, settings.getLocalRepository())
+		if(logger.isTraceEnabled()) logger.trace("Building Maven setting for request {}",
+				ansiString(GREEN, ObjectUtils.toStringBuilder(request))
 		);
 
+		settings = new MavenSettingsBuilder().buildSettings(request);
+
+		if(logger.isTraceEnabled()) {
+			logger.trace("Using Maven settings {}",
+					ansiString(GREEN, ObjectUtils.toStringBuilder(settings))
+			);
+		} else if(logger.isDebugEnabled()) {
+			logger.trace("Using local Maven repository {}",
+					ansiString(GREEN, settings.getLocalRepository())
+			);
+		}
 
 		setActive(true);
 	}
 
 //	--------------------------------------------------------------------------
 	@Override
-	protected List<File> resolve(String groupId, String templateId, String version) throws Exception {
+	protected List<File> resolve(String fqtn) throws Exception {
+		if(logger.isDebugEnabled()) logger.debug("Resolving Maven artifact for template {}",
+				ansiString(GREEN, fqtn)
+		);
+
+		StringTokenizer tokenizer = new StringTokenizer(fqtn, ":", false);
+		String groupId = tokenizer.nextToken();
+		String templateId = tokenizer.nextToken();
+		String version = tokenizer.nextToken();
+
 		List<File> files = new ArrayList<File>();
 
 		MavenResolvedArtifact artifact = resolver.resolve(
 				groupId + ":" + templateId + ":" + version
 		).withoutTransitivity().asSingle(MavenResolvedArtifact.class);
 		files.add(artifact.asFile());
+
+		StringBuilder deps = null;
+		if(logger.isTraceEnabled()) {
+			deps = new StringBuilder();
+		} else if(logger.isDebugEnabled()) logger.debug(
+				"Template {} resolved as Maven archive {}",
+				ansiString(GREEN, fqtn),
+				ansiString(GREEN, files.get(0).getCanonicalPath())
+		);
 
 		MavenArtifactInfo[] dependencies = artifact.getDependencies();
 		for(MavenArtifactInfo dependency : dependencies) {
@@ -123,8 +153,21 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 			).withTransitivity().asFile();
 			for(File jar : jars) {
 				files.add(jar);
+				if(logger.isTraceEnabled()) {
+					if(deps.length() > 0) {
+						deps.append(", ");
+					}
+					deps.append(jar.getCanonicalPath());
+				}
 			}
 		}
+
+		if(logger.isTraceEnabled()) logger.trace(
+				"Template {} resolved as Maven archive {} with dependencies {}",
+				ansiString(GREEN, fqtn),
+				ansiString(GREEN, files.get(0).getCanonicalPath()),
+				ansiString(GREEN, deps.toString())
+		);
 
 		return files;
 	}

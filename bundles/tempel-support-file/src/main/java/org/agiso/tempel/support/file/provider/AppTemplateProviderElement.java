@@ -52,6 +52,7 @@ import org.springframework.stereotype.Component;
 public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 	private static final Logger logger = LogUtils.getLogger(RunTemplateProviderElement.class);
 
+//	--------------------------------------------------------------------------
 	private boolean initialized;
 	private String settingsPath;
 	private String librariesPath;
@@ -142,15 +143,14 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 				}
 			});
 
-			logger.debug("Application {} file processed successfully",
+			if(logger.isDebugEnabled()) logger.debug("Application settings file {} processed successfully",
 					ansiString(GREEN, appSettingsFile.getCanonicalPath())
 			);
 
 			return true;
 		} catch(Exception e) {
-			logger.error(e, "Error processing application {} file: {}",
-					ansiString(GREEN, appSettingsFile.getCanonicalPath()),
-					ansiString(RED, e.getMessage())
+			logger.error(e, "Error processing application settings file {}",
+					ansiString(GREEN, appSettingsFile.getCanonicalPath())
 			);
 			throw new RuntimeException(e);
 		}

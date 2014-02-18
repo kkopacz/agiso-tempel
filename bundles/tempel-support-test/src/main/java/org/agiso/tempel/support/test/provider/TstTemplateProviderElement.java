@@ -18,6 +18,9 @@
  */
 package org.agiso.tempel.support.test.provider;
 
+import static org.agiso.core.lang.util.AnsiUtils.*;
+import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -26,6 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.agiso.core.lang.util.StringUtils;
+import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -45,6 +50,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TstTemplateProviderElement extends BaseTemplateProviderElement {
+	private static final Logger logger = LogUtils.getLogger(TstTemplateProviderElement.class);
+
+//	--------------------------------------------------------------------------
 	private boolean initialized;
 	private String settingsPath;
 	private String librariesPath;
@@ -137,11 +145,16 @@ public class TstTemplateProviderElement extends BaseTemplateProviderElement {
 					);
 				}
 			});
-			System.out.println("Wczytano ustawienia lokalne z pliku " + tstSettingsFile.getCanonicalPath());
+
+			if(logger.isDebugEnabled()) logger.debug("Test settings file {} processed successfully",
+					ansiString(GREEN, tstSettingsFile.getCanonicalPath())
+			);
 
 			return true;
 		} catch(Exception e) {
-			System.err.println("Błąd wczytywania ustawień lokalnych: " + e.getMessage());
+			logger.error(e, "Error processing test settings file {}",
+					ansiString(GREEN, tstSettingsFile.getCanonicalPath())
+			);
 			throw new RuntimeException(e);
 		}
 		return false;
