@@ -73,6 +73,7 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		Map<String, String> cmdParams = new HashMap<String, String>();
 		cmdParams.put("date_format", "yyyy-MM-dd HH:mm:ss");
 		cmdParams.put("date", "2010-12-21 11:12:13");
+		cmdParams.put("date_format_medium", "yyyy-MM-dd");
 
 		ITempel tempel = getTempelInstance();
 		tempel.setParamReader(paramReader);
