@@ -22,12 +22,15 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.agiso.core.lang.util.ConvertUtils;
 import org.agiso.core.lang.util.DigestUtils;
+import org.agiso.core.lang.util.FileUtils;
 import org.agiso.tempel.ITempel;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.support.test.AbstractTemplateTest;
@@ -84,6 +87,9 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("templateId", "Template templateId", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("version", "Template version", "1.0.0");
 		verifyNoMoreInteractions(paramReader);
+
+		File f = new File(outPath + "/src/test/java/aaa/bbb/ccc/xxx/yyy/zzz/TemplateITest.java");
+		System.out.println("!!!!!!!!!!!!!" + ConvertUtils.toString(new FileInputStream(f)));
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "3cfcf56a7a2804c2bc278c3d138966ab".equals(md5) : md5;
