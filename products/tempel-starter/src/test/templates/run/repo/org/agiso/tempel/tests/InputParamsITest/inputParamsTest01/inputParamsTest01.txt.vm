@@ -6,6 +6,7 @@ date_format_short:  ${date_format_short}
 date_format_medium: ${date_format_medium}
 date_format_long:   ${date_format_long}
 date_format_full:   ${date_format_full}
+time_zone:          ${time_zone}
 time_format_short:  ${time_format_short}
 time_format_medium: ${time_format_medium}
 time_format_long:   ${time_format_long}

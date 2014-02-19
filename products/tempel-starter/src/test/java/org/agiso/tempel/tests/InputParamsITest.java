@@ -57,6 +57,7 @@ public class InputParamsITest extends AbstractOutputTest {
 				"org.agiso.tempel.tests:InputParamsITest:inputParamsTest01",
 				"-d " + outPath,
 				"-Ddate_format=yyyy-MM-dd HH:mm:ss",
+				"-Dtime_zone=GMT-8:00",
 				"-Ddate=2010-12-21 11:12:13",
 				"-Ddate_format_short=dd/MM/yyyy",
 				"-Dproperty_01=property value 01 (runtime)",
@@ -69,6 +70,6 @@ public class InputParamsITest extends AbstractOutputTest {
 		System.out.println("!!!!!!!!!!" + ConvertUtils.toString(new FileInputStream(outPath + "/inputParamsTest01.txt")));
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "457182c5406df3c185be5750b20c513f".equals(md5) : md5;
+		assert "575cef4cb4e23312591f588fd2e15bd0".equals(md5) : md5;
 	}
 }

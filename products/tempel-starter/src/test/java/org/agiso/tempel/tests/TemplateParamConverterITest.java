@@ -62,7 +62,7 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:TemplateParamConverterITest:templateParamConverterTest01",
 				"-d " + outPath,
-				"-Ddate_locale=de_DE"
+				"-Dtime_zone=GMT-3:00"
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
@@ -76,7 +76,7 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		System.out.println("!!!!!!!!!!" + ConvertUtils.toString(new FileInputStream(outPath + "/templateFile1.txt")));
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "6d29fc434271b7b3e19c189138a07743".equals(md5) : md5;
+		assert "af89b01c75f70d5ff05d9b70c7fe639e".equals(md5) : md5;
 	}
 
 //	public static class TestParamConverter implements ITemplateParamConverter<String> {

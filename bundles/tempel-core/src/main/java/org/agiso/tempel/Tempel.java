@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.agiso.core.logging.Logger;
@@ -149,6 +150,7 @@ public class Tempel implements ITempel {
 	public static final String UP_DATE_FORMAT_MEDIUM = "date_format_medium";
 	public static final String UP_DATE_FORMAT_LONG   = "date_format_long";
 	public static final String UP_DATE_FORMAT_FULL   = "date_format_full";
+	public static final String UP_TIME_ZONE = "time_zone";
 	public static final String UP_TIME_FORMAT_SHORT  = "time_format_short";
 	public static final String UP_TIME_FORMAT_MEDIUM = "time_format_medium";
 	public static final String UP_TIME_FORMAT_LONG   = "time_format_long";
@@ -180,8 +182,17 @@ public class Tempel implements ITempel {
 		Locale date_locale;
 		if(properties.containsKey(UP_DATE_LOCALE)) {
 			date_locale = LocaleUtils.toLocale((String)properties.get(UP_DATE_LOCALE));
+			Locale.setDefault(date_locale);
 		} else {
 			date_locale = Locale.getDefault();
+		}
+
+		TimeZone time_zone;
+		if(properties.containsKey(UP_TIME_ZONE)) {
+			time_zone = TimeZone.getTimeZone((String)properties.get(UP_DATE_LOCALE));
+			TimeZone.setDefault(time_zone);
+		} else {
+			time_zone = TimeZone.getDefault();
 		}
 
 		// Wyznaczanie daty, na podstawie której zostaną wypełnione parametry szablonów
@@ -198,6 +209,7 @@ public class Tempel implements ITempel {
 			if(properties.containsKey(RP_DATE_FORMAT)) {
 				String date_format = (String)properties.get(RP_DATE_FORMAT);
 				DateFormat formatter = new SimpleDateFormat(date_format);
+				formatter.setTimeZone(time_zone);
 				calendar.setTime(formatter.parse(date_string));
 			} else if(properties.containsKey(UP_DATE_FORMAT_LONG) && properties.containsKey(UP_TIME_FORMAT_LONG)) {
 				// TODO: Założenie, że format data-czas jest złożony z łańcucha daty i czasu rozdzelonych spacją:
@@ -205,10 +217,12 @@ public class Tempel implements ITempel {
 				DateFormat formatter = new SimpleDateFormat(
 						(String)properties.get(UP_DATE_FORMAT_LONG) + " " +
 						(String)properties.get(UP_TIME_FORMAT_LONG), date_locale);
+				formatter.setTimeZone(time_zone);
 				calendar.setTime(formatter.parse(date_string));
 			} else {
 				DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.LONG,
 						DateFormat.LONG, date_locale);
+				formatter.setTimeZone(time_zone);
 				calendar.setTime(formatter.parse(date_string));
 			}
 		}
@@ -237,6 +251,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.SHORT, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_DATE_SHORT, formatter.format(date));
 		}
 		if(!properties.containsKey(TP_DATE_MEDIUM)) {
@@ -248,6 +263,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_DATE_MEDIUM, formatter.format(date));
 		}
 		if(!properties.containsKey(TP_DATE_LONG)) {
@@ -259,6 +275,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.LONG, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_DATE_LONG, formatter.format(date));
 		}
 		if(!properties.containsKey(TP_DATE_FULL)) {
@@ -270,6 +287,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getDateInstance(DateFormat.FULL, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_DATE_FULL, formatter.format(date));
 		}
 
@@ -282,6 +300,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.SHORT, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_TIME_SHORT, formatter.format(date));
 		}
 		if(!properties.containsKey(TP_TIME_MEDIUM)) {
@@ -293,6 +312,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.MEDIUM, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_TIME_MEDIUM, formatter.format(date));
 		}
 		if(!properties.containsKey(TP_TIME_LONG)) {
@@ -304,6 +324,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.LONG, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_TIME_LONG, formatter.format(date));
 		}
 		if(!properties.containsKey(TP_TIME_FULL)) {
@@ -315,6 +336,7 @@ public class Tempel implements ITempel {
 			} else {
 				formatter = DateFormat.getTimeInstance(DateFormat.FULL, date_locale);
 			}
+			formatter.setTimeZone(time_zone);
 			props.put(TP_TIME_FULL, formatter.format(date));
 		}
 
