@@ -24,8 +24,6 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;

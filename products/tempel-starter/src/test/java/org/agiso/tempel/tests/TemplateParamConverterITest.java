@@ -22,11 +22,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.agiso.core.lang.util.ConvertUtils;
 import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
@@ -45,8 +41,6 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
 	@Test
 	public void templateParamConverterTest01() throws Exception {
-		Logger.getLogger("").setLevel(Level.FINE);
-
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
@@ -62,6 +56,7 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		Bootstrap.main(paramReader, new String[] {
 				"org.agiso.tempel.tests:TemplateParamConverterITest:templateParamConverterTest01",
 				"-d " + outPath,
+				"-Ddate_locale=pl_PL",
 				"-Dtime_zone=GMT-3:00"
 		});
 
@@ -71,9 +66,6 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("param_long", null, null);
 		inOrder.verify(paramReader, times(1)).getParamValue("param_date", null, null);
 		verifyNoMoreInteractions(paramReader);
-
-
-		System.out.println("!!!!!!!!!!" + ConvertUtils.toString(new FileInputStream(outPath + "/templateFile1.txt")));
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "af89b01c75f70d5ff05d9b70c7fe639e".equals(md5) : md5;
