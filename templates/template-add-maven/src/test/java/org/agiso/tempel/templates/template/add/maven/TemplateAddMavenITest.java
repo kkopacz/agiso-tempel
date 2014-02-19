@@ -24,6 +24,8 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.tempel.ITempel;
@@ -51,6 +53,8 @@ public class TemplateAddMavenITest extends AbstractTemplateTest {
 //	--------------------------------------------------------------------------
 	@Test
 	public void testTemplateAddMaven() throws Exception {
+		Logger.getLogger("").setLevel(Level.FINE);
+
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:

@@ -16,6 +16,17 @@
 	<inceptionYear>2012</inceptionYear>
 	<description>Base POM for Tempel templates.</description>
 
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -92,7 +103,7 @@
 		<tempel.templates.version><!--tempel.templates.version-->1.0.0</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.BUILD-SNAPSHOT</agiso.core.version>
 
 		<!-- Other dependencies -->
 		<velocity.version>1.7</velocity.version>
@@ -278,6 +289,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
@@ -307,6 +323,10 @@
 		<dependency>
 			<groupId>org.agiso.core</groupId>
 			<artifactId>agiso-core-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

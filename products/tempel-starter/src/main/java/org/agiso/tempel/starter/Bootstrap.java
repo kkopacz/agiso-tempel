@@ -27,6 +27,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
@@ -40,6 +42,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -57,9 +60,16 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration @EnableAutoConfiguration
 @ImportResource("classpath*:/META-INF/spring/tempel-context.xml")
 public class Bootstrap implements CommandLineRunner {
-	private static final Logger logger = LogUtils.getLogger(Bootstrap.class);
-
+	private static final Logger logger;
+	
 	private static IParamReader PARAM_READER = null;
+
+	static {
+		LogManager.getLogManager().reset();
+		SLF4JBridgeHandler.install();
+
+		logger = LogUtils.getLogger(Bootstrap.class);
+	}
 
 	@Autowired
 	private ITempel tempel;
@@ -71,6 +81,8 @@ public class Bootstrap implements CommandLineRunner {
 
 //	--------------------------------------------------------------------------
 	public static void main(String[] args) throws Exception {
+		// java.util.logging.Logger.getLogger("global").setLevel(Level.FINEST);
+
 		main(PARAM_READER, args);
 	}
 	public static void main(IParamReader paramReader, String[] args) throws Exception {

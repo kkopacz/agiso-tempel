@@ -19,15 +19,17 @@
 package org.agiso.tempel.support.test;
 
 import java.io.File;
+import java.util.logging.LogManager;
 
 import org.agiso.core.test.AbstractOutputTest;
 import org.agiso.tempel.ITempel;
-import org.agiso.tempel.support.test.provider.IArchiveTemplateProviderElement;
 import org.agiso.tempel.support.test.provider.ArchiveTemplateProviderElement;
+import org.agiso.tempel.support.test.provider.IArchiveTemplateProviderElement;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -54,6 +56,11 @@ public abstract class AbstractTemplateTest extends AbstractOutputTest {
 	private String version;
 
 	private ITempel tempel;
+//	--------------------------------------------------------------------------
+	static {
+		LogManager.getLogManager().reset();
+		SLF4JBridgeHandler.install();
+	}
 
 //	--------------------------------------------------------------------------
 	/**
