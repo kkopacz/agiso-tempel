@@ -35,6 +35,7 @@ import org.agiso.core.lang.util.StringUtils;
 import org.agiso.core.logging.Logger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.support.maven.resolver.ShrinkWrapMvnTempelDependencyResolver;
 import org.apache.maven.settings.Settings;
 import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
 import org.apache.maven.settings.building.SettingsBuildingRequest;
@@ -43,6 +44,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenArtifactInfo;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolvedArtifact;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.jboss.shrinkwrap.resolver.impl.maven.bootstrap.MavenSettingsBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -55,16 +57,9 @@ import org.springframework.stereotype.Component;
 public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
 	private static final Logger logger = LogUtils.getLogger(ShrinkWrapMvnTemplateProviderElement.class);
 
-	/** Nazwa zmiennej przechowującej ścieżkę do ustawień Maven'a */
-	private static final String MAVEN_SETTINS_PATH_PROPERTY = "maven_settings";
-
-	/** Domyślna lokalizacja ustawień Maven'a poziomu użytkownika */
-	private static final String DEFAULT_MAVEN_SETTINGS_PATH = System.getProperty("user.home")
-			.concat("/.m2/settings.xml");
-
 //	--------------------------------------------------------------------------
-	private Settings settings;
-	private MavenResolverSystem resolver;
+	@Autowired
+	private ShrinkWrapMvnTempelDependencyResolver mvnDependencyResolver;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -73,46 +68,7 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 
 	@Override
 	protected void doConfigure(Map<String, Object> properties) throws IOException {
-		SettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
-
-		File mavenSettingsFile = null;
-		if(properties.containsKey(MAVEN_SETTINS_PATH_PROPERTY)) {
-			mavenSettingsFile = new File(
-					properties.get(MAVEN_SETTINS_PATH_PROPERTY).toString()
-			);
-		} else {
-			mavenSettingsFile = new File(DEFAULT_MAVEN_SETTINGS_PATH);
-		}
-		if(mavenSettingsFile.exists()) {
-			request.setUserSettingsFile(mavenSettingsFile);
-			resolver = Maven.configureResolver().fromFile(mavenSettingsFile);
-
-			if(logger.isDebugEnabled()) logger.debug("Using maven settings file {}",
-					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
-			);
-		} else {
-			resolver = Maven.resolver();
-
-			if(logger.isWarnEnabled()) logger.warn("Maven settings file {} not found",
-					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
-			);
-		}
-
-		if(logger.isTraceEnabled()) logger.trace("Building Maven setting for request {}",
-				ansiString(GREEN, ObjectUtils.toStringBuilder(request))
-		);
-
-		settings = new MavenSettingsBuilder().buildSettings(request);
-
-		if(logger.isTraceEnabled()) {
-			logger.trace("Using Maven settings {}",
-					ansiString(GREEN, ObjectUtils.toStringBuilder(settings))
-			);
-		} else if(logger.isDebugEnabled()) {
-			logger.trace("Using local Maven repository {}",
-					ansiString(GREEN, settings.getLocalRepository())
-			);
-		}
+		mvnDependencyResolver.doConfigure(properties);
 
 		setActive(true);
 	}
@@ -129,47 +85,7 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 		String templateId = tokenizer.nextToken();
 		String version = tokenizer.nextToken();
 
-		List<File> files = new ArrayList<File>();
-
-		MavenResolvedArtifact artifact = resolver.resolve(
-				groupId + ":" + templateId + ":" + version
-		).withoutTransitivity().asSingle(MavenResolvedArtifact.class);
-		files.add(artifact.asFile());
-
-		StringBuilder deps = null;
-		if(logger.isTraceEnabled()) {
-			deps = new StringBuilder();
-		} else if(logger.isDebugEnabled()) logger.debug(
-				"Template {} resolved as Maven archive {}",
-				ansiString(GREEN, fqtn),
-				ansiString(GREEN, files.get(0).getCanonicalPath())
-		);
-
-		MavenArtifactInfo[] dependencies = artifact.getDependencies();
-		for(MavenArtifactInfo dependency : dependencies) {
-// TODO:			dependency.getScope();
-			File[] jars = resolver.resolve(
-					dependency.getCoordinate().toCanonicalForm()
-			).withTransitivity().asFile();
-			for(File jar : jars) {
-				files.add(jar);
-				if(logger.isTraceEnabled()) {
-					if(deps.length() > 0) {
-						deps.append(", ");
-					}
-					deps.append(jar.getCanonicalPath());
-				}
-			}
-		}
-
-		if(logger.isTraceEnabled()) logger.trace(
-				"Template {} resolved as Maven archive {} with dependencies {}",
-				ansiString(GREEN, fqtn),
-				ansiString(GREEN, files.get(0).getCanonicalPath()),
-				ansiString(GREEN, deps.toString())
-		);
-
-		return files;
+		return mvnDependencyResolver.resolve(groupId, templateId, version);
 	}
 
 	@Override
@@ -183,7 +99,7 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 			throw new RuntimeException("Szablon SWRAP bez groupId");
 		}
 
-		String path = settings.getLocalRepository();
+		String path = mvnDependencyResolver.getLocalRepositoryPath();
 		path = path + '/' + template.getGroupId().replace('.', '/');
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
