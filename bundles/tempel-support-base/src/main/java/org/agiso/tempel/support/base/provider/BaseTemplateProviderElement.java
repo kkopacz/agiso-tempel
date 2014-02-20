@@ -18,17 +18,24 @@
  */
 package org.agiso.tempel.support.base.provider;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import org.agiso.core.lang.util.StringUtils;
+import org.agiso.tempel.api.ITemplateClassPathExtender;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
+import org.agiso.tempel.api.internal.ITempelDependencyResolver;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
+import org.agiso.tempel.api.model.TempelDependency;
 import org.agiso.tempel.api.model.Template;
 import org.agiso.tempel.api.model.TemplateResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +48,17 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseTemplateProviderElement implements ITemplateProviderElement {
 	private boolean active;
-	private Map<String, String> properties = new TreeMap<String, String>();
+	private List<TempelDependency> dependencies = Collections.emptyList();
+	private Map<String, String> properties = Collections.emptyMap();
 
 	@Autowired
 	private IExpressionEvaluator expressionEvaluator;
 
 	@Autowired
 	protected ITempelFileProcessor tempelFileProcessor;
+
+	@Autowired(required = false)
+	protected ITempelDependencyResolver tempelDependencyResolver;
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -78,8 +89,8 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 	 * Przetwarza obiekt odczytany z pliku tempel.xml.
 	 * 
 	 * @param scope
-	 * @param tempelObject Obiekt odczytany z pliku xml. Może być mapą parametrów
-	 *     bądź definicją szablonu.
+	 * @param tempelObject Obiekt odczytany z pliku xml.
+	 *     Może być listą zależności, mapą parametrów bądź definicją szablonu.
 	 * @param objectClassPath Śceżka klas szablonu odczytanego z pliku xml. Ma
 	 *     zastosowanie tylko dla szablonów odczytywanych z repozytoriów Maven
 	 *     i zawiera zależności zdefiniowane w pliku pom.xml biblioteki szablonu.
@@ -87,11 +98,19 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 	 * @param templateSourceFactory
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	protected void processObject(/* String scope, */ Object tempelObject, Set<String> objectClassPath,
 			ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
+		// Mapa zależności pliku tempel.xml
+		if(tempelObject instanceof List) {
+			dependencies = (List<TempelDependency>)tempelObject;
+			return;
+		}
+
 		// Mapa parametrów pliku tempel.xml:
 		if(tempelObject instanceof Map) {
-			@SuppressWarnings("unchecked")
+			properties = new TreeMap<String, String>();
+
 			Map<String, String> scopeProperties = (Map<String, String>)tempelObject;
 			for(String key : scopeProperties.keySet()) {
 				String value = scopeProperties.get(key);
@@ -108,11 +127,10 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			Template<?> template = (Template<?>)tempelObject;
 
 			// Rozbudowa ścieżki klas szablonu o elementy specyficzne dla repozytorium:
-			template.extendTemplateClassPath(getRepositoryClassPath());
+			template.addTemplateClassPathExtender(new RepositoryTemplateClassPathExtender());
+			template.addTemplateClassPathExtender(new DependenciesTemplateClassPathExtender());
 			// Rozbudowa ścieżki klas szablonu o zależności szablonu (dla repozytoriów typu Maven):
-			if(objectClassPath != null) {
-				template.extendTemplateClassPath(objectClassPath);
-			}
+			template.addTemplateClassPathExtender(new FixedSetTemplateClassPathExtender(objectClassPath));
 
 			// Ustawianie referencji we wszystkich podszablonach:
 			if(template.getResources() != null) {
@@ -141,8 +159,93 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 		}
 	}
 
+	protected abstract String getBasePath();
+
 	/**
 	 * @return
 	 */
 	protected abstract Set<String> getRepositoryClassPath();
+
+	/**
+	 * @return
+	 */
+	private Set<String> getDependenciesClassPath() {
+		Set<String> dependenciesClassPath = new LinkedHashSet<String>();
+		for(TempelDependency dependency : dependencies) {
+			String relativePath = dependency.getRelativePath();
+			if(StringUtils.isNotEmpty(relativePath)) {
+				File dependencyJar = new File(getBasePath() + "/" + relativePath);
+				if(!dependencyJar.isFile()) {
+					throw new RuntimeException("Error resolving dependency " +
+							dependencyJar.getAbsolutePath() +"; " +
+							"dependency file not found");
+				}
+				dependenciesClassPath.add(dependencyJar.getAbsolutePath());
+			} else if(tempelDependencyResolver != null) {
+				for(File dependencyJar : tempelDependencyResolver.resolve(
+						dependency.getGroupId(),
+						dependency.getArtifactId(),
+						dependency.getVersion())) {
+					if(!dependencyJar.isFile()) {
+						throw new RuntimeException("Error resolving dependency " +
+								dependencyJar.getAbsolutePath() +"; " +
+								"dependency file not found");
+					}
+					dependenciesClassPath.add(dependencyJar.getAbsolutePath());
+				}
+			} else {
+				throw new RuntimeException("Error resolving dependency " +
+						dependency.getGroupId() + ":" +
+						dependency.getArtifactId() + ":" + 
+						dependency.getVersion() + "; " +
+						"no dependency resolver defined"
+				);
+			}
+		}
+		return dependenciesClassPath;
+	}
+
+	private class RepositoryTemplateClassPathExtender extends FixedSetTemplateClassPathExtender {
+		@Override
+		public Set<String> getClassPathEntries() {
+			if(classPathEntries == null) {
+				classPathEntries = getRepositoryClassPath();
+			}
+			return classPathEntries;
+		}
+	}
+	private class DependenciesTemplateClassPathExtender extends FixedSetTemplateClassPathExtender {
+		@Override
+		public Set<String> getClassPathEntries() {
+			if(classPathEntries == null) {
+				classPathEntries = getDependenciesClassPath();
+			}
+			return classPathEntries;
+		}
+	}
+}
+
+/**
+ * 
+ * 
+ * @author Karol Kopacz
+ * @since 1.0
+ */
+class FixedSetTemplateClassPathExtender implements ITemplateClassPathExtender {
+	protected Set<String> classPathEntries;
+
+	protected FixedSetTemplateClassPathExtender() {
+	}
+	public FixedSetTemplateClassPathExtender(Set<String> classPathEntries) {
+		if(classPathEntries == null) {
+			this.classPathEntries = Collections.emptySet();
+		} else {
+			this.classPathEntries = Collections.unmodifiableSet(classPathEntries);
+		}
+	}
+
+	@Override
+	public Set<String> getClassPathEntries() {
+		return classPathEntries;
+	}
 }

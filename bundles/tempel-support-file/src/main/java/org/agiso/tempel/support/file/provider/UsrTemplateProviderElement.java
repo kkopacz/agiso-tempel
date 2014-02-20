@@ -54,6 +54,7 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	private boolean initialized;
+	private String basePath;
 	private String settingsPath;
 	private String librariesPath;
 	private String repositoryPath;
@@ -80,6 +81,7 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
+			basePath = System.getProperty("user.home") + "/.tempel";
 			settingsPath = System.getProperty("user.home") + "/.tempel/tempel.xml";
 			librariesPath = System.getProperty("user.home") + "/.tempel/lib";
 			repositoryPath = System.getProperty("user.home") + "/.tempel/repo";
@@ -87,6 +89,7 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			path = System.getProperty("user.dir");
 
+			basePath = path + "/src/test/templates/usr";
 			settingsPath = path + "/src/test/templates/usr/tempel.xml";
 			librariesPath = path + "/src/test/templates/usr/lib";
 			repositoryPath = path + "/src/test/templates/usr/repo";
@@ -163,6 +166,11 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 
 			return false;
 		}
+	}
+
+	@Override
+	protected String getBasePath() {
+		return basePath;
 	}
 
 	private String getTemplatePath(Template<?> template) {

@@ -91,6 +91,11 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 
 //	--------------------------------------------------------------------------
 	@Override
+	protected String getBasePath() {
+		throw new IllegalStateException("Archive templates can't have relative dependencies");
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	protected ArchiveCacheEntry doGet(String key) {
 		if(logger.isTraceEnabled()) logger.trace("Preparing cache entry for template {}",

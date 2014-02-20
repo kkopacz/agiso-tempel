@@ -54,6 +54,7 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	private boolean initialized;
+	private String basePath;
 	private String settingsPath;
 	private String librariesPath;
 	private String repositoryPath;
@@ -80,6 +81,7 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
+			basePath = System.getProperty("user.dir") + "/.tempel";
 			settingsPath = System.getProperty("user.dir") + "/tempel.xml";
 			librariesPath = System.getProperty("user.dir") + "/.tempel/lib";
 			repositoryPath = System.getProperty("user.dir") + "/.tempel/repo";
@@ -87,6 +89,7 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			path = System.getProperty("user.dir");
 
+			basePath = path + "/src/test/templates/run";
 			settingsPath = path + "/src/test/templates/run/tempel.xml";
 			librariesPath = path + "/src/test/templates/run/lib";
 			repositoryPath = path + "/src/test/templates/run/repo";
@@ -176,6 +179,11 @@ public class RunTemplateProviderElement extends BaseTemplateProviderElement {
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
 		return path;
+	}
+
+	@Override
+	protected String getBasePath() {
+		return basePath;
 	}
 
 	@Override

@@ -21,6 +21,7 @@ package org.agiso.tempel.api.model;
 import java.util.List;
 import java.util.Set;
 
+import org.agiso.tempel.api.ITemplateClassPathExtender;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 
@@ -48,9 +49,9 @@ public interface Template<E extends TemplateEngine> extends TemplateReference {
 	public Set<String> getTemplateClassPath();
 
 	/**
-	 * @param entries
+	 * @param extender
 	 */
-	public void extendTemplateClassPath(Set<String> entries);
+	public void addTemplateClassPathExtender(ITemplateClassPathExtender extender);
 
 //	--------------------------------------------------------------------------
 	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory);

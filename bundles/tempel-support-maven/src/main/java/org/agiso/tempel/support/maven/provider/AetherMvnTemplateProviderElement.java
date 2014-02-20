@@ -56,6 +56,7 @@ import org.sonatype.aether.util.graph.PreorderNodeListGenerator;
  * @since 1.0
  */
 public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
+	@SuppressWarnings("unused")
 	private static final Logger logger = LogUtils.getLogger(AetherMvnTemplateProviderElement.class);
 
 //	--------------------------------------------------------------------------

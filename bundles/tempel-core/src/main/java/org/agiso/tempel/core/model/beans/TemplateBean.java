@@ -20,9 +20,11 @@ package org.agiso.tempel.core.model.beans;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.agiso.tempel.api.ITemplateClassPathExtender;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.ITemplateSourceFactory;
 import org.agiso.tempel.api.model.Template;
@@ -53,6 +55,9 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 
 	@XStreamOmitField
 	private ITemplateSourceFactory templateSourceFactory;
+
+	@XStreamOmitField
+	private List<ITemplateClassPathExtender> classPathExtenders;
 
 //	--------------------------------------------------------------------------
 	public TemplateBean() {
@@ -104,7 +109,16 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 
 	@Override
 	public Set<String> getTemplateClassPath() {
-		return templateClassPath;
+		Set<String> extendedTemplateClassPath = new LinkedHashSet<String>();
+		if(templateClassPath != null) {
+			extendedTemplateClassPath.addAll(templateClassPath);
+		}
+		if(classPathExtenders != null) {
+			for(ITemplateClassPathExtender extender : classPathExtenders) {
+				extendedTemplateClassPath.addAll(extender.getClassPathEntries());
+			}
+		}
+		return extendedTemplateClassPath;
 	}
 	public void setTemplateClassPath(Set<String> templateClassPath) {
 		this.templateClassPath = templateClassPath;
@@ -116,12 +130,11 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 	}
 
 	@Override
-	public void extendTemplateClassPath(Set<String> entries) {
-		if(templateClassPath == null) {
-			templateClassPath = new HashSet<String>(entries);
-		} else {
-			templateClassPath.addAll(entries);
+	public void addTemplateClassPathExtender(ITemplateClassPathExtender extender) {
+		if(classPathExtenders == null) {
+			classPathExtenders = new ArrayList<ITemplateClassPathExtender>();
 		}
+		classPathExtenders.add(extender);
 	}
 
 //	--------------------------------------------------------------------------

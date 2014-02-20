@@ -54,6 +54,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	private boolean initialized;
+	private String basePath;
 	private String settingsPath;
 	private String librariesPath;
 	private String repositoryPath;
@@ -80,6 +81,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
 			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
+			basePath = path.substring(0, index) + "/templates";
 			settingsPath = path.substring(0, index) + "/conf/tempel.xml";
 			librariesPath = path.substring(0, index) + "/templates/lib";
 			repositoryPath = path.substring(0, index) + "/templates/repo";
@@ -87,6 +89,7 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			path = System.getProperty("user.dir");
 
+			basePath = path + "/src/test/templates/app";
 			settingsPath = path + "/src/test/templates/app/tempel.xml";
 			librariesPath = path + "/src/test/templates/app/lib";
 			repositoryPath = path + "/src/test/templates/app/repo";
@@ -168,6 +171,11 @@ public class AppTemplateProviderElement extends BaseTemplateProviderElement {
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
 		return path;
+	}
+
+	@Override
+	protected String getBasePath() {
+		return basePath;
 	}
 
 	@Override

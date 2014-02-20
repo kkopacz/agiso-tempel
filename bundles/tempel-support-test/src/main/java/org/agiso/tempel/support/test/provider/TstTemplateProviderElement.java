@@ -54,6 +54,7 @@ public class TstTemplateProviderElement extends BaseTemplateProviderElement {
 
 //	--------------------------------------------------------------------------
 	private boolean initialized;
+	private String basePath;
 	private String settingsPath;
 	private String librariesPath;
 	private String repositoryPath;
@@ -79,14 +80,12 @@ public class TstTemplateProviderElement extends BaseTemplateProviderElement {
 		int index = path.lastIndexOf("/lib/");
 		// Inicjalizacja repozytoriów z zasobami dla poszczególnych poziomów:
 		if(index != -1) {
-			// Rzeczywiste środowisko uruchomieniowe (uruchomienie z linni komend):
-			settingsPath = System.getProperty("user.dir") + "/tempel.xml";
-			librariesPath = System.getProperty("user.dir") + "/.tempel/lib";
-			repositoryPath = System.getProperty("user.dir") + "/.tempel/repo";
+			throw new IllegalStateException("TstTemplateProvider can be used only in test environment");
 		} else {
 			// Deweloperskie środowisko uruchomieniowe (uruchomienie z eclipse'a):
 			path = System.getProperty("user.dir");
 
+			basePath = path + "/src/test/templates/tst";
 			settingsPath = path + "/src/test/templates/tst/tempel.xml";
 			librariesPath = path + "/src/test/templates/tst/lib";
 			repositoryPath = path + "/src/test/templates/tst/repo";
@@ -170,6 +169,11 @@ public class TstTemplateProviderElement extends BaseTemplateProviderElement {
 		path = path + '/' + template.getTemplateId();
 		path = path + '/' + template.getVersion();
 		return path;
+	}
+
+	@Override
+	protected String getBasePath() {
+		return basePath;
 	}
 
 	@Override

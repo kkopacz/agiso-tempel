@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -61,6 +60,11 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 	}
 
 //	--------------------------------------------------------------------------
+	@Override
+	protected String getBasePath() {
+		throw new IllegalStateException("Library templates can't have relative dependencies");
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	protected MvnCacheEntry doGet(String key) {

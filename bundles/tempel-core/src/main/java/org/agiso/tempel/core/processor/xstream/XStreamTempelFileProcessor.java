@@ -24,10 +24,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.agiso.tempel.api.internal.ITempelEntryProcessor;
 import org.agiso.tempel.api.internal.ITempelFileProcessor;
+import org.agiso.tempel.core.model.beans.TempelDependencyBean;
 import org.agiso.tempel.core.model.beans.TemplateBean;
 import org.agiso.tempel.core.model.beans.TemplateEngineBean;
 import org.agiso.tempel.core.model.beans.TemplateParamBean;
@@ -72,9 +74,11 @@ public class XStreamTempelFileProcessor implements ITempelFileProcessor {
 				xStream.getMapper(), xStream.getReflectionProvider()
 		));
 		xStream.alias("properties", Map.class);
+		xStream.alias("dependencies", List.class);
 		xStream.aliasSystemAttribute("paramClass", "class");
 		xStream.autodetectAnnotations(true);
 		xStream.processAnnotations(new Class[] {
+				TempelDependencyBean.class,
 				TemplateBean.class,
 				TemplateEngineBean.class,
 				TemplateParamBean.class,
