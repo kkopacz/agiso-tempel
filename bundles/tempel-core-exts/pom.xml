@@ -39,41 +39,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- Szablony abstrakcyjne. -->
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-mkdir</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-mkdirs</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-velocityFileEngine</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-velocityFileExtendEngine</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-velocityDirectoryEngine</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-velocityDirectoryExtendEngine</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-fileExtenderEngine</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-directoryExtenderEngine</artifactId>
-		</dependency>
-
+		<!-- Zależności testowe -->
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-support-test</artifactId>

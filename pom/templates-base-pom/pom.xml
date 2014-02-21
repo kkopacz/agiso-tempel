@@ -232,48 +232,6 @@
 				<version>${tempel.version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-mkdir</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-mkdirs</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-velocityFileEngine</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-velocityFileExtendEngine</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-velocityDirectoryEngine</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-velocityDirectoryExtendEngine</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-fileExtenderEngine</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.agiso.tempel.templates</groupId>
-				<artifactId>abstract-directoryExtenderEngine</artifactId>
-				<version>${tempel.templates.version}</version>
-			</dependency>
-
 			<!-- Other dependencies -->
 			<dependency>
 				<groupId>org.apache.velocity</groupId>

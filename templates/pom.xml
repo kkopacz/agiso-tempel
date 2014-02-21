@@ -33,6 +33,8 @@
 	</build>
 
 	<modules>
+		<module>../pom/templates-base-pom</module>
+
 		<module>abstract-mkdir</module>
 		<module>abstract-mkdirs</module>
 		<module>abstract-velocityFileEngine</module>

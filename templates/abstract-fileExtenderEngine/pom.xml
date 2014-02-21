@@ -29,16 +29,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-velocityFileEngine</artifactId>
-			<optional>true</optional>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
-			<optional>true</optional>
 			<scope>compile</scope>
 		</dependency>
 

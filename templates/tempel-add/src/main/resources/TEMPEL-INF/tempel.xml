@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dependencies>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract-velocityDirectoryEngine</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
 	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
 		<groupId>org.agiso.tempel.templates</groupId>
 		<templateId>tempel-add</templateId>

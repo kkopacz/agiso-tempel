@@ -52,12 +52,11 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 
 	@XStreamOmitField
 	private Set<String> templateClassPath;
+	@XStreamOmitField
+	private List<ITemplateClassPathExtender> classPathExtenders;
 
 	@XStreamOmitField
 	private ITemplateSourceFactory templateSourceFactory;
-
-	@XStreamOmitField
-	private List<ITemplateClassPathExtender> classPathExtenders;
 
 //	--------------------------------------------------------------------------
 	public TemplateBean() {
@@ -139,13 +138,13 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 
 //	--------------------------------------------------------------------------
 	@Override
-	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory) {
-		this.templateSourceFactory = templateSourceFactory;
+	public ITemplateSource getTemplateSource(String source) {
+		return templateSourceFactory.createTemplateSource(this, source);
 	}
 
 	@Override
-	public ITemplateSource getTemplateSource(String source) {
-		return templateSourceFactory.createTemplateSource(this, source);
+	public void setTemplateSourceFactory(ITemplateSourceFactory templateSourceFactory) {
+		this.templateSourceFactory = templateSourceFactory;
 	}
 
 //	--------------------------------------------------------------------------
@@ -175,6 +174,9 @@ public class TemplateBean extends TemplateReferenceBean implements Template<Temp
 
 		if(templateClassPath != null) {
 			clone.templateClassPath = new HashSet<String>(templateClassPath);
+		}
+		if(classPathExtenders != null) {
+			clone.classPathExtenders = new ArrayList<ITemplateClassPathExtender>(classPathExtenders);
 		}
 
 		clone.templateSourceFactory = templateSourceFactory;

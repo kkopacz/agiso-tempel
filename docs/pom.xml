@@ -32,6 +32,8 @@
 	</build>
 
 	<modules>
+		<module>../pom/tempel-docs-pom</module>
+
 		<module>tempel-docs-devguide</module>
 		<module>tempel-docs-userguide</module>
 	</modules>

@@ -3,6 +3,28 @@
   - Ustawienia użytkownika, specyficzne dla użytkownika.
   -->
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dependencies>
+		<!-- FIXME
+		  - Do usunięcia po implementacji mechanizmu dodawania do ścieżki klas
+		  - bibliotek podszablonów i wnoszonych przez nie zależności (kaskadowo)
+		  -->
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract-mkdir</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract-mkdirs</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel.templates</groupId>
+			<artifactId>abstract-velocityFileEngine</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
 	<!-- repository>./</repository -->
 	<!-- repository>./src/test/repository</repository -->
 
