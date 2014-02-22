@@ -128,16 +128,36 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
 		try {
+			StringBuilder deps = null;
+			if(logger.isTraceEnabled()) {
+				deps = new StringBuilder();
+			} else if(logger.isDebugEnabled()) logger.debug("Executing template {}", ansiString(GREEN,
+					ansiString(GREEN, template.getKey()) + ": " +
+					ansiString(GREEN, template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion()))
+			);
+
 			// FIXME: Zastosować zbiór Set<URL>
 			Set<String> classPath = template.getTemplateClassPath();
 			if(classPath != null && !classPath.isEmpty()) {
 				List<URL> urls = new ArrayList<URL>(classPath.size());
 				for(String classPathEntry : classPath) {
 					urls.add(new File(classPathEntry).toURI().toURL());
+					if(logger.isTraceEnabled()) {
+						if(deps.length() > 0) {
+							deps.append(", ");
+						}
+						deps.append(classPathEntry);
+					}
 				}
 				ClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[urls.size()]), contextClassLoader);
 				Thread.currentThread().setContextClassLoader(classLoader);
 			}
+
+			if(logger.isTraceEnabled()) logger.trace("Executing template {} with classpath {}", ansiString(GREEN,
+					ansiString(GREEN, template.getKey()) + ": " +
+					ansiString(GREEN, template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())),
+					ansiString(GREEN, deps.toString())
+			);
 
 			doExecuteTemplateInternal(template, properties, workDir);
 		} catch(Exception e) {
@@ -151,11 +171,6 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		if(!StringUtils.isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
 		}
-
-		logger.debug("Executing template {}", ansiString(GREEN,
-				template.getKey() + ": " +
-				template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())
-		);
 
 		// Instancjonowanie klasy silnika generatora:
 		ITempelEngine engine = template.getEngine().getInstance();

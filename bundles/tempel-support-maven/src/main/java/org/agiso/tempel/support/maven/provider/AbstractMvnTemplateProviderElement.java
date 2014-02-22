@@ -24,9 +24,11 @@ import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -47,6 +49,9 @@ import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
  */
 public abstract class AbstractMvnTemplateProviderElement extends CachingTemplateProviderElement {
 	private static final Logger logger = LogUtils.getLogger(AbstractMvnTemplateProviderElement.class);
+
+//	--------------------------------------------------------------------------
+	private Set<String> classPath = Collections.emptySet();
 
 //	--------------------------------------------------------------------------
 	@Override
@@ -135,6 +140,11 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 		}
 
 		return null;
+	}
+
+	@Override
+	protected Set<String> getRepositoryClassPath() {
+		return classPath;
 	}
 
 	/**

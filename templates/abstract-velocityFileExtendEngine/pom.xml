@@ -43,6 +43,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel</groupId>
+			<artifactId>tempel-support-maven</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.agiso.tempel</groupId>
 			<artifactId>tempel-support-test</artifactId>
 			<scope>test</scope>
 		</dependency>

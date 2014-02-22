@@ -79,11 +79,6 @@ public class ShrinkWrapMvnTemplateProviderElement extends AbstractMvnTemplatePro
 	}
 
 	@Override
-	protected Set<String> getRepositoryClassPath() {
-		return Collections.emptySet();
-	}
-
-	@Override
 	protected String getTemplatePath(Template<?> template) {
 		if(StringUtils.isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon SWRAP bez groupId");

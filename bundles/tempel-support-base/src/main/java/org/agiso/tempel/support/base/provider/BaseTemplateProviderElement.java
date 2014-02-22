@@ -21,6 +21,7 @@ package org.agiso.tempel.support.base.provider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ import org.agiso.tempel.api.internal.ITempelFileProcessor;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
 import org.agiso.tempel.api.model.TempelDependency;
 import org.agiso.tempel.api.model.Template;
+import org.agiso.tempel.api.model.TemplateReference;
 import org.agiso.tempel.api.model.TemplateResource;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,8 +50,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseTemplateProviderElement implements ITemplateProviderElement {
 	private boolean active;
-	private List<TempelDependency> dependencies = Collections.emptyList();
+	private Set<String> templates = new HashSet<String>();
 	private Map<String, String> properties = Collections.emptyMap();
+	private List<TempelDependency> dependencies = Collections.emptyList();
 
 	@Autowired
 	private IExpressionEvaluator expressionEvaluator;
@@ -101,12 +104,6 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 	@SuppressWarnings("unchecked")
 	protected void processObject(/* String scope, */ Object tempelObject, Set<String> objectClassPath,
 			ITemplateRepository templateRepository, ITemplateSourceFactory templateSourceFactory) {
-		// Mapa zależności pliku tempel.xml
-		if(tempelObject instanceof List) {
-			dependencies = (List<TempelDependency>)tempelObject;
-			return;
-		}
-
 		// Mapa parametrów pliku tempel.xml:
 		if(tempelObject instanceof Map) {
 			properties = new TreeMap<String, String>();
@@ -122,6 +119,12 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			return;
 		}
 
+		// Mapa zależności pliku tempel.xml
+		if(tempelObject instanceof List) {
+			dependencies = (List<TempelDependency>)tempelObject;
+			return;
+		}
+
 		// Definicja szabloun z pliku tempel.xml:
 		if(tempelObject instanceof Template) {
 			Template<?> template = (Template<?>)tempelObject;
@@ -131,6 +134,11 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			template.addTemplateClassPathExtender(new DependenciesTemplateClassPathExtender());
 			// Rozbudowa ścieżki klas szablonu o zależności szablonu (dla repozytoriów typu Maven):
 			template.addTemplateClassPathExtender(new FixedSetTemplateClassPathExtender(objectClassPath));
+
+//			List<TemplateReference> referenceResources = template.getReferences();
+//			if(referenceResources != null && !referenceResources.isEmpty()) {
+//				template.addTemplateClassPathExtender(new ReferenceDependenciesTemplateClassPathExtender(referenceResources));
+//			}
 
 			// Ustawianie referencji we wszystkich podszablonach:
 			if(template.getResources() != null) {
@@ -144,6 +152,7 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			String tId = StringUtils.emptyIfBlank(template.getTemplateId());
 			String ver = StringUtils.emptyIfBlank(template.getVersion());
 			if(!StringUtils.isBlank(gId)) {
+				templates.add(gId + ":" + tId + ":" + ver);
 				templateRepository.put(null, gId, tId, ver, template);
 			}
 
@@ -166,45 +175,7 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 	 */
 	protected abstract Set<String> getRepositoryClassPath();
 
-	/**
-	 * @return
-	 */
-	private Set<String> getDependenciesClassPath() {
-		Set<String> dependenciesClassPath = new LinkedHashSet<String>();
-		for(TempelDependency dependency : dependencies) {
-			String relativePath = dependency.getRelativePath();
-			if(StringUtils.isNotEmpty(relativePath)) {
-				File dependencyJar = new File(getBasePath() + "/" + relativePath);
-				if(!dependencyJar.isFile()) {
-					throw new RuntimeException("Error resolving dependency " +
-							dependencyJar.getAbsolutePath() +"; " +
-							"dependency file not found");
-				}
-				dependenciesClassPath.add(dependencyJar.getAbsolutePath());
-			} else if(tempelDependencyResolver != null) {
-				for(File dependencyJar : tempelDependencyResolver.resolve(
-						dependency.getGroupId(),
-						dependency.getArtifactId(),
-						dependency.getVersion())) {
-					if(!dependencyJar.isFile()) {
-						throw new RuntimeException("Error resolving dependency " +
-								dependencyJar.getAbsolutePath() +"; " +
-								"dependency file not found");
-					}
-					dependenciesClassPath.add(dependencyJar.getAbsolutePath());
-				}
-			} else {
-				throw new RuntimeException("Error resolving dependency " +
-						dependency.getGroupId() + ":" +
-						dependency.getArtifactId() + ":" + 
-						dependency.getVersion() + "; " +
-						"no dependency resolver defined"
-				);
-			}
-		}
-		return dependenciesClassPath;
-	}
-
+//	--------------------------------------------------------------------------
 	private class RepositoryTemplateClassPathExtender extends FixedSetTemplateClassPathExtender {
 		@Override
 		public Set<String> getClassPathEntries() {
@@ -214,6 +185,7 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			return classPathEntries;
 		}
 	}
+
 	private class DependenciesTemplateClassPathExtender extends FixedSetTemplateClassPathExtender {
 		@Override
 		public Set<String> getClassPathEntries() {
@@ -222,15 +194,96 @@ public abstract class BaseTemplateProviderElement implements ITemplateProviderEl
 			}
 			return classPathEntries;
 		}
+
+		private Set<String> getDependenciesClassPath() {
+			Set<String> dependenciesClassPath = new LinkedHashSet<String>();
+			for(TempelDependency dependency : dependencies) {
+				String relativePath = dependency.getRelativePath();
+				if(StringUtils.isNotEmpty(relativePath)) {
+					File dependencyJar = new File(getBasePath() + "/" + relativePath);
+					if(!dependencyJar.isFile()) {
+						throw new RuntimeException("Error resolving dependency " +
+								dependencyJar.getAbsolutePath() +"; " +
+								"dependency file not found");
+					}
+					dependenciesClassPath.add(dependencyJar.getAbsolutePath());
+				} else if(tempelDependencyResolver != null) {
+					for(File dependencyJar : tempelDependencyResolver.resolve(
+							dependency.getGroupId(),
+							dependency.getArtifactId(),
+							dependency.getVersion())) {
+						if(!dependencyJar.isFile()) {
+							throw new RuntimeException("Error resolving dependency " +
+									dependencyJar.getAbsolutePath() +"; " +
+									"dependency file not found");
+						}
+						dependenciesClassPath.add(dependencyJar.getAbsolutePath());
+					}
+				} else {
+					throw new RuntimeException("Error resolving dependency " +
+							dependency.getGroupId() + ":" +
+							dependency.getArtifactId() + ":" + 
+							dependency.getVersion() + "; " +
+							"no dependency resolver defined"
+					);
+				}
+			}
+			return dependenciesClassPath;
+		}
+	}
+
+	private class ReferenceDependenciesTemplateClassPathExtender extends FixedSetTemplateClassPathExtender {
+		private final List<TemplateReference> references;
+
+		public ReferenceDependenciesTemplateClassPathExtender(List<TemplateReference> references) {
+			this.references = references;
+		}
+
+		@Override
+		public Set<String> getClassPathEntries() {
+			if(classPathEntries == null) {
+				classPathEntries = getReferenceDependenciesClassPath();
+			}
+			return classPathEntries;
+		}
+
+		private Set<String> getReferenceDependenciesClassPath() {
+			Set<String> dependenciesClassPath = new LinkedHashSet<String>();
+			for(TemplateReference reference : references) {
+				if(templates.contains(reference.getGroupId() + ":" +
+						reference.getTemplateId() + ":" + 
+						reference.getVersion())) {
+					// szablon, do którego odnosi się referencja jest
+					// zdefiniowany w tym samym pliku; nie dodajemy do cp:
+					continue;
+				}
+
+				if(tempelDependencyResolver != null) {
+					for(File dependencyJar : tempelDependencyResolver.resolve(
+							reference.getGroupId(),
+							reference.getTemplateId(),
+							reference.getVersion())) {
+						if(!dependencyJar.isFile()) {
+							throw new RuntimeException("Error resolving reference dependency " +
+									dependencyJar.getAbsolutePath() +"; " +
+									"reference dependency file not found");
+						}
+						dependenciesClassPath.add(dependencyJar.getAbsolutePath());
+					}
+				} else {
+					throw new RuntimeException("Error resolving reference dependency " +
+							reference.getGroupId() + ":" +
+							reference.getTemplateId() + ":" + 
+							reference.getVersion() + "; " +
+							"no dependency resolver defined"
+					);
+				}
+			}
+			return dependenciesClassPath;
+		}
 	}
 }
 
-/**
- * 
- * 
- * @author Karol Kopacz
- * @since 1.0
- */
 class FixedSetTemplateClassPathExtender implements ITemplateClassPathExtender {
 	protected Set<String> classPathEntries;
 

@@ -128,11 +128,6 @@ public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProvide
 	}
 
 	@Override
-	protected Set<String> getRepositoryClassPath() {
-		return Collections.emptySet();
-	}
-
-	@Override
 	protected String getTemplatePath(Template<?> template) {
 		if(StringUtils.isEmpty(template.getGroupId())) {
 			throw new RuntimeException("Szablon MAVEN bez groupId");

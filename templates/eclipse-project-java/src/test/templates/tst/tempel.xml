@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tempel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<dependencies>
-		<!-- FIXME
-		  - Do usunięcia po implementacji mechanizmu dodawania do ścieżki klas
-		  - bibliotek podszablonów i wnoszonych przez nie zależności (kaskadowo)
-		  -->
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-mkdirs</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.agiso.tempel.templates</groupId>
-			<artifactId>abstract-velocityFileEngine</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-	</dependencies>
-
 	<!--
 	  - Utworzenie w oparciu o szablon 'eclipse.project.java' polecenia (tj.
 	  - szablonu bez FQTN) 'testReferenceTemplateInvocation_01':
