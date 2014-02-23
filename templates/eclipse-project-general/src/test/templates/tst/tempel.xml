@@ -9,7 +9,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>eclipse-project-general</templateId>
-				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 			</reference>
 		</references>
 	</template>
@@ -27,7 +27,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>eclipse-project-general</templateId>
-				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 				<params>
 					<param key="name">

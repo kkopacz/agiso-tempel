@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>templates-base-pom</artifactId>
-	<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+	<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Templates Base POM</name>
@@ -56,14 +56,14 @@
 	</scm>
 
 	<repositories>
-		<repository>
+		<!-- repository>
 			<id>sonatype-nexus-snapshots</id>
 			<name>Sonatype Nexus snapshot repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
+		</repository -->
 	</repositories>
 
 	<!-- distributionManagement>
@@ -96,11 +96,12 @@
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</tempel.version>
-		<tempel.templates.version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</tempel.templates.version>
+		<tempel.version><!--tempel.version-->0.0.1.RELEASE</tempel.version>
+		<tempel.templates.version><!--tempel.templates.version-->0.0.1.RELEASE</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
 		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
@@ -171,6 +172,12 @@
 					<configuration>
 						<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven-deploy-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -338,6 +345,7 @@
 		<profile>
 			<id>release-sign-artifacts</id>
 			<activation>
+				<!-- activeByDefault>true</activeByDefault -->
 				<property>
 					<name>performRelease</name>
 					<value>true</value>

@@ -6,25 +6,24 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.agiso.tempel.templates</groupId>
-		<artifactId>templates-base-pom</artifactId>
-		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
-		<relativePath>../pom/templates-base-pom/pom.xml</relativePath>
-	</parent>
-
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>tempel-templates-builder</artifactId>
+	<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Templates Builder</name>
 	<inceptionYear>2012</inceptionYear>
+
+	<properties>
+		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven-deploy-plugin.version}</version>
 				<configuration>
 					<skip>true</skip>
 				</configuration>

@@ -9,7 +9,8 @@
 	<parent>
 		<groupId>org.agiso.tempel</groupId>
 		<artifactId>tempel-base-pom</artifactId>
-		<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
+		<version><!--tempel.version-->0.0.1.RELEASE</version>
+		<relativePath>../../pom/tempel-base-pom/pom.xml</relativePath>
 	</parent>
 	<!-- parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,20 +20,20 @@
 
 	<groupId>org.agiso.tempel.products</groupId>
 	<artifactId>tempel-starter</artifactId>
-	<version><!--tempel.starter.version-->0.0.1.BUILD-SNAPSHOT</version>
+	<version><!--tempel.starter.version-->0.0.1.RC1</version>
 
 	<name>AGISO Tempel Starter</name>
 	<inceptionYear>2012</inceptionYear>
 
 	<repositories>
-		<repository>
+		<!-- repository>
 			<id>sonatype-nexus-snapshots</id>
 			<name>Sonatype Nexus snapshot repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
+		</repository -->
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>

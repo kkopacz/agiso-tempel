@@ -3,7 +3,7 @@
 	<template>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<templateId>eclipse-project-java</templateId>
-		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+		<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 		<params>
 			<param key="name" name="Project name" />
@@ -13,7 +13,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-mkdirs</templateId>
-				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 				<resource>
 					<target>${top.name}/.settings</target>
@@ -25,7 +25,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityFileEngine</templateId>
-				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 				<resource>
 					<source>project.vm</source>

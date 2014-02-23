@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>pl.exso.core.mat</groupId>
 			<artifactId>pl.exso.core.mat.service</artifactId>
-			<version><!--pl.exso.core.mat.version-->0.0.1.BUILD-SNAPSHOT</version>
+			<version><!--pl.exso.core.mat.version-->1.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<!--!!!_dependencies_!!!-->

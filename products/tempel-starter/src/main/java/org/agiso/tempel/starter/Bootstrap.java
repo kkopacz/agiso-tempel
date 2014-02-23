@@ -181,7 +181,7 @@ public class Bootstrap implements CommandLineRunner {
 //	--------------------------------------------------------------------------
 	private static void printTempelInfo() {
 		System.out.println(ansiString(RED, "Agiso Tempel", " ",
-				GREEN, "0.0.1.BUILD-SNAPSHOT"));
+				GREEN, "0.0.1.RC1"));
 		System.out.println("Copyright 2014 agiso.org");
 		System.out.println();
 		System.out.println("usage: tpl template [options]");

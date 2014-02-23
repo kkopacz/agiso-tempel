@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel.docs</groupId>
 	<artifactId>tempel-docs-pom</artifactId>
-	<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
+	<version><!--tempel.docs.version-->0.0.1.RC1</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Docs POM</name>

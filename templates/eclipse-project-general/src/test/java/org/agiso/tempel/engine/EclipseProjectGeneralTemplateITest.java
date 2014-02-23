@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
 public class EclipseProjectGeneralTemplateITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";
 	private static final String TEMPLATE_ID = "eclipse-project-general";
-	private static final String VERSION     = "0.0.1.BUILD-SNAPSHOT";
+	private static final String VERSION     = "0.0.1.RELEASE";
 
 //	--------------------------------------------------------------------------
 	public EclipseProjectGeneralTemplateITest() {

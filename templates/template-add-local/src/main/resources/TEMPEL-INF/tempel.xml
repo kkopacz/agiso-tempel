@@ -3,7 +3,7 @@
 	<template>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<templateId>template-add-local</templateId>
-		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+		<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 		<params>
 			<param key="groupId" name="Template groupId">
@@ -20,7 +20,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-mkdirs</templateId>
-				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 				<resource>
 					<target>.tempel/${top.groupId}/${top.templateId}/${top.version}</target>

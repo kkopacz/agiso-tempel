@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel</groupId>
 	<artifactId>tempel-base-pom</artifactId>
-	<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
+	<version><!--tempel.version-->0.0.1.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Base POM</name>
@@ -97,10 +97,11 @@
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</tempel.version>
+		<tempel.version><!--tempel.version-->0.0.1.RELEASE</tempel.version>
 
 		<!-- agiso.core dependencies -->
 		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
@@ -190,6 +191,12 @@
 					<configuration>
 						<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven-deploy-plugin.version}</version>
 				</plugin>
 
 				<plugin>
@@ -448,6 +455,7 @@
 		<profile>
 			<id>release-sign-artifacts</id>
 			<activation>
+				<!-- activeByDefault>true</activeByDefault -->
 				<property>
 					<name>performRelease</name>
 					<value>true</value>

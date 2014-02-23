@@ -4,14 +4,14 @@
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-velocityDirectoryEngine</artifactId>
-			<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+			<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 		</dependency>
 	</dependencies>
 
 	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
 		<groupId>org.agiso.tempel.templates</groupId>
 		<templateId>tempel-add</templateId>
-		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
+		<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
 
 	</template>
 </tempel>

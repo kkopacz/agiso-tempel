@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 public class VelocityDirectoryTemplateITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";
 	private static final String TEMPLATE_ID = "abstract-velocityDirectoryEngine";
-	private static final String VERSION     = "0.0.1.BUILD-SNAPSHOT";
+	private static final String VERSION     = "0.0.1.RELEASE";
 
 //	--------------------------------------------------------------------------
 	public VelocityDirectoryTemplateITest() {

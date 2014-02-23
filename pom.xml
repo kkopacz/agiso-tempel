@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel</groupId>
 	<artifactId>tempel-builder</artifactId>
-	<version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</version>
+	<version><!--tempel.version-->0.0.1.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Builder</name>
@@ -22,7 +22,7 @@
 	</scm>
 
 	<properties>
-		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
 	</properties>
 
 	<build>
@@ -30,7 +30,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
-				<version>${maven-release-plugin.version}</version>
+				<version>${maven-deploy-plugin.version}</version>
 				<configuration>
 					<skip>true</skip>
 				</configuration>
