@@ -8,24 +8,13 @@
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>templates-base-pom</artifactId>
-	<version><!--tempel.templates.version-->1.0.0</version>
+	<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Templates Base POM</name>
 	<url>http://agiso.org/tempel</url>
 	<inceptionYear>2012</inceptionYear>
 	<description>Base POM for Tempel templates.</description>
-
-	<repositories>
-		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus snapshot repository</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<licenses>
 		<license>
@@ -66,7 +55,18 @@
 		<url>git@github.com:kkopacz/agiso-tempel.git</url>
 	</scm>
 
-	<distributionManagement>
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- distributionManagement>
 		<repository>
 			<id>agiso-releases</id>
 			<url>http://repo.agiso.org/content/repositories/releases</url>
@@ -75,8 +75,8 @@
 			<id>agiso-snapshots</id>
 			<url>http://repo.agiso.org/content/repositories/snapshots</url>
 		</snapshotRepository>
-	</distributionManagement>
-	<!-- distributionManagement>
+	</distributionManagement -->
+	<distributionManagement>
 		<repository>
 			<id>sonatype-nexus-staging</id>
 			<name>Sonatype Nexus release repository</name>
@@ -87,7 +87,7 @@
 			<name>Sonatype Nexus snapshot repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
-	</distributionManagement -->
+	</distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -100,7 +100,7 @@
 
 		<!-- agiso.org Tempel dependencies -->
 		<tempel.version><!--tempel.version-->0.0.1.BUILD-SNAPSHOT</tempel.version>
-		<tempel.templates.version><!--tempel.templates.version-->1.0.0</tempel.templates.version>
+		<tempel.templates.version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
 		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
@@ -230,6 +230,48 @@
 				<groupId>org.agiso.tempel</groupId>
 				<artifactId>tempel-core-exts</artifactId>
 				<version>${tempel.version}</version>
+			</dependency>
+
+			<!-- agiso.org Templates dependencies -->
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-mkdir</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-mkdirs</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-velocityFileEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-velocityFileExtendEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-velocityDirectoryEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-velocityDirectoryExtendEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-fileExtenderEngine</artifactId>
+				<version>${tempel.templates.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.agiso.tempel.templates</groupId>
+				<artifactId>abstract-directoryExtenderEngine</artifactId>
+				<version>${tempel.templates.version}</version>
 			</dependency>
 
 			<!-- Other dependencies -->

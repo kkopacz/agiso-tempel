@@ -9,13 +9,13 @@
 	<parent>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<artifactId>templates-base-pom</artifactId>
-		<version><!--tempel.templates.version-->1.0.0</version>
+		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 		<relativePath>../../pom/templates-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>eclipse-project-general</artifactId>
-	<version>1.0.0</version>
+	<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 	<name>AGISO Tempel Eclipse General Project Template</name>
 	<inceptionYear>2012</inceptionYear>

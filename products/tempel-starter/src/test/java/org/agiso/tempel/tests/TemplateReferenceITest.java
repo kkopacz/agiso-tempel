@@ -40,7 +40,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 //	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
-	 * Szablon grupujący org.agiso.tempel.tests:javaProject:1.0.0
+	 * Szablon grupujący org.agiso.tempel.tests:TemplateReferenceITest:templateReferenceTest01
 	 */
 	@Test
 	public void templateReferenceTest01() throws Exception {
@@ -71,7 +71,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 	}
 
 	/**
-	 * Szablon grupujący org.agiso.tempel.tests:javaBundleProject:1.0.0
+	 * Szablon grupujący org.agiso.tempel.tests:TemplateReferenceITest:templateReferenceTest02
 	 */
 	@Test
 	public void templateReferenceTest02() throws Exception {

@@ -32,6 +32,8 @@
 	</build>
 
 	<modules>
+		<module>../pom/tempel-base-pom</module>
+
 		<module>tempel-api</module>
 
 		<module>tempel-core</module>

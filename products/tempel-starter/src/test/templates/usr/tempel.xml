@@ -30,7 +30,7 @@
 	<template>
 		<groupId>org.agiso.tempel.tests</groupId>
 		<templateId>javaClass</templateId>
-		<version>1.0.0</version>
+		<version>usr</version>
 
 		<params>
 			<param key="srcDir" name="Source directory">
@@ -48,7 +48,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-mkdirs</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource>
 					<target>${top.srcDir}/${top.packageDir}</target>
@@ -57,7 +57,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityFileEngine</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource>
 					<source>javaClass.java.vm</source>

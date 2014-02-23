@@ -39,29 +39,12 @@ import org.testng.annotations.Test;
  * @since 1.0
  */
 public class TempelCoreITest extends AbstractOutputTest {
-//	@Test
-//	public void test_base_mkdir_1_0_0() throws Exception {
-//		String outPath = getOutputPath(true);
-//		Bootstrap.main(new String[] {
-//				"org.agiso.tempel.templates:base.mkdir:1.0.0",
-//				"-d " + outPath
-//		});
-//
-//		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-//		System.out.println(md5);
-//		assert "31c287aec4ff50269de4523bdfc4707b".equals(md5) : md5;
-//	}
-
-//	--------------------------------------------------------------------------
-//	src/test/templates/app/tempel.xml
-//	--------------------------------------------------------------------------
-
 //	--------------------------------------------------------------------------
 //	src/test/templates/usr/tempel.xml
 //	--------------------------------------------------------------------------
 	/**
 	 * src/test/repository/home/
-	 * org/agiso/tempel/tests/javaClass/1.0.0
+	 * org/agiso/tempel/tests/javaClass/usr
 	 */
 	@Test
 	public void testJavaClass_1_0_0() throws Exception {
@@ -78,7 +61,7 @@ public class TempelCoreITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {
-				"org.agiso.tempel.tests:javaClass:1.0.0",
+				"org.agiso.tempel.tests:javaClass:usr",
 				"-d " + outPath,
 				"-Dyear=2013"
 		});

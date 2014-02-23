@@ -10,12 +10,12 @@
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-velocityFileEngine</artifactId>
-			<version>1.0.0</version>
+			<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-velocityDirectoryEngine</artifactId>
-			<version>1.0.0</version>
+			<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<relativePath>lib/aa.bb.cc.JavaBean.jar</relativePath>
@@ -163,7 +163,7 @@
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
 			</reference>
@@ -185,7 +185,7 @@
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
 			</reference>
@@ -205,7 +205,7 @@
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource>
 					<target>subdir</target>
@@ -227,7 +227,7 @@
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityDirectoryEngine</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
 				<workdir>subdir</workdir>
@@ -254,7 +254,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>eclipse-project-java</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<params>
 					<param key="name">
@@ -266,7 +266,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.tests</groupId>
 				<templateId>javaClass</templateId>
-				<version>1.0.0</version>
+				<version>usr</version>
 
 				<params>
 					<param key="srcDir">
@@ -295,7 +295,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-mkdirs</templateId>
-				<version>1.0.0</version>
+				<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 				<resource>
 					<target>bundles/${top.name}</target>

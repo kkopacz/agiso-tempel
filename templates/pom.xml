@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<artifactId>templates-base-pom</artifactId>
-		<version><!--tempel.templates.version-->1.0.0</version>
+		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 		<relativePath>../pom/templates-base-pom/pom.xml</relativePath>
 	</parent>
 

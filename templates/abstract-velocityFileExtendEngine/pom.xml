@@ -9,13 +9,13 @@
 	<parent>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<artifactId>templates-base-pom</artifactId>
-		<version><!--tempel.templates.version-->1.0.0</version>
+		<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 		<relativePath>../../pom/templates-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>abstract-velocityFileExtendEngine</artifactId>
-	<version>1.0.0</version>
+	<version><!--tempel.templates.version-->0.0.1.BUILD-SNAPSHOT</version>
 
 	<name>AGISO Tempel Velocity File Extend Engine</name>
 	<inceptionYear>2013</inceptionYear>
@@ -32,8 +32,6 @@
 			<groupId>org.agiso.tempel.templates</groupId>
 			<artifactId>abstract-velocityFileEngine</artifactId>
 			<scope>compile</scope>
-
-			<version><!-- template.version -->1.0.0</version>
 		</dependency>
 
 		<dependency>
