@@ -20,7 +20,7 @@ Zastosowanie
 Temple może być z powodzeniem wykorzystywany do takich celów jak:
 
 * tworzenie złożonych struktur dyskowych składających się z wielu katalogów
-  i plików, np. projekty programistyczne, strony WWW, etc.,
+  i plików, takich jak np. projekty programistyczne, strony WWW, etc.,
 
 * rozbudowa istniejących stuktur dyskowych poprzez dodawanie nowych katalogów,
   tworzenie nowych plików i rozbudowę teści istniejących plików,
@@ -37,6 +37,6 @@ Instalacja polega na pobraniu odpowiedniego archiwum i jego rozpakowaniu
 w dogodnej lokalizacji systemu plików. Po wykonaniu tej czynności można
 używać z polecenia `tpl`, wykorzystywać dostępne szablony i tworzyć własne.
 
-[tempel.tar.gz]: releases/download/v0.0.1.RC1/tempel-0.0.1.RC1.tar.gz
-[tempel.zip]: releases/download/v0.0.1.RC1/tempel-0.0.1.RC1.zip
-[releases]: releases
+[tempel.tar.gz]: /releases/download/v0.0.1.RC1/tempel-0.0.1.RC1.tar.gz
+[tempel.zip]: /releases/download/v0.0.1.RC1/tempel-0.0.1.RC1.zip
+[releases]: /releases
