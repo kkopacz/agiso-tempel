@@ -110,8 +110,8 @@
 		<commons-cli.version>1.2</commons-cli.version>
 
 		<!-- Spring Framework dependencies -->
-		<spring.version>4.0.0.RELEASE</spring.version>
-		<spring.boot.version>1.0.0.RC3</spring.boot.version>
+		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.boot.version>1.0.0.RC4</spring.boot.version>
 
 		<!-- ShrinkWrap dependencies -->
 		<shrinkwrap.version>1.2.1</shrinkwrap.version>
