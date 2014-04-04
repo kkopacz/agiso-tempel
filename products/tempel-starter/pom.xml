@@ -33,7 +33,7 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository -->
+		</repository
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -41,7 +41,7 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</repository>
+		</repository -->
 	</repositories>
 
 	<build>
