@@ -28,6 +28,7 @@ import org.agiso.core.lang.util.StringUtils;
  */
 public class JavaField {
 	private String fieldName;
+	private String fieldNameI18N;
 	private String fieldType;
 
 	// FIXME: Do usunięcia. Nie występuje w stnadardowych POJO.
@@ -48,6 +49,13 @@ public class JavaField {
 			this.fieldAccessName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
 			setter = "set" + fieldAccessName;
 		}
+	}
+
+	public String getFieldNameI18N() {
+		return fieldNameI18N;
+	}
+	public void setFieldNameI18N(String fieldNameI18N) {
+		this.fieldNameI18N = fieldNameI18N;
 	}
 
 	public String getFieldType() {
