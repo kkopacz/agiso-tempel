@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>templates-base-pom</artifactId>
-	<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+	<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Templates Base POM</name>
@@ -100,11 +100,11 @@
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version><!--tempel.version-->0.0.1.RELEASE</tempel.version>
-		<tempel.templates.version><!--tempel.templates.version-->0.0.1.RELEASE</tempel.templates.version>
+		<tempel.version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</tempel.version>
+		<tempel.templates.version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.BUILD-SNAPSHOT</agiso.core.version>
 
 		<!-- Other dependencies -->
 		<velocity.version>1.7</velocity.version>

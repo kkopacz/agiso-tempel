@@ -21,7 +21,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-mkdir</templateId>
-				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+				<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 
 				<resource>
 					<target>${top.name}</target>
@@ -43,7 +43,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-mkdirs</templateId>
-				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+				<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 
 				<resource>
 					<target>${top.path}</target>
@@ -60,7 +60,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>tempel-add</templateId>
-				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+				<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 			</reference>
 		</references>
 	</template>
@@ -74,7 +74,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>template-add-local</templateId>
-				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+				<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 			</reference>
 		</references>
 	</template>
@@ -88,7 +88,7 @@
 			<reference>
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>template-add-maven</templateId>
-				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+				<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 			</reference>
 		</references>
 	</template>

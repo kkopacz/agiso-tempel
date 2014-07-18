@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel</groupId>
 	<artifactId>tempel-base-pom</artifactId>
-	<version><!--tempel.version-->0.0.1.RELEASE</version>
+	<version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Base POM</name>
@@ -101,10 +101,10 @@
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version><!--tempel.version-->0.0.1.RELEASE</tempel.version>
+		<tempel.version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</tempel.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.BUILD-SNAPSHOT</agiso.core.version>
 
 		<!-- Apache Commons dependencies -->
 		<commons-cli.version>1.2</commons-cli.version>

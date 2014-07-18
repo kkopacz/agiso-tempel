@@ -3,7 +3,7 @@
 	<template>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<templateId>template-add-maven</templateId>
-		<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+		<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 
 		<params>
 			<param key="groupId" name="Template groupId">
@@ -25,7 +25,7 @@
 			<reference onParentTemplates="true">
 				<groupId>org.agiso.tempel.templates</groupId>
 				<templateId>abstract-velocityDirectoryEngine</templateId>
-				<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+				<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 
 				<resource />		<!-- Wywołanie silnika referencji na szablonach rodzica -->
 			</reference>

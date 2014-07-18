@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
 public class DirectoryExtenderTemplateITest extends AbstractTemplateTest {
 	private static final String GROUP_ID    = "org.agiso.tempel.templates";
 	private static final String TEMPLATE_ID = "abstract-directoryExtenderEngine";
-	private static final String VERSION     = "0.0.1.RELEASE";
+	private static final String VERSION     = "0.0.2.BUILD-SNAPSHOT";
 
 //	--------------------------------------------------------------------------
 	public DirectoryExtenderTemplateITest() {
