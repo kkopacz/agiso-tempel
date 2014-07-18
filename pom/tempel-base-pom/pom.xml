@@ -110,8 +110,8 @@
 		<commons-cli.version>1.2</commons-cli.version>
 
 		<!-- Spring Framework dependencies -->
-		<spring.version>4.0.2.RELEASE</spring.version>
-		<spring.boot.version>1.0.0.RELEASE</spring.boot.version>
+		<spring.version>4.0.6.RELEASE</spring.version>
+		<spring.boot.version>1.1.4.RELEASE</spring.boot.version>
 
 		<!-- ShrinkWrap dependencies -->
 		<shrinkwrap.version>1.2.1</shrinkwrap.version>
@@ -123,16 +123,16 @@
 		<wagon.version>2.6</wagon.version>
 
 		<!-- Other dependencies -->
-		<xstream.version>1.4.6</xstream.version>
+		<xstream.version>1.4.7</xstream.version>
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
-		<guava.version>16.0</guava.version>
+		<guava.version>17.0</guava.version>
 
 		<!-- Logging dependencies -->
-		<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.7.7</slf4j.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.8.7</testng.version>
+		<testng.version>6.8.8</testng.version>
 		<mockito.version>1.9.5</mockito.version>
 	</properties>
 

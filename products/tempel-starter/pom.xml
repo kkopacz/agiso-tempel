@@ -20,7 +20,7 @@
 
 	<groupId>org.agiso.tempel.products</groupId>
 	<artifactId>tempel-starter</artifactId>
-	<version><!--tempel.starter.version-->0.0.1.RC1</version>
+	<version><!--tempel.starter.version-->0.0.1.RELEASE</version>
 
 	<name>AGISO Tempel Starter</name>
 	<inceptionYear>2012</inceptionYear>
