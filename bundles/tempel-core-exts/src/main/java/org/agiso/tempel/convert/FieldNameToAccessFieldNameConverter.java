@@ -22,9 +22,8 @@ import org.agiso.core.lang.util.StringUtils;
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
- * Konwerter zamieniający nazwę pola klasy zaczynającą
- * się z małej litery na nazwę dostępową do pola. 
- * Zamienia pierwszą listerę na dużą.
+ * Konwerter zamieniający nazwę pola klasy zaczynającą się z małej litery na
+ * nazwę dostępową do pola. Zamienia pierwszą listerę na dużą.
  * 
  * @author Michał Klin
  * @since 1.0
