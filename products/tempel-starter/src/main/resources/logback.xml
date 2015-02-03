@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-	<property name="LOG_FILE" value="tmp/tempel.log"/>
-	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<!-- https://github.com/pedestal/samples/blob/master/template-server/config/logback.xml -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%nopex[%level] %logger - %msg%n</pattern>
+		</encoder>
+		<!-- Only log level INFO and above -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
 
 	<root level="WARN">
-		<appender-ref ref="CONSOLE" />
-		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
 	</root>
 
-	<logger name="org.agiso.tempel" level="INFO" />
-	<logger name="org.agiso.tempel.core.DefaultTemplateExecutor" level="TRACE" />
-	<!-- logger name="org.springframework" level="INFO"/ -->
+	<!-- see: org.agiso.tempel.ITempel -->
+	<logger name="CORE" level="ALL" />
+	<logger name="SUPPORT" level="ALL" />
+	<logger name="ENGINE" level="ALL" />
+	<logger name="EXTENSION" level="ALL" />
+	<logger name="STARTER" level="ALL" />
+
+<!--
+	<logger name="org.reflections" level="WARN" />
+	<logger name="org.apache.velocity" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+-->
 </configuration>

@@ -20,6 +20,7 @@ package org.agiso.tempel.support.test.provider;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,9 +29,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.util.ConvertUtils;
 import org.agiso.core.lang.util.ObjectUtils;
-import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.model.Template;
@@ -49,7 +52,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArchiveTemplateProviderElement extends CachingTemplateProviderElement
 		implements IArchiveTemplateProviderElement {
-	private static final Logger logger = LogUtils.getLogger(ArchiveTemplateProviderElement.class);
+	private static final I18nLogger<Logs> supportLogger = LogUtils.getLogger(LOGGER_SUPPORT);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Putting template {0} archive {1}")
+		LOG_01,
+
+		@I18n(def = "Preparing cache entry for template {0}")
+		LOG_02,
+
+		@I18n(def = "Cache entry preparation error for template {0}")
+		LOG_03,
+
+		@I18n(def = "Resolved template {0} archive {1}")
+		LOG_04,
+	}
 
 	private final Map<String, Archive<?>> repository = new HashMap<String, Archive<?>>();
 
@@ -81,7 +97,7 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 //	--------------------------------------------------------------------------
 	@Override
 	public void addArchive(String key, Archive<?> archive) {
-		if(logger.isDebugEnabled()) logger.debug("Putting template {} archive {}",
+		if(supportLogger.isDebugEnabled()) supportLogger.debug(Logs.LOG_01,
 				ansiString(GREEN, key),
 				ansiString(GREEN, archive.toString())
 		);
@@ -98,7 +114,7 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 	@Override
 	@SuppressWarnings("unchecked")
 	protected ArchiveCacheEntry doGet(String key) {
-		if(logger.isTraceEnabled()) logger.trace("Preparing cache entry for template {}",
+		if(supportLogger.isTraceEnabled()) supportLogger.trace(Logs.LOG_02,
 				ansiString(GREEN, key)
 		);
 
@@ -128,7 +144,7 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 
 			return cacheEntry;
 		} catch(Exception e) {
-			logger.error(e, "Cache entry preparation error for template {}",
+			supportLogger.error(e, Logs.LOG_03,
 					ansiString(GREEN, key)
 			);
 			return null;
@@ -137,7 +153,7 @@ public class ArchiveTemplateProviderElement extends CachingTemplateProviderEleme
 
 	protected Archive<?> resolve(String key) throws Exception {
 		Archive<?> archive = repository.get(key);
-		if(logger.isTraceEnabled()) logger.trace("Resolved template {} archive {}",
+		if(supportLogger.isTraceEnabled()) supportLogger.trace(Logs.LOG_04,
 				ansiString(GREEN, key),
 				ansiString(GREEN, archive == null? null : archive.toString())
 		);

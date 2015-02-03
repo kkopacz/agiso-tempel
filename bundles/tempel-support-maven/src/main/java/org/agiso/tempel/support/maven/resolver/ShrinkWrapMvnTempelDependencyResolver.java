@@ -20,6 +20,7 @@ package org.agiso.tempel.support.maven.resolver;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.util.ObjectUtils;
-import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.internal.ITempelDependencyResolver;
 import org.apache.maven.settings.Settings;
@@ -49,7 +52,29 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ShrinkWrapMvnTempelDependencyResolver implements ITempelDependencyResolver {
-	private static final Logger logger = LogUtils.getLogger(ShrinkWrapMvnTempelDependencyResolver.class);
+	private static final I18nLogger<Logs> supportLogger = LogUtils.getLogger(LOGGER_SUPPORT);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Using maven settings file {0}")
+		LOG_01,
+
+		@I18n(def = "Maven settings file {0} not found")
+		LOG_02,
+
+		@I18n(def = "Building Maven setting for request {0}")
+		LOG_03,
+
+		@I18n(def = "Using Maven settings {0}")
+		LOG_04,
+
+		@I18n(def = "Using local Maven repository {0}")
+		LOG_05,
+
+		@I18n(def = "Template {0} resolved as Maven archive {1}")
+		LOG_06,
+
+		@I18n(def = "Template {0} resolved as Maven archive {1} with dependencies {2}")
+		LOG_07,
+	}
 
 	/** Nazwa zmiennej przechowującej ścieżkę do ustawień Maven'a */
 	private static final String MAVEN_SETTINS_PATH_PROPERTY = "maven_settings";
@@ -78,29 +103,29 @@ public class ShrinkWrapMvnTempelDependencyResolver implements ITempelDependencyR
 			request.setUserSettingsFile(mavenSettingsFile);
 			resolver = Maven.configureResolver().fromFile(mavenSettingsFile);
 
-			if(logger.isDebugEnabled()) logger.debug("Using maven settings file {}",
+			if(supportLogger.isDebugEnabled()) supportLogger.debug(Logs.LOG_01,
 					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
 			);
 		} else {
 			resolver = Maven.resolver();
 
-			if(logger.isWarnEnabled()) logger.warn("Maven settings file {} not found",
+			if(supportLogger.isWarnEnabled()) supportLogger.warn(Logs.LOG_02,
 					ansiString(GREEN, mavenSettingsFile.getCanonicalPath())
 			);
 		}
 
-		if(logger.isTraceEnabled()) logger.trace("Building Maven setting for request {}",
+		if(supportLogger.isTraceEnabled()) supportLogger.trace(Logs.LOG_03,
 				ansiString(GREEN, ObjectUtils.toStringBuilder(request))
 		);
 
 		settings = new MavenSettingsBuilder().buildSettings(request);
 
-		if(logger.isTraceEnabled()) {
-			logger.trace("Using Maven settings {}",
+		if(supportLogger.isTraceEnabled()) {
+			supportLogger.trace(Logs.LOG_04,
 					ansiString(GREEN, ObjectUtils.toStringBuilder(settings))
 			);
-		} else if(logger.isDebugEnabled()) {
-			logger.trace("Using local Maven repository {}",
+		} else if(supportLogger.isDebugEnabled()) {
+			supportLogger.trace(Logs.LOG_05,
 					ansiString(GREEN, settings.getLocalRepository())
 			);
 		}
@@ -122,10 +147,9 @@ public class ShrinkWrapMvnTempelDependencyResolver implements ITempelDependencyR
 		files.add(artifact.asFile());
 
 		StringBuilder deps = null;
-		if(logger.isTraceEnabled()) {
+		if(supportLogger.isTraceEnabled()) {
 			deps = new StringBuilder();
-		} else if(logger.isDebugEnabled()) logger.debug(
-				"Template {} resolved as Maven archive {}",
+		} else if(supportLogger.isDebugEnabled()) supportLogger.debug(Logs.LOG_06,
 				ansiString(GREEN, groupId + ":" + artifactId + ":" + version),
 				ansiString(GREEN, files.get(0).getAbsolutePath())
 		);
@@ -138,7 +162,7 @@ public class ShrinkWrapMvnTempelDependencyResolver implements ITempelDependencyR
 			).withTransitivity().asFile();
 			for(File jar : jars) {
 				files.add(jar);
-				if(logger.isTraceEnabled()) {
+				if(supportLogger.isTraceEnabled()) {
 					if(deps.length() > 0) {
 						deps.append(", ");
 					}
@@ -147,8 +171,7 @@ public class ShrinkWrapMvnTempelDependencyResolver implements ITempelDependencyR
 			}
 		}
 
-		if(logger.isTraceEnabled()) logger.trace(
-				"Template {} resolved as Maven archive {} with dependencies {}",
+		if(supportLogger.isTraceEnabled()) supportLogger.trace(Logs.LOG_07,
 				ansiString(GREEN, groupId + ":" + artifactId + ":" + version),
 				ansiString(GREEN, files.get(0).getAbsolutePath()),
 				ansiString(GREEN, deps.toString())

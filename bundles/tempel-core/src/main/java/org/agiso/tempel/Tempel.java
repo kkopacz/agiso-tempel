@@ -30,7 +30,9 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
-import org.agiso.core.logging.Logger;
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.internal.IExpressionEvaluator;
 import org.agiso.tempel.api.internal.IParamReader;
@@ -46,7 +48,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @since 1.0
  */
 public class Tempel implements ITempel {
-	private static final Logger logger = LogUtils.getLogger(Tempel.class);
+	private static final I18nLogger<Logs> coreLogger = LogUtils.getLogger(LOGGER_CORE);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Property {0}: {1} <-- {2}")
+		LOG_01,
+	}
 
 	private final Map<String, Object> systemProperties;
 
@@ -116,9 +122,7 @@ public class Tempel implements ITempel {
 				String oldValue = (String)value;
 				String newValue = expressionEvaluator.evaluate(oldValue, properties);
 				if(!oldValue.equals(newValue)) {
-					logger.debug("Property {}: {} <-- {}",
-							key, oldValue, newValue
-					);
+					coreLogger.debug(Logs.LOG_01, key, oldValue, newValue);
 					properties.put(key, newValue);
 				}
 			}

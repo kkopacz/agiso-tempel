@@ -30,6 +30,12 @@ import org.agiso.tempel.api.internal.ITemplateExecutor;
  * @since 1.0
  */
 public interface ITempel {
+	public static final String LOGGER_CORE = "CORE";
+	public static final String LOGGER_SUPPORT = "SUPPORT";
+	public static final String LOGGER_ENGINE = "ENGINE";
+	public static final String LOGGER_EXTENSION = "EXTENSION";
+	public static final String LOGGER_STARTER = "STARTER";
+
 	/**
 	 * @see ITemplateExecutor#setParamReader(IParamReader)
 	 */

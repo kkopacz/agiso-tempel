@@ -98,6 +98,7 @@
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
 		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
@@ -110,11 +111,11 @@
 		<commons-cli.version>1.2</commons-cli.version>
 
 		<!-- Spring Framework dependencies -->
-		<spring.version>4.0.6.RELEASE</spring.version>
-		<spring.boot.version>1.1.4.RELEASE</spring.boot.version>
+		<spring.version>4.1.4.RELEASE</spring.version>
+		<spring.boot.version>1.2.1.RELEASE</spring.boot.version>
 
 		<!-- ShrinkWrap dependencies -->
-		<shrinkwrap.version>1.2.1</shrinkwrap.version>
+		<shrinkwrap.version>1.2.2</shrinkwrap.version>
 		<shrinkwrap-resolver.version>2.0.2</shrinkwrap-resolver.version>
 
 		<!-- Maven, Aether & Wagon dependencies -->
@@ -126,14 +127,14 @@
 		<xstream.version>1.4.7</xstream.version>
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
-		<guava.version>17.0</guava.version>
+		<guava.version>18.0</guava.version>
 
 		<!-- Logging dependencies -->
-		<slf4j.version>1.7.7</slf4j.version>
+		<slf4j.version>1.7.10</slf4j.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.8.8</testng.version>
-		<mockito.version>1.9.5</mockito.version>
+		<testng.version>6.8.13</testng.version>
+		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
 	<build>
@@ -197,6 +198,12 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven-deploy-plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>${maven-antrun-plugin.version}</version>
 				</plugin>
 
 				<plugin>
@@ -455,7 +462,7 @@
 		<profile>
 			<id>release-sign-artifacts</id>
 			<activation>
-				<!-- activeByDefault>true</activeByDefault -->
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>performRelease</name>
 					<value>true</value>

@@ -20,6 +20,7 @@ package org.agiso.tempel.support.maven.provider;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +33,11 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.util.ConvertUtils;
 import org.agiso.core.lang.util.ObjectUtils;
-import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateSource;
 import org.agiso.tempel.api.impl.JarTemplateSource;
@@ -48,7 +51,14 @@ import org.agiso.tempel.support.base.provider.CachingTemplateProviderElement;
  * @since 1.0
  */
 public abstract class AbstractMvnTemplateProviderElement extends CachingTemplateProviderElement {
-	private static final Logger logger = LogUtils.getLogger(AbstractMvnTemplateProviderElement.class);
+	private static final I18nLogger<Logs> supportLogger = LogUtils.getLogger(LOGGER_SUPPORT);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Preparing cache entry for template {0}")
+		LOG_01,
+
+		@I18n(def = "Cache entry preparation error for template {0}")
+		LOG_02,
+	}
 
 //	--------------------------------------------------------------------------
 	private Set<String> classPath = Collections.emptySet();
@@ -73,7 +83,7 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 	@Override
 	@SuppressWarnings("unchecked")
 	protected MvnCacheEntry doGet(String key) {
-		if(logger.isTraceEnabled()) logger.trace("Preparing cache entry for template {}",
+		if(supportLogger.isTraceEnabled()) supportLogger.trace(Logs.LOG_01,
 				ansiString(GREEN, key)
 		);
 
@@ -133,7 +143,7 @@ public abstract class AbstractMvnTemplateProviderElement extends CachingTemplate
 //				}
 			}
 		} catch(Exception e) {
-			logger.error(e, "Cache entry preparation error for template {}",
+			supportLogger.error(e, Logs.LOG_02,
 					ansiString(GREEN, key)
 			);
 			return null;

@@ -110,11 +110,11 @@
 		<velocity.version>1.7</velocity.version>
 
 		<!-- Logging dependencies -->
-		<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.7.10</slf4j.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.8.7</testng.version>
-		<mockito.version>1.9.5</mockito.version>
+		<testng.version>6.8.13</testng.version>
+		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
 	<build>
@@ -345,7 +345,7 @@
 		<profile>
 			<id>release-sign-artifacts</id>
 			<activation>
-				<!-- activeByDefault>true</activeByDefault -->
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>performRelease</name>
 					<value>true</value>

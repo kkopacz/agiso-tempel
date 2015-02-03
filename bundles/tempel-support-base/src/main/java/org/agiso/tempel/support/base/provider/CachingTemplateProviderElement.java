@@ -20,13 +20,16 @@ package org.agiso.tempel.support.base.provider;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.annotation.InToString;
-import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSourceFactory;
@@ -41,8 +44,19 @@ import org.agiso.tempel.support.base.repository.HashBasedTemplateRepository;
  * @since 1.0
  */
 public abstract class CachingTemplateProviderElement extends BaseTemplateProviderElement implements ITemplateSourceFactory {
-	private static final Logger logger = LogUtils.getLogger(CachingTemplateProviderElement.class);
+	private static final I18nLogger<Logs> supportLogger = LogUtils.getLogger(LOGGER_SUPPORT);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Definition successfully processed for entry {0}")
+		LOG_01,
 
+		@I18n(def = "Error processing definition for entry {0}")
+		LOG_02,
+
+		@I18n(def = "Caching entry {0} for template {1}")
+		LOG_03,
+	}
+
+//	--------------------------------------------------------------------------
 	private final Map<String, CacheEntry> cache = new HashMap<String, CacheEntry>();
 
 //	--------------------------------------------------------------------------
@@ -74,11 +88,11 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 						);
 					}
 				});
-				if(logger.isTraceEnabled()) logger.trace("Definition successfully processed for entry {}",
+				if(supportLogger.isTraceEnabled()) supportLogger.trace(Logs.LOG_01,
 						ansiString(GREEN, cacheEntry.toString())
 				);
 			} catch(Exception e) {
-				logger.error(e, "Error processing definition for entry {}",
+				supportLogger.error(e, Logs.LOG_02,
 						ansiString(GREEN, cacheEntry.toString())
 				);
 				throw new RuntimeException(e);
@@ -93,9 +107,9 @@ public abstract class CachingTemplateProviderElement extends BaseTemplateProvide
 	private void doChacheEntry(String key) {
 		if(!cache.containsKey(key)) {
 			cache.put(key, doGet(key));
-			if(logger.isTraceEnabled()) {
+			if(supportLogger.isTraceEnabled()) {
 				CacheEntry entry = cache.get(key);
-				logger.trace("Caching entry {} for template {}",
+				supportLogger.trace(Logs.LOG_03,
 						ansiString(GREEN, entry == null? "null" : entry.toString()),
 						ansiString(GREEN, key)
 				);

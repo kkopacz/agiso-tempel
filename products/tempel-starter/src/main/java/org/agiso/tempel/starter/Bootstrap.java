@@ -20,6 +20,7 @@ package org.agiso.tempel.starter;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +28,14 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.LogManager;
 
-import org.agiso.core.logging.Logger;
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.provider.AnnotationMessageProvider;
+import org.agiso.core.i18n.util.I18nUtils;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
+import org.agiso.core.lang.util.AnsiUtils.IWrappingAnsiProcessor;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.ITempel;
 import org.agiso.tempel.api.internal.IParamReader;
@@ -60,17 +65,38 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration @EnableAutoConfiguration
 @ImportResource("classpath*:/META-INF/spring/tempel-context.xml")
 public class Bootstrap implements CommandLineRunner {
-	private static final Logger logger;
-	
-	private static IParamReader PARAM_READER = null;
-
 	static {
 		LogManager.getLogManager().reset();
 		SLF4JBridgeHandler.install();
 
-		logger = LogUtils.getLogger(Bootstrap.class);
+		I18nUtils.setMessageProvider(
+				new AnnotationMessageProvider("org.agiso.tempel")
+		);
 	}
 
+	private static final I18nLogger<Logs> starterLogger = LogUtils.getLogger(LOGGER_STARTER);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Processing template {0}")
+		LOG_01,
+
+		@I18n(def = "Template {0} processed successfully")
+		LOG_02,
+
+		@I18n(def = "Setting working directory to {0}")
+		LOG_03,
+
+		@I18n(def = "Working directory {0} does not exist")
+		LOG_04,
+
+		@I18n(def = "Working directory {0} is not correct")
+		LOG_05,
+
+		@I18n(def = "Błąd: {0}")
+		LOG_06,
+	}
+
+	private static IParamReader PARAM_READER = null;
+//	--------------------------------------------------------------------------
 	@Autowired
 	private ITempel tempel;
 
@@ -164,18 +190,18 @@ public class Bootstrap implements CommandLineRunner {
 		}
 
 		// Uruchamianie generatora dla określonego szablonu:
-		logger.info("Running template {}",
-				ansiString(GREEN, templateName)
-		);
+		starterLogger.info(Logs.LOG_01, ansiString(GREEN, templateName));
 
-		if(PARAM_READER != null) {
-			tempel.setParamReader(PARAM_READER);
+		try {
+			if(PARAM_READER != null) {
+				tempel.setParamReader(PARAM_READER);
+			}
+			tempel.startTemplate(templateName, params, workDir);
+			starterLogger.info(Logs.LOG_02, ansiString(GREEN, templateName));
+		} catch(Exception e) {
+			starterLogger.error(e, Logs.LOG_06, ansiString(RED, e.getMessage()));
+			System.exit(-4);
 		}
-		tempel.startTemplate(templateName, params, workDir);
-
-		logger.info("Template {} executed successfully",
-				ansiString(GREEN, templateName)
-		);
 	}
 
 //	--------------------------------------------------------------------------
@@ -254,23 +280,17 @@ public class Bootstrap implements CommandLineRunner {
 		if(cmd.hasOption('d')) {
 			workDir = new File(cmd.getOptionValue('d').trim());
 			if(!workDir.exists()) {
-				System.err.println("Working directory does not exist: " +
-						ansiString(RED, workDir.getPath())
-				);
+				starterLogger.error(Logs.LOG_04, ansiString(RED, workDir.getPath()));
 				System.exit(-2);
 			} else if(!workDir.isDirectory()) {
-				System.err.println("Incorrect working directory: " +
-						ansiString(RED, workDir.getPath())
-				);
+				starterLogger.error(Logs.LOG_05, ansiString(RED, workDir.getPath()));
 				System.exit(-3);
 			}
 		} else {
 			workDir = new File(".");
 		}
 
-		logger.debug("Setting working directory to {}",
-				ansiString(GREEN, workDir.getPath())
-		);
+		starterLogger.debug(Logs.LOG_03, ansiString(GREEN, workDir.getPath()));
 		return workDir.getCanonicalPath();
 	}
 }

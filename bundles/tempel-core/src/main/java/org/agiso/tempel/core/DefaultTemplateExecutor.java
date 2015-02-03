@@ -20,6 +20,7 @@ package org.agiso.tempel.core;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.File;
 import java.net.URL;
@@ -30,10 +31,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.type.MapStack;
 import org.agiso.core.lang.type.SimpleMapStack;
 import org.agiso.core.lang.util.StringUtils;
-import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITempelEngine;
 import org.agiso.tempel.api.ITemplateParamConverter;
@@ -65,7 +68,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DefaultTemplateExecutor implements ITemplateExecutor {
-	private static final Logger logger = LogUtils.getLogger(DefaultTemplateExecutor.class);
+	private static final I18nLogger<Logs> coreLogger = LogUtils.getLogger(LOGGER_CORE);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Executing template {0}")
+		LOG_01,
+
+		@I18n(def = "Executing template {0} with classpath {1}")
+		LOG_02,
+
+		@I18n(def = "Preparing template {0}")
+		LOG_03,
+
+		@I18n(def = "Reference property {0}: {1} <-- {2}")
+		LOG_04,
+
+		@I18n(def = "Running template {0}")
+		LOG_05,
+	}
 
 	private ITemplateProvider templateProvider;
 	private ITemplateVerifier templateVerifier;
@@ -129,9 +148,9 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		try {
 			StringBuilder deps = null;
-			if(logger.isTraceEnabled()) {
+			if(coreLogger.isTraceEnabled()) {
 				deps = new StringBuilder();
-			} else if(logger.isDebugEnabled()) logger.debug("Executing template {}", ansiString(GREEN,
+			} else if(coreLogger.isDebugEnabled()) coreLogger.debug(Logs.LOG_01, ansiString(GREEN,
 					ansiString(GREEN, template.getKey()) + ": " +
 					ansiString(GREEN, template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion()))
 			);
@@ -142,7 +161,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				List<URL> urls = new ArrayList<URL>(classPath.size());
 				for(String classPathEntry : classPath) {
 					urls.add(new File(classPathEntry).toURI().toURL());
-					if(logger.isTraceEnabled()) {
+					if(coreLogger.isTraceEnabled()) {
 						if(deps.length() > 0) {
 							deps.append(", ");
 						}
@@ -153,7 +172,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 				Thread.currentThread().setContextClassLoader(classLoader);
 			}
 
-			if(logger.isTraceEnabled()) logger.trace("Executing template {} with classpath {}", ansiString(GREEN,
+			if(coreLogger.isTraceEnabled()) coreLogger.trace(Logs.LOG_02, ansiString(GREEN,
 					ansiString(GREEN, template.getKey()) + ": " +
 					ansiString(GREEN, template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())),
 					ansiString(GREEN, deps.toString())
@@ -167,6 +186,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 		}
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void doExecuteTemplateInternal(Template<?> template, MapStack<String, Object> properties, String workDir) {
 		if(!StringUtils.isEmpty(template.getWorkDir())) {
 			workDir = workDir + "/" + template.getWorkDir();
@@ -243,7 +263,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 				// Szablon istnieje. Kopiowanie jego standardowej definicji i aktualizowanie
 				// w oparciu o informacje zdefiniowane w podszablonie:
-				logger.debug("Preparing template {}", ansiString(GREEN,
+				coreLogger.debug(Logs.LOG_03, ansiString(GREEN,
 						subTemplate.getKey() + ": " +
 						subTemplate.getGroupId() +":" + subTemplate.getTemplateId() + ":" + subTemplate.getVersion())
 				);
@@ -285,7 +305,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 						} else {
 							if(refParam.getValue() != null) {
 								String refParamValue = expressionEvaluator.evaluate(refParam.getValue(), properties.peek());
-								logger.debug("Reference property {}: {} <-- {}",
+								coreLogger.debug(Logs.LOG_04,
 										refParam.getKey(), param.getValue(), refParamValue
 								);
 	
@@ -330,7 +350,7 @@ public class DefaultTemplateExecutor implements ITemplateExecutor {
 
 		// Generacja zasobów:
 		if(engine != null) {
-			logger.debug("Running template {}", ansiString(GREEN,
+			coreLogger.debug(Logs.LOG_05, ansiString(GREEN,
 					template.getKey() + ": " +
 					template.getGroupId() +":" + template.getTemplateId() + ":" + template.getVersion())
 			);
