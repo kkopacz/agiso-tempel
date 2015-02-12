@@ -3,6 +3,7 @@
 <configuration scan="true" scanPeriod="10 seconds">
 
 	<!-- https://github.com/pedestal/samples/blob/master/template-server/config/logback.xml -->
+	<!-- http://blogger.ziesemer.com/2009/05/dynamically-configuring-logging-runtime.html -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
 		<encoder>
@@ -10,7 +11,7 @@
 		</encoder>
 		<!-- Only log level INFO and above -->
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>INFO</level>
+			<level>TRACE</level>
 		</filter>
 	</appender>
 

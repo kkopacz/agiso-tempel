@@ -61,6 +61,7 @@
 					<extraJvmArguments>-Dfile.encoding=UTF-8</extraJvmArguments>
 					<licenseHeaderFile>${basedir}/license-header.txt</licenseHeaderFile>
 					<assembleDirectory>${project.build.directory}/appassembler</assembleDirectory>
+					<configurationDirectory>conf</configurationDirectory>
 					<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
 					<platforms>
 						<platform>windows</platform>
