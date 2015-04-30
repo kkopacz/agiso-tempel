@@ -124,16 +124,16 @@
 		<wagon.version>2.6</wagon.version>
 
 		<!-- Other dependencies -->
-		<xstream.version>1.4.7</xstream.version>
+		<xstream.version>1.4.8</xstream.version>
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
 		<guava.version>18.0</guava.version>
 
 		<!-- Logging dependencies -->
-		<slf4j.version>1.7.10</slf4j.version>
+		<slf4j.version>1.7.12</slf4j.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.8.13</testng.version>
+		<testng.version>6.8.21</testng.version>
 		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
