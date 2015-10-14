@@ -32,6 +32,7 @@ import java.util.logging.LogManager;
 
 import org.agiso.core.i18n.annotation.I18n;
 import org.agiso.core.i18n.provider.AnnotationMessageProvider;
+import org.agiso.core.i18n.provider.SpringMessageSourceMessageProvider;
 import org.agiso.core.i18n.util.I18nUtils;
 import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.util.AnsiUtils.IWrappingAnsiProcessor;
@@ -55,6 +56,7 @@ import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 /**
  * Klasa startowa obsługująca uruchamianie aplikacji z linii komend.
@@ -69,7 +71,12 @@ public class Bootstrap implements CommandLineRunner {
 		LogManager.getLogManager().reset();
 		SLF4JBridgeHandler.install();
 
-		I18nUtils.setMessageProvider(
+		final ResourceBundleMessageSource messageSource
+				= new ResourceBundleMessageSource();
+		messageSource.setBasename("messages");
+
+		I18nUtils.setMessageProviders(
+				new SpringMessageSourceMessageProvider(messageSource),
 				new AnnotationMessageProvider("org.agiso.tempel")
 		);
 	}
@@ -91,7 +98,7 @@ public class Bootstrap implements CommandLineRunner {
 		@I18n(def = "Working directory {0} is not correct")
 		LOG_05,
 
-		@I18n(def = "Błąd: {0}")
+		@I18n(def = "Error: {0}")
 		LOG_06,
 	}
 
