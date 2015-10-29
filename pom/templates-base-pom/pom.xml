@@ -107,7 +107,7 @@
 		<tempel.templates.version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.2.BUILD-SNAPSHOT</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.RC1</agiso.core.version>
 
 		<!-- Other dependencies -->
 		<velocity.version>1.7</velocity.version>

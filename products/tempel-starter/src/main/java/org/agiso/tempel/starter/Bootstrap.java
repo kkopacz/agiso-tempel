@@ -18,6 +18,7 @@
  */
 package org.agiso.tempel.starter;
 
+import static org.agiso.core.i18n.util.I18nUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
 import static org.agiso.tempel.ITempel.*;
@@ -31,8 +32,8 @@ import java.util.Properties;
 import java.util.logging.LogManager;
 
 import org.agiso.core.i18n.annotation.I18n;
-import org.agiso.core.i18n.provider.AnnotationMessageProvider;
-import org.agiso.core.i18n.provider.SpringMessageSourceMessageProvider;
+import org.agiso.core.i18n.support.reflections.AnnotationMessageProvider;
+import org.agiso.core.i18n.support.spring.MessageSourceMessageProvider;
 import org.agiso.core.i18n.util.I18nUtils;
 import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.util.AnsiUtils.IWrappingAnsiProcessor;
@@ -57,7 +58,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ResourceBundleMessageSource;
-
 /**
  * Klasa startowa obsługująca uruchamianie aplikacji z linii komend.
  * 
@@ -76,7 +76,7 @@ public class Bootstrap implements CommandLineRunner {
 		messageSource.setBasename("messages");
 
 		I18nUtils.setMessageProviders(
-				new SpringMessageSourceMessageProvider(messageSource),
+				new MessageSourceMessageProvider(messageSource),
 				new AnnotationMessageProvider("org.agiso.tempel")
 		);
 	}
@@ -100,6 +100,41 @@ public class Bootstrap implements CommandLineRunner {
 
 		@I18n(def = "Error: {0}")
 		LOG_06,
+	}
+	private static enum Messages implements I18nId {
+		@I18n(def = "Copyright 2014-2015 agiso.org")
+		COPYRIGHT,
+
+		@I18n(def = "usage: tpl template [options]"
+				+ "\n   or: tpl --help")
+		USAGE_INFO,
+
+		@I18n(def = "Incorrect params. Use \"tpl --help\" for help.")
+		USAGE_ERROR,
+
+		@I18n(def = "tpl template [options]")
+		HELP_USAGE,
+
+		@I18n(def = "print this help message")
+		HELP_HELP,
+
+		@I18n(def = "print the version information and exit")
+		HELP_VERSION,
+
+		@I18n(def = "create resources in defined directory")
+		HELP_DIRECTORY,
+
+		@I18n(def = "DIRECTORY")
+		HELP_DIRECTORY_ARG,
+
+		@I18n(def = "use value for given property")
+		HELP_DEFINE,
+
+		@I18n(def = "property=value")
+		HELP_DEFINE_ARG,
+
+		@I18n(def = "run Tempel in debug mode")
+		HELP_DEBUG,
 	}
 
 	private static IParamReader PARAM_READER = null;
@@ -182,7 +217,7 @@ public class Bootstrap implements CommandLineRunner {
 		// Pobieranie nazwy szablonu do wykonania:
 		String templateName;
 		if(cmd.getArgList().size() != 1) {
-			System.err.println("Incorrect params. Use \"tpl --help\" for help.");
+			System.err.println(getMessage(Messages.USAGE_ERROR));
 			System.exit(-1);
 		}
 		templateName = String.valueOf(cmd.getArgList().get(0));
@@ -215,49 +250,48 @@ public class Bootstrap implements CommandLineRunner {
 	private static void printTempelInfo() {
 		System.out.println(ansiString(RED, "Agiso Tempel", " ",
 				GREEN, "0.0.2.BUILD-SNAPSHOT"));
-		System.out.println("Copyright 2014 agiso.org");
+		System.out.println(getMessage(Messages.COPYRIGHT));
 		System.out.println();
-		System.out.println("usage: tpl template [options]");
-		System.out.println("   or: tpl --help");
+		System.out.println(getMessage(Messages.USAGE_INFO));
 	}
 
 	private static void printTempelHelp(Options options) {
 		// automatically generate the help statement
 		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("tpl template [options]", options);
+		formatter.printHelp(getMessage(Messages.HELP_USAGE), options);
 	}
 
 	private static Options configureTempelOptions() {
 		Options options = new Options();
 
 		Option help = new Option("h", "help", false,
-				"print this help message");
+				getMessage(Messages.HELP_HELP));
 		options.addOption(help);
 
 		Option version = new Option("v", "version", false,
-				"print the version information and exit");
+				getMessage(Messages.HELP_VERSION));
 		options.addOption(version);
 
 		@SuppressWarnings("static-access")
 		Option directory = OptionBuilder.withLongOpt("directory")
-				.withDescription("create resources in defined directory")
+				.withDescription(getMessage(Messages.HELP_DIRECTORY))
 				.hasArg()
-				.withArgName("DIRECTORY")
+				.withArgName(getMessage(Messages.HELP_DIRECTORY_ARG))
 				.create("d");
 		options.addOption(directory);
 
 		@SuppressWarnings("static-access")
 		Option property = OptionBuilder.withLongOpt("define")
-				.withArgName("property=value")
+				.withDescription(getMessage(Messages.HELP_DEFINE))
 				.hasArgs(2)
+				.withArgName(getMessage(Messages.HELP_DEFINE_ARG))
 				.withValueSeparator()
-				.withDescription("use value for given property")
 				.create("D");
 		options.addOption(property);
 
 		@SuppressWarnings("static-access")
 		Option debug = OptionBuilder.withLongOpt("debug")
-				.withDescription("run Tempel in debug mode")
+				.withDescription(getMessage(Messages.HELP_DEBUG))
 				.create();
 		options.addOption(debug);
 
