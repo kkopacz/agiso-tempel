@@ -51,13 +51,16 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+
 /**
  * Klasa startowa obsługująca uruchamianie aplikacji z linii komend.
  * 
@@ -65,6 +68,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  * @since 1.0
  */
 @Configuration @EnableAutoConfiguration
+@PropertySource("classpath:git.properties")
 @ImportResource("classpath*:/META-INF/spring/tempel-context.xml")
 public class Bootstrap implements CommandLineRunner {
 	static {
@@ -138,6 +142,7 @@ public class Bootstrap implements CommandLineRunner {
 	}
 
 	private static IParamReader PARAM_READER = null;
+
 //	--------------------------------------------------------------------------
 	@Autowired
 	private ITempel tempel;
@@ -182,12 +187,6 @@ public class Bootstrap implements CommandLineRunner {
 			.withAnsiWhite(org.springframework.boot.ansi.AnsiElement.WHITE)
 			.withAnsiDefault(org.springframework.boot.ansi.AnsiElement.DEFAULT);
 
-		// Obsługa wywołania bezargumentowego:
-		if(args.length == 0) {
-			printTempelInfo();
-			System.exit(0);
-		}
-
 		setParamReader(paramReader);
 
 		SpringApplication application = new SpringApplication(Bootstrap.class);
@@ -199,6 +198,12 @@ public class Bootstrap implements CommandLineRunner {
 //	--------------------------------------------------------------------------
 	@Override
 	public void run(String... args) throws Exception {
+		// Obsługa wywołania bezargumentowego:
+		if(args.length == 0) {
+			printTempelInfo();
+			System.exit(0);
+		}
+
 		// Konfiguracja opcji i parsowanie argumentów:
 		Options options = configureTempelOptions();
 
@@ -247,15 +252,20 @@ public class Bootstrap implements CommandLineRunner {
 	}
 
 //	--------------------------------------------------------------------------
-	private static void printTempelInfo() {
+	@Value("${git.commit.id}")
+	private String commitId;
+	@Value("${git.build.version}")
+	private String buildVersion;
+
+	private void printTempelInfo() {
 		System.out.println(ansiString(RED, "Agiso Tempel", " ",
-				GREEN, "0.0.2.BUILD-SNAPSHOT"));
+				GREEN, buildVersion + " (" + commitId + ")"));
 		System.out.println(getMessage(Messages.COPYRIGHT));
 		System.out.println();
 		System.out.println(getMessage(Messages.USAGE_INFO));
 	}
 
-	private static void printTempelHelp(Options options) {
+	private void printTempelHelp(Options options) {
 		// automatically generate the help statement
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(getMessage(Messages.HELP_USAGE), options);
@@ -298,7 +308,7 @@ public class Bootstrap implements CommandLineRunner {
 		return options;
 	}
 
-	private static CommandLine parseTempelCommandArgs(Options options, String[] args) {
+	private CommandLine parseTempelCommandArgs(Options options, String[] args) {
 		CommandLine cmd = null;
 
 		CommandLineParser parser = new PosixParser();
