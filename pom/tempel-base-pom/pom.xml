@@ -110,7 +110,7 @@
 		<tempel.version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</tempel.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.2.RC3</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.RC4</agiso.core.version>
 
 		<!-- Apache Commons dependencies -->
 		<commons-cli.version>1.2</commons-cli.version>
