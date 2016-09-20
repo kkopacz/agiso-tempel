@@ -107,20 +107,14 @@ public class VelocityFileExtendEngine extends AbstractVelocityEngine {
 					//wczytanie zawartości rozszerzenia szablonu
 					String line2;
 					BufferedReader reader2 = null;
-					FileInputStream fileStream2 = null;
 					try{
-						fileStream2 = new FileInputStream(entry.getTemplate() + "/"+ entry.getName());
-						reader2 = new BufferedReader(new InputStreamReader(fileStream2));
+						reader2 = new BufferedReader(new InputStreamReader(entry.getInputStream()));
 						while((line2 = reader2.readLine()) != null){
 							fileContent.append(line2).append("\n");
 						}
 					} finally{
 						if(reader2 != null) try {
 							reader2.close();
-						} catch(Exception e) {
-						}
-						if(fileStream2 != null) try {
-							fileStream2.close();
 						} catch(Exception e) {
 						}
 					}
