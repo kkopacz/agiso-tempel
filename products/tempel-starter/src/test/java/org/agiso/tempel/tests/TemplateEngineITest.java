@@ -21,6 +21,7 @@ package org.agiso.tempel.tests;
 import java.io.File;
 
 import org.agiso.core.lang.util.DigestUtils;
+import org.agiso.core.test.AbstractOutputTest;
 import org.agiso.tempel.starter.Bootstrap;
 import org.testng.annotations.Test;
 
@@ -31,6 +32,10 @@ import org.testng.annotations.Test;
  * @since 1.0
  */
 public class TemplateEngineITest extends AbstractOutputTest {
+	protected String getOutputPathPrefix() {
+		return "./target/velocity-output/";
+	}
+
 //	--------------------------------------------------------------------------
 //	src/test/templates/run/tempel.xml
 //	--------------------------------------------------------------------------

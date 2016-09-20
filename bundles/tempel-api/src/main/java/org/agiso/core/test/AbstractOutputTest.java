@@ -49,7 +49,7 @@ public abstract class AbstractOutputTest {
 			depth++;
 		}
 
-		String outputPath = "./target/test-output/"
+		String outputPath = getOutputPathPrefix()
 				+ this.getClass().getSimpleName() + "/"
 				+ timeInMillis + "/" + trace[depth].getMethodName() + "/";
 		if(create) {
@@ -63,5 +63,9 @@ public abstract class AbstractOutputTest {
 		}
 
 		return outputPath;
+	}
+
+	protected String getOutputPathPrefix() {
+		return "./target/test-output/";
 	}
 }
