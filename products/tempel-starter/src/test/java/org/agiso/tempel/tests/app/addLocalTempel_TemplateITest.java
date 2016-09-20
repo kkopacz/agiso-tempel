@@ -1,8 +1,8 @@
-/* org.agiso.tempel.tests.MakeDirsTemplateITest (18-01-2014)
+/* org.agiso.tempel.tests.app.addLocalTempel_TemplateITest (20-09-2016)
  * 
- * MakeDirsTemplateITest.java
+ * addLocalTempel_TemplateITest.java
  * 
- * Copyright 2014 agiso.org
+ * Copyright 2016 agiso.org
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.tests;
+package org.agiso.tempel.tests.app;
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
@@ -27,27 +26,30 @@ import org.agiso.core.lang.util.DigestUtils;
 import org.agiso.core.test.AbstractOutputTest;
 import org.agiso.tempel.api.internal.IParamReader;
 import org.agiso.tempel.starter.Bootstrap;
-import org.mockito.InOrder;
 import org.testng.annotations.Test;
 
 /**
- * Testy integracyjne szablonu <code>base.mkdirs</code>.
+ * Testy integracyjne szablonu <code>tempel-add</code>.
  * </br>
  * Wykorzystują definicję szablonu z pliku <code>TEMPEL-INF/tempel.xml</code>
  * znajdującą się w katalogu <code>src/main/resources</code> i umieszczaną w
  * pliku <code>.jar</code> szablonu oraz dodatkowo definicje testowe z pliku
- * <code>src/test/templates/run/tempel.xml</code>.
+ * <code>src/test/templates/app/tempel.xml</code>.
  * 
  * @author Karol Kopacz
  * @since 1.0
  */
-public class MakeDirsTemplateITest extends AbstractOutputTest {
+public class addLocalTempel_TemplateITest extends AbstractOutputTest {
 	protected String getOutputPathPrefix() {
 		return "./target/velocity-output/";
 	}
 
+//	--------------------------------------------------------------------------
+//	src/test/templates/app/tempel.xml
+//	--------------------------------------------------------------------------
 	/**
-	 * Test bezpośredniego wywołania szablonu (polecenia) <code>mkdirs</code>.
+	 * Test bezpośredniego wywołania szablonu (polecenia)
+	 * <code>addLocalTempel</code>.
 	 */
 	@Test
 	public void testTemplateInvocation() throws Exception {
@@ -55,20 +57,16 @@ public class MakeDirsTemplateITest extends AbstractOutputTest {
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
-		when(paramReader.getParamValue(eq("path"), anyString(), anyString()))
-			.thenReturn("parent/newDirectory");
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
-		Bootstrap.main(paramReader, new String[] {"mkdirs",
+		Bootstrap.main(paramReader, new String[] {"addLocalTempel",
 				"-d " + outPath
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
-		InOrder inOrder = inOrder(paramReader);
-		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path name", null);
 		verifyNoMoreInteractions(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;
+		assert "4028a1a1e284375c00a4847558a94132".equals(md5) : md5;
 	}
 }

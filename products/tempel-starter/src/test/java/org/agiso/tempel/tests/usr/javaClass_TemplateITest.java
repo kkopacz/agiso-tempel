@@ -1,6 +1,6 @@
-/* org.agiso.tempel.TempelCoreITest (14-09-2012)
+/* org.agiso.tempel.tests.usr_TemplateITest (14-09-2012)
  * 
- * TempelCoreITest.java
+ * javaClass_TemplateITest.java
  * 
  * Copyright 2012 agiso.org
  * 
@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.agiso.tempel.tests;
+package org.agiso.tempel.tests.usr;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
  * @author Karol Kopacz
  * @since 1.0
  */
-public class TempelCoreITest extends AbstractOutputTest {
+public class javaClass_TemplateITest extends AbstractOutputTest {
 	protected String getOutputPathPrefix() {
 		return "./target/velocity-output/";
 	}
