@@ -78,7 +78,9 @@ public class addMavenTemplate_TemplateITest extends AbstractOutputTest {
 
 		// Wywołanie Bootstrap i uruchamianie szablonu:
 		Bootstrap.main(paramReader, new String[] {"addMavenTemplate",
-				"-d " + outPath
+				"-d " + outPath,
+				"-Ddate_format=yyyy-MM-dd",
+				"-Ddate=2016-09-20"
 		});
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
