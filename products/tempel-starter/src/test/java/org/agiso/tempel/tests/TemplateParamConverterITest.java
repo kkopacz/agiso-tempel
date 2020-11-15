@@ -71,6 +71,7 @@ public class TemplateParamConverterITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("param_long", null, null);
 		inOrder.verify(paramReader, times(1)).getParamValue("param_date", null, null);
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "af89b01c75f70d5ff05d9b70c7fe639e".equals(md5) : md5;

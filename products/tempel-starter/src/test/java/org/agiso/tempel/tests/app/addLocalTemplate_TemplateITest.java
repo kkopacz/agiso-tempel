@@ -77,6 +77,7 @@ public class addLocalTemplate_TemplateITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("templateId", "Template templateId", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("version", "Template version", "1.0.0");
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "16d72aed1b9670ced785aa7f59d48064".equals(md5) : md5;

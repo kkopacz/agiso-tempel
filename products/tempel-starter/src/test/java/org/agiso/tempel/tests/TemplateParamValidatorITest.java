@@ -63,6 +63,7 @@ public class TemplateParamValidatorITest extends AbstractOutputTest {
 		InOrder inOrder = inOrder(paramReader);
 		inOrder.verify(paramReader, times(1)).getParamValue("param_string", null, null);
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "d41d8cd98f00b204e9800998ecf8427e".equals(md5) : md5;
