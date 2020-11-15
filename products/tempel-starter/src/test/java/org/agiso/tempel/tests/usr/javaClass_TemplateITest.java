@@ -77,6 +77,7 @@ public class javaClass_TemplateITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Class name", null);
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "677a1eabb14d0bb2a0c3f108d2795ad1".equals(md5) : md5;

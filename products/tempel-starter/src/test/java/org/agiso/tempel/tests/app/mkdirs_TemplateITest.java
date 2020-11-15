@@ -70,6 +70,7 @@ public class mkdirs_TemplateITest extends AbstractOutputTest {
 		InOrder inOrder = inOrder(paramReader);
 		inOrder.verify(paramReader, times(1)).getParamValue("path", "Directory path name", null);
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "30cdf9209aac5b88185f97dbe4863a5a".equals(md5) : md5;

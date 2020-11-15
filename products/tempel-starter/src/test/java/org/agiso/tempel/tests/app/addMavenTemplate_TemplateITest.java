@@ -89,6 +89,7 @@ public class addMavenTemplate_TemplateITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("templateId", "Template templateId", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("version", "Template version", "1.0.0");
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "d822211ec87c9f628ab1f3c4a458cda5".equals(md5) : md5;

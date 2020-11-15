@@ -65,6 +65,7 @@ public class addLocalTempel_TemplateITest extends AbstractOutputTest {
 
 		// Weryfikacja wywołań poleceń odczytu paramtrów:
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "4028a1a1e284375c00a4847558a94132".equals(md5) : md5;

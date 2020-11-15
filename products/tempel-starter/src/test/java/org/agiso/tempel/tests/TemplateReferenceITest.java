@@ -70,6 +70,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "e142610395f405d6a60beae6c10474cc".equals(md5) : md5;
@@ -101,6 +102,7 @@ public class TemplateReferenceITest extends AbstractOutputTest {
 		inOrder.verify(paramReader, times(1)).getParamValue("name", "Project name", null);
 		inOrder.verify(paramReader, times(1)).getParamValue("package", "Package name", null);
 		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
 		assert "e40206a73f9732699c33b623b9a2b6f5".equals(md5) : md5;
