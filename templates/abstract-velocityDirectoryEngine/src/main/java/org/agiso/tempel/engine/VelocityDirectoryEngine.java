@@ -56,6 +56,7 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 		}
 	}
 
+	@Override
 	protected void processVelocityFile(ITemplateSourceEntry entry, VelocityContext context, String target) throws Exception {
 		String resourceName = entry.getName();
 		if(resourceName.endsWith(TEMPLATE_FILE_SUFFIX)) {

@@ -20,6 +20,7 @@ package org.agiso.tempel.core.provider;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +29,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.agiso.core.logging.Logger;
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.internal.ITemplateProvider;
 import org.agiso.tempel.api.internal.ITemplateProviderElement;
@@ -44,7 +47,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CoreTemplateProvider implements ITemplateProvider {
-	private static final Logger logger = LogUtils.getLogger(CoreTemplateProvider.class);
+	private static final I18nLogger<Logs> coreLogger = LogUtils.getLogger(LOGGER_CORE);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Setting up template provider {0} with order {1}")
+		LOG_01,
+
+		@I18n(def = "Initializing template provider {0} with order {1}")
+		LOG_02,
+
+		@I18n(def = "Configuring template provider {0} with order {1}")
+		LOG_03,
+
+		@I18n(def = "Looking for template {0}")
+		LOG_04,
+	}
 
 	@SuppressWarnings("unchecked")
 	private List<ITemplateProviderElement> elements = Collections.EMPTY_LIST;
@@ -63,7 +79,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 		});
 
 		for(ITemplateProviderElement provider : elements) {
-			if(logger.isDebugEnabled()) logger.debug("Setting up template provider {} with order {}",
+			if(coreLogger.isDebugEnabled()) coreLogger.debug(Logs.LOG_01,
 					ansiString(GREEN, provider.getClass().getSimpleName()),
 					ansiString(GREEN, provider.getOrder())
 			);
@@ -75,7 +91,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 	public void initialize(Map<String, Object> properties) throws IOException {
 		for(int index = elements.size() - 1; index >= 0; index--) {
 			ITemplateProviderElement provider = elements.get(index);
-			if(logger.isTraceEnabled()) logger.trace("Initializing template provider {} with order {}",
+			if(coreLogger.isTraceEnabled()) coreLogger.trace(Logs.LOG_02,
 					ansiString(GREEN, provider.getClass().getSimpleName()),
 					ansiString(GREEN, provider.getOrder())
 			);
@@ -90,7 +106,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 	@Override
 	public void configure(Map<String, Object> properties) throws IOException {
 		for(ITemplateProviderElement provider : elements) {
-			if(logger.isTraceEnabled()) logger.trace("Configuring template provider {} with order {}",
+			if(coreLogger.isTraceEnabled()) coreLogger.trace(Logs.LOG_03,
 					ansiString(GREEN, provider.getClass().getSimpleName()),
 					ansiString(GREEN, provider.getOrder())
 			);
@@ -110,7 +126,7 @@ public class CoreTemplateProvider implements ITemplateProvider {
 
 	@Override
 	public Template<?> get(String key, String groupId, String templateId, String version) {
-		if(logger.isDebugEnabled()) logger.debug("Looking for template {}",
+		if(coreLogger.isDebugEnabled()) coreLogger.debug(Logs.LOG_04,
 				ansiString(GREEN, key + ": " + groupId +":" + templateId + ":" + version)
 		);
 

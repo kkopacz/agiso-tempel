@@ -9,13 +9,13 @@
 	<parent>
 		<groupId>org.agiso.tempel.templates</groupId>
 		<artifactId>templates-base-pom</artifactId>
-		<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+		<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 		<relativePath>../../pom/templates-base-pom/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>template-add-maven</artifactId>
-	<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+	<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 
 	<name>AGISO Tempel Template Add Maven Template</name>
 	<inceptionYear>2013</inceptionYear>

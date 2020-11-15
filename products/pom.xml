@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel.products</groupId>
 	<artifactId>tempel-products-builder</artifactId>
-	<version><!--tempel.starter.version-->0.0.1.RELEASE</version>
+	<version><!--tempel.starter.version-->0.0.2.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Products Builder</name>

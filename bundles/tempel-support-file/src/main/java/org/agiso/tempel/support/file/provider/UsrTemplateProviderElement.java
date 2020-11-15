@@ -20,6 +20,7 @@ package org.agiso.tempel.support.file.provider;
 
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +29,10 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
 import org.agiso.core.lang.util.StringUtils;
-import org.agiso.core.logging.Logger;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.ITemplateRepository;
 import org.agiso.tempel.api.ITemplateSource;
@@ -50,7 +53,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
-	private static final Logger logger = LogUtils.getLogger(RunTemplateProviderElement.class);
+	private static final I18nLogger<Logs> supportLogger = LogUtils.getLogger(LOGGER_SUPPORT);
+	private static enum Logs implements I18nId {
+		@I18n(def = "User settings file {0} processed successfully")
+		LOG_01,
+
+		@I18n(def = "Error processing user settings file {0}")
+		LOG_02,
+	}
 
 //	--------------------------------------------------------------------------
 	private boolean initialized;
@@ -150,13 +160,13 @@ public class UsrTemplateProviderElement extends BaseTemplateProviderElement {
 					}
 				});
 
-				if(logger.isDebugEnabled()) logger.debug("User settings file {} processed successfully",
+				if(supportLogger.isDebugEnabled()) supportLogger.debug(Logs.LOG_01,
 						ansiString(GREEN, usrSettingsFile.getCanonicalPath())
 				);
 
 				return true;
 			} catch(Exception e) {
-				logger.error(e, "Error processing user settings file {}",
+				supportLogger.error(e, Logs.LOG_02,
 						ansiString(GREEN, usrSettingsFile.getCanonicalPath())
 				);
 				throw new RuntimeException(e);

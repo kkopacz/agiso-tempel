@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel.templates</groupId>
 	<artifactId>templates-base-pom</artifactId>
-	<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+	<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Templates Base POM</name>
@@ -56,14 +56,17 @@
 	</scm>
 
 	<repositories>
-		<!-- repository>
+		<repository>
 			<id>sonatype-nexus-snapshots</id>
 			<name>Sonatype Nexus snapshot repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository -->
+		</repository>
 	</repositories>
 
 	<!-- distributionManagement>
@@ -100,21 +103,21 @@
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version><!--tempel.version-->0.0.1.RELEASE</tempel.version>
-		<tempel.templates.version><!--tempel.templates.version-->0.0.1.RELEASE</tempel.templates.version>
+		<tempel.version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</tempel.version>
+		<tempel.templates.version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</tempel.templates.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.RC4</agiso.core.version>
 
 		<!-- Other dependencies -->
 		<velocity.version>1.7</velocity.version>
 
 		<!-- Logging dependencies -->
-		<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.7.12</slf4j.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.8.7</testng.version>
-		<mockito.version>1.9.5</mockito.version>
+		<testng.version>6.8.21</testng.version>
+		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
 	<build>
@@ -345,7 +348,7 @@
 		<profile>
 			<id>release-sign-artifacts</id>
 			<activation>
-				<!-- activeByDefault>true</activeByDefault -->
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>performRelease</name>
 					<value>true</value>

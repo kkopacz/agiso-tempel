@@ -80,6 +80,10 @@ public class VelocityFileEngine extends AbstractVelocityEngine {
 			);
 		}
 
+		doProcessVelocityFile(entry, context, target);
+	}
+
+	protected final void doProcessVelocityFile(ITemplateSourceEntry entry, VelocityContext context, String target) throws Exception {
 		Writer writer = null;
 		Reader reader = null;
 		try {

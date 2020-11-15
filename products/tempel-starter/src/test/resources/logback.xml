@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<!-- https://github.com/pedestal/samples/blob/master/template-server/config/logback.xml -->
+	<!-- http://blogger.ziesemer.com/2009/05/dynamically-configuring-logging-runtime.html -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%nopex[%level] %logger - %msg%n</pattern>
+		</encoder>
+		<!-- Only log level INFO and above -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>TRACE</level>
+		</filter>
+	</appender>
+
+	<root level="WARN">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<!-- see: org.agiso.tempel.ITempel -->
+	<logger name="CORE" level="ALL" />
+	<logger name="SUPPORT" level="ALL" />
+	<logger name="ENGINE" level="ALL" />
+	<logger name="EXTENSION" level="ALL" />
+	<logger name="STARTER" level="ALL" />
+
+<!--
+	<logger name="org.reflections" level="WARN" />
+	<logger name="org.apache.velocity" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+-->
+</configuration>

@@ -20,15 +20,11 @@ package org.agiso.tempel.support.maven.provider;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.agiso.core.lang.util.StringUtils;
-import org.agiso.core.logging.Logger;
-import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.api.model.Template;
 import org.apache.maven.repository.internal.MavenRepositorySystemSession;
 import org.apache.maven.repository.internal.MavenServiceLocator;
@@ -56,10 +52,6 @@ import org.sonatype.aether.util.graph.PreorderNodeListGenerator;
  * @since 1.0
  */
 public class AetherMvnTemplateProviderElement extends AbstractMvnTemplateProviderElement {
-	@SuppressWarnings("unused")
-	private static final Logger logger = LogUtils.getLogger(AetherMvnTemplateProviderElement.class);
-
-//	--------------------------------------------------------------------------
 	private String settingsPath;
 	private String repositoryPath;
 

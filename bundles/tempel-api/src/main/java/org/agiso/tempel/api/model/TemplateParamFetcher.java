@@ -39,4 +39,3 @@ public interface TemplateParamFetcher extends Cloneable {
 //	--------------------------------------------------------------------------
 	public TemplateParamFetcher clone();
 }
-

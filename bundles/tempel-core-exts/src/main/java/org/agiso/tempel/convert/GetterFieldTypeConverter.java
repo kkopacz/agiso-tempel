@@ -21,8 +21,8 @@ package org.agiso.tempel.convert;
 import org.agiso.tempel.api.ITemplateParamConverter;
 
 /**
- * Konwerter zamieniający nazwę pola klasy na metodę dostępową 
- * do tego pola get lub is
+ * Konwerter zamieniający nazwę pola klasy na metodę dostępową do tego pola
+ * 'get' lub 'is'.
  * 
  * @author Michał Klin
  * @since 1.0

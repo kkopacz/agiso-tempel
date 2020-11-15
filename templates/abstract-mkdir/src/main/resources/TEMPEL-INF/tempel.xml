@@ -4,6 +4,6 @@
 		<!-- Tworzenie pojedynczego katalogu -->
 		<groupId>org.agiso.tempel.templates</groupId>
 		<templateId>abstract-mkdir</templateId>
-		<version><!--tempel.templates.version-->0.0.1.RELEASE</version>
+		<version><!--tempel.templates.version-->0.0.2.BUILD-SNAPSHOT</version>
 	</template>
 </tempel>

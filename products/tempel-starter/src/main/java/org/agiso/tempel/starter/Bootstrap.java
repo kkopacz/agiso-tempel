@@ -18,8 +18,10 @@
  */
 package org.agiso.tempel.starter;
 
+import static org.agiso.core.i18n.util.I18nUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.*;
 import static org.agiso.core.lang.util.AnsiUtils.AnsiElement.*;
+import static org.agiso.tempel.ITempel.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +29,15 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.LogManager;
 
-import org.agiso.core.logging.Logger;
+import org.agiso.core.i18n.annotation.I18n;
+import org.agiso.core.i18n.support.reflections.AnnotationMessageProvider;
+import org.agiso.core.i18n.support.spring.MessageSourceMessageProvider;
+import org.agiso.core.i18n.util.I18nUtils;
+import org.agiso.core.i18n.util.I18nUtils.I18nId;
+import org.agiso.core.lang.util.AnsiUtils.IWrappingAnsiProcessor;
+import org.agiso.core.logging.I18nLogger;
 import org.agiso.core.logging.util.LogUtils;
 import org.agiso.tempel.ITempel;
 import org.agiso.tempel.api.internal.IParamReader;
@@ -44,12 +51,15 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 /**
  * Klasa startowa obsługująca uruchamianie aplikacji z linii komend.
@@ -58,19 +68,82 @@ import org.springframework.context.annotation.ImportResource;
  * @since 1.0
  */
 @Configuration @EnableAutoConfiguration
+@PropertySource("classpath:git.properties")
 @ImportResource("classpath*:/META-INF/spring/tempel-context.xml")
 public class Bootstrap implements CommandLineRunner {
-	private static final Logger logger;
-	
-	private static IParamReader PARAM_READER = null;
-
 	static {
 		LogManager.getLogManager().reset();
 		SLF4JBridgeHandler.install();
 
-		logger = LogUtils.getLogger(Bootstrap.class);
+		final ResourceBundleMessageSource messageSource
+				= new ResourceBundleMessageSource();
+		messageSource.setBasename("messages");
+
+		I18nUtils.setMessageProviders(
+				new MessageSourceMessageProvider(messageSource),
+				new AnnotationMessageProvider("org.agiso.tempel")
+		);
 	}
 
+	private static final I18nLogger<Logs> starterLogger = LogUtils.getLogger(LOGGER_STARTER);
+	private static enum Logs implements I18nId {
+		@I18n(def = "Processing template {0}")
+		LOG_01,
+
+		@I18n(def = "Template {0} processed successfully")
+		LOG_02,
+
+		@I18n(def = "Setting working directory to {0}")
+		LOG_03,
+
+		@I18n(def = "Working directory {0} does not exist")
+		LOG_04,
+
+		@I18n(def = "Working directory {0} is not correct")
+		LOG_05,
+
+		@I18n(def = "Error: {0}")
+		LOG_06,
+	}
+	private static enum Messages implements I18nId {
+		@I18n(def = "Copyright 2014-2015 agiso.org")
+		COPYRIGHT,
+
+		@I18n(def = "usage: tpl template [options]"
+				+ "\n   or: tpl --help")
+		USAGE_INFO,
+
+		@I18n(def = "Incorrect params. Use \"tpl --help\" for help.")
+		USAGE_ERROR,
+
+		@I18n(def = "tpl template [options]")
+		HELP_USAGE,
+
+		@I18n(def = "print this help message")
+		HELP_HELP,
+
+		@I18n(def = "print the version information and exit")
+		HELP_VERSION,
+
+		@I18n(def = "create resources in defined directory")
+		HELP_DIRECTORY,
+
+		@I18n(def = "DIRECTORY")
+		HELP_DIRECTORY_ARG,
+
+		@I18n(def = "use value for given property")
+		HELP_DEFINE,
+
+		@I18n(def = "property=value")
+		HELP_DEFINE_ARG,
+
+		@I18n(def = "run Tempel in debug mode")
+		HELP_DEBUG,
+	}
+
+	private static IParamReader PARAM_READER = null;
+
+//	--------------------------------------------------------------------------
 	@Autowired
 	private ITempel tempel;
 
@@ -114,12 +187,6 @@ public class Bootstrap implements CommandLineRunner {
 			.withAnsiWhite(org.springframework.boot.ansi.AnsiElement.WHITE)
 			.withAnsiDefault(org.springframework.boot.ansi.AnsiElement.DEFAULT);
 
-		// Obsługa wywołania bezargumentowego:
-		if(args.length == 0) {
-			printTempelInfo();
-			System.exit(0);
-		}
-
 		setParamReader(paramReader);
 
 		SpringApplication application = new SpringApplication(Bootstrap.class);
@@ -131,6 +198,12 @@ public class Bootstrap implements CommandLineRunner {
 //	--------------------------------------------------------------------------
 	@Override
 	public void run(String... args) throws Exception {
+		// Obsługa wywołania bezargumentowego:
+		if(args.length == 0) {
+			printTempelInfo();
+			System.exit(0);
+		}
+
 		// Konfiguracja opcji i parsowanie argumentów:
 		Options options = configureTempelOptions();
 
@@ -149,7 +222,7 @@ public class Bootstrap implements CommandLineRunner {
 		// Pobieranie nazwy szablonu do wykonania:
 		String templateName;
 		if(cmd.getArgList().size() != 1) {
-			System.err.println("Incorrect params. Use \"tpl --help\" for help.");
+			System.err.println(getMessage(Messages.USAGE_ERROR));
 			System.exit(-1);
 		}
 		templateName = String.valueOf(cmd.getArgList().get(0));
@@ -164,74 +237,78 @@ public class Bootstrap implements CommandLineRunner {
 		}
 
 		// Uruchamianie generatora dla określonego szablonu:
-		logger.info("Running template {}",
-				ansiString(GREEN, templateName)
-		);
+		starterLogger.info(Logs.LOG_01, ansiString(GREEN, templateName));
 
-		if(PARAM_READER != null) {
-			tempel.setParamReader(PARAM_READER);
+		try {
+			if(PARAM_READER != null) {
+				tempel.setParamReader(PARAM_READER);
+			}
+			tempel.startTemplate(templateName, params, workDir);
+			starterLogger.info(Logs.LOG_02, ansiString(GREEN, templateName));
+		} catch(Exception e) {
+			starterLogger.error(e, Logs.LOG_06, ansiString(RED, e.getMessage()));
+			System.exit(-4);
 		}
-		tempel.startTemplate(templateName, params, workDir);
-
-		logger.info("Template {} executed successfully",
-				ansiString(GREEN, templateName)
-		);
 	}
 
 //	--------------------------------------------------------------------------
-	private static void printTempelInfo() {
+	@Value("${git.commit.id}")
+	private String commitId;
+	@Value("${git.build.version}")
+	private String buildVersion;
+
+	private void printTempelInfo() {
 		System.out.println(ansiString(RED, "Agiso Tempel", " ",
-				GREEN, "0.0.1.RELEASE"));
-		System.out.println("Copyright 2014 agiso.org");
+				GREEN, buildVersion + " (" + commitId + ")"));
+		System.out.println(getMessage(Messages.COPYRIGHT));
 		System.out.println();
-		System.out.println("usage: tpl template [options]");
-		System.out.println("   or: tpl --help");
+		System.out.println(getMessage(Messages.USAGE_INFO));
 	}
 
-	private static void printTempelHelp(Options options) {
+	private void printTempelHelp(Options options) {
 		// automatically generate the help statement
 		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("tpl template [options]", options);
+		formatter.printHelp(getMessage(Messages.HELP_USAGE), options);
 	}
 
 	private static Options configureTempelOptions() {
 		Options options = new Options();
 
 		Option help = new Option("h", "help", false,
-				"print this help message");
+				getMessage(Messages.HELP_HELP));
 		options.addOption(help);
 
 		Option version = new Option("v", "version", false,
-				"print the version information and exit");
+				getMessage(Messages.HELP_VERSION));
 		options.addOption(version);
 
 		@SuppressWarnings("static-access")
 		Option directory = OptionBuilder.withLongOpt("directory")
-				.withDescription("create resources in defined directory")
+				.withDescription(getMessage(Messages.HELP_DIRECTORY))
 				.hasArg()
-				.withArgName("DIRECTORY")
+				.withArgName(getMessage(Messages.HELP_DIRECTORY_ARG))
 				.create("d");
 		options.addOption(directory);
 
 		@SuppressWarnings("static-access")
 		Option property = OptionBuilder.withLongOpt("define")
-				.withArgName("property=value")
+				.withDescription(getMessage(Messages.HELP_DEFINE))
 				.hasArgs(2)
+				.withArgName(getMessage(Messages.HELP_DEFINE_ARG))
 				.withValueSeparator()
-				.withDescription("use value for given property")
 				.create("D");
 		options.addOption(property);
 
 		@SuppressWarnings("static-access")
 		Option debug = OptionBuilder.withLongOpt("debug")
-				.withDescription("run Tempel in debug mode")
+				.withDescription(getMessage(Messages.HELP_DEBUG))
 				.create();
 		options.addOption(debug);
 
 		return options;
 	}
 
-	private static CommandLine parseTempelCommandArgs(Options options, String[] args) {
+	private CommandLine parseTempelCommandArgs(Options options, String[] args) {
 		CommandLine cmd = null;
 
 		CommandLineParser parser = new PosixParser();
@@ -254,23 +331,17 @@ public class Bootstrap implements CommandLineRunner {
 		if(cmd.hasOption('d')) {
 			workDir = new File(cmd.getOptionValue('d').trim());
 			if(!workDir.exists()) {
-				System.err.println("Working directory does not exist: " +
-						ansiString(RED, workDir.getPath())
-				);
+				starterLogger.error(Logs.LOG_04, ansiString(RED, workDir.getPath()));
 				System.exit(-2);
 			} else if(!workDir.isDirectory()) {
-				System.err.println("Incorrect working directory: " +
-						ansiString(RED, workDir.getPath())
-				);
+				starterLogger.error(Logs.LOG_05, ansiString(RED, workDir.getPath()));
 				System.exit(-3);
 			}
 		} else {
 			workDir = new File(".");
 		}
 
-		logger.debug("Setting working directory to {}",
-				ansiString(GREEN, workDir.getPath())
-		);
+		starterLogger.debug(Logs.LOG_03, ansiString(GREEN, workDir.getPath()));
 		return workDir.getCanonicalPath();
 	}
 }

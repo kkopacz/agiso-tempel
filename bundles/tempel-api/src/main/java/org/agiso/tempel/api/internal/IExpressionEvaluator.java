@@ -27,7 +27,6 @@ import java.util.Map;
  * @since 1.0
  */
 public interface IExpressionEvaluator {
-
 	/**
 	 * @param expression
 	 * @param model

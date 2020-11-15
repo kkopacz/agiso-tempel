@@ -8,7 +8,7 @@
 
 	<groupId>org.agiso.tempel</groupId>
 	<artifactId>tempel-base-pom</artifactId>
-	<version><!--tempel.version-->0.0.1.RELEASE</version>
+	<version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>AGISO Tempel Base POM</name>
@@ -57,14 +57,17 @@
 	</scm>
 
 	<repositories>
-		<!-- repository>
+		<repository>
 			<id>sonatype-nexus-snapshots</id>
 			<name>Sonatype Nexus snapshot repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository -->
+		</repository>
 	</repositories>
 
 	<!-- distributionManagement>
@@ -97,24 +100,27 @@
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
-		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+		<maven-gpg-plugin.version>1.4</maven-gpg-plugin.version>
+		<maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
+		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
+		<git-commit-id-plugin.version>2.2.0</git-commit-id-plugin.version>
 		<appassembler-plugin.version>1.7</appassembler-plugin.version>
 
 		<!-- agiso.org Tempel dependencies -->
-		<tempel.version><!--tempel.version-->0.0.1.RELEASE</tempel.version>
+		<tempel.version><!--tempel.version-->0.0.2.BUILD-SNAPSHOT</tempel.version>
 
 		<!-- agiso.core dependencies -->
-		<agiso.core.version><!--org.agiso.core-->0.0.1.RELEASE</agiso.core.version>
+		<agiso.core.version><!--org.agiso.core-->0.0.2.RC4</agiso.core.version>
 
 		<!-- Apache Commons dependencies -->
 		<commons-cli.version>1.2</commons-cli.version>
 
 		<!-- Spring Framework dependencies -->
-		<spring.version>4.0.6.RELEASE</spring.version>
-		<spring.boot.version>1.1.4.RELEASE</spring.boot.version>
+		<spring.version>4.1.6.RELEASE</spring.version>
+		<spring.boot.version>1.2.3.RELEASE</spring.boot.version>
 
 		<!-- ShrinkWrap dependencies -->
-		<shrinkwrap.version>1.2.1</shrinkwrap.version>
+		<shrinkwrap.version>1.2.2</shrinkwrap.version>
 		<shrinkwrap-resolver.version>2.0.2</shrinkwrap-resolver.version>
 
 		<!-- Maven, Aether & Wagon dependencies -->
@@ -126,14 +132,14 @@
 		<xstream.version>1.4.13</xstream.version>
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
-		<guava.version>17.0</guava.version>
+		<guava.version>18.0</guava.version>
 
 		<!-- Logging dependencies -->
-		<slf4j.version>1.7.7</slf4j.version>
+		<slf4j.version>1.7.12</slf4j.version>
 
 		<!-- Test dependencies -->
-		<testng.version>6.8.8</testng.version>
-		<mockito.version>1.9.5</mockito.version>
+		<testng.version>6.8.21</testng.version>
+		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
 	<build>
@@ -174,7 +180,6 @@
 						<showWarnings>true</showWarnings>
 					</configuration>
 				</plugin>
-	
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
@@ -183,7 +188,6 @@
 						<encoding>utf-8</encoding>
 					</configuration>
 				</plugin>
-	
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
@@ -192,11 +196,47 @@
 						<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
 					</configuration>
 				</plugin>
-
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven-gpg-plugin.version}</version>
+					<configuration>
+						<keyname>kkopacz@agiso.org</keyname>
+						<passphrase>${gpg.passphrase}</passphrase>
+					</configuration>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven-deploy-plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>${maven-antrun-plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>pl.project13.maven</groupId>
+					<artifactId>git-commit-id-plugin</artifactId>
+					<version>${git-commit-id-plugin.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>revision</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 
 				<plugin>
@@ -455,7 +495,7 @@
 		<profile>
 			<id>release-sign-artifacts</id>
 			<activation>
-				<!-- activeByDefault>true</activeByDefault -->
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>performRelease</name>
 					<value>true</value>
@@ -466,20 +506,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.4</version>
-						<configuration>
-							<keyname>kkopacz@agiso.org</keyname>
-							<passphrase>${gpg.passphrase}</passphrase>
-						</configuration>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>
