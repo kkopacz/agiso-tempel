@@ -50,7 +50,9 @@ public class TemplateAddLocalITest extends AbstractTemplateTest {
 //	--------------------------------------------------------------------------
 	@Test
 	public void testTemplateAddLocal() throws Exception {
-		String outPath = getOutputPath(true);
+		String outPath = getOutputPath(true,
+				"src/test/templates/tst/base/TemplateAddLocalITest"
+		);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
@@ -78,6 +80,6 @@ public class TemplateAddLocalITest extends AbstractTemplateTest {
 
 		// Wyliczenie i sprawdzenie skrótu MD5 utworzonego zasobu:
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "f69e866f6c3c2939b8109085b7f0b77f".equals(md5) : md5;
+		assert "1ef9f2f5faef53875a4f0e809b5ed8e1".equals(md5) : md5;
 	}
 }

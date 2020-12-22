@@ -54,7 +54,7 @@ public class addLocalTemplate_TemplateITest extends AbstractOutputTest {
 	 * <code>addLocalTemplate</code>.
 	 */
 	@Test
-	public void testTemplateInvocation() throws Exception {
+	public void testAaddLocalTemplate() throws Exception {
 		String outPath = getOutputPath(true);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
