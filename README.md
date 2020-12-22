@@ -37,6 +37,6 @@ Instalacja polega na pobraniu odpowiedniego archiwum i jego rozpakowaniu
 w dogodnej lokalizacji systemu plików. Po wykonaniu tej czynności można
 używać z polecenia `tpl`, wykorzystywać dostępne szablony i tworzyć własne.
 
-[tempel.tar.gz]: https://github.com/kkopacz/agiso-tempel/releases/download/v0.0.1.RELEASE/tempel-0.0.1.RELEASE.tar.gz
-[tempel.zip]: https://github.com/kkopacz/agiso-tempel/releases/download/v0.0.1.RELEASE/tempel-0.0.1.RELEASE.zip
+[tempel.tar.gz]: https://github.com/kkopacz/agiso-tempel/releases/download/v0.0.2.BUILD-SNAPSHOT/tempel-0.0.2.BUILD-SNAPSHOT.tar.gz
+[tempel.zip]: https://github.com/kkopacz/agiso-tempel/releases/download/v0.0.2.BUILD-SNAPSHOT/tempel-0.0.2.BUILD-SNAPSHOT.zip
 [releases]: https://github.com/kkopacz/agiso-tempel/releases/
