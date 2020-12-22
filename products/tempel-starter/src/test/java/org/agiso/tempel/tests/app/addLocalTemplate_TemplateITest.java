@@ -42,6 +42,9 @@ import org.testng.annotations.Test;
  * @since 1.0
  */
 public class addLocalTemplate_TemplateITest extends AbstractOutputTest {
+	private String outPath;
+
+//	--------------------------------------------------------------------------
 	protected String getOutputPathPrefix() {
 		return "./target/velocity-output/";
 	}
@@ -51,11 +54,35 @@ public class addLocalTemplate_TemplateITest extends AbstractOutputTest {
 //	--------------------------------------------------------------------------
 	/**
 	 * Test bezpośredniego wywołania szablonu (polecenia)
-	 * <code>addLocalTemplate</code>.
+	 * <code>addLocalTempel</code>.
 	 */
 	@Test
+	public void testAddLocalTempel() throws Exception {
+		outPath = getOutputPath(true);
+
+		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
+		IParamReader paramReader = mock(IParamReader.class);
+
+		// Wywołanie Bootstrap i uruchamianie szablonu:
+		Bootstrap.main(paramReader, new String[] {"addLocalTempel",
+				"-d " + outPath
+		});
+
+		// Weryfikacja wywołań poleceń odczytu paramtrów:
+		verifyNoMoreInteractions(paramReader);
+		reset(paramReader);
+
+		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
+		assert "31209bb542d725c4eddc29e37fb1e426".equals(md5) : md5;
+	}
+
+	/**
+	 * Test bezpośredniego wywołania szablonu (polecenia)
+	 * <code>addLocalTemplate</code>.
+	 */
+	@Test(dependsOnMethods = "testAddLocalTempel")
 	public void testAaddLocalTemplate() throws Exception {
-		String outPath = getOutputPath(true);
+		outPath = getOutputPath(true, outPath);
 
 		// Tworzenie i konfiguracja pozornej implementacji IParamReader'a:
 		IParamReader paramReader = mock(IParamReader.class);
@@ -80,6 +107,6 @@ public class addLocalTemplate_TemplateITest extends AbstractOutputTest {
 		reset(paramReader);
 
 		String md5 = DigestUtils.countDigest("MD5", new File(outPath));
-		assert "16d72aed1b9670ced785aa7f59d48064".equals(md5) : md5;
+		assert "6feb6ef35c3d0372f1b3b19a0be668b6".equals(md5) : md5;
 	}
 }
