@@ -16,7 +16,9 @@
 		</params>
 	</template>
 
-	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+	<template>
+		<engine class="org.agiso.tempel.engine.VelocityDirectoryEngine" />
+
 		<groupId>org.agiso.tempel.engine</groupId>
 		<templateId>VelocityDirectoryTemplateITest</templateId>
 		<version>testEngineInvocation_02</version>
@@ -28,7 +30,8 @@
 		<resource />
 	</template>
 
-	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine"
+			param1="value1" param2="value2">
 		<groupId>org.agiso.tempel.engine</groupId>
 		<templateId>VelocityDirectoryTemplateITest</templateId>
 		<version>testEngineInvocation_03</version>
@@ -42,7 +45,11 @@
 		</resource>
 	</template>
 
-	<template engine="org.agiso.tempel.engine.VelocityDirectoryEngine">
+	<template>
+		<engine class="org.agiso.tempel.engine.VelocityDirectoryEngine">
+			<param1>value1</param1>
+			<param2>value2</param2>
+		</engine>
 		<groupId>org.agiso.tempel.engine</groupId>
 		<templateId>VelocityDirectoryTemplateITest</templateId>
 		<version>testEngineInvocation_04</version>

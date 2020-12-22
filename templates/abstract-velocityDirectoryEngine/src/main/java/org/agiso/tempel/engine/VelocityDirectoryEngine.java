@@ -36,6 +36,21 @@ public class VelocityDirectoryEngine extends VelocityFileEngine {
 	private static final String TEMPLATE_FILE_SUFFIX = ".vm";
 
 //	--------------------------------------------------------------------------
+	private String param1;
+	private String param2;
+
+	public void setParam1(String param1) {
+		this.param1 = param1;
+
+		System.out.println("!!!!!!!!!!!!!!!!! " + param1);
+	}
+	public void setParam2(String param2) {
+		this.param2 = param2;
+
+		System.out.println("!!!!!!!!!!!!!!!!! " + param2);
+	}
+
+//	--------------------------------------------------------------------------
 	/**
 	 * Szablon może być pojedynczym plikiem (wówczas silnik działa tak jak silnik
 	 * {@link VelocityFileEngine}, lub katalogiem. W takiej sytuacji przetwarzane
