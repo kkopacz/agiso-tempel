@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  */
 @TempelEngineTest(FileExtenderEngine.class)
 public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
-	// @Test
+	@Test
 	// FIXME: Test nie działa poprawnie, ponieważ generowane pliki mają inne
 	// zakończenia linii w systemie Windows i inne w systemie Linux.
 	public void testModifyFile1() throws Exception {
@@ -58,7 +58,7 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 				repositoryPath + "FileExtenderEngineUTest/testModifyFile1/base"
 		) + "/testBean.java";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "/FileExtenderEngineUTest/testModifyFile1/repo",
+				repositoryPath + "FileExtenderEngineUTest/testModifyFile1/repo",
 				"testBean.java.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);
@@ -88,7 +88,7 @@ public class FileExtenderEngineUTest extends AbstractTempelEngineTest {
 				repositoryPath + "FileExtenderEngineUTest/testModifyFile2/base"
 		) + "/testBean2.java";
 		ITemplateSource templateSource = new FileTemplateSource(
-				repositoryPath + "/FileExtenderEngineUTest/testModifyFile2/repo",
+				repositoryPath + "FileExtenderEngineUTest/testModifyFile2/repo",
 				"testBean2.java.vm"
 		);
 		engine.run(templateSource, modelMap, outPath);

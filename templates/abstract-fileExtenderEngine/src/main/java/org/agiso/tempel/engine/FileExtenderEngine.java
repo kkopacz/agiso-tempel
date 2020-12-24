@@ -23,6 +23,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -41,94 +43,95 @@ import org.apache.velocity.app.VelocityEngine;
  * @since 1.0
  */
 public class FileExtenderEngine implements ITempelEngine {
+	private String lineSeparator;
+	private int lineSeparatorLength;
+
+//	--------------------------------------------------------------------------
+	public FileExtenderEngine() {
+		setLineSeparator(System.getProperty("line.separator"));
+	}
+
+//	--------------------------------------------------------------------------
+	public void setLineSeparator(String lineSeparator) {
+		this.lineSeparator = lineSeparator;
+		this.lineSeparatorLength = lineSeparator.length();
+	}
+
+//	--------------------------------------------------------------------------
 	@Override
 	public void run(ITemplateSource source, Map<String, Object> params, String target) {
-		BufferedReader buffRead = null;
+		// Tworzenie kontekstu Velocity wspólnego w całym procesie obsługi:
+		final VelocityContext context = createVelocityContext(params);
 
+		BufferedReader reader = null;
 		try {
 			//System.out.println("Otwieranie pliku template " + source.getTemplate() + "/"+ source.getResource());
-			//String fileContent = new String(Files.readAllBytes(fileSource.toPath()));
+			reader = new BufferedReader(new InputStreamReader(source.getEntry(source.getResource()).getInputStream()));
 
+			boolean insideTag = false;
 			String line = "", multiLine = "", tag = "";
-			boolean foundTag = false;			
-			buffRead = new BufferedReader(new FileReader(source.getTemplate() + "/" + source.getResource()));
-			
 			List<String> listAdd = new ArrayList<String>();
-			VelocityContext context = createVelocityContext(params);
 
 			// Wczytywanie linii
-			while((line = buffRead.readLine()) != null) {
+			while((line = reader.readLine()) != null) {
 				//System.out.println("add line " + line + " długość " + line.length());
 
 				// Wykrywanie znacznikow
-				if(!foundTag && line.trim().length() > 0) {
+				if(!insideTag && !line.trim().isEmpty()) {
 					tag = line;
 					//System.out.println("Znaleziono tag " + tag);
-					foundTag = true;
-				} else if(foundTag) {
-					// Jeśli znaleziono znacznik kończący
-					if(tag.compareTo(line) == 0) {
+					insideTag = true;
+				} else if(insideTag) {
+					if(!tag.equals(line)) {
+						multiLine += line + lineSeparator;
+					} else {		// Jeśli znaleziono znacznik kończący
 						//System.out.println("Zakończono tag " + tag);
 						multiLine = processVelocityString(multiLine, multiLine, context);
 
-						 // Dodawanie przetworzonej linii do listy
-						for(int s=0, e=0; s<multiLine.length(); s=e+1) {
-							e = multiLine.indexOf('\n', s); // Indeks znalezionej frazy
+						// Dodawanie przetworzonej linii do listy
+						for(int s = 0, e = 0; s < multiLine.length(); s = e + 1) {
+							e = multiLine.indexOf(lineSeparator, s); // Indeks znalezionej frazy
 							listAdd.add(multiLine.substring(s, e));
 						}
 
 						procesFile(tag, listAdd, target);
+
 						//System.out.println("Rozpoczęto wyszukiwanie następnego tagu");
+						insideTag = false;
 						multiLine = line = tag = "";
 						listAdd.clear();
-						foundTag = false;
-					} else {
-						multiLine += line + '\n';
 					}
 				}
 			}
-
-			if(buffRead != null) {
-				buffRead.close();
+		} catch(Exception e) {
+			throw new RuntimeException("Wystąpił błąd podczas próby edycji pliku: " + e.getMessage());
+		} finally {
+			if(reader != null)try {
+				reader.close();
+				reader = null;
+			} catch(IOException e) {
+				e.printStackTrace();
 			}
-		} catch(IOException e) {
-			throw new RuntimeException("Wystąpił błąd podczas próby edycji pliku");
 		}
-
-	}
-
-	public VelocityContext createVelocityContext(Map<String, Object> params) {
-		VelocityContext context = new VelocityContext();
-		for(String key : params.keySet()) {
-			context.put(key, params.get(key));
-		}
-		return context;
-	}
-
-	public String processVelocityString(String logTag, String inString, VelocityContext context) {
-		Writer writer = new StringWriter();
-		VelocityEngine engine = new VelocityEngine();
-		engine.evaluate(context, writer, logTag, inString);
-		return writer.toString();
 	}
 
 	public void procesFile(String strFind, List<String> listPut, String target) throws IOException {
-
-		// Zmienne związane z plikami
-		BufferedReader buffRead = null;
-		BufferedWriter buffModified = null;
+		// Odczyt pliku, który będzie rozbudowywany:
 		String fileContent = "";
 
+		Reader fileReader = null;
+		BufferedReader bufferedReader = null;
 		try {
-			// Otwieranie pliku, do którego będzie zapisywana zmodyfikowana zawartość
-			buffRead = new BufferedReader(new FileReader(target));
+			fileReader = new FileReader(target);
+			bufferedReader = new BufferedReader(fileReader);
+
 			String line = null;
 			String ls = System.getProperty("line.separator");
 			StringBuilder stringBuilder = new StringBuilder();
 			boolean firstTime = true;
 
 			// Tworzenie łańcucha znakowego z zawartością pliku
-			while((line = buffRead.readLine()) != null) {
+			while((line = bufferedReader.readLine()) != null) {
 				if(firstTime == false) {
 					stringBuilder.append(ls);
 				}
@@ -140,16 +143,29 @@ public class FileExtenderEngine implements ITempelEngine {
 			}
 
 			fileContent = stringBuilder.toString();
-
-			if(buffRead != null) {
-				buffRead.close();
+		} finally {
+			if(bufferedReader != null) try {
+				bufferedReader.close();
+				bufferedReader = null;
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
+			if(fileReader != null) try {
+				fileReader.close();
+				fileReader = null;
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 
-			buffModified = new BufferedWriter(new FileWriter(target));
+		// Przetwarzanie i rozbudowywanie pliku:
+		BufferedWriter bufferedWriter = null;
+		try {
+			bufferedWriter = new BufferedWriter(new FileWriter(target));
 
 			// Zmienne pomicnicze
 			int findInd = 0, commentInd = 0, newLineInd = 0, begInd = 0;
-			int endInd = fileContent.length()-1;
+			int endInd = fileContent.length() - 1;
 			char tempChar = 0;
 			boolean newLineNotFound = false;
 			String whiteSpace;
@@ -161,7 +177,7 @@ public class FileExtenderEngine implements ITempelEngine {
 
 				if(newLineInd != -1) {
 					// Znaleziono szukaną frazę, ustalany jest indeks dla znaku nowej linii
-					while(fileContent.charAt(newLineInd) != '\n') {
+					while(!lineSeparator.equals(fileContent.substring(newLineInd, newLineInd + lineSeparatorLength))) {
 						// Jeśli został przekroczony zakres znaków
 						if(newLineInd <= begInd) {
 							newLineNotFound = true;
@@ -184,39 +200,51 @@ public class FileExtenderEngine implements ITempelEngine {
 					//System.out.println("Wykryto poprawnie znaki białe przed komentarzem");
 
 					// Przepisywanie istniejącego fragmentu pliku
-					buffModified.write(fileContent.substring(begInd, newLineInd));
+					bufferedWriter.write(fileContent.substring(begInd, newLineInd));
 
 					for(String linePut : listPut) {
 						if(newLineNotFound) {
-							buffModified.write(whiteSpace + linePut); // Jedna linia wstawianego tekstu
+							bufferedWriter.write(whiteSpace + linePut);			// Jedna linia wstawianego tekstu
 							newLineNotFound = false;
-						}
-						else {
-							buffModified.write("\n");
+						} else {
+							bufferedWriter.write(lineSeparator);
 
 							if(!linePut.contentEquals("")) {
-								buffModified.write(whiteSpace + linePut); // Jedna linia wstawianego tekstu
+								bufferedWriter.write(whiteSpace + linePut);		// Jedna linia wstawianego tekstu
 							}
 						}
 					}
 					// Reszta pliku
-					buffModified.write(fileContent.substring(newLineInd, findInd + strFind.length()));
+					bufferedWriter.write(fileContent.substring(newLineInd, findInd + strFind.length()));
 					begInd = findInd + strFind.length();
-				}
-				else {
+				} else {
 					//System.out.println("Nie znaleziono więcej pasujących wyrazów");
 
 					// Nie znaleziono szukanej frazy, pozostała część pliku jest przepisywana
-					buffModified.write(fileContent.substring(begInd, endInd+1));
+					bufferedWriter.write(fileContent.substring(begInd, endInd+1));
 				}
 			}
-		}
-		finally {
-			if(buffModified != null) {
-				buffModified.close();
+		} finally {
+			if(bufferedWriter != null) {
+				bufferedWriter.close();
+				bufferedWriter = null;
 			}
-
-			//System.out.println("Plik został zakmniety");
 		}
+	}
+
+//	--------------------------------------------------------------------------
+	public VelocityContext createVelocityContext(Map<String, Object> params) {
+		VelocityContext context = new VelocityContext();
+		for(String key : params.keySet()) {
+			context.put(key, params.get(key));
+		}
+		return context;
+	}
+
+	public String processVelocityString(String logTag, String inString, VelocityContext context) {
+		Writer writer = new StringWriter();
+		VelocityEngine engine = new VelocityEngine();
+		engine.evaluate(context, writer, logTag, inString);
+		return writer.toString();
 	}
 }
