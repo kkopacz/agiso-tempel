@@ -129,7 +129,7 @@
 		<wagon.version>2.6</wagon.version>
 
 		<!-- Other dependencies -->
-		<xstream.version>1.4.15</xstream.version>
+		<xstream.version>1.4.18</xstream.version>
 		<velocity.version>1.7</velocity.version>
 		<inflector.version>0.7.0</inflector.version>
 		<guava.version>18.0</guava.version>
